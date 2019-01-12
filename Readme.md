@@ -10,4 +10,6 @@ Brief Synopsis for windows:
 5. Use the installer to download and install VS code (top right button)
 6. Make sure all checkboxes are checked then run the execute install (bottom center button)
 
+Test that Aidan can push (he probably cant)
+
 
