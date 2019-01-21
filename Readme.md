@@ -9,7 +9,12 @@ Brief Synopsis for windows:
 4. Extract the above installer and run it for all users
 5. Use the installer to download and install VS code (top right button)
 6. Make sure all checkboxes are checked then run the execute install (bottom center button)
+7. install git command line on your computer https://git-scm.com/downloads
+8. Open VS Code using the FRC shortcut on your desktop, underextensions, install 'git lens' extension in VS Code
 
-Test that Aidan can push (he probably cant)
 
+## Clone this Repo
+
+1. In VS Code press `ctrl+shift+p`
+2. type `git clone 
 
