@@ -26,6 +26,11 @@ Brief Synopsis for windows:
 7. A pop up will ask if you would like to open the project, select yes
 8. If any pop-ups show up to update WPI Lib, select yes
 
+## Setup git credentials
+1. Open Git bash
+2. Set global name to your name type `git config --global user.name "Kevin Harrilal"
+3. Set global email to your email type `git config --global user.name "Kevin@team2168.org"
+
 ## To pull the latest code
 1. In VS Code press `ctrl+shift+p`
 2. 
