@@ -10,11 +10,30 @@ Brief Synopsis for windows:
 5. Use the installer to download and install VS code (top right button)
 6. Make sure all checkboxes are checked then run the execute install (bottom center button)
 7. install git command line on your computer https://git-scm.com/downloads
-8. Open VS Code using the FRC shortcut on your desktop, underextensions, install 'git lens' extension in VS Code
+8. Launch git bash application
+9. In git bash type git
+9. Open VS Code using the FRC shortcut on your desktop, underextensions, install 'git lens' extension in VS Code
 
 
 ## Clone this Repo
 
 1. In VS Code press `ctrl+shift+p`
-2. type `git clone 
+2. In command dropdown type `git clone' and hit enter
+3. Enter repo URL `https://github.com/Team2168/2019_Main_Robot.git` and hit enter
+4. Select a Folder to store the files in (Make a new folder) for all robotics like: `C:\Users\2168\Documents\RoboticsDevelopment`
+5. A window will pop up to login, enter your github login credentials
+6. The code will download into the folder above
+7. A pop up will ask if you would like to open the project, select yes
+8. If any pop-ups show up to update WPI Lib, select yes
+
+## To pull the latest code
+1. In VS Code press `ctrl+shift+p`
+2. 
+
+## To build the code
+1. In VS Code press `ctrl+shift+p`
+2. Type `Wpilib build`
+
+## To deploy the code
+
 
