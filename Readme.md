@@ -37,6 +37,9 @@ Brief Synopsis for windows:
 
 ## To Commit
 1. Use the source control pane
+2. Add files to the commit using the +
+3. Add a commit message and hit the check symbol
+4. Push using the menu
 
 ## To build the code
 1. In VS Code press `ctrl+shift+p`
