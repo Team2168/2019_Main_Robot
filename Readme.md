@@ -36,8 +36,7 @@ Brief Synopsis for windows:
 2. Type `git Fetch`
 
 ## To Commit
-1. In VS Code type `ctrl+shift+p`
-2. Type `git  
+1. Use the source control pane
 
 ## To build the code
 1. In VS Code press `ctrl+shift+p`
