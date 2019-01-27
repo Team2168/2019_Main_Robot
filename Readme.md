@@ -33,12 +33,21 @@ Brief Synopsis for windows:
 
 ## To pull the latest code
 1. In VS Code press `ctrl+shift+p`
-2. 
+2. Type `git Fetch`
+
+## To Commit
+1. In VS Code type `ctrl+shift+p`
+2. Type `git  
 
 ## To build the code
 1. In VS Code press `ctrl+shift+p`
 2. Type `Wpilib build`
 
 ## To deploy the code
+1. In VS code press `ctrl+shift+p`
+2. Type `WPILib deploy`
+
+
+
 
 
