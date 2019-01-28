@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.I2C;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around\][\ */
+
+ //This is a test
 public class RobotMap {
 
 	public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
