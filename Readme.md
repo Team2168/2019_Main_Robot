@@ -26,6 +26,11 @@ Brief Synopsis for windows:
 7. A pop up will ask if you would like to open the project, select yes
 8. If any pop-ups show up to update WPI Lib, select yes
 
+# Common tasks in VS Code
+## Videos
+Videos for the above can be found at the following playlist
+https://www.youtube.com/playlist?list=PLUTJdMwEWueIyWRVWkQE8N3XxPGucEx0Q
+
 ## Setup git credentials
 1. Open Git bash
 2. Set global name to your name type `git config --global user.name "Kevin Harrilal"
@@ -49,9 +54,6 @@ Brief Synopsis for windows:
 1. In VS code press `ctrl+shift+p`
 2. Type `WPILib deploy`
 
-## Videos
-Videos for the above can be found at the following playlist
-https://www.youtube.com/playlist?list=PLUTJdMwEWueIyWRVWkQE8N3XxPGucEx0Q
 
 
 # 2019_Main_Robot
