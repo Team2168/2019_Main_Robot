@@ -1,4 +1,4 @@
-Getting Started with VS Code for 2019 Season
+# Getting Started with VS Code for 2019 Season
 
 Directions can be found here: https://wpilib.screenstepslive.com/s/currentCS/m/java/l/1027503-installing-c-and-java-development-tools-for-frc
 
