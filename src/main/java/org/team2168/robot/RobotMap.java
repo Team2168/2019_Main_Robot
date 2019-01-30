@@ -39,8 +39,8 @@ public class RobotMap {
 	public static final int LEFT_DRIVE_MOTOR_1 = 2; //Same as 2017
 	public static final int LEFT_DRIVE_MOTOR_2 = 3; //Same as 2017
 	
-	public static final int LIFT_MOTOR_1 = 4; //2017 ball intake
-	public static final int LIFT_MOTOR_2 = 5; //2017 conveyor
+	public static final int LIFT_MOTOR_1 = 4; //2019 lift motor
+	public static final int LIFT_MOTOR_2 = 5; //2019 lift motor
 	public static final int LIFT_MOTOR_3 = 6; //2017 agitator
 	
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 7; //2017 gear intake
