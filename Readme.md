@@ -130,6 +130,11 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - use a digital input to control practice bot
 - use a digital input to control if CAN or PWM 
 
+### Plunger Arm Pivot *Unassigned*
+- 1x Victor SP motor controller
+- 1x Double Solenoid for brake
+- 1x AveragePot for position feedback
+
 ### Cargo Intake/Claw (Jean-Carlos)
 - 2x VictorSP motor controllers
 ..- Positive values move cube inwards / Negative values move cube outwards
