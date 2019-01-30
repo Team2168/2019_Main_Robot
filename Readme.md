@@ -165,9 +165,9 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - 2x hall effect digital IO for Up/Down position
 
 ### Moneky Bar (Liam)
-- 1 Victor SP for Motor wheels
-- 1 Victor SP for Rotation (in opposite directions maybe)
-- 1 AveragePot for position
+- 2x Victor SP for Motor wheels
+- 2x Victor SP for Rotation (in opposite directions maybe)
+- 2x AveragePot for position
 
 ### Stinger (Kaleb)
 - 2x Victor SP for winch
