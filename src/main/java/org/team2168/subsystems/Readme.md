@@ -1,16 +1,15 @@
 # Subsystems
 ## Actuator summary per subsystem
-| Subsystem                      | Motors | Pneumatics | Sensors |   |
-|--------------------------------|--------|------------|---------|---|
-| Lift                           | 2      | 1          | 3       |   |
-| Claw                           | 2      | 1          | 1       |   |
-| Harpoon                        | 0      | 2          | 1       |   |
-| Monkey Bar                     | 4      | 1          | 2       |   |
-| Drivetrain                     | 6      | 2          | 4       |   |
-| Stingers                       | 0      | 1          | 2       |   |
-| Hatch Panel Floor Intake (HPI) | 1      | 1          | 1       |   |
-|                                |        |            |         |   |
-| Total                          | 15     | 9          | 14      |   |
+| Subsystem                      | Motors | Pneumatics | Sensors |
+|--------------------------------|--------|------------|---------|
+| Lift                           | 2      | 1          | 3       |
+| Claw                           | 2      | 1          | 1       |
+| Harpoon                        | 0      | 2          | 1       |
+| Monkey Bar                     | 4      | 1          | 2       |
+| Drivetrain                     | 6      | 2          | 4       |
+| Stingers                       | 0      | 1          | 2       |
+| Hatch Panel Floor Intake (HPI) | 1      | 1          | 1       |
+| **Total**                      | **15** | **9**      | **14**  |
 
 ## Robot Map
 
