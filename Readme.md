@@ -182,7 +182,5 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ## Controls (Old Aiden)
 - TBD
 
-
-
-
-
+## Variable Naming Conventions
+- _*** (e.g. _currentPosition) : For member variables lead the name with _ character
