@@ -171,7 +171,8 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 
 
 ## Vision (Cierra)
-- TBD
+- Track target
+- Stitch camera feeds to create panoramic view
 
 ## Controls (Old Aiden)
 - TBD
