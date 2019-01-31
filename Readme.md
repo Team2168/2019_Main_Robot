@@ -130,6 +130,11 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - use a digital input to control practice bot
 - use a digital input to control if CAN or PWM 
 
+### Plunger Arm Pivot *Unassigned*
+- 1x Victor SP motor controller
+- 1x Double Solenoid for brake
+- 1x AveragePot for position feedback
+
 ### Cargo Intake/Claw (Jean-Carlos)
 - 2x VictorSP motor controllers
 ..- Positive values move cube inwards / Negative values move cube outwards
@@ -160,9 +165,9 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - 2x hall effect digital IO for Up/Down position
 
 ### Moneky Bar (Liam)
-- 1 Victor SP for Motor wheels
-- 1 Victor SP for Rotation (in opposite directions maybe)
-- 1 AveragePot for position
+- 2x Victor SP for Motor wheels
+- 2x Victor SP for Rotation (in opposite directions maybe)
+- 2x AveragePot for position
 
 ### Stinger (Kaleb)
 - 2x Victor SP for winch
@@ -171,12 +176,11 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 
 
 ## Vision (Cierra)
-- TBD
+- Track target
+- Stitch camera feeds to create panoramic view
 
 ## Controls (Old Aiden)
 - TBD
 
-
-
-
-
+## Variable Naming Conventions
+- _*** (e.g. _currentPosition) : For member variables lead the name with _ character
