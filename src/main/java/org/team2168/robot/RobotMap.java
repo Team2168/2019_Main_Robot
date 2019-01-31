@@ -36,15 +36,17 @@ public class RobotMap {
 	// PWM (0 to 9) on RoboRio/////////////////////////////////////////////////
 	public static final int RIGHT_DRIVE_MOTOR_1 = 0; //Same as 2017
 	public static final int RIGHT_DRIVE_MOTOR_2 = 1; //Same as 2017
-	public static final int LEFT_DRIVE_MOTOR_1 = 2; //Same as 2017
-	public static final int LEFT_DRIVE_MOTOR_2 = 3; //Same as 2017
+	public static final int RIGHT_DRIVE_MOTOR_3 = 2; //NEW: HOW TO INTEGRATE
+	public static final int LEFT_DRIVE_MOTOR_1 = 3; //Same as 2017
+	public static final int LEFT_DRIVE_MOTOR_2 = 4; //Same as 2017
+	public static final int LEFT_DRIVE_MOTOR_3 = 5; //NEW: HOW TO INTEGRATE
 	
-	public static final int LIFT_MOTOR_1 = 4; //2017 ball intake
-	public static final int LIFT_MOTOR_2 = 5; //2017 conveyor
-	public static final int LIFT_MOTOR_3 = 6; //2017 agitator
+	public static final int LIFT_MOTOR_1 = 6; //2017 ball intake
+	public static final int LIFT_MOTOR_2 = 7; //2017 conveyor
+	//public static final int LIFT_MOTOR_3 = 6; //2017 agitator
 	
-	public static final int CUBE_INTAKE_MOTOR_LEFT = 7; //2017 gear intake
-	public static final int CUBE_INTAKE_MOTOR_RIGHT = 8; //PWM 19 on board //2017 spare
+	public static final int CUBE_INTAKE_MOTOR_LEFT = 8; //2017 gear intake
+	public static final int CUBE_INTAKE_MOTOR_RIGHT = 9; //PWM 19 on board //2017 spare
 	
 	//public static final int CUBE_INTAKE_PIVOT_MOTOR = 9;
 	
@@ -177,8 +179,10 @@ public class RobotMap {
 	// TODO check if the reverse values match the physical robot
 	public static final boolean DT_REVERSE_LEFT1 = false; //false
 	public static final boolean DT_REVERSE_LEFT2 = false; //false
+	public static final boolean DT_REVERSE_LEFT3 = false; //GUESS 2019
 	public static final boolean DT_REVERSE_RIGHT1 = true; //true
 	public static final boolean DT_REVERSE_RIGHT2 = true; //true
+	public static final boolean DT_REVERSE_RIGHT3 = true; //GUESS 2019
 	
 	private static final int DRIVE_PULSE_PER_ROTATION = 256; // encoder ticks per rotation
 	// TODO find ratio
