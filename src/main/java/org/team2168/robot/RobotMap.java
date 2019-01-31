@@ -87,8 +87,8 @@ public class RobotMap {
 	//Solenoid Channels//////////////////////////////////////////
 
 	//Double Soldenoids PCM ID = 0
-	public final static int DRIVETRAIN_LOW_GEAR_PCM = 0;
-	public final static int DRIVETRAIN_HIGH_GEAR_PCM = 1;
+	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
+	public final static int STINGERS_ENGAGED_PCM = 1;
 	public static final int CUBE_INTAKE_GRIPPER_EXTENDED_PCM = 4;
 	public static final int CUBE_INTAKE_GRIPPER_RETRACTED_PCM = 5;
 	public static final int CUBE_INATKE_PIVOT_PISTON_EXTEND = 6;
