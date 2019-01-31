@@ -7,6 +7,7 @@
 
 package org.team2168.robot;
 
+import org.team2168.subsystems.Drivetrain;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -26,6 +27,11 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  //Operator Interface
+  public static OI oi;
+
+  //Subsystems
+  public static Drivetrain drivetrain;
 
   //PDP Instance
   public static PowerDistribution pdp;
@@ -39,9 +45,16 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    
+    //Instantiate the subsystems
+    drivetrain = Drivetrain.getInstance();
+
 
     pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
     pdp.startThread();
+
+    //Start Operator Interface
+		oi = OI.getInstance();
     
     System.out.println("Robot Initialization Complete!!");
   }

@@ -5,10 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.robot.subsystems;
+package org.team2168.subsystems;
+
+import javax.swing.text.DefaultStyledDocument.ElementSpec;
 
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
+import org.team2168.PID.sensors.IMU;
 import org.team2168.robot.RobotMap;
 import org.team2168.robot.Robot;
 
@@ -42,6 +45,8 @@ public class Drivetrain extends Subsystem {
 	  public volatile double _rightMotor1Voltage;
     public volatile double _rightMotor2Voltage;
     public volatile double _rightMotor3Voltage;
+
+    public IMU imu;
 
 
     private static Drivetrain _instance = null;
@@ -82,7 +87,9 @@ public class Drivetrain extends Subsystem {
 				RobotMap.DRIVE_ENCODING_TYPE,
 				RobotMap.DRIVE_SPEED_RETURN_TYPE, 
 				RobotMap.DRIVE_POS_RETURN_TYPE, 
-				RobotMap.DRIVE_AVG_ENCODER_VAL);
+        RobotMap.DRIVE_AVG_ENCODER_VAL);
+        
+        imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
 
     }
 
@@ -286,6 +293,14 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * call to start an active calibration sequence
+     */
+    public void startGyroCalibrating()
+    {
+      _gyroSPI.startCalibrating();;
+    }
+
+    /**
      * 
      * @return true if the gyro has completed its previous calibration sequence
      */
@@ -312,6 +327,7 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * returns total distance traveled by the right side of the drivetrain
      * 
      * @return double in feet of total distance traveled by right encoder
      */
@@ -319,7 +335,214 @@ public class Drivetrain extends Subsystem {
     {
       return _drivetrainRightEncoder.getPos();
     }
+
+    /**
+     * returns total distance traveled by the right side of the drivetrain
+     * 
+     * @return double in feet of total distance traveled by right encoder 
+     */
+    public double getLeftPosition()
+    {
+      return _drivetrainLeftEncoder.getPos();
+    }
+
+    /**
+     * returns total distance traveled by drivetrain
+     * 
+     * @return double in inches of average distance traveled by both encoders
+     */
+    public double getAverageDistance()
+    {
+      return imu.getPos();
+    }
     
+    /**
+     * resets position of right encoder to 0 inches
+     */
+    public void resetRightPosition()
+    {
+      _drivetrainRightEncoder.reset();
+    }
+
+    /**
+     * resets position of left encoder of 0 inches
+     */
+    public void resetLeftPosition()
+    {
+      _drivetrainLeftEncoder.reset();
+    }
+
+    /**
+     * resets position of both encoders to 0 inches
+     */
+    public void resetPosition()
+    {
+      resetLeftPosition();
+      resetRightPosition();
+    }
+
+    // Code from last year that I don't know if we will use, and I can't find the associated classes
+  //   /**
+	//  * Gets the voltage given by the sonar sensor on the Gear Intake.
+	//  * 
+	//  * @return the raw voltage from the gear presence sensor
+	//  */
+	// public double getSonarVoltage() {
+	// 	return DrivetrainSonarSensor.getVoltage();
+	// }
+	
+	// /**
+	//  * Gets the status of the line detector 
+	//  * @return true if line is detected
+	//  */
+	// public boolean getLinedectorStatus() {
+	// 	if(INVERT_LINE_SENSOR) {
+	// 		return !lineDetector.get();
+	// 	} else {
+	// 		return lineDetector.get();
+	// 	}
+  // }
+  
+  /**
+   * returns the last commanded voltage of Left motor 1
+   * 
+   * @return double in volts between 0 and 12
+   */
+  public double getLeftMotor1Voltage()
+  {
+    return _leftMotor1Voltage;
+  }
+
+  /**
+   * returns the last commanded voltage of left motor 2
+   * 
+   * @return double in volts between 0 and 12
+   */
+  public double getLeftMotor2Voltage()
+  {
+    return _leftMotor2Voltage;
+  }
+
+  /**
+   * returns the last commanded voltage of left motor 3
+   * 
+   * @return double in volts between 0 and 12
+   */
+  public double getLeftMotor3Voltage()
+  {
+    return _leftMotor3Voltage;
+  }
+
+  /**
+   * returns the last commanded voltage of right motor 1
+   * 
+   * @return double in volts between 0 and 12
+   */
+  public double getRightMotor1Voltage()
+  {
+    return _rightMotor1Voltage;
+  }
+
+  /**
+   * returns the last commanded voltage of right motor 2
+   * 
+   * @return double in volts between 0 and 12
+   */
+  public double getRightMotor2Voltage()
+  {
+    return _rightMotor2Voltage;
+  }
+
+  /**
+   * returns the last commanded voltage of right motor 3
+   * 
+   * @return double in volts between 0 and 12
+   */
+  public double getRightMotor3Voltage()
+  {
+    return _rightMotor3Voltage;
+  }
+
+  public double getRightEncoderRate()
+  {
+    return _drivetrainRightEncoder.getRate();
+  }
+
+  public double getLeftEncoderRate()
+  {
+    return _drivetrainLeftEncoder.getRate();
+  }
+
+  public double getAverageEncoderRate()
+  {
+    return ((getRightEncoderRate()+ getLeftEncoderRate()) /2);
+  }
+
+  public double PIDVoltageFeedLeftMotor1()
+  {
+    if (getLeftEncoderRate() != 0)
+    {
+      return getLeftMotor1Voltage() / getLeftEncoderRate();
+    }
+    else 
+      return 0.0;
+  }
+
+  public double PIDVoltageFeedLeftMotor2()
+  {
+    if (getLeftEncoderRate() != 0)
+    {
+      return getLeftMotor2Voltage() / getLeftEncoderRate();
+    }
+    else
+      return 0.0;
+  }
+
+  public double PIDVoltageFeedLeftMotor3()
+  {
+    if (getLeftEncoderRate() != 0)
+    {
+      return getLeftMotor3Voltage() / getLeftEncoderRate();
+    }
+    else
+      return 0.0;
+  }
+
+  public double PIDVoltageFeedRightMotor1()
+  {
+    if (getRightEncoderRate() != 0)
+    {
+      return getRightMotor1Voltage() / getRightEncoderRate();
+    }
+    else
+      return 0.0;
+  }
+
+  public double PIDVoltageFeedRightMotor2()
+  {
+    if (getRightEncoderRate() != 0)
+    {
+      return getRightMotor2Voltage() / getRightEncoderRate();
+    }
+    else 
+      return 0.0;
+  }
+
+  public double PIDVoltageFeedRightMotor3()
+  {
+    if (getRightEncoderRate() != 0)
+    {
+      return getRightMotor3Voltage() / getRightEncoderRate();
+    }
+    else
+      return 0.0;
+  }
+  
+
+
+
+
+
 
   @Override
   public void initDefaultCommand() {
