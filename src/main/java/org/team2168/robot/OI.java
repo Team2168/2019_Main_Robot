@@ -8,7 +8,8 @@
 package org.team2168.robot;
 
 import org.team2168.PID.trajectory.OneDimensionalRotation;
-
+import org.team2168.commands.drivetrain.EngageDrivetrain;
+import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -70,8 +71,8 @@ public class OI {
 		/*************************************************************************
 		 *                         Driver Joystick			                       *
 		 *************************************************************************/
-		// driverJoystick.ButtonStart().whenPressed(new ShiftLow());  //add drivetrainshifter
-		// driverJoystick.ButtonA().whenPressed(new ShiftHigh());
+		driverJoystick.ButtonStart().whenPressed(new EngageDrivetrain());  //???? Which command should
+		driverJoystick.ButtonA().whenPressed(new EngageStingers());     //attached to which button
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
 		////////////// Operator Joystick//////////////
