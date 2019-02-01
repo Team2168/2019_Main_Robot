@@ -140,7 +140,7 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ### Cargo Intake/Claw (Jean-Carlos)
 - 1x VictorSP motor controllers
 ..- Positive values move cube inwards / Negative values move cube outwards
-- 1x Double Solenoid valve to punch ball NOTE: Do we need to punch ball
+- 1x Double Solenoid valve to punch ball
 ..- Koff is intake open / Kon is intake closed
 - 1x SHARP IR sensor to detect the presence of a cargo
 
@@ -173,7 +173,6 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - 2x AveragePot for position
 
 ### Stinger (Kaleb)
-- 2x Victor SP for winch
 - 2x averagePot for positon
 - 2x hall effects for retracted detection
 
