@@ -102,3 +102,27 @@ Powers the robot's movement, controlling speed and direction of travel. The moto
 | External | Drivetrain (D) | _drivetrainShifter | Stingers, DrivetrainStingerShifter | during endgame the motor power is transferred from the drivetrain to the stingers and then back again using the DrivetrainStingerShifter  |
 
 <img src="http://yuml.me/diagram/scruffy/class/[Drivetrain|-PWMSpeedController _leftMotor1;-PWMSpeedController _leftMotor2;-PWMSpeedController _leftMotor3;-PWMSpeedController _rightMotor1; -PWMSpeedController _rightMotor2;-PWMSpeedController _rightMotor3;-ADXRS453 Gyro _gyroSPI;-AverageEncoder _drivetrainLeftEncoder;-AverageEncoder _drivetrainRightEncoder; +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage; +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |-Drivetrain();+getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed);+driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed, double rightSpeed); +tankDrive(double leftSpeed, double rightSpeed); +getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated(); +isGyroCalibrating; +stopGyroCalibrating(); +getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition(); +getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
+
+
+### DrivetrainStingerShifter (DSS)
+Serves dual function of climbing to 3rd level on endgame and intaking cargo during match. This system will need to work in tandem with the stingers in order to lift the robothorizontally onto the 3rd level.
+
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| DSS01 | private | DoubleSolenoid | _drivetrainShifter | Changes gear engaging or disengaging the drivetrain and the stingers |
+| DSS02 | private | DrivetrainStingerShifter | _instance | object designed to create a singleton object of the DrivetrainStingerShifter |
+
+
+#### Requirements: Interlocks, Functionality, or External
+**Interlocks** represent scenarios where the robot may be capable of harming itself by its own subsystem action or by the action of another subsystem (e.g. Intake may not lift higher than the crossbar of the lift when it is rotated towards the back of the robot).<br>
+**Functionality** is a capability the subsystem needs to have (e.g. The intake shall hold the cargo in place until it is commanded to shoot or drop the cargo).<br>
+**External** represent scenarios when a subsystem will need to collaborate with or consider another subsystem for a particular action (e.g. Stingers shall lower at the same rate as MonkeyBars to horizontally lift the robot to the third stage).<br>
+
+| Requirement Type | Subsystem | Component | Interfaces with | Description |
+|------------------|-----------|-----------|-----------------|-------------|
+| Command | DrivetrainStingerShifter(DSS): EngageDrivetrain | _drivetrainShifter | Drivetrain (D), Stingers (S) | engages the drivetrain and places the stingers in neutral |
+| Command | DrivetrainStingerShifter(DSS): EngageStingers | _drivetrainShifter | Drivetrain (D), Stingers (S) | engages the stingers and places the drivetrain in neutral |
+| Warning | DrivetrainShifterStinger | _drivetrainShifter | Drivetrain (D) | Make sure drivetrain is engaged at the beginning of the match |
+| Functionality + External | DrivetrainStingerShifter (DSS) | _drivetrainShifter  | Drivetrain (D), Stingers (S) | During end game, the shifter will have to engage the stingers to raise the robot, and then re-engage the drivetrain to pull the chassis onto the 3rd stage of the HAB  |
+
+<img src="http://yuml.me/diagram/scruffy/class/[MonkeyBar|-DoubleSolenoid _drivetrainShifter;-DrivetrainStingerShifter _instance |+DrivetrainStingerShifter(); +getInstance(); +engageDrivetrain(); +engageStingers(); +isDrivetrainEngaged(); +isStingerEngaged(); +initDefaultCommand()]" >
