@@ -130,7 +130,7 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - use a digital input to control practice bot
 - use a digital input to control if CAN or PWM 
 
-### Plunger Arm Pivot *Unassigned*
+### Plunger Arm Pivot (Alyssa)
 - 1x Victor SP motor controller
 - 1x Double Solenoid for brake
 - 1x AveragePot for position feedback
@@ -147,7 +147,6 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ..- Kforward is extended, Kreverse is retract
 - 1x Double Solenoid to extend/retract the plunger
 ..- Kforward is hatch engaged, Kreverse is hatch disengaged
-- 1 AveragePot for position feedback
 - 1x SHARP IR sensor to detect the presence of a hatch
 
 ### Lift(Nathan)
