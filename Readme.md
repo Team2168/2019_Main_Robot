@@ -34,7 +34,7 @@ https://www.youtube.com/playlist?list=PLUTJdMwEWueIyWRVWkQE8N3XxPGucEx0Q
 ## Setup git credentials
 1. Open Git bash
 2. Set global name to your name type `git config --global user.name "Kevin Harrilal"
-3. Set global email to your email type `git config --global user.name "Kevin@team2168.org"
+3. Set global email to your email type `git config --global user.email "Kevin@team2168.org"
 
 ## To pull the latest code
 1. In VS Code press `ctrl+shift+p`
