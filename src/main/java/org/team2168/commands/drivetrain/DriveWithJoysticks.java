@@ -56,20 +56,20 @@ public class DriveWithJoysticks extends Command {
 
             //reset controller 
                 Robot.drivetrain.resetPosition();
-                Robot.drivetrain.imu.reset();
-                Robot.drivetrain.driveTrainPosController.reset();
-                Robot.drivetrain.rotateDriveStraightController.reset();
+                Robot.drivetrain._imu.reset();
+                Robot.drivetrain._drivetrainPosController.reset();
+                Robot.drivetrain._rotateDriveStraightController.reset();
             
             endDistance = Robot.drivetrain.getAverageDistance() + distanceGoal;
             angle = Robot.drivetrain.getHeading();
 
-            Robot.drivetrain.driveTrainPosController.setSetPoint(endDistance);
-            Robot.drivetrain.driveTrainPosController.setMaxPosOutput(speed);
-            Robot.drivetrain.driveTrainPosController.setMaxNegOutput(speed);
-            Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(error);
-            Robot.drivetrain.rotateDriveStraightController.setSetPoint(angle);
+            Robot.drivetrain._drivetrainPosController.setSetPoint(endDistance);
+            Robot.drivetrain._drivetrainPosController.setMaxPosOutput(speed);
+            Robot.drivetrain._drivetrainPosController.setMaxNegOutput(speed);
+            Robot.drivetrain._drivetrainPosController.setAcceptErrorDiff(error);
+            Robot.drivetrain._rotateDriveStraightController.setSetPoint(angle);
 
-            Robot.drivetrain.driveTrainPosController.Enable();
+            Robot.drivetrain._drivetrainPosController.Enable();
 
     default: 
 
@@ -120,7 +120,7 @@ public class DriveWithJoysticks extends Command {
        */
       case 1:
 
-              lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
+              lastRotateOutput = Robot.drivetrain._rotateDriveStraightController.getControlOutput();
               if ((Robot.oi.driverJoystick.getLeftStickRaw_Y() < 0.1) && (Robot.oi.driverJoystick.getLeftStickRaw_Y() > -0.1))
               {
                 Robot.drivetrain.tankDrive(Robot.oi.getGunStyleXValue(), Robot.oi.getGunStyleXValue());
@@ -130,7 +130,7 @@ public class DriveWithJoysticks extends Command {
                 Robot.drivetrain.tankDrive(
                                 (Robot.oi.getGunStyleXValue() + Robot.oi.driverJoystick.getLeftStickRaw_Y()),
                                 (Robot.oi.getGunStyleXValue() - Robot.oi.driverJoystick.getLeftStickRaw_Y()));
-                Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+                Robot.drivetrain._rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
               }
       
       /**
@@ -175,7 +175,7 @@ public class DriveWithJoysticks extends Command {
        * New Gun Style
        */
       case 4:
-              lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
+              lastRotateOutput = Robot.drivetrain._rotateDriveStraightController.getControlOutput();
             
               if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1)
               {
@@ -188,7 +188,7 @@ public class DriveWithJoysticks extends Command {
                 Robot.drivetrain.tankDrive(
                                 Robot.oi.getGunStyleYValue() + Robot.oi.driverJoystick.getX(Hand.kLeft),
                                 Robot.oi.getGunStyleYValue() - Robot.oi.driverJoystick.getX(Hand.kLeft));
-                Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+                Robot.drivetrain._rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
                 
               }
 

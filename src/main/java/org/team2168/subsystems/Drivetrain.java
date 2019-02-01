@@ -40,7 +40,7 @@ public class Drivetrain extends Subsystem {
     private AverageEncoder _drivetrainLeftEncoder;
     private AverageEncoder _drivetrainRightEncoder;
 
-
+  //voltage
     public volatile double _leftMotor1Voltage;
     public volatile double _leftMotor2Voltage;
     public volatile double _leftMotor3Voltage;
@@ -48,12 +48,12 @@ public class Drivetrain extends Subsystem {
     public volatile double _rightMotor2Voltage;
     public volatile double _rightMotor3Voltage;
 
-    public IMU imu;
+    public IMU _imu;
 
     // declare position/speed controllers
-	public PIDPosition driveTrainPosController;
-	public PIDPosition rotateController;
-	public PIDPosition rotateDriveStraightController;
+	public PIDPosition _drivetrainPosController;
+//	public PIDPosition _rotateController;
+	public PIDPosition _rotateDriveStraightController;
 
 
     private static Drivetrain _instance = null;
@@ -96,18 +96,18 @@ public class Drivetrain extends Subsystem {
 				RobotMap.DRIVE_POS_RETURN_TYPE, 
         RobotMap.DRIVE_AVG_ENCODER_VAL);
         
-        imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+        _imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
 
-        rotateController = new PIDPosition(
-				"RotationController", 
-				RobotMap.ROTATE_POSITION_P, 
-				RobotMap.ROTATE_POSITION_I,
-				RobotMap.ROTATE_POSITION_D, 
-				_gyroSPI, 
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+        // rotateController = new PIDPosition(
+				// "RotationController", 
+        // RobotMap.ROTATE_POSITION_P, 
+				// RobotMap.ROTATE_POSITION_I,
+				// RobotMap.ROTATE_POSITION_D, 
+				// _gyroSPI, 
+				// RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
 		
-		rotateDriveStraightController = new PIDPosition(
+		_rotateDriveStraightController = new PIDPosition(
 				"RotationStraightController",
 				RobotMap.ROTATE_POSITION_P_Drive_Straight, 
 				RobotMap.ROTATE_POSITION_I_Drive_Straight,
@@ -115,27 +115,27 @@ public class Drivetrain extends Subsystem {
 				_gyroSPI, 
 				RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		driveTrainPosController = new PIDPosition(
-				"driveTrainPosController", 
+		_drivetrainPosController = new PIDPosition(
+				"drivetrainPosController", 
 				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
 				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
 				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
-				imu,
+				_imu,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
         
 
     // add min and max output defaults and set array size
 		
-		driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+		_drivetrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+		//rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+		_rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
 
 
 		// start controller threads
 		
-		driveTrainPosController.startThread();
-		rotateController.startThread();
-		rotateDriveStraightController.startThread();
+		_drivetrainPosController.startThread();
+	//	rotateController.startThread();
+		_rotateDriveStraightController.startThread();
 
 
     }
@@ -400,7 +400,7 @@ public class Drivetrain extends Subsystem {
      */
     public double getAverageDistance()
     {
-      return imu.getPos();
+      return _imu.getPos();
     }
     
     /**

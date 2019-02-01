@@ -62,3 +62,43 @@ Serves dual function of climbing to 3rd level on endgame and intaking cargo duri
 | External | Monkey Bar (MB) |  | Stingers | During end game, Stingers will need to raise the robot at the same rate as the Monkey Bar |
 
 <img src="http://yuml.me/diagram/scruffy/class/[MonkeyBar|-VictorSP _rightRaiseMotor;-VictorSP _leftRaiseMotor;-VictorSP _rightWheelMotor;-VictorSP _leftWheelMotor;-DoubleSolenoid _brake;-DigitalInput _fullyRaised; -AverageEncoder _currPosition |+MonkeyBar();+methodA(String word)]" >
+
+
+### Drivetrain (D)
+Powers the robot's movement, controlling speed and direction of travel. The motors provided to the drivetrain are temporarily rerouted to the stingers during end game. 
+
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| D01 | private | PWMSpeedController | _leftMotor1 | motor controller for wheels on the left side of the chassis |
+| D02 | private | PWMSpeedController | _leftMotor2 | motor controller for wheels on the left side of the chassis |
+| D03 | private | PWMSpeedController | _leftMotor3 | motor controller for wheels onthe left side of the chassis |
+| D04 | private | PWMSpeedController | _rightMotor1 | motor controller for wheels on the right side of the chassis |
+| D05 | private | PWMSpeedController | _rightMotor2 | motor controller for wheels on the right side of the chassis |
+| D06 | private | PWMSpeedController | _rightMotor3 | motor controller for wheels on the right side of the chassis |
+| D07 | private | ADXRS453 Gyro | _gyroSPI | rotational position sensor to determine current heading of the robot |
+| D08 | private | AverageEncoder | _drivetrainLeftEncoder | linear position sensor that determines how far the robot has travelled |
+| D09 | private | AverageEncoder | _drivetrainRightEncoder | linear position sensor that determines how far the robot has travelled |
+| D10 | private | double | _leftMotor1Voltage | gives raw data of voltage sent to the motor controller |
+| D11 | private | double | _leftMotor2Voltage | gives raw data of voltage sent to the motor controller |
+| D12 | private | double | _leftMotor3Voltage | gives raw data of voltage sent to the motor controller |
+| D13 | private | double | _rightMotor1Voltage | gives raw data of voltage sent to the motor controller | 
+| D14 | private | double | _rightMotor2Voltage | gives raw data of voltage sent to the motor controller | 
+| D15 | private | double | _rightMotor3Voltage | gives raw data of voltage sent to the motor controller |
+| D16 | public | IMU | _imu | averages encoder values to find average distance travelled |
+| D17 | public | PIDPosition | _drivetrainPosController | helps to control the robot's position (ie how far it drives), esp during autos. Uses PID |
+| D18 | public | PIDPosition | _rotateDriveStraightController | helps to stabilize the robot's heading when using the Gun Style controller or during autos |
+| D19 | private | Drivetrain | _instance | object designed to create a singleton object of the Drivetrain
+
+#### Requirements: Interlocks, Functionality, or External
+**Interlocks** represent scenarios where the robot may be capable of harming itself by its own subsystem action or by the action of another subsystem (e.g. Intake may not lift higher than the crossbar of the lift when it is rotated towards the back of the robot).<br>
+**Functionality** is a capability the subsystem needs to have (e.g. The intake shall hold the cargo in place until it is commanded to shoot or drop the cargo).<br>
+**External** represent scenarios when a subsystem will need to collaborate with or consider another subsystem for a particular action (e.g. Stingers shall lower at the same rate as MonkeyBars to horizontally lift the robot to the third stage).<br>
+
+| Requirement Type | Subsystem | Component | Interfaces with | Description |
+|------------------|-----------|-----------|-----------------|-------------|
+| Interlock | Drivetrain (D) |  | Lift (L) | the max drivetrain speed must be reduced when the lift is above a certain height |
+| Command | Drivetrain:DriveWithJoysticks | _leftMotor1, _leftMotor2, _leftMotor3, _rightMotor1, _rightMotor2, _rightMotor3, _gyroSPI, _imu, _drivetrainPosController, _rotateDriveStraightController,  | Drivetrain (D) | Gives control of the drivetrain with a joystick using varying control styles |
+| Warning | Monkey Bar (MB) |  | Monkey Bar (MB) | Consider raising when not actively intaking |
+| External | Drivetrain (D) | _drivetrainShifter | Stingers, DrivetrainStingerShifter | during endgame the motor power is transferred from the drivetrain to the stingers and then back again using the DrivetrainStingerShifter  |
+
+<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain|-PWMSpeedController _leftMotor1;-PWMSpeedController _leftMotor2;-PWMSpeedController _leftMotor3;-PWMSpeedController _rightMotor1; -PWMSpeedController _rightMotor2;-PWMSpeedController _rightMotor3;-ADXRS453 Gyro _gyroSPI;-AverageEncoder _drivetrainLeftEncoder;-AverageEncoder _drivetrainRightEncoder; +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage; +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |-Drivetrain();+getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed);+driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed, double rightSpeed); +tankDrive(double leftSpeed, double rightSpeed); +getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated(); +isGyroCalibrating; +stopGyroCalibrating(); +getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition(); +getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
