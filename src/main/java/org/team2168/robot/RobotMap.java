@@ -97,24 +97,18 @@ public class RobotMap {
 
 	
 	//Double Soldenoids PCM ID = 1
-	public static final int LIFT_RACHET_ENGAGE_PCM = 0;
-	public static final int LIFT_RACHET_DISENGAGE_PCM = 1;
-	public static final int LIFT_BRAKE_ENGAGE_PCM = 3;
-	public static final int LIFT_BRAKE_DISENGAGE_PCM = 2;
-	public static final int LIFT_HIGH_GEAR_PCM = 4;
-	public static final int LIFT_LOW_GEAR_PCM = 5;
+	public static final int PLUNGER_EXTEND_PCM = 4;
+	public static final int PLUNGER_RETRACT_PCM = 5;
+	public static final int PLUNGER_ENGAGE_PCM = 6;
+	public static final int PLUNGER_DISENGAGE_PCM = 7;
+
 	
 	
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
-	public static final int LIFT_POSITION_POT = 0;
-	public static final int CUBE_INTAKE_IR_SENSOR1 = 1;
-	public static final int DRIVETRAIN_SONAR_SENSOR = 2;
-	public static final int CUBE_INTAKE_IR_SENSOR2 = 3;
-	public static final int PRESSURE_SENSOR = 4;
-	
+	public static final int HATCH__INTAKE_IR_THRESHOLD = 1;
 
 	// Channels 4-7 on MXP
 
