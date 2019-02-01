@@ -132,21 +132,23 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 
 ### Plunger Arm Pivot (Alyssa)
 - 1x Victor SP motor controller
+- 1x AveragePot for position 
+
+### Plunger Arm Hard Stop (Alyssa)
 - 1x Double Solenoid for brake
-- 1x AveragePot for position feedback
 
 ### Cargo Intake/Claw (Jean-Carlos)
-- 2x VictorSP motor controllers
+- 1x VictorSP motor controllers
 ..- Positive values move cube inwards / Negative values move cube outwards
-- 1x Double Solenoid valve to punch ball
+- 1x Double Solenoid valve to punch ball NOTE: Do we need to punch ball
 ..- Koff is intake open / Kon is intake closed
 - 1x SHARP IR sensor to detect the presence of a cargo
 
 ### Hatch Plunger (Young Aiden)
 - 1x Double Solenoid to extend/retract the plunger
 ..- Kforward is extended, Kreverse is retract
-- 1x Double Solenoid to extend/retract the plunger
-..- Kforward is hatch engaged, Kreverse is hatch disengaged
+- 1x Double Solenoid to extend/retract the fingers
+..- Kforward is fingers engaged, Kreverse is fingers disengaged
 - 1x SHARP IR sensor to detect the presence of a hatch
 
 ### Lift(Nathan)
@@ -154,16 +156,18 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ..- Positive values move upwards / Negative values move down
 ..- On 30A fuses on the PDP
 - 2x hall effect sensors (discrete inputs) for fully raised & fully lowered position indications 
-- 1x pneumatic Double Solenoid for brake
-..- KForward is high speed / KReverse is low speed
 - 1x Encoder/10 turn potentiometer for lift position
+
+### Lift Hard Stop (Nathan)
+- 1x pneumatic Double Solenoid for brake
+..- KForward is brake enable / KReverse is disable
 
 ### Floor hatch mechanism (Conor)
 - 1x Double Solenoid to rotate up and down the mechanism
 - 1x Victor SP for the wheels
 - 2x hall effect digital IO for Up/Down position
 
-### Moneky Bar (Liam)
+### Monkey Bar (Liam)
 - 2x Victor SP for Motor wheels
 - 2x Victor SP for Rotation (in opposite directions maybe)
 - 2x AveragePot for position
