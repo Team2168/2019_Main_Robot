@@ -9,9 +9,11 @@ package org.team2168.subsystems;
 
 import javax.swing.text.DefaultStyledDocument.ElementSpec;
 
+import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
+import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.robot.RobotMap;
 import org.team2168.robot.Robot;
 
@@ -47,6 +49,11 @@ public class Drivetrain extends Subsystem {
     public volatile double _rightMotor3Voltage;
 
     public IMU imu;
+
+    // declare position/speed controllers
+	public PIDPosition driveTrainPosController;
+	public PIDPosition rotateController;
+	public PIDPosition rotateDriveStraightController;
 
 
     private static Drivetrain _instance = null;
@@ -90,6 +97,46 @@ public class Drivetrain extends Subsystem {
         RobotMap.DRIVE_AVG_ENCODER_VAL);
         
         imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+
+        rotateController = new PIDPosition(
+				"RotationController", 
+				RobotMap.ROTATE_POSITION_P, 
+				RobotMap.ROTATE_POSITION_I,
+				RobotMap.ROTATE_POSITION_D, 
+				_gyroSPI, 
+				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
+		
+		rotateDriveStraightController = new PIDPosition(
+				"RotationStraightController",
+				RobotMap.ROTATE_POSITION_P_Drive_Straight, 
+				RobotMap.ROTATE_POSITION_I_Drive_Straight,
+				RobotMap.ROTATE_POSITION_D_Drive_Straight, 
+				_gyroSPI, 
+				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
+		driveTrainPosController = new PIDPosition(
+				"driveTrainPosController", 
+				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
+				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
+				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
+				imu,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+        
+
+    // add min and max output defaults and set array size
+		
+		driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+		rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+		rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+
+
+		// start controller threads
+		
+		driveTrainPosController.startThread();
+		rotateController.startThread();
+		rotateDriveStraightController.startThread();
+
 
     }
 
@@ -548,5 +595,6 @@ public class Drivetrain extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new DriveWithJoysticks(0));
   }
 }
