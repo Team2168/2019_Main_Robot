@@ -145,5 +145,11 @@ public class OI {
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return operatorJoystick.getRightStickRaw_X();
 	}
+
+	public static double getDrivePlungerArmPivotJoystickValue()
+	{
+		//TODO actually figure out which stick and axis will connect
+		return operatorJoystick.getRightStickRaw_Y();
+	}
 }    
     

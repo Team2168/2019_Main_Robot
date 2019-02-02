@@ -33,7 +33,7 @@ public class PlungerArmHardStop extends Subsystem {
 	 * 
 	 */
 
-	public static PlungerArmHardStop GetInstance() {
+	public static PlungerArmHardStop getInstance() {
 		if (_instance == null)
 			_instance = new PlungerArmHardStop();
 		return _instance;
@@ -53,6 +53,19 @@ public class PlungerArmHardStop extends Subsystem {
   public void disablePlungerArmBrake()
   {
     _plungerArmBrake.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  /**
+   * @return true if last commanded shift was to engagePlungerArmBrake
+   */
+  public boolean isEnabledPlungerArmBrake()
+  {
+    return _plungerArmBrake.get() == DoubleSolenoid.Value.kForward;
+  }
+
+  public boolean isDisabledPlungerArmBrake()
+  {
+    return _plungerArmBrake.get() == DoubleSolenoid.Value.kReverse; 
   }
 
   @Override

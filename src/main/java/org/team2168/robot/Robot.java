@@ -9,6 +9,8 @@ package org.team2168.robot;
 
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
+import org.team2168.subsystems.PlungerArmHardStop;
+import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -41,6 +43,8 @@ public class Robot extends TimedRobot {
   //Subsystems
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
+  public static PlungerArmPivot plungerArmPivot;
+  public static PlungerArmHardStop plungerArmHardStop;
 
   //PDP Instance
   public static PowerDistribution pdp;
@@ -65,7 +69,8 @@ public class Robot extends TimedRobot {
     //Instantiate the subsystems
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
-
+    plungerArmPivot = PlungerArmPivot.getInstance();
+    plungerArmHardStop = PlungerArmHardStop.getInstance();
 
     pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
     pdp.startThread();

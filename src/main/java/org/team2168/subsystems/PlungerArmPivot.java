@@ -51,7 +51,7 @@ public class PlungerArmPivot extends Subsystem {
 	 * 
 	 */
 
-	public static PlungerArmPivot GetInstance() {
+	public static PlungerArmPivot getInstance() {
 		if (_instance == null)
 			_instance = new PlungerArmPivot();
 		return _instance;
