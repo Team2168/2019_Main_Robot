@@ -109,6 +109,9 @@ public class RobotMap {
 	public static final int FLIPPY_FLOOPED = 3;
 	public static final int FLIPPER_FLUPED = 2;//Forklift
 
+	public static final int PLUNGER_ARM_BREAK_EXTENDED_PCM = 4; // TODO check ports
+	public static final int PLUNGER_ARM_BREAK_RETRACTED_PCM = 5; //these look open but not positive
+
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int LIFT_RACHET_ENGAGE_PCM = 0;
@@ -299,17 +302,17 @@ public class RobotMap {
 	 *************************************************************************/
 	 /////TODO set these values
 	public static final double PIVOT_POT_VOLTAGE_0 = 0;
-	public static final double PIVOT_POT_VOLTAGE_MAX = 0;
-	public static final double PIVOT_POT_0_HEIGHT_INCHES = 0;
-	public static final double PIVOT_POT_MAX_HEIGHT_INCHES = 0;
+	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
+	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
+	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
 
 	/////TODO set these values
 	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
-	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 0;
-	public static final double PIVOT_POT_0_HEIGHT_INCHES_PBOT = 0;
-	public static final double PIVOT_POT_MAX_HEIGHT_INCHES_PBOT = 0;
+	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 5;
+	public static final double PIVOT_POT_0_ROTATION_DEGREES_PBOT = 0;
+	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 180;
 
-	public static final int PIVOT_AVG_ENCODER_VAL = 0;
+	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = false; //TODO set
 

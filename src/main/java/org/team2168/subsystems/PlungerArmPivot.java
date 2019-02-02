@@ -34,14 +34,14 @@ public class PlungerArmPivot extends Subsystem {
     if (Robot.isPracticeRobot())
     {
       _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT_PBOT, RobotMap.PIVOT_POT_VOLTAGE_0_PBOT,
-            RobotMap.PIVOT_POT_0_HEIGHT_INCHES_PBOT, RobotMap.PIVOT_POT_VOLTAGE_MAX_PBOT, 
-            RobotMap.PIVOT_POT_MAX_HEIGHT_INCHES_PBOT, RobotMap.PIVOT_AVG_ENCODER_VAL);
+            RobotMap.PIVOT_POT_0_ROTATION_DEGREES_PBOT, RobotMap.PIVOT_POT_VOLTAGE_MAX_PBOT, 
+            RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES_PBOT, RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
     else 
     {
       _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, RobotMap.PIVOT_POT_VOLTAGE_0,
-            RobotMap.PIVOT_POT_0_HEIGHT_INCHES, RobotMap.PIVOT_POT_VOLTAGE_MAX, 
-            RobotMap.PIVOT_POT_MAX_HEIGHT_INCHES, RobotMap.PIVOT_AVG_ENCODER_VAL);
+            RobotMap.PIVOT_POT_0_ROTATION_DEGREES, RobotMap.PIVOT_POT_VOLTAGE_MAX, 
+            RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
   
   }
@@ -84,7 +84,7 @@ public class PlungerArmPivot extends Subsystem {
 
 	/**
 	 * 
-	 * @return pot position in inches ???TODO HOW IS THIS HELPFUL FOR A ROTATING ARM
+	 * @return pot position in degrees from 0 to 180
 	 */
 	public double getPotPos() {
 		return _pivotPot.getPos();
