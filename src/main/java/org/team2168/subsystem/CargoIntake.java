@@ -21,7 +21,7 @@ public class CargoIntake extends Subsystem {
     /**
      * negative value moves cargo outwards?
      */
-    private SpeedController cargoMotor2;
+
     /**
      * the sharp IR Sensor will detect the presence of the cargo or measure the distance from the sensor to the cargo in volts
      */
@@ -34,7 +34,6 @@ public class CargoIntake extends Subsystem {
     
 	public CargoIntake() {
         cargoMotor1 = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR_1);
-        cargoMotor2 = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR_2);
         punchCargoSolenoid = new DoubleSolenoid(RobotMap.CARGO_PUNCH_BALL_EXTENDED_PCM, RobotMap.CARGO_PUNCH_BALL_RETRACTED_PCM);
         sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
     }
@@ -44,25 +43,16 @@ public class CargoIntake extends Subsystem {
         cargoMotor1.set(speed);
     }
 
-    public void driveCargoMotor2(double speed)
-    {
-        cargoMotor2.set(speed);
-    }
 
     //drivecargo is probably useless because why would you want to move
     //cargo both inwards and outwards, but just incase we will write it
-    public void driveCargo(double speed)
-    {
-        driveCargoMotor1(speed);
-        driveCargoMotor2(speed);
-    }
 
-    public void intakeOpen(double speed)
+    public void intakeOpen(double speed)//or i should change it to extend
     {
         punchCargoSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 
-    public void intakeClose(double speed)
+    public void intakeClose(double speed)//or i should change it to retract?
     {
         punchCargoSolenoid.set(DoubleSolenoid.Value.KOn);
     }
