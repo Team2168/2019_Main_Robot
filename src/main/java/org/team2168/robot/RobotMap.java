@@ -64,6 +64,8 @@ public class RobotMap {
 	
 	
 	public static final int PLATFORM_MOTOR = 11; //2017 turret
+
+	public static final int PLUNGER_ARM_PIVOT_MOTOR = 8;
 	
 	
 
@@ -126,6 +128,7 @@ public class RobotMap {
 	public static final int DRIVETRAIN_SONAR_SENSOR = 2;
 	public static final int CUBE_INTAKE_IR_SENSOR2 = 3;
 	public static final int PRESSURE_SENSOR = 4;
+	public static final int PIVOT_POSITION_POT = 7; //TODO set input channel (NOT ON ROBOTMAP whiteboard pictures)
 	
 
 	// Channels 4-7 on MXP
@@ -181,6 +184,7 @@ public class RobotMap {
 	
 	
 	public static final int LIFT_POSITION_POT_PBOT = 0;
+	public static final int PIVOT_POSITION_POT_PBOT = 7; //TODO SET THIS
 	
 	
 	/*************************************************************************
@@ -290,6 +294,25 @@ public class RobotMap {
 	public static final boolean WINCH_MOTOR1_REVERSE = true;
 	public static final boolean WINCH_MOTOR2_REVERSE = true;
 	
+	/*************************************************************************
+	 *                         Plunger Arm Pivot PARAMETERS                   *
+	 *************************************************************************/
+	 /////TODO set these values
+	public static final double PIVOT_POT_VOLTAGE_0 = 0;
+	public static final double PIVOT_POT_VOLTAGE_MAX = 0;
+	public static final double PIVOT_POT_0_HEIGHT_INCHES = 0;
+	public static final double PIVOT_POT_MAX_HEIGHT_INCHES = 0;
+
+	/////TODO set these values
+	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
+	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 0;
+	public static final double PIVOT_POT_0_HEIGHT_INCHES_PBOT = 0;
+	public static final double PIVOT_POT_MAX_HEIGHT_INCHES_PBOT = 0;
+
+	public static final int PIVOT_AVG_ENCODER_VAL = 0;
+
+	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = false; //TODO set
+
 	/*************************************************************************
 	 *                         PDP PARAMETERS                                *
 	 *************************************************************************/
