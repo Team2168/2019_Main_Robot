@@ -18,8 +18,12 @@ import org.team2168.robot.RobotMap;
 import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
  * Add your docs here.
@@ -29,12 +33,12 @@ public class Drivetrain extends Subsystem {
   // here. Call these from Commands.
 
   //Hardware
-    private static PWMSpeedController _leftMotor1;
-    private static PWMSpeedController _leftMotor2;
-    private static PWMSpeedController _leftMotor3;
-    private static PWMSpeedController _rightMotor1;
-    private static PWMSpeedController _rightMotor2; 
-    private static PWMSpeedController _rightMotor3;
+    private static SpeedController _leftMotor1;
+    private static SpeedController _leftMotor2;
+    private static SpeedController _leftMotor3;
+    private static SpeedController _rightMotor1;
+    private static SpeedController _rightMotor2; 
+    private static SpeedController _rightMotor3;
 
     private ADXRS453Gyro _gyroSPI;
     private AverageEncoder _drivetrainLeftEncoder;
@@ -63,12 +67,35 @@ public class Drivetrain extends Subsystem {
      */
     private Drivetrain()
     {
-      _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-      _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-      _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-      _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-      _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-      _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
+      if (Robot.isPracticeRobot())
+      {
+        _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
+        _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
+        _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
+        _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
+        _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
+        _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
+
+      }
+      else if (Robot.isCanDrivetrain())
+      {
+        _leftMotor1 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_MOTOR_1_CAN);
+        _leftMotor2 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_MOTOR_2_CAN);
+        _leftMotor3 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_MOTOR_3_CAN);
+        _rightMotor1 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_MOTOR_1_CAN);
+        _rightMotor2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_MOTOR_2_CAN);
+        _rightMotor3 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_MOTOR_3_CAN);
+      }
+      else 
+      {
+        _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
+        _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
+        _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
+        _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
+        _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
+        _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
+      }
+      
 
       _gyroSPI = new ADXRS453Gyro();
       _gyroSPI.startThread();

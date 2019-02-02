@@ -32,6 +32,7 @@ public class RobotMap {
 	public static final int GUN_STYLE_ENUM = 1;
 	public static final int ARCADE_STYLE_ENUM = 2;
 	public static final int GTA_STYLE_ENUM = 3;
+	public static final int NEW_GUN_STYLE_ENUM = 4;
 
 	// PWM (0 to 9) on RoboRio/////////////////////////////////////////////////
 	public static final int RIGHT_DRIVE_MOTOR_1 = 0; //Same as 2017
@@ -40,6 +41,14 @@ public class RobotMap {
 	public static final int LEFT_DRIVE_MOTOR_1 = 3; //Same as 2017
 	public static final int LEFT_DRIVE_MOTOR_2 = 4; //Same as 2017
 	public static final int LEFT_DRIVE_MOTOR_3 = 5; //NEW: HOW TO INTEGRATE
+
+	// Can PWM Ports
+	public static final int RIGHT_DRIVE_MOTOR_1_CAN = 0; 
+	public static final int RIGHT_DRIVE_MOTOR_2_CAN = 1; 
+	public static final int RIGHT_DRIVE_MOTOR_3_CAN = 2;
+	public static final int LEFT_DRIVE_MOTOR_1_CAN = 3; 
+	public static final int LEFT_DRIVE_MOTOR_2_CAN = 4;
+	public static final int LEFT_DRIVE_MOTOR_3_CAN = 5;
 	
 	public static final int LIFT_MOTOR_1 = 6; //2017 ball intake
 	public static final int LIFT_MOTOR_2 = 7; //2017 conveyor
@@ -79,6 +88,7 @@ public class RobotMap {
 
 	//Channels 10-25 on MXP (PWM and DIO)
 	public static final int PRACTICE_BOT_JUMPER = 24;
+	public static final int CAN_DRIVETRAIN_JUMPER = 25; 
 	public static final int PWM_LIGHTS = 18;
 
 	// PBOT Differences 

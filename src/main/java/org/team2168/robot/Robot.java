@@ -11,6 +11,7 @@ import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.utils.PowerDistribution;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +29,12 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  //Digital Jumper to Identify if this is practice bot or comp bot
+  private static DigitalInput practiceBot;
+
+  //Digital Jumper to Identify if this uses a CAN drivetrain
+  private static DigitalInput canDrivetrain;
+  
   //Operator Interface
   public static OI oi;
 
@@ -52,6 +59,9 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     
+    practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
+    canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
+
     //Instantiate the subsystems
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
@@ -128,6 +138,25 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+  /**
+	 * Returns the status of DIO pin 24
+	 *
+	 * @return true if this is the practice robot
+	 */
+	public static boolean isPracticeRobot() {
+		return !practiceBot.get();
+
+  }
+  
+  /**
+   * Returns the status of DIO pin 25 
+   * 
+   * @return true if this has a CAN drivetrain
+   */
+  public static boolean isCanDrivetrain(){
+		return !canDrivetrain.get();
+	}
 
 
 
