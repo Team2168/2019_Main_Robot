@@ -34,7 +34,7 @@ https://www.youtube.com/playlist?list=PLUTJdMwEWueIyWRVWkQE8N3XxPGucEx0Q
 ## Setup git credentials
 1. Open Git bash
 2. Set global name to your name type `git config --global user.name "Kevin Harrilal"
-3. Set global email to your email type `git config --global user.name "Kevin@team2168.org"
+3. Set global email to your email type `git config --global user.email "Kevin@team2168.org"
 
 ## To pull the latest code
 1. In VS Code press `ctrl+shift+p`
@@ -130,13 +130,15 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 - use a digital input to control practice bot
 - use a digital input to control if CAN or PWM 
 
-### Plunger Arm Pivot *Unassigned*
+### Plunger Arm Pivot (Alyssa)
 - 1x Victor SP motor controller
+- 1x AveragePot for position 
+
+### Plunger Arm Hard Stop (Alyssa)
 - 1x Double Solenoid for brake
-- 1x AveragePot for position feedback
 
 ### Cargo Intake/Claw (Jean-Carlos)
-- 2x VictorSP motor controllers
+- 1x VictorSP motor controllers
 ..- Positive values move cube inwards / Negative values move cube outwards
 - 1x Double Solenoid valve to punch ball
 ..- Koff is intake open / Kon is intake closed
@@ -145,9 +147,8 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ### Hatch Plunger (Young Aiden)
 - 1x Double Solenoid to extend/retract the plunger
 ..- Kforward is extended, Kreverse is retract
-- 1x Double Solenoid to extend/retract the plunger
-..- Kforward is hatch engaged, Kreverse is hatch disengaged
-- 1 AveragePot for position feedback
+- 1x Double Solenoid to extend/retract the fingers
+..- Kforward is fingers engaged, Kreverse is fingers disengaged
 - 1x SHARP IR sensor to detect the presence of a hatch
 
 ### Lift(Nathan)
@@ -155,22 +156,23 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ..- Positive values move upwards / Negative values move down
 ..- On 30A fuses on the PDP
 - 2x hall effect sensors (discrete inputs) for fully raised & fully lowered position indications 
-- 1x pneumatic Double Solenoid for brake
-..- KForward is high speed / KReverse is low speed
 - 1x Encoder/10 turn potentiometer for lift position
+
+### Lift Hard Stop (Nathan)
+- 1x pneumatic Double Solenoid for brake
+..- KForward is brake enable / KReverse is disable
 
 ### Floor hatch mechanism (Conor)
 - 1x Double Solenoid to rotate up and down the mechanism
 - 1x Victor SP for the wheels
 - 2x hall effect digital IO for Up/Down position
 
-### Moneky Bar (Liam)
-- 1 Victor SP for Motor wheels
-- 1 Victor SP for Rotation (in opposite directions maybe)
-- 1 AveragePot for position
+### Monkey Bar (Liam)
+- 2x Victor SP for Motor wheels
+- 2x Victor SP for Rotation (in opposite directions maybe)
+- 2x AveragePot for position
 
 ### Stinger (Kaleb)
-- 2x Victor SP for winch
 - 2x averagePot for positon
 - 2x hall effects for retracted detection
 
@@ -182,7 +184,5 @@ Our repository and workflow loosely follows the gitflow workflow. This workflow 
 ## Controls (Old Aiden)
 - TBD
 
-
-
-
-
+## Variable Naming Conventions
+- _*** (e.g. _currentPosition) : For member variables lead the name with _ character
