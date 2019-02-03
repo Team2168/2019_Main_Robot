@@ -42,23 +42,23 @@ public class lift extends Subsystem {
   /**
    * a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the minimum height
    */
-  private DigitalInput liftFullyDown;
+  private static DigitalInput liftFullyDown;
   /**
    * a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the maximum height
    */
-  private DigitalInput liftFullyUp;
+  private static DigitalInput liftFullyUp;
   /**
    * tracks the position of the lift
    */
-  private AnalogPotentiometer liftPosition;
+  private static AnalogPotentiometer liftPosition;
   /**
    * a variable which surns true if either a hall effect sensor or potentiometer reports true or at the maximum height
    */
-  private boolean _liftImmovable;
+  private static boolean _liftImmovable;
  
-  private boolean _solenoidPos;
+  private static boolean _solenoidPos;
 
-  private double _liftMove;
+  private static double _liftMove;
   //default constructors
   private lift(){
     liftMotor1=new VictorSP(RobotMap.LIFT_MOTOR_1);
@@ -73,40 +73,113 @@ public class lift extends Subsystem {
 
   }
 
+private static void driveLiftMotor1(double _liftSpeed){
+    liftMotor1.set(_liftSpeed);
+  }
 
-private void driveLift (double _liftSpeed){
 
-liftMotor1.set(_liftSpeed);
-liftMotor2.set(_liftSpeed);
 
-}
+private static void driveLiftMotor2(double _liftSpeed){
+    liftMotor1.set(_liftSpeed);
+  }
 
-public void _getLiftPosition() {
-  if (liftFullyDown.get()==true||liftFullyUp.get()==true||liftPosition.get()>=RobotMap.LIFT_POT_VOLTAGE_MAX||liftPosition.get()>=RobotMap.LIFT_POT_0_HEIGHT_INCHES|| liftDSolenoid.get() == Value.kForward) {
-    _liftImmovable=true;
+
+
+private static void baseDriveLift (double _liftSpeed){
+    liftHardStop.extendSolenoid();
+    driveLiftMotor1(_liftSpeed);
+    driveLiftMotor2(_liftSpeed);
+    liftHardStop.contractSolenoid();
+  }
+
+
+
+private static boolean isLiftFullyDownHES(){
+    boolean _liftFullyDown;
+    if (liftFullyDown.get()==true){
+      _liftFullyDown=true;
+  }
+    else{
+      _liftFullyDown=false;
+    }
+    return _liftFullyDown;
+  }
+
+
+
+private static boolean isLiftFullyUpHES(){
+  boolean _liftFullyUpHES;
+  if(liftFullyUp.get()==true){
+    _liftFullyUpHES=true;
   }
   else{
-    _liftImmovable=false;
+    _liftFullyUpHES=false;
   }
+  return _liftFullyUpHES;
+}
+
+private static boolean isliftMaxPot(){
+  boolean _liftMaxPot;
+  if (liftPosition.get()==RobotMap.LIFT_POT_VOLTAGE_MAX){
+    _liftMaxPot=true;
+  }
+  else{
+    _liftMaxPot=false;
+  }
+  return _liftMaxPot;
+}
+
+private static boolean isliftMinPot(){
+  boolean _liftMinPot;
+  if (liftPosition.get()==RobotMap.LIFT_DOWN_MIN_VOLTAGE){
+    _liftMinPot=true;
+  }
+  else{
+    _liftMinPot=false;
+  }
+  return _liftMinPot;
+}
+
+private static boolean liftAtMax(){
+  boolean _liftAtMax;
+  if(isLiftFullyUpHES() == true || isliftMaxPot() == true) {
+    _liftAtMax=true;
+  }
+  else{
+    _liftAtMax=false;
+  }
+  return _liftAtMax;
+}
+
+private static boolean liftAtMin(){
+  boolean _liftAtMin; 
+  if(isLiftFullyDownHES()==true||isliftMinPot()==true){
+    _liftAtMin=true;
+  }
+  else{
+    _liftAtMin=false;
+  }
+  return _liftAtMin;
 }
 
 
-  public void driveLift(){
-    _getLiftPosition();
-    if (_solenoidPos==false){
-      if (_liftImmovable=false){
-        driveLift();
-      }
-      else{
-        if (_liftMove!=Math.abs(_liftMove)){
-          driveLift();
-        }
-      }
+public static void driveLift(double _liftSpeed){
+if(liftAtMax()==false){
+  if(liftAtMin()==false){
+    baseDriveLift(_liftSpeed);
     }
     else{
-      liftDSolenoid.set(Value.kReverse);
+      if(_liftSpeed==Math.abs(_liftSpeed)){
+        baseDriveLift(_liftSpeed);
+      }
     }
   }
+  else{
+    if(_liftSpeed!= Math.abs(_liftSpeed)) {
+      baseDriveLift(_liftSpeed);
+    }
+  }
+}
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

@@ -30,7 +30,7 @@ public class liftHardStop extends Subsystem {
     return _solenoidPos;
   }
   
-private void baseExtendSolenoid(){
+private static void baseExtendSolenoid(){
   if(lift.liftDSolenoid.get()!=Value.kForward){
     lift.liftDSolenoid.set(Value.kForward);
   }
@@ -47,7 +47,11 @@ public static void extendSolenoid(){
 }
 
 public static void contractSolenoid(){
+  if (lift.liftMotor1.get()==0.0 && lift.liftMotor2.get()==0.0){
+    baseContractSolenoid();
 
+
+    }
 }
 
   @Override
