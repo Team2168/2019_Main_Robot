@@ -22,11 +22,11 @@ public class PlungerArmPivot extends Subsystem {
   // here. Call these from Commands.
 
   //hardware
-  public static VictorSP _plungerArmPivotMotor; 
-  public static AveragePotentiometer _pivotPot;
+  private static VictorSP _plungerArmPivotMotor; 
+  private static AveragePotentiometer _pivotPot;
 
   public volatile double _plungerArmPivotVoltage;
-  public static PlungerArmPivot _instance;
+  private static PlungerArmPivot _instance;
 
   private PlungerArmPivot()
   {
