@@ -69,12 +69,12 @@ Powers the robot's movement, controlling speed and direction of travel. The moto
 
 | ID | Scope | Type | Name | Description |
 |----|-------|------|------|-------------|
-| D01 | private | PWMSpeedController | _leftMotor1 | motor controller for wheels on the left side of the chassis |
-| D02 | private | PWMSpeedController | _leftMotor2 | motor controller for wheels on the left side of the chassis |
-| D03 | private | PWMSpeedController | _leftMotor3 | motor controller for wheels onthe left side of the chassis |
-| D04 | private | PWMSpeedController | _rightMotor1 | motor controller for wheels on the right side of the chassis |
-| D05 | private | PWMSpeedController | _rightMotor2 | motor controller for wheels on the right side of the chassis |
-| D06 | private | PWMSpeedController | _rightMotor3 | motor controller for wheels on the right side of the chassis |
+| D01 | private | SpeedController | _leftMotor1 | motor controller for wheels on the left side of the chassis |
+| D02 | private | SpeedController | _leftMotor2 | motor controller for wheels on the left side of the chassis |
+| D03 | private | SpeedController | _leftMotor3 | motor controller for wheels onthe left side of the chassis |
+| D04 | private | SpeedController | _rightMotor1 | motor controller for wheels on the right side of the chassis |
+| D05 | private | SpeedController | _rightMotor2 | motor controller for wheels on the right side of the chassis |
+| D06 | private | SpeedController | _rightMotor3 | motor controller for wheels on the right side of the chassis |
 | D07 | private | ADXRS453 Gyro | _gyroSPI | rotational position sensor to determine current heading of the robot |
 | D08 | private | AverageEncoder | _drivetrainLeftEncoder | linear position sensor that determines how far the robot has travelled |
 | D09 | private | AverageEncoder | _drivetrainRightEncoder | linear position sensor that determines how far the robot has travelled |
@@ -100,9 +100,11 @@ Powers the robot's movement, controlling speed and direction of travel. The moto
 | Command | Drivetrain:DriveWithJoysticks | _leftMotor1, _leftMotor2, _leftMotor3, _rightMotor1, _rightMotor2, _rightMotor3, _gyroSPI, _imu, _drivetrainPosController, _rotateDriveStraightController,  | Drivetrain (D) | Gives control of the drivetrain with a joystick using varying control styles |
 | External | Drivetrain (D) | _drivetrainShifter | Stingers, DrivetrainStingerShifter | during endgame the motor power is transferred from the drivetrain to the stingers and then back again using the DrivetrainStingerShifter  |
 
-<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain|-PWMSpeedController _leftMotor1;-PWMSpeedController _leftMotor2;-PWMSpeedController _leftMotor3;-PWMSpeedController _rightMotor1; -PWMSpeedController _rightMotor2;-PWMSpeedController _rightMotor3;-ADXRS453 Gyro _gyroSPI;-AverageEncoder _drivetrainLeftEncoder;-AverageEncoder _drivetrainRightEncoder |-Drivetrain();+getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed);+driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed, double rightSpeed); +tankDrive(double leftSpeed, double rightSpeed); +getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated(); +isGyroCalibrating; +stopGyroCalibrating()]" >
+<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain|-SpeedController _leftMotor1;-SpeedController _leftMotor2;-SpeedController _leftMotor3;-SpeedController _rightMotor1; -SpeedController _rightMotor2;-SpeedController _rightMotor3 |-Drivetrain(); +getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed);+driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed, double rightSpeed); +tankDrive(double leftSpeed, double rightSpeed) ]" >
 
-<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain (con.) | +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage; +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |+getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition(); +getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
+<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain (con.) |-ADXRS453 Gyro _gyroSPI;-AverageEncoder _drivetrainLeftEncoder;-AverageEncoder _drivetrainRightEncoder; +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage |+getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated(); +isGyroCalibrating; +stopGyroCalibrating(); +getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition()]" >
+
+<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain (con.) |  +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |+getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
 
 
 
@@ -127,4 +129,4 @@ Serves dual function of climbing to 3rd level on endgame and intaking cargo duri
 | Warning | DrivetrainShifterStinger | _drivetrainShifter | Drivetrain (D) | Make sure drivetrain is engaged at the beginning of the match |
 | Functionality + External | DrivetrainStingerShifter (DSS) | _drivetrainShifter  | Drivetrain (D), Stingers (S) | During end game, the shifter will have to engage the stingers to raise the robot, and then re-engage the drivetrain to pull the chassis onto the 3rd stage of the HAB  |
 
-<img src="http://yuml.me/diagram/scruffy/class/[DrivetrainStingerShifter|-DoubleSolenoid _drivetrainShifter;-DrivetrainStingerShifter _instance |+DrivetrainStingerShifter(); +getInstance(); +engageDrivetrain(); +engageStingers(); +isDrivetrainEngaged(); +isStingerEngaged(); +initDefaultCommand()]" >
+<img src="http://yuml.me/diagram/scruffy/class/[DrivetrainStingerShifter|-DoubleSolenoid _drivetrainShifter;-DrivetrainStingerShifter _instance |-DrivetrainStingerShifter(); +getInstance(); +engageDrivetrain(); +engageStingers(); +isDrivetrainEngaged(); +isStingerEngaged(); +initDefaultCommand()]" >
