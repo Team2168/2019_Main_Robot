@@ -8,14 +8,15 @@
 package org.team2168.Commands;
 
 import org.team2168.Subsystems.monkeyBar;
+import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EjectCargo extends Command {
-  public EjectCargo() {
+public class CargoIntake extends Command {
+  public CargoIntake() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.monkeyBar);
+    requires(Robot.monkeybar);
   }
 
   // Called just before this Command runs the first time
@@ -26,6 +27,7 @@ public class EjectCargo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.monkeybar.IntakeFull();
   }
 
   // Make this return true when this Command no longer needs to run execute()

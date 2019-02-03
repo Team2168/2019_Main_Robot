@@ -7,7 +7,7 @@
 
 package org.team2168.robot;
 
-import org.team2168.Subsystems.monkeyBar;
+import org.team2168.Subsystems.MonkeyBar;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  public static monkeyBar monkeyBar = new monkeyBar();
+  public static MonkeyBar monkeybar = new MonkeyBar();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.

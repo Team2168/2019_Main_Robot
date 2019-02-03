@@ -19,7 +19,7 @@ import org.team2168.PID.sensors.AveragePotentiometer;
 
 
 
-public class monkeyBar extends Subsystem 
+public class MonkeyBar extends Subsystem 
 {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -30,11 +30,11 @@ public class monkeyBar extends Subsystem
   private static VictorSP RotateBar2;
 
   
-  private static AveragePotentiometer MonkeyBarRotationCheck1;
-  private static AveragePotentiometer MonkeyBarRotationCheck2;
+  private static AveragePotentiometer monkeyBarRotationCheck1;
+  private static AveragePotentiometer monkeyBarRotationCheck2;
 
   //constructors for monkey bar
-  public monkeyBar() 
+  public MonkeyBar() 
   { 
     MotorIntake1 = new VictorSP(RobotMap.INTAKE_ARM_MOTOR_RIGHT);
     MotorIntake2 = new VictorSP(RobotMap.INTAKE_ARM_MOTOR_LEFT);
@@ -42,12 +42,12 @@ public class monkeyBar extends Subsystem
     RotateBar1 = new VictorSP(RobotMap.ROTATE_ARM_MOTOR_RIGHT);
     RotateBar2 = new VictorSP(RobotMap.ROTATE_ARM_MOTOR_LEFT);
     
-    MonkeyBarRotationCheck1 = new AveragePotentiometer
+    monkeyBarRotationCheck1 = new AveragePotentiometer
     (RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER1, RobotMap.MONKEY_BAR_POT_VOLTAGE_0, 
     RobotMap.MONKEY_BAR_0_ANGLE_DEGREES, RobotMap.MONKEY_BAR_POT_VOLTAGE_MAX, 
     RobotMap.MONKEY_BAR_LIFT_POT_MAX_ROTATION, RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
 
-    MonkeyBarRotationCheck2 = new AveragePotentiometer
+    monkeyBarRotationCheck2 = new AveragePotentiometer
     (RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER2, RobotMap.MONKEY_BAR_POT_VOLTAGE_0, 
     RobotMap.MONKEY_BAR_0_ANGLE_DEGREES, RobotMap.MONKEY_BAR_POT_VOLTAGE_MAX, 
     RobotMap.MONKEY_BAR_LIFT_POT_MAX_ROTATION, RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
@@ -82,13 +82,13 @@ public class monkeyBar extends Subsystem
   
   public boolean CheckFullPosition()
   {
-    MonkeyBarRotationCheck1.getPos();
-    MonkeyBarRotationCheck2.getPos();
+    monkeyBarRotationCheck1.getPos();
+    monkeyBarRotationCheck2.getPos();
 
-    boolean checkPosition1 = MonkeyBarRotationCheck1.getPos() == 
+    boolean checkPosition1 = monkeyBarRotationCheck1.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_MAX;
     
-    boolean checkPosition2 = MonkeyBarRotationCheck2.getPos() == 
+    boolean checkPosition2 = monkeyBarRotationCheck2.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_MAX;
 
     return checkPosition1 && checkPosition2;
@@ -112,13 +112,13 @@ public class monkeyBar extends Subsystem
 
   public boolean CheckZeroPosition()
   {
-    MonkeyBarRotationCheck1.getPos();
-    MonkeyBarRotationCheck2.getPos();
+    monkeyBarRotationCheck1.getPos();
+    monkeyBarRotationCheck2.getPos();
 
-    boolean checkPosition1 = MonkeyBarRotationCheck1.getPos() == 
+    boolean checkPosition1 = monkeyBarRotationCheck1.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_0;
     
-    boolean checkPosition2 = MonkeyBarRotationCheck2.getPos() == 
+    boolean checkPosition2 = monkeyBarRotationCheck2.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_0;
 
     return checkPosition1 && checkPosition2;
