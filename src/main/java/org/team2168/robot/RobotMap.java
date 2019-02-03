@@ -372,7 +372,14 @@ public class RobotMap {
 	public static final String DID_AIDEN_PUSH_IT = "only if Liam said he could"; //so false
 	public static final boolean DID_AIDEN_WRITE_A_PATH = false;
 	
-	
+	/*********************************************************************
+	 * 						Floor Intake Parameters
+	 *//******************************************************************** */
+	public static final int Hatch_Intake_Lower_pcm=2;
+	public static final int Hatch_Intake_Raise_pcm=3;
+	public static final int Hatch_Intake_Belt_CAN=14;
+	public static final int Mechanism_Raise_DIO=7;
+	public static final int Mechanism_Lower_DIO=8;
 	
 	
 }

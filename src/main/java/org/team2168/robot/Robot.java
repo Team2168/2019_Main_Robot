@@ -7,6 +7,8 @@
 
 package org.team2168.robot;
 
+import org.team2168.Subsystems.FloorHatchMechanism;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +25,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+  public static FloorHatchMechanism floorHatchMechanism;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,7 +35,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-
+    floorHatchMechanism = new FloorHatchMechanism();
     System.out.println("Robot Initialization Complete!!");
   }
 
