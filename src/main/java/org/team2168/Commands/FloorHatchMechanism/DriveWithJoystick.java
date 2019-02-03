@@ -7,6 +7,7 @@
 
 package org.team2168.Commands.FloorHatchMechanism;
 
+import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,6 +28,7 @@ public class DriveWithJoystick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.floorHatchMechanism.intakeHatchPanel(OI.getFloorIntakeMechanism());
   }
 
   // Make this return true when this Command no longer needs to run execute()
