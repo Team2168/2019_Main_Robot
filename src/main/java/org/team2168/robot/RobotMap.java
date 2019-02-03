@@ -54,8 +54,11 @@ public class RobotMap {
 	
 	public static final int PLATFORM_MOTOR = 11; //2017 turret
 	
-	
-
+	//Monkey Bar Motors////////////////////////////////////////////////////////
+	public static final int ROTATE_ARM_MOTOR_RIGHT = 20;
+	public static final int ROTATE_ARM_MOTOR_LEFT = 21;
+	public static final int INTAKE_ARM_MOTOR_RIGHT = 22;
+	public static final int INTAKE_ARM_MOTOR_LEFT = 23;
 
     //SPI Channels/////////////////////////////////////////////////////////////
 	public static final int GYRO = 0;
@@ -114,8 +117,8 @@ public class RobotMap {
 	public static final int DRIVETRAIN_SONAR_SENSOR = 2;
 	public static final int CUBE_INTAKE_IR_SENSOR2 = 3;
 	public static final int PRESSURE_SENSOR = 4;
-	
-
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER1 = 5;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER2 = 6;
 	// Channels 4-7 on MXP
 
 	// TODO: Confirm PDP Ports
@@ -269,6 +272,15 @@ public class RobotMap {
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 	
+	/*************************************************************************
+	 *                      Monkey Bar PARAMETERS                            *
+	 *************************************************************************/
+	public static final double MONKEY_BAR_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_LIFT_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_0_ANGLE_DEGREES = 0.0;
+	public static final int MONKEY_BAR_AVG_ENCODER_VAL = 5;
+
 	/*************************************************************************
 	 *                         Winch PARAMETERS                               *
 	 *************************************************************************/
