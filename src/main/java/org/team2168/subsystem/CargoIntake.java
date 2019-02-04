@@ -1,11 +1,13 @@
 package org.team2168.subsystem;
 
+import org.team2168.Commands.DriveCargoIntakeWITHJoystick;
 import org.team2168.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -47,22 +49,29 @@ public class CargoIntake extends Subsystem {
     //drivecargo is probably useless because why would you want to move
     //cargo both inwards and outwards, but just incase we will write it
 
-    public void intakeOpen(double speed)//or i should change it to extend
+    public void intakeOpen()//or i should change it to extend
     {
         punchCargoSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 
-    public void intakeClose(double speed)//or i should change it to retract?
+    public void intakeClose()//or i should change it to retract?
     {
-        punchCargoSolenoid.set(DoubleSolenoid.Value.KOn);
+        punchCargoSolenoid.set(DoubleSolenoid.Value.kReverse);//should be kon but isnt working
     }
 
+    public boolean cargoExtended(){
+        return punchCargoSolenoid.get() == Value.kForward; //inspiration from allysas subsystem
+    }
+
+    public boolean cargoRetracted(){
+        return punchCargoSolenoid.get() == Value.kReverse; //inspiration from allysas subsystem
+    }
     public double getRawIRVoltage()
     {
         return sharpIRSensor.getVoltage();
     }
 
-    public boolean cargoPresence()
+    public boolean cargoPresence()//presence because in the readme it says that it will sense the "presence" of the cargo ;)
     {
         return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
     }
@@ -73,6 +82,6 @@ public class CargoIntake extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new DriveCargoIntakeWITHJoystick());
 	}
 }

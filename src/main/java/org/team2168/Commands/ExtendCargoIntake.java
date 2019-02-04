@@ -1,4 +1,4 @@
-package org.team2168.robot.commands;
+package org.team2168.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team2168.robot.Robot;
@@ -22,13 +22,14 @@ public class ExtendCargoIntake extends Command {
 	@Override
 	protected void execute() {
 
+        Robot.cargointake.intakeOpen(); //shouldnt have double because i dont think you woul dhave double for a piston that extends etc
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
-	}
+		return Robot.cargointake.cargoRetracted()//we want it to be retracted instead of extended because it should retract once its already extended, i think
+;	}
 
 	// Called once after isFinished returns true
 	@Override

@@ -97,8 +97,12 @@ public class OI {
 		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y();
 	}
 
-	public static double getDriveIntakeWheelsJoystickValue() {
+	public static double getDriveIntakeWheelsJoystickValue() {//use the top one for joystick value, make one of ur own
 		return operatorJoystick.getRightStickRaw_Y();
+	}
+
+	public static double getDriveCargoIntakeJoystickValue(){
+		return operatorJoystick.getLeftStickRaw_Y();
 	}
 
 	public static double getDriveIntakePivotJoystickValue() {
