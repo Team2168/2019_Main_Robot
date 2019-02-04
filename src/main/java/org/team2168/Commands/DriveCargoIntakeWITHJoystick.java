@@ -1,6 +1,8 @@
 package org.team2168.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
 
 /**
@@ -19,13 +21,14 @@ public class DriveCargoIntakeWITHJoystick extends Command {
 	@Override
 	protected void initialize() {
 
+		Robot.cargointake.driveCargoMotor1(0);
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.cargointake.driveCargoMotor1(Robot.);
+		Robot.cargointake.driveCargoMotor1(OI.getDriveCargoIntakeJoystickValue());
 
 	}
 
@@ -38,11 +41,13 @@ public class DriveCargoIntakeWITHJoystick extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.cargointake.driveCargoMotor1(0.0);//0.0 because its a double
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }
