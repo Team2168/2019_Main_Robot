@@ -57,7 +57,7 @@ public class OI {
 	/**
 	 * Private constructor for singleton class which instantiates the OI object
 	 */
-	private OI() {
+	OI() {
 		
 	}
 

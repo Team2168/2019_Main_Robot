@@ -7,6 +7,9 @@
 
 package org.team2168.subsystems;
 
+import org.team2168.commands.liftConstant;
+import org.team2168.commands.liftJoystick;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class liftHardStop extends Subsystem {
   private boolean _solenoidPos;
-  private liftHardStop(){
+  public liftHardStop(){
     
   }
   // Put methods for controlling this subsystem
@@ -58,5 +61,7 @@ public static void contractSolenoid(){
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    
+    ;
   }
 }

@@ -6,6 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 package org.team2168.subsystems;
+
+import org.team2168.commands.liftConstant;
+import org.team2168.commands.liftJoystick;
 import org.team2168.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -60,7 +63,7 @@ public class lift extends Subsystem {
 
   private static double _liftMove;
   //default constructors
-  private lift(){
+  public lift(){
     liftMotor1=new VictorSP(RobotMap.LIFT_MOTOR_1);
     liftMotor2=new VictorSP(RobotMap.LIFT_MOTOR_2);
     liftDSolenoid=new DoubleSolenoid(RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
@@ -118,9 +121,11 @@ private static boolean isLiftFullyUpHES(){
   return _liftFullyUpHES;
 }
 
+
+
 private static boolean isliftMaxPot(){
   boolean _liftMaxPot;
-  if (liftPosition.get()==RobotMap.LIFT_POT_VOLTAGE_MAX){
+  if (liftPosition.get()>=RobotMap.LIFT_POT_VOLTAGE_MAX){
     _liftMaxPot=true;
   }
   else{
@@ -131,7 +136,7 @@ private static boolean isliftMaxPot(){
 
 private static boolean isliftMinPot(){
   boolean _liftMinPot;
-  if (liftPosition.get()==RobotMap.LIFT_DOWN_MIN_VOLTAGE){
+  if (liftPosition.get()<=RobotMap.LIFT_DOWN_MIN_VOLTAGE){
     _liftMinPot=true;
   }
   else{
@@ -184,5 +189,7 @@ if(liftAtMax()==false){
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new liftJoystick());
+    setDefaultCommand(new liftConstant());
   }
 }
