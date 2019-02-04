@@ -159,51 +159,50 @@ public class Robot extends TimedRobot {
 	}
 
 
-
   /**
-		 * Get the name of an control style.
-		 * 
-		 * @return the name of the control style.
-		 */
-		public static String getControlStyleName() {
-			String retVal = "";
+   * Get the name of a contron style.
+   * 
+   * @return the name of the control style.
+   */
+	public static String getControlStyleName() {
+    String retVal = "";
 
-			switch (controlStyle) {
-			case 0:
-				retVal = "Tank Drive";
-				break;
-			case 1:
-				retVal = "Gun Style";
-				break;
-			case 2:
-				retVal = "Arcade Drive";
-				break;
-			case 3:
-				retVal = "GTA Drive";
-				break;
-			case 4:
-				retVal = "New Gun Style";
-				break;
-			default:
-				retVal = "Invalid Control Style";
-			}
+    switch (controlStyle) {
+    case 0:
+      retVal = "Tank Drive";
+      break;
+    case 1:
+      retVal = "Gun Style";
+      break;
+    case 2:
+      retVal = "Arcade Drive";
+      break;
+    case 3:
+      retVal = "GTA Drive";
+      break;
+    case 4:
+      retVal = "New Gun Style";
+      break;
+    default:
+      retVal = "Invalid Control Style";
+    }
 
 			return retVal;
 		}
 
   /**
-		 * Adds control styles to the selector
-		 */
-		public void controlStyleSelectInit() {
-			controlStyleChooser = new SendableChooser<>();
-			controlStyleChooser.addOption("Tank Drive", 0);
-			controlStyleChooser.setDefaultOption("Gun Style Controller", 1);
-			controlStyleChooser.addOption("Arcade Drive", 2);
-			controlStyleChooser.addOption("GTA Drive", 3);
-			controlStyleChooser.setDefaultOption("New Gun Style", 4);
-		}
+   * Adds control styles to the selector
+   */
+  public void controlStyleSelectInit() {
+    controlStyleChooser = new SendableChooser<>();
+    controlStyleChooser.addOption("Tank Drive", 0);
+    controlStyleChooser.setDefaultOption("Gun Style Controller", 1);
+    controlStyleChooser.addOption("Arcade Drive", 2);
+    controlStyleChooser.addOption("GTA Drive", 3);
+    controlStyleChooser.setDefaultOption("New Gun Style", 4);
+  }
 
-		public static int getControlStyleInt() {
-			return (int) controlStyleChooser.getSelected();
-		}
+  public static int getControlStyleInt() {
+    return (int) controlStyleChooser.getSelected();
+  }
 }

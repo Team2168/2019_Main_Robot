@@ -37,33 +37,31 @@ public class RobotMap {
 	// PWM (0 to 9) on RoboRio/////////////////////////////////////////////////
 	public static final int RIGHT_DRIVE_MOTOR_1 = 0; //Same as 2017
 	public static final int RIGHT_DRIVE_MOTOR_2 = 1; //Same as 2017
-	public static final int RIGHT_DRIVE_MOTOR_3 = 2; //NEW: HOW TO INTEGRATE
+	public static final int RIGHT_DRIVE_MOTOR_3 = 2; 
 	public static final int LEFT_DRIVE_MOTOR_1 = 3; //Same as 2017
 	public static final int LEFT_DRIVE_MOTOR_2 = 4; //Same as 2017
-	public static final int LEFT_DRIVE_MOTOR_3 = 5; //NEW: HOW TO INTEGRATE
+	public static final int LEFT_DRIVE_MOTOR_3 = 5; 
 
 	// Can PWM Ports
-	public static final int RIGHT_DRIVE_MOTOR_1_CAN = 0; 
-	public static final int RIGHT_DRIVE_MOTOR_2_CAN = 1; 
-	public static final int RIGHT_DRIVE_MOTOR_3_CAN = 2;
-	public static final int LEFT_DRIVE_MOTOR_1_CAN = 3; 
-	public static final int LEFT_DRIVE_MOTOR_2_CAN = 4;
-	public static final int LEFT_DRIVE_MOTOR_3_CAN = 5;
+	public static final int RIGHT_DRIVE_MOTOR_1_CAN = 1; 
+	public static final int RIGHT_DRIVE_MOTOR_2_CAN = 2; 
+	public static final int RIGHT_DRIVE_MOTOR_3_CAN = 3;
+	public static final int LEFT_DRIVE_MOTOR_1_CAN = 4; 
+	public static final int LEFT_DRIVE_MOTOR_2_CAN = 5;
+	public static final int LEFT_DRIVE_MOTOR_3_CAN = 6;
 	
-	public static final int LIFT_MOTOR_1 = 6; //2017 ball intake
-	public static final int LIFT_MOTOR_2 = 7; //2017 conveyor
-	//public static final int LIFT_MOTOR_3 = 6; //2017 agitator
+	public static final int LIFT_MOTOR_1 = 6; 
+	public static final int LIFT_MOTOR_2 = 7; 
 	
-	public static final int CUBE_INTAKE_MOTOR_LEFT = 8; //2017 gear intake
-	public static final int CUBE_INTAKE_MOTOR_RIGHT = 9; //PWM 19 on board //2017 spare
 	
-	//public static final int CUBE_INTAKE_PIVOT_MOTOR = 9;
+	public static final int CUBE_INTAKE_MOTOR_LEFT = 8; 
+	public static final int CUBE_INTAKE_MOTOR_RIGHT = 9; 
 	
 	public static final int WINCH_MOTOR_1 = 9;
 	public static final int WINCH_MOTOR_2 = 19;
 	
 	
-	public static final int PLATFORM_MOTOR = 11; //2017 turret
+	public static final int PLATFORM_MOTOR = 11; 
 	
 	
 
@@ -87,8 +85,8 @@ public class RobotMap {
 
 
 	//Channels 10-25 on MXP (PWM and DIO)
-	public static final int PRACTICE_BOT_JUMPER = 24;
-	public static final int CAN_DRIVETRAIN_JUMPER = 25; 
+	public static final int CAN_DRIVETRAIN_JUMPER = 23;
+	public static final int PRACTICE_BOT_JUMPER = 24; 
 	public static final int PWM_LIGHTS = 18;
 
 	// PBOT Differences 
@@ -99,22 +97,24 @@ public class RobotMap {
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
 	public final static int STINGERS_ENGAGED_PCM = 1;
-	public static final int CUBE_INTAKE_GRIPPER_EXTENDED_PCM = 4;
-	public static final int CUBE_INTAKE_GRIPPER_RETRACTED_PCM = 5;
-	public static final int CUBE_INATKE_PIVOT_PISTON_EXTEND = 6;
-	public static final int CUBE_INTAKE_PIVOT_PISTON_RETRACT = 7;
-	
-	public static final int FLIPPY_FLOOPED = 3;
-	public static final int FLIPPER_FLUPED = 2;//Forklift
-
+	public static final int HATCH_INTAKE_LOWER_PCM = 2;
+	public static final int HATCH_INTAKE_RAISE_PCM = 3;
+	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
+	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
+	public static final int LIFT_BRAKE_ENGAGE_PCM = 6;
+	public static final int LIFE_BRAKE_DISENGAGE = 7;
 	
 	//Double Soldenoids PCM ID = 1
-	public static final int LIFT_RACHET_ENGAGE_PCM = 0;
-	public static final int LIFT_RACHET_DISENGAGE_PCM = 1;
-	public static final int LIFT_BRAKE_ENGAGE_PCM = 3;
-	public static final int LIFT_BRAKE_DISENGAGE_PCM = 2;
-	public static final int LIFT_HIGH_GEAR_PCM = 4;
-	public static final int LIFT_LOW_GEAR_PCM = 5;
+	//0
+	//1
+	public static final int BALL_PUNCH_EXTEND_PCM = 2;
+	public static final int BALL_PUNCH_RETRACT_PCM = 3;
+	public static final int PROBE_EXTEND_PCM = 4;
+	public static final int PROBE_RETRACT_PCM = 5;
+	public static final int PROBE_ENGAGE_PCM = 6;
+	public static final int PROBE_DISENGAGE_PCM = 7;
+
+
 	
 	
 
