@@ -64,63 +64,73 @@ public class MonkeyBar extends Subsystem
    * This program will rotate the monkey arm up and down
    *  
    */  
-  public void IntakeMotor1(double speed)
+  public void driveIntakeMotor1(double speed)
   {
     MotorIntake1.set(speed);
   }
 
-  public void IntakeMotor2(double speed)
+  public void driveIntakeMotor2(double speed)
   {
     MotorIntake2.set(speed);
   }
 
-  public void IntakeFull(double speed) 
+  public void driveIntakeAll(double speed) 
   {
-    IntakeMotor1(speed);
-    IntakeMotor2(speed);
+    driveIntakeMotor1(speed);
+    driveIntakeMotor2(-speed);
   }
   
-  public boolean CheckFullPosition()
+  public boolean checkFullPosition()
   {
     monkeyBarRotationCheck1.getPos();
     monkeyBarRotationCheck2.getPos();
 
-    boolean checkPosition1 = monkeyBarRotationCheck1.getPos() == 
+    boolean checkPositionUp1 = monkeyBarRotationCheck1.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_MAX;
     
-    boolean checkPosition2 = monkeyBarRotationCheck2.getPos() == 
+    boolean checkPositionUp2 = monkeyBarRotationCheck2.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_MAX;
 
-    return checkPosition1 && checkPosition2;
+    return checkPositionUp1 && checkPositionUp2;
   }
 
-  public void BarRotate1(double speed)
+  public void driveBarRotate1(double speed)
   {
     RotateBar1.set(speed);
   }
 
-  public void BarRotate2(double speed)
+  public void driveBarRotate2(double speed)
   {
     RotateBar2.set(speed);
   }
   
-  public void RotateBar(double speed) 
+  public void driveRotateBarMotors(double speed) 
   {
-    BarRotate1(speed);
-    BarRotate2(speed);
+    driveBarRotate1(speed);
+    driveBarRotate2(-speed);
   }
 
-  public boolean CheckZeroPosition()
+  public boolean checkZeroPosition()
   {
     monkeyBarRotationCheck1.getPos();
     monkeyBarRotationCheck2.getPos();
 
-    boolean checkPosition1 = monkeyBarRotationCheck1.getPos() == 
+    boolean checkPositionDown1 = monkeyBarRotationCheck1.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_0;
     
-    boolean checkPosition2 = monkeyBarRotationCheck2.getPos() == 
+    boolean checkPositionDown2 = monkeyBarRotationCheck2.getPos() == 
     RobotMap.MONKEY_BAR_POT_VOLTAGE_0;
 
-    return checkPosition1 && checkPosition2;
+    return checkPositionDown1 && checkPositionDown2;
+  }
+
+  public double checkCurrentPosition1()
+  {
+    return monkeyBarRotationCheck1.getPos();
+  }
+
+  public double checkCurrentPosition2()
+  {
+    return monkeyBarRotationCheck2.getPos();
   }
 }
