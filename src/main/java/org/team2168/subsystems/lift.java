@@ -38,10 +38,7 @@ public class lift extends Subsystem {
    * a motor to raise/lower the lift (2 of 2)
    */
   static VictorSP liftMotor2;
-  /**
-   * a double solenoid with a rubber pad on the end to stop a gear in the lift gearbox to "lock" the lift at the specified position
-   */
-  public static DoubleSolenoid liftDSolenoid;
+
   /**
    * a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the minimum height
    */
@@ -57,22 +54,21 @@ public class lift extends Subsystem {
   /**
    * a variable which surns true if either a hall effect sensor or potentiometer reports true or at the maximum height
    */
-  private static boolean _liftImmovable;
  
-  private static boolean _solenoidPos;
+ 
+
 
   private static double _liftMove;
   //default constructors
   public lift(){
     liftMotor1=new VictorSP(RobotMap.LIFT_MOTOR_1);
     liftMotor2=new VictorSP(RobotMap.LIFT_MOTOR_2);
-    liftDSolenoid=new DoubleSolenoid(RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
     liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
     liftFullyUp=new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
     liftPosition=new AnalogPotentiometer(RobotMap.LIFT_POSITION_POT);
     _liftMove=0.0;
-    _liftImmovable=false;
-    _solenoidPos=false;
+
+ 
 
   }
 

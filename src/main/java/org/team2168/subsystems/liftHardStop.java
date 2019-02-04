@@ -9,22 +9,35 @@ package org.team2168.subsystems;
 
 import org.team2168.commands.liftConstant;
 import org.team2168.commands.liftJoystick;
+import org.team2168.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Add your docs here.
  */
+
+
 public class liftHardStop extends Subsystem {
-  private boolean _solenoidPos;
+
+    /**
+   * a double solenoid with a rubber pad on the end to stop a gear in the lift gearbox to "lock" the lift at the specified position
+   */
+  public static DoubleSolenoid liftDSolenoid;
+
+
+
+  
   public liftHardStop(){
-    
+    liftDSolenoid=new DoubleSolenoid(RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private boolean getSolenoidPosition(){
-    if(lift.liftDSolenoid.get()==Value.kForward){
+    boolean _solenoidPos;
+    if(liftDSolenoid.get()==Value.kForward){
       _solenoidPos=true;
     }
     else{
@@ -34,13 +47,13 @@ public class liftHardStop extends Subsystem {
   }
   
 private static void baseExtendSolenoid(){
-  if(lift.liftDSolenoid.get()!=Value.kForward){
-    lift.liftDSolenoid.set(Value.kForward);
+  if(liftDSolenoid.get()!=Value.kForward){
+    liftDSolenoid.set(Value.kForward);
   }
 }
 private static void baseContractSolenoid(){
-  if(lift.liftDSolenoid.get()!=Value.kReverse){
-    lift.liftDSolenoid.set(Value.kReverse);
+  if(liftDSolenoid.get()!=Value.kReverse){
+    liftDSolenoid.set(Value.kReverse);
   }
 }
 public static void extendSolenoid(){

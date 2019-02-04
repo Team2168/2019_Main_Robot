@@ -70,15 +70,21 @@ Serves dual function of climbing to 3rd level on endgame and intaking cargo duri
 | 10 | Monkey Bar Wheels 2 |  |  |  |  |  |  |  |  |  |  |  |
 | 11 | PENDING |  |  |  |  |  |  |  |  |  |  |  |
 
+
 | ID | Scope | Type | Name | Description |
 |----|-------|------|------|-------------|
-| MB01 | private | VictorSP | _rightRaiseMotor | Range of -25 deg to 90 deg from vertical |
-| MB02 | private | VictorSP | _leftRaiseMotor | Range of -25 deg to 90 deg from vertical |
-| MB03 | private | VictorSP | _leftWheels | Active intake on wheels and drive robot onto third level |
-| MB04 | private | VictorSP | _rightWheels | Active intake on wheels and drive robot onto third level |
-| MB05 | private | DoubleSolenoid | _brake | Break to hold Monkey Bar arms in a fixed position |
-| MB06 | private | DigitalInput | _isFullyRaised | Boolean sensor to indicate if MB is raised fully or not |
-| MB07 | private | AverageEncoder | _currPosition | Rotary position sensor (Potentiometer) to indicate the current position of the MB |
+| | public | VictorSP | liftMotor1 |a motor to raise/lower the lift (1 of 2) |
+| | public | VictorSP| liftMotor2 | a motor to raise/lower the lift (2 of 2) |
+| | private| DigitalInput | liftFullyDown | a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the minimum height |
+| | private | DigitalInput | liftFullyUp | a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the maximum height
+ |
+| | private | AnalogPotientometer | liftPosition | tracks the position of the lift |
+
+liftHardStop
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| | public | DoubleSolenoid | liftDSolenoid | a double solenoid with a rubber pad on the end to stop a gear in the lift gearbox to "lock" the lift at the specified position |
+
 
 #### Requirements: Interlocks, Functionality, or External
 **Interlocks** represent scenarios where the robot may be capable of harming itself by its own subsystem action or by the action of another subsystem (e.g. Intake may not lift higher than the crossbar of the lift when it is rotated towards the back of the robot).<br>
