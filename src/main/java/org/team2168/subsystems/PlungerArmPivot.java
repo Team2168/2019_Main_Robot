@@ -47,15 +47,15 @@ public class PlungerArmPivot extends Subsystem {
   }
 
   /**
-	 * Singleton constructor of the plunger arm pivot
-	 * 
-	 */
+   * Singleton constructor of the plunger arm pivot
+   * 
+   */
 
-	public static PlungerArmPivot getInstance() {
-		if (_instance == null)
-			_instance = new PlungerArmPivot();
-		return _instance;
-	}
+  public static PlungerArmPivot getInstance() {
+    if (_instance == null)
+      _instance = new PlungerArmPivot();
+    return _instance;
+  }
 
   /**
    * Calls plunger arm pivot motor and creates a local variable "speed" Refers to boolean in
@@ -76,21 +76,21 @@ public class PlungerArmPivot extends Subsystem {
     //_plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; //not currently used
   }
 
-	/**
-	 * 
-	 * @return pot position in volts
-	 */
-	public double getRawPot() {
-		return _pivotPot.getRawPos();
-	}
+  /**
+   * 
+   * @return pot position in volts
+   */
+  public double getRawPot() {
+    return _pivotPot.getRawPos();
+  }
 
-	/**
-	 * 
-	 * @return pot position in degrees from 0 to 180
-	 */
-	public double getPotPos() {
-		return _pivotPot.getPos();
-	}
+  /**
+   * 
+   * @return pot position in degrees from 0 to 180
+   */
+  public double getPotPos() {
+    return _pivotPot.getPos();
+  }
 
 
 

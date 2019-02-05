@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
     oi = OI.getInstance();
     
     //Initialize Control Selector Choices
-		controlStyleSelectInit();
+    controlStyleSelectInit();
     
     System.out.println("Robot Initialization Complete!!");
   }
@@ -145,12 +145,12 @@ public class Robot extends TimedRobot {
   }
 
   /**
-	 * Returns the status of DIO pin 24
-	 *
-	 * @return true if this is the practice robot
-	 */
-	public static boolean isPracticeRobot() {
-		return !practiceBot.get();
+   * Returns the status of DIO pin 24
+   *
+   * @return true if this is the practice robot
+   */
+  public static boolean isPracticeRobot() {
+    return !practiceBot.get();
 
   }
   
@@ -160,55 +160,55 @@ public class Robot extends TimedRobot {
    * @return true if this has a CAN drivetrain
    */
   public static boolean isCanDrivetrain(){
-		return !canDrivetrain.get();
-	}
+    return !canDrivetrain.get();
+  }
 
 
 
   /**
-		 * Get the name of an control style.
-		 * 
-		 * @return the name of the control style.
-		 */
-		public static String getControlStyleName() {
-			String retVal = "";
+     * Get the name of an control style.
+     * 
+     * @return the name of the control style.
+     */
+    public static String getControlStyleName() {
+      String retVal = "";
 
-			switch (controlStyle) {
-			case 0:
-				retVal = "Tank Drive";
-				break;
-			case 1:
-				retVal = "Gun Style";
-				break;
-			case 2:
-				retVal = "Arcade Drive";
-				break;
-			case 3:
-				retVal = "GTA Drive";
-				break;
-			case 4:
-				retVal = "New Gun Style";
-				break;
-			default:
-				retVal = "Invalid Control Style";
-			}
+      switch (controlStyle) {
+      case 0:
+        retVal = "Tank Drive";
+        break;
+      case 1:
+        retVal = "Gun Style";
+        break;
+      case 2:
+        retVal = "Arcade Drive";
+        break;
+      case 3:
+        retVal = "GTA Drive";
+        break;
+      case 4:
+        retVal = "New Gun Style";
+        break;
+      default:
+        retVal = "Invalid Control Style";
+      }
 
-			return retVal;
-		}
+      return retVal;
+    }
 
   /**
-		 * Adds control styles to the selector
-		 */
-		public void controlStyleSelectInit() {
-			controlStyleChooser = new SendableChooser<>();
-			controlStyleChooser.addOption("Tank Drive", 0);
-			controlStyleChooser.setDefaultOption("Gun Style Controller", 1);
-			controlStyleChooser.addOption("Arcade Drive", 2);
-			controlStyleChooser.addOption("GTA Drive", 3);
-			controlStyleChooser.setDefaultOption("New Gun Style", 4);
-		}
+     * Adds control styles to the selector
+     */
+    public void controlStyleSelectInit() {
+      controlStyleChooser = new SendableChooser<>();
+      controlStyleChooser.addOption("Tank Drive", 0);
+      controlStyleChooser.setDefaultOption("Gun Style Controller", 1);
+      controlStyleChooser.addOption("Arcade Drive", 2);
+      controlStyleChooser.addOption("GTA Drive", 3);
+      controlStyleChooser.setDefaultOption("New Gun Style", 4);
+    }
 
-		public static int getControlStyleInt() {
-			return (int) controlStyleChooser.getSelected();
-		}
+    public static int getControlStyleInt() {
+      return (int) controlStyleChooser.getSelected();
+    }
 }

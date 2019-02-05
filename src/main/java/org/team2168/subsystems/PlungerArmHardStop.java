@@ -12,14 +12,14 @@ import org.team2168.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
-public class PlungerArmHardStop extends Subsystem {
+  /**
+   * Add your docs here.
+   */
+  public class PlungerArmHardStop extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static DoubleSolenoid _plungerArmBrake;
-  
+
   private static PlungerArmHardStop _instance;
 
   private PlungerArmHardStop()
@@ -29,16 +29,16 @@ public class PlungerArmHardStop extends Subsystem {
   }
 
   /**
-	 * Singleton constructor of the plunger arm pivot
-	 * 
-	 */
+   * Singleton constructor of the plunger arm pivot
+   * 
+   */
 
-	public static PlungerArmHardStop getInstance() {
-		if (_instance == null)
-			_instance = new PlungerArmHardStop();
-		return _instance;
+  public static PlungerArmHardStop getInstance() {
+    if (_instance == null)
+      _instance = new PlungerArmHardStop();
+    return _instance;
   }
-  
+
   /**
    * engages brake to stop the plunger arm 
    */
@@ -73,4 +73,4 @@ public class PlungerArmHardStop extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-}
+  }
