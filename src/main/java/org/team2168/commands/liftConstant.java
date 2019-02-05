@@ -13,6 +13,7 @@ import org.team2168.subsystems.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+
 public class liftConstant extends Command {
   double speed;
   public liftConstant(double _liftSpeed) {
@@ -31,6 +32,7 @@ public class liftConstant extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //this is just a placeholder
     lift.driveLift(speed);
   }
 
