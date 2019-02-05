@@ -213,8 +213,18 @@ public class RobotMap {
 	public static final boolean FORKLIFT_LEFT_REVERSE = false;
 	public static final boolean FORKLIFT_RIGHT_REVERSE = false;
 	
-	
-	
+	/*************************************************************************
+	 *                             STINGER PARAMS                            *
+	 *************************************************************************/
+	public static final int STINGER_MOTOR_1 = 0;
+	public static final int STINGER_MOTOR_2 = 1;
+
+	public static final int STINGER_HALL_1 = 1;
+	public static final int STINGER_HALL_2 = 0;
+
+	public static final int STING_POT_VOLTAGE = 0;
+
+
 	/*************************************************************************
 	 *                         CUBE INTAKE PARAMETERS                        *
 	 *************************************************************************/
