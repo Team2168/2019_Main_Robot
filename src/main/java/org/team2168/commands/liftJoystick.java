@@ -10,27 +10,27 @@ package org.team2168.commands;
 import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
 import org.team2168.robot.RobotMap;
-import org.team2168.subsystems.lift;
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class liftJoystick extends Command {
-  public liftJoystick() {
+public class LiftJoystick extends Command {
+  public LiftJoystick() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.Lift);
+    requires(Robot.lift);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    lift.driveLift(0.0);
+    Lift.driveLift(0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    lift.driveLift(OI.getDriveLiftJoystickValue()*RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+    Lift.driveLift(OI.getDriveLiftJoystickValue()*RobotMap.LIFT_MAX_JOYSTICK_SPEED);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +42,7 @@ public class liftJoystick extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    lift.driveLift(0.0);
+    Lift.driveLift(0.0);
   }
 
   // Called when another command which requires one or more of the same

@@ -7,8 +7,8 @@
 
 package org.team2168.robot;
 
-import org.team2168.subsystems.lift;
-import org.team2168.subsystems.liftHardStop;
+import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.LiftHardStop;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,8 +27,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static OI m_oi;
-  public static lift Lift;
-  public static liftHardStop LiftHardStop;
+  public static Lift lift;
+  public static LiftHardStop LiftHardStop;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -39,8 +39,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     m_oi=new OI();
-    Lift=new lift();
-    LiftHardStop=new liftHardStop();
+    lift=new Lift();
+    LiftHardStop=new LiftHardStop();
     System.out.println("Robot Initialization Complete!!");
   }
 

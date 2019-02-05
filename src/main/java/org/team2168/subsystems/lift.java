@@ -7,8 +7,8 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.liftConstant;
-import org.team2168.commands.liftJoystick;
+import org.team2168.commands.LiftConstant;
+import org.team2168.commands.LiftJoystick;
 import org.team2168.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 1x Encoder/10 turn potentiometer for lift position 
 hall effect sensors are used in tandem with the pot. to stop the lift from going up so it doesn't break the drivetrain
  */
-public class lift extends Subsystem {
+public class Lift extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   /**
@@ -60,7 +60,7 @@ public class lift extends Subsystem {
 
   private static double _liftMove;
   //default constructors
-  public lift(){
+  public Lift(){
     liftMotor1=new VictorSP(RobotMap.LIFT_MOTOR_1);
     liftMotor2=new VictorSP(RobotMap.LIFT_MOTOR_2);
     liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
@@ -85,10 +85,10 @@ private static void driveLiftMotor2(double _liftSpeed){
 
 
 private static void baseDriveLift (double _liftSpeed){
-    liftHardStop.extendSolenoid();
+    LiftHardStop.extendSolenoid();
     driveLiftMotor1(_liftSpeed);
     driveLiftMotor2(_liftSpeed);
-    liftHardStop.contractSolenoid();
+    LiftHardStop.contractSolenoid();
   }
 
 
@@ -185,7 +185,6 @@ if(liftAtMax()==false){
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new liftJoystick());
-    setDefaultCommand(new liftConstant());
+    setDefaultCommand(new LiftJoystick());
   }
 }

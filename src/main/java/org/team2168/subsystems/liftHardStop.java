@@ -7,8 +7,8 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.liftConstant;
-import org.team2168.commands.liftJoystick;
+import org.team2168.commands.LiftConstant;
+import org.team2168.commands.LiftJoystick;
 import org.team2168.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 
 
-public class liftHardStop extends Subsystem {
+public class LiftHardStop extends Subsystem {
 
     /**
    * a double solenoid with a rubber pad on the end to stop a gear in the lift gearbox to "lock" the lift at the specified position
@@ -30,7 +30,7 @@ public class liftHardStop extends Subsystem {
 
 
   
-  public liftHardStop(){
+  public LiftHardStop(){
     liftDSolenoid=new DoubleSolenoid(RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
   }
   // Put methods for controlling this subsystem
@@ -57,13 +57,13 @@ private static void baseContractSolenoid(){
   }
 }
 public static void extendSolenoid(){
-  if (lift.liftMotor1.get()==0.0 && lift.liftMotor2.get()==0.0){
+  if (Lift.liftMotor1.get()==0.0 && Lift.liftMotor2.get()==0.0){
     baseExtendSolenoid();
   }
 }
 
 public static void contractSolenoid(){
-  if (lift.liftMotor1.get()==0.0 && lift.liftMotor2.get()==0.0){
+  if (Lift.liftMotor1.get()==0.0 && Lift.liftMotor2.get()==0.0){
     baseContractSolenoid();
 
 

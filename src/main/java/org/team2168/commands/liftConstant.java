@@ -14,12 +14,14 @@ import org.team2168.subsystems.lift;
 import edu.wpi.first.wpilibj.command.Command;
 
 
-public class liftConstant extends Command {
+public class LiftConstant extends Command {
   double speed;
-  public liftConstant(double _liftSpeed) {
+  
+  public LiftConstant(double _liftSpeed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.Lift);
+    
     speed=_liftSpeed;
   }
 
