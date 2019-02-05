@@ -21,7 +21,7 @@ public class DisengagePlungerArmBrake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.plungerArmHardStop.disablePlungerArmBrake();
+    Robot.plungerArmHardStop.disengage();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,7 @@ public class DisengagePlungerArmBrake extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.plungerArmHardStop.isDisabledPlungerArmBrake();
+    return Robot.plungerArmHardStop.isDisengaged();
   }
 
   // Called once after isFinished returns true

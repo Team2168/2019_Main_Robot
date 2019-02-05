@@ -20,7 +20,7 @@ public class PlungerArmHardStop extends Subsystem {
   // here. Call these from Commands.
   private static DoubleSolenoid _plungerArmBrake;
   
-  public static PlungerArmHardStop _instance;
+  private static PlungerArmHardStop _instance;
 
   private PlungerArmHardStop()
   {
@@ -42,7 +42,7 @@ public class PlungerArmHardStop extends Subsystem {
   /**
    * engages brake to stop the plunger arm 
    */
-  public void enablePlungerArmBrake()
+  public void engage()
   {
     _plungerArmBrake.set(DoubleSolenoid.Value.kForward);
   }
@@ -50,7 +50,7 @@ public class PlungerArmHardStop extends Subsystem {
   /**
    * disengages brake to allow the plunger arm to move again
    */
-  public void disablePlungerArmBrake()
+  public void disengage()
   {
     _plungerArmBrake.set(DoubleSolenoid.Value.kReverse);
   }
@@ -58,12 +58,12 @@ public class PlungerArmHardStop extends Subsystem {
   /**
    * @return true if last commanded shift was to engagePlungerArmBrake
    */
-  public boolean isEnabledPlungerArmBrake()
+  public boolean isEngaged()
   {
     return _plungerArmBrake.get() == DoubleSolenoid.Value.kForward;
   }
 
-  public boolean isDisabledPlungerArmBrake()
+  public boolean isDisengaged()
   {
     return _plungerArmBrake.get() == DoubleSolenoid.Value.kReverse; 
   }
