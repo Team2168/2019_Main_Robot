@@ -48,16 +48,16 @@ public class Drivetrain extends Subsystem {
     public volatile double _leftMotor1Voltage;
     public volatile double _leftMotor2Voltage;
     public volatile double _leftMotor3Voltage;
-	  public volatile double _rightMotor1Voltage;
+    public volatile double _rightMotor1Voltage;
     public volatile double _rightMotor2Voltage;
     public volatile double _rightMotor3Voltage;
 
     public IMU _imu;
 
     // declare position/speed controllers
-	public PIDPosition _drivetrainPosController;
-//	public PIDPosition _rotateController;
-	public PIDPosition _rotateDriveStraightController;
+  public PIDPosition _drivetrainPosController;
+  //  public PIDPosition _rotateController;
+  public PIDPosition _rotateDriveStraightController;
 
 
     private static Drivetrain _instance = null;
@@ -101,93 +101,93 @@ public class Drivetrain extends Subsystem {
       _gyroSPI.startThread();
 
       _drivetrainRightEncoder = new AverageEncoder(
-				RobotMap.RIGHT_DRIVE_ENCODER_A,
-				RobotMap.RIGHT_DRIVE_ENCODER_B,
-				RobotMap.DRIVE_ENCODER_PULSE_PER_ROT,
-				RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
-				RobotMap.RIGHT_DRIVE_TRAIN_ENCODER_REVERSE,
-				RobotMap.DRIVE_ENCODING_TYPE,
-				RobotMap.DRIVE_SPEED_RETURN_TYPE,
-				RobotMap.DRIVE_POS_RETURN_TYPE,
-				RobotMap.DRIVE_AVG_ENCODER_VAL);
+        RobotMap.RIGHT_DRIVE_ENCODER_A,
+        RobotMap.RIGHT_DRIVE_ENCODER_B,
+        RobotMap.DRIVE_ENCODER_PULSE_PER_ROT,
+        RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
+        RobotMap.RIGHT_DRIVE_TRAIN_ENCODER_REVERSE,
+        RobotMap.DRIVE_ENCODING_TYPE,
+        RobotMap.DRIVE_SPEED_RETURN_TYPE,
+        RobotMap.DRIVE_POS_RETURN_TYPE,
+        RobotMap.DRIVE_AVG_ENCODER_VAL);
 
 
-		  _drivetrainLeftEncoder = new AverageEncoder(
-				RobotMap.LEFT_DRIVE_ENCODER_A, 
-				RobotMap.LEFT_DRIVE_ENCODER_B,
-				RobotMap.DRIVE_ENCODER_PULSE_PER_ROT, 
-				RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
-				RobotMap.LEFT_DRIVE_TRAIN_ENCODER_REVERSE, 
-				RobotMap.DRIVE_ENCODING_TYPE,
-				RobotMap.DRIVE_SPEED_RETURN_TYPE, 
-				RobotMap.DRIVE_POS_RETURN_TYPE, 
+      _drivetrainLeftEncoder = new AverageEncoder(
+        RobotMap.LEFT_DRIVE_ENCODER_A, 
+        RobotMap.LEFT_DRIVE_ENCODER_B,
+        RobotMap.DRIVE_ENCODER_PULSE_PER_ROT, 
+        RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
+        RobotMap.LEFT_DRIVE_TRAIN_ENCODER_REVERSE, 
+        RobotMap.DRIVE_ENCODING_TYPE,
+        RobotMap.DRIVE_SPEED_RETURN_TYPE, 
+        RobotMap.DRIVE_POS_RETURN_TYPE, 
         RobotMap.DRIVE_AVG_ENCODER_VAL);
         
         _imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
 
         // rotateController = new PIDPosition(
-				// "RotationController", 
+        // "RotationController", 
         // RobotMap.ROTATE_POSITION_P, 
-				// RobotMap.ROTATE_POSITION_I,
-				// RobotMap.ROTATE_POSITION_D, 
-				// _gyroSPI, 
-				// RobotMap.DRIVE_TRAIN_PID_PERIOD);
+        // RobotMap.ROTATE_POSITION_I,
+        // RobotMap.ROTATE_POSITION_D, 
+        // _gyroSPI, 
+        // RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		
-		_rotateDriveStraightController = new PIDPosition(
-				"RotationStraightController",
-				RobotMap.ROTATE_POSITION_P_Drive_Straight, 
-				RobotMap.ROTATE_POSITION_I_Drive_Straight,
-				RobotMap.ROTATE_POSITION_D_Drive_Straight, 
-				_gyroSPI, 
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    
+    _rotateDriveStraightController = new PIDPosition(
+        "RotationStraightController",
+        RobotMap.ROTATE_POSITION_P_Drive_Straight, 
+        RobotMap.ROTATE_POSITION_I_Drive_Straight,
+        RobotMap.ROTATE_POSITION_D_Drive_Straight, 
+        _gyroSPI, 
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		_drivetrainPosController = new PIDPosition(
-				"drivetrainPosController", 
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
-				_imu,
+    _drivetrainPosController = new PIDPosition(
+        "drivetrainPosController", 
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
+        _imu,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
         
 
     // add min and max output defaults and set array size
-		
-		_drivetrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		//rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		_rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    
+    _drivetrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    //rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    _rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
 
 
-		// start controller threads
-		
-		_drivetrainPosController.startThread();
-	//	rotateController.startThread();
-		_rotateDriveStraightController.startThread();
+    // start controller threads
+    
+    _drivetrainPosController.startThread();
+  //  rotateController.startThread();
+    _rotateDriveStraightController.startThread();
 
 
     }
 
     /**
-	  * Calls instance object and makes it a singleton object of type Drivetrain
-	  * 
-	  * @returns Drivetrain object "instance"
-	  */
-	  public static Drivetrain getInstance()
-	  {
-		  if (_instance == null)
-			  _instance = new Drivetrain();
-		  return _instance;
+    * Calls instance object and makes it a singleton object of type Drivetrain
+    * 
+    * @returns Drivetrain object "instance"
+    */
+    public static Drivetrain getInstance()
+    {
+      if (_instance == null)
+        _instance = new Drivetrain();
+      return _instance;
     }
 
     /**
-	  * Calls left motor 1 and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to left motor 1
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+    * Calls left motor 1 and creates a local variable "speed" Refers to boolean in
+    * Robot map and if true, speed = - speed Uses set() command to assign the new
+    * speed to left motor 1
+    * 
+    * @param double
+    *            speed between -1 and 1 negative is reverse, positive if forward, 0
+    *            is stationary
+    */
     public void driveLeftMotor1(double speed)
     {
       if (RobotMap.DT_REVERSE_LEFT1)
@@ -199,14 +199,14 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-	  * Calls left motor 2 and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to left motor 2
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+    * Calls left motor 2 and creates a local variable "speed" Refers to boolean in
+    * Robot map and if true, speed = - speed Uses set() command to assign the new
+    * speed to left motor 2
+    * 
+    * @param double
+    *            speed between -1 and 1 negative is reverse, positive if forward, 0
+    *            is stationary
+    */
     public void driveLeftMotor2(double speed)
     {
       if (RobotMap.DT_REVERSE_LEFT2)
@@ -216,14 +216,14 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-	  * Calls left motor 3 and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to left motor 3
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+    * Calls left motor 3 and creates a local variable "speed" Refers to boolean in
+    * Robot map and if true, speed = - speed Uses set() command to assign the new
+    * speed to left motor 3
+    * 
+    * @param double
+    *            speed between -1 and 1 negative is reverse, positive if forward, 0
+    *            is stationary
+    */
     public void driveLeftMotor3(double speed)
     {
       if (RobotMap.DT_REVERSE_LEFT3)
@@ -233,14 +233,14 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-	  * Calls right motor 1 and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to right motor 1
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+    * Calls right motor 1 and creates a local variable "speed" Refers to boolean in
+    * Robot map and if true, speed = - speed Uses set() command to assign the new
+    * speed to right motor 1
+    * 
+    * @param double
+    *            speed between -1 and 1 negative is reverse, positive if forward, 0
+    *            is stationary
+    */
     public void driveRightMotor1(double speed)
     {
       if (RobotMap.DT_REVERSE_RIGHT1)
@@ -250,14 +250,14 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-	  * Calls right motor 2 and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to right motor 2
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+    * Calls right motor 2 and creates a local variable "speed" Refers to boolean in
+    * Robot map and if true, speed = - speed Uses set() command to assign the new
+    * speed to right motor 2
+    * 
+    * @param double
+    *            speed between -1 and 1 negative is reverse, positive if forward, 0
+    *            is stationary
+    */
     public void driveRightMotor2(double speed)
     {
       if (RobotMap.DT_REVERSE_RIGHT2)
@@ -267,14 +267,14 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-	  * Calls right motor 3 and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to right motor 3
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+    * Calls right motor 3 and creates a local variable "speed" Refers to boolean in
+    * Robot map and if true, speed = - speed Uses set() command to assign the new
+    * speed to right motor 3
+    * 
+    * @param double
+    *            speed between -1 and 1 negative is reverse, positive if forward, 0
+    *            is stationary
+    */
     public void driveRightMotor3(double speed)
     {
       if (RobotMap.DT_REVERSE_RIGHT3)
@@ -308,10 +308,10 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-	  * This method is to drive the two sides, left and right, of the drivetrain simultaneously at two different speeds. 
-	  * @param leftSpeed is a value between -1 and 1 as a double, where 1 indicates forward motion.
-	  * @param rightSpeed is a value between -1 and 1 as a double, where 1 indicates forward motion.
-	  */
+    * This method is to drive the two sides, left and right, of the drivetrain simultaneously at two different speeds. 
+    * @param leftSpeed is a value between -1 and 1 as a double, where 1 indicates forward motion.
+    * @param rightSpeed is a value between -1 and 1 as a double, where 1 indicates forward motion.
+    */
     public void dangerousTankDrive(double leftSpeed, double rightSpeed)
     {
       driveLeftMotors(leftSpeed);
@@ -321,10 +321,10 @@ public class Drivetrain extends Subsystem {
 
     /////////////Check for this years lift height//////////////////////////////////////////
     /**
-  	 * Tank drive that limits speed when lift is up.
-  	 * @param leftSpeed
-  	 * @param rightSpeed
-  	 */
+     * Tank drive that limits speed when lift is up.
+     * @param leftSpeed
+     * @param rightSpeed
+     */
     public void tankDrive(double leftSpeed, double rightSpeed)
     {
       if (Robot.lift.getPotPos() > 30)     //Won't work until lift is integrated
@@ -457,26 +457,26 @@ public class Drivetrain extends Subsystem {
 
     // Code from last year that I don't know if we will use, and I can't find the associated classes
   //   /**
-	//  * Gets the voltage given by the sonar sensor on the Gear Intake.
-	//  * 
-	//  * @return the raw voltage from the gear presence sensor
-	//  */
-	// public double getSonarVoltage() {
-	// 	return DrivetrainSonarSensor.getVoltage();
-	// }
-	
-	// /**
-	//  * Gets the status of the line detector 
-	//  * @return true if line is detected
-	//  */
-	// public boolean getLinedectorStatus() {
-	// 	if(INVERT_LINE_SENSOR) {
-	// 		return !lineDetector.get();
-	// 	} else {
-	// 		return lineDetector.get();
-	// 	}
+  //  * Gets the voltage given by the sonar sensor on the Gear Intake.
+  //  * 
+  //  * @return the raw voltage from the gear presence sensor
+  //  */
+  // public double getSonarVoltage() {
+  //  return DrivetrainSonarSensor.getVoltage();
   // }
-  
+
+  // /**
+  //  * Gets the status of the line detector 
+  //  * @return true if line is detected
+  //  */
+  // public boolean getLinedectorStatus() {
+  //  if(INVERT_LINE_SENSOR) {
+  //    return !lineDetector.get();
+  //  } else {
+  //    return lineDetector.get();
+  //  }
+  // }
+
   /**
    * returns the last commanded voltage of Left motor 1
    * 
@@ -611,7 +611,7 @@ public class Drivetrain extends Subsystem {
     else
       return 0.0;
   }
-  
+
 
 
 
@@ -624,4 +624,4 @@ public class Drivetrain extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new DriveWithJoysticks(0));
   }
-}
+  }
