@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
     oi = OI.getInstance();
     
     //Initialize Control Selector Choices
-		controlStyleSelectInit();
+    controlStyleSelectInit();
     
     System.out.println("Robot Initialization Complete!!");
   }
@@ -140,23 +140,23 @@ public class Robot extends TimedRobot {
   }
 
   /**
-	 * Returns the status of DIO pin 24
-	 *
-	 * @return true if this is the practice robot
-	 */
-	public static boolean isPracticeRobot() {
-		return !practiceBot.get();
+   * Returns the status of DIO pin 24
+   *
+   * @return true if this is the practice robot
+   */
+  public static boolean isPracticeRobot() {
+    return !practiceBot.get();
 
   }
-  
+
   /**
    * Returns the status of DIO pin 25 
    * 
    * @return true if this has a CAN drivetrain
    */
   public static boolean isCanDrivetrain(){
-		return !canDrivetrain.get();
-	}
+    return !canDrivetrain.get();
+  }
 
 
   /**
@@ -164,7 +164,7 @@ public class Robot extends TimedRobot {
    * 
    * @return the name of the control style.
    */
-	public static String getControlStyleName() {
+  public static String getControlStyleName() {
     String retVal = "";
 
     switch (controlStyle) {
@@ -187,8 +187,8 @@ public class Robot extends TimedRobot {
       retVal = "Invalid Control Style";
     }
 
-			return retVal;
-		}
+      return retVal;
+    }
 
   /**
    * Adds control styles to the selector
