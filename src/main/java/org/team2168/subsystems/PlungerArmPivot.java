@@ -25,7 +25,7 @@ public class PlungerArmPivot extends Subsystem {
   private static VictorSP _plungerArmPivotMotor; 
   private static AveragePotentiometer _pivotPot;
 
-  public volatile double _plungerArmPivotVoltage;
+  // public volatile double _plungerArmPivotVoltage; //not currently used
   private static PlungerArmPivot _instance;
 
   private PlungerArmPivot()
@@ -58,20 +58,22 @@ public class PlungerArmPivot extends Subsystem {
 	}
 
   /**
-	  * Calls plunger arm pivot motor and creates a local variable "speed" Refers to boolean in
-	  * Robot map and if true, speed = - speed Uses set() command to assign the new
-	  * speed to plunger arm pivot motor
-	  * 
-	  * @param double
-	  *            speed between -1 and 1 negative is reverse, positive if forward, 0
-	  *            is stationary
-	  */
+   * Calls plunger arm pivot motor and creates a local variable "speed" Refers to boolean in
+   * Robot map and if true, speed = - speed Uses set() command to assign the new
+   * speed to plunger arm pivot motor. 
+   * 
+   * 
+   * @param double speed between -1 and 1 
+   *      positive values rotate pivot to the front of the robot,
+   *      negative values rotate pivot to the back of the robot,
+   *      0 is stationary
+   */
   public void drivePlungerArmPivotMotor(double speed)
   { 
     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
       speed = -speed;
     _plungerArmPivotMotor.set(speed);
-    _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed;
+    //_plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; //not currently used
   }
 
 	/**

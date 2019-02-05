@@ -11,8 +11,8 @@ import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DisablePlungerArmBrake extends Command {
-  public DisablePlungerArmBrake() {
+public class EngagePlungerArmBrake extends Command {
+  public EngagePlungerArmBrake() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.plungerArmHardStop);
@@ -21,7 +21,7 @@ public class DisablePlungerArmBrake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.plungerArmHardStop.disablePlungerArmBrake();
+    Robot.plungerArmHardStop.enablePlungerArmBrake();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,7 @@ public class DisablePlungerArmBrake extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.plungerArmHardStop.isDisabledPlungerArmBrake();
+    return Robot.plungerArmHardStop.isEnabledPlungerArmBrake();
   }
 
   // Called once after isFinished returns true
