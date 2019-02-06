@@ -275,11 +275,17 @@ public class RobotMap {
 	/*************************************************************************
 	 *                      Monkey Bar PARAMETERS                            *
 	 *************************************************************************/
-	public static final double MONKEY_BAR_POT_VOLTAGE_MAX = 5.108; //130 degrees
-	public static final double MONKEY_BAR_LIFT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_POT_VOLTAGE_0 = 0.66; //0 degrees
-	public static final double MONKEY_BAR_0_ANGLE_DEGREES = 0.0;
-	public static final int MONKEY_BAR_AVG_ENCODER_VAL = 5;
+	public static final double MONKEY_BAR_1_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_1_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_1_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_1_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_1_AVG_ENCODER_VAL = 5;
+	
+	public static final double MONKEY_BAR_2_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_2_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_2_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_2_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_2_AVG_ENCODER_VAL = 5;
 
 	/*************************************************************************
 	 *                         Winch PARAMETERS                               *
