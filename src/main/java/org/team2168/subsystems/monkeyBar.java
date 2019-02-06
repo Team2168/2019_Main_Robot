@@ -24,6 +24,9 @@ public class MonkeyBar extends Subsystem
   private static AveragePotentiometer monkeyBarRotation1;
   private static AveragePotentiometer monkeyBarRotation2;
 
+  private final boolean _isReversed1;
+  private final boolean _isReversed2;
+  
   //constructors for monkey bar
   public MonkeyBar() 
   { 
@@ -86,12 +89,26 @@ public class MonkeyBar extends Subsystem
 
   public void driveBarRotate1(double speed)
   {
-    RotateBar1.set(speed);
+    if (_isReversed1)
+    {
+      RotateBar1.set(-speed);
+    }
+    else 
+    {
+      RotateBar1.set(speed);
+    }
   }
 
   public void driveBarRotate2(double speed)
   {
-    RotateBar2.set(speed);
+    if (isReversed2)
+    {
+      RotateBar2.set(-speed);
+    }
+    else
+    {
+      RotateBar2.set(speed);
+    }
   }
   
   public void driveRotateBarMotors(double speed) 
