@@ -68,8 +68,10 @@ public class Drivetrain extends Subsystem {
 
 	public volatile double leftMotor1Voltage;
 	public volatile double leftMotor2Voltage;
+	public volatile double leftMotor3Voltage;
 	public volatile double rightMotor1Voltage;
 	public volatile double rightMotor2Voltage;
+	public volatile double rightMotor3Voltage;
 
 	/**
 	 * Default constructors for Drivetrain
@@ -77,6 +79,7 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		if (Robot.isPracticeRobot())
 		{
+		  System.out.println("Practice Bot Drivetrain enabled");
 		  leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
 		  leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
 		  leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
@@ -87,6 +90,7 @@ public class Drivetrain extends Subsystem {
 		}
 		else if (Robot.isCanRobot())
 		{
+		  System.out.println("CAN Drivetrain enabled");
 		  leftMotor1 = new CANSparkMax(RobotMap.DT_MAX_CAN_ID_LEFT_1, MotorType.kBrushless);
 		  leftMotor2 = new CANSparkMax(RobotMap.DT_MAX_CAN_ID_LEFT_2,MotorType.kBrushless);
 		  leftMotor3 = new CANSparkMax(RobotMap.DT_MAX_CAN_ID_LEFT_3,MotorType.kBrushless);
@@ -327,6 +331,14 @@ public class Drivetrain extends Subsystem {
 		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
+	private void driveleftMotor3(double speed) {
+		if (RobotMap.DT_REVERSE_LEFT3)
+			speed = -speed;
+
+		leftMotor3.set(speed);
+		leftMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
+	}
+
 	/**
 	 * Take in double speed and sets it to left motors 1, 2, and 3
 	 * 
@@ -337,6 +349,7 @@ public class Drivetrain extends Subsystem {
 	public void driveLeft(double speed) {
 		driveleftMotor1(speed);
 		driveleftMotor2(speed);
+		driveleftMotor3(speed);
 	}
 
 	/**
@@ -373,6 +386,14 @@ public class Drivetrain extends Subsystem {
 		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
+	private void driverightMotor3(double speed) {
+		if (RobotMap.DT_REVERSE_RIGHT3)
+			speed = -speed;
+
+		rightMotor3.set(speed);
+		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
+	}
+
 	/**
 	 * Takes in a double speed and sets it to their right motors 1, 2, and 3
 	 * 
@@ -383,6 +404,7 @@ public class Drivetrain extends Subsystem {
 	public void driveRight(double speed) {
 		driverightMotor1(speed);
 		driverightMotor2(speed);
+		driverightMotor3(speed);
 	}
 
 	/**

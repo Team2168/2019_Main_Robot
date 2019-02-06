@@ -577,13 +577,13 @@ public class Robot extends TimedRobot
 	 * @return true if this is the practice robot
 	 */
 	public static boolean isPracticeRobot() {
-    System.out.println("StartUP as Practice Robot");
+ 
 		return !practiceBot.get();
 
   }
   
   public static boolean isCanRobot() {
-    System.out.println("StartUP as CAN Robot");
+  
 		return !canBot.get();
 
 	}

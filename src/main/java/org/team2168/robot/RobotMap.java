@@ -175,9 +175,11 @@ public class RobotMap {
 	 *************************************************************************/
 	// TODO check if the reverse values match the physical robot
 	public static final boolean DT_REVERSE_LEFT1 = false; //false
-	public static final boolean DT_REVERSE_LEFT2 = false; //false
-	public static final boolean DT_REVERSE_RIGHT1 = true; //true
+	public static final boolean DT_REVERSE_LEFT2 = true; //false
+	public static final boolean DT_REVERSE_LEFT3 = false; //false
+	public static final boolean DT_REVERSE_RIGHT1 = false; //true
 	public static final boolean DT_REVERSE_RIGHT2 = true; //true
+	public static final boolean DT_REVERSE_RIGHT3 = true; //true
 	
 	private static final int DRIVE_PULSE_PER_ROTATION = 256; // encoder ticks per rotation
 	// TODO find ratio
