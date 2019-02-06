@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.TimeZone;
 import java.util.TimerTask;
 
-import org.team2168.RobotMap;
+import org.team2168.robot.RobotMap;
 import org.team2168.PID.pathplanner.FalconLinePlot;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 import org.team2168.utils.consoleprinter.Loggable;
