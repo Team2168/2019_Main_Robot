@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.TimeZone;
 import java.util.TimerTask;
 
-import org.team2168.robot.RobotMap;
+import org.team2168.RobotMap;
 import org.team2168.PID.pathplanner.FalconLinePlot;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 import org.team2168.utils.consoleprinter.Loggable;
@@ -93,15 +93,13 @@ public class QuinticTrajectory
 		
 		
 		double[][] waypointPath = new double[][]{
-			{1, 15.5, 0}, //Right switch Path
-			{2, 15.5, 0},
-			{10.5, 20.3, 0} 
+			{5.0, 26.5, 0},
+			{1.0, 26.5, 0} //works with 19.3 on practice bot
 		};
 		
 		double[][] waypointPath2 = new double[][]{
-			{2, 26.5, 0}, //crazy path
-			{17.0, 26.5, 0},
-			{19.6, 25.5, -0.349} //works with 19.3 on practice bot
+			{0.0, 26.5, 0},
+			{5.0, 26.5, 0} //works with 19.3 on practice bot
 	};
 		
 	double[][] waypointPath3 = new double[][]{
@@ -161,13 +159,14 @@ public class QuinticTrajectory
 		fig3.setYTic(0, fieldWidth, 1);
 		fig3.addData(quinticPath.rightPath, Color.magenta);
 		fig3.addData(quinticPath.leftPath, Color.blue);
+		
 
 		fig3.addData(quinticPath2.leftPath, Color.blue);
 		fig3.addData(quinticPath2.rightPath, Color.magenta);
 		fig3.addData(waypointPath2, null, Color.black);
  
-//		fig3.addData(quinticPath3.leftPath, Color.blue);
-//		fig3.addData(quinticPath3.rightPath, Color.magenta);
+//		fig3.addData(quinticPath2.leftPath, Color.blue);
+//		fig3.addData(quinticPath2.rightPath, Color.magenta);
 //		fig3.addData(waypointPath3, null, Color.black);
 		
 		fig3.addData(new double[][]{{4.667, 3}}, Color.black);
@@ -215,10 +214,12 @@ public class QuinticTrajectory
 		FalconLinePlot fig33 = new FalconLinePlot(new double[][]{{0.0,0.0}});
 		fig33.yGridOn();
 		fig33.xGridOn();
-		fig33.setYLabel("Velocity (ft/sec)");
+		fig33.setYLabel("Position (ft/time)");
 		fig33.setXLabel("time (seconds)");
 		fig33.setTitle("Pos Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
 		fig33.addData(quinticPath.time,quinticPath.leftPos, Color.magenta);
+		fig33.addData(quinticPath.time,quinticPath.rightPos, Color.blue);
+		fig33.addData(quinticPath.time,quinticPath.heading, Color.green);
 		
 		
 		
@@ -630,6 +631,18 @@ public class QuinticTrajectory
 			  this.rightJerk[i][1] = this.leftRightTraj.right.getSegment(i).jerk;
 			  
 		  }
+	  }
+	  
+	  public double[] getLeftPos()
+	  {
+		 
+			  return this.leftPos;
+	  }
+	  
+	  public double[] getRightPos()
+	  {
+		 
+		  return this.rightPos;
 	  }
 	  
 	  public double[] getLeftVel()

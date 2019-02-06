@@ -1,0 +1,52 @@
+body {
+  font-family: sans-serif;
+  font-size: 16px;
+
+}
+
+fieldset {
+
+font-family: sans-serif;
+font-size: 12px;
+width:220px;
+padding:5px;
+border:5px solid gray;
+margin:5px; 
+
+}
+
+div.plotdiv{
+float:right;
+width:650px;
+margin:5px;
+}
+
+div.robot
+{
+float:left;
+width:250px;
+height:430px;
+margin:10px;
+}
+
+label {
+text-align:left;
+width:30%
+float:left
+}
+
+input {
+    float: right;
+text-align:left;
+}
+
+ul {
+    list-style-type: none;
+padding: 0px;
+margin: 0px;
+}
+
+ul li {
+    clear: both;
+
+}
