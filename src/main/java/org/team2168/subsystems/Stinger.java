@@ -10,34 +10,39 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Stinger extends Subsystem 
 {
-    AveragePotentiometer stingPotLeft;
-    AveragePotentiometer stingPotRight;
-    DigitalInput stingerHallLeft; //
-    DigitalInput stingerHallRight; // 
+    AveragePotentiometer _stingPotLeft;
+    AveragePotentiometer _stingPotRight;
+    DigitalInput _stingerHallLeft; //
+    DigitalInput _stingerHallRight; // 
 
     private Stinger()
     {
-		stingerHallLeft = new DigitalInput(RobotMap.STINGER_HALL_1);
-        stingerHallRight = new DigitalInput(RobotMap.STINGER_HALL_2);
-        stingPotLeft = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
-        stingPotRight = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
+		_stingerHallLeft = new DigitalInput(RobotMap.STINGER_HALL_1);
+        _stingerHallRight = new DigitalInput(RobotMap.STINGER_HALL_2);
+        _stingPotLeft = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
+        _stingPotRight = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
     }
 
-    public void driveStingerDown(double speed)
+    public boolean isLeftStingDown()
     {
-        if(stingerHallLeft == true && stingerHallRight == true)
-        {    
-        }
+        return _stingerHallLeft.get();
     }
 
-    public void driveStingerUp(double speed)
+    public boolean isRightStingDown()
     {
-        if(stingerHallLeft == false && stingerHallRight == false)
-       {
-       }
+        return _stingerHallRight.get();
     }
 
-    public static void initDefaultCommand() {
-        
+    public double getRawLeftPot()
+    {
+        return _stingPotLeft.getRawPos();
+    }
+
+    public double getRawRightPot()
+    {
+        return _stingPotRight.getRawPos();
+    }
+
+    public static void initDefaultCommand() { 
     }
 }
