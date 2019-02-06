@@ -8,12 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimerTask;
 
-
+import org.team2168.robot.Robot;
 import org.team2168.PID.sensors.PIDSensorInterface;
 import org.team2168.utils.TCPMessageInterface;
 
 import edu.wpi.first.wpilibj.Timer;
-
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * @author Kevin Harrilal, First Robotics Team 2168
@@ -419,6 +419,7 @@ public class PIDPosition implements TCPMessageInterface {
 		this.olderrsum = 0;
 		this.clock = 0;
 		this.int_d_term = 0;
+		this.setPointArrayCounter = 0;
 	}
 
 	/**
@@ -1079,23 +1080,24 @@ public class PIDPosition implements TCPMessageInterface {
 
 			deriv = 0;
 
-			// // deriv term
-			// if (enDerivFilter) {
-			// 	// Derivative filtering using forward euler integration
-			// 	int_d_term = int_d_term + (lastDeriv * executionTime);
-			// 	deriv = ((d * err) - int_d_term) * n;
-			// 	lastDeriv = deriv;
-			// } else {
-			// 	// prevent divide by zero error, by disabiling deriv term
-			// 	// if execution time is zero.
-			diff = 0;
-			if (executionTime > 0)
-				diff = (err - olderr) / executionTime; // delta
-			else
+//			// deriv term
+//			if (enDerivFilter) {
+//				// Derivative filtering using forward euler integration
+//				int_d_term = int_d_term + (lastDeriv * executionTime);
+//				deriv = ((d * err) - int_d_term) * n;
+//				lastDeriv = deriv;
+//			} else 
+			{
+				// prevent divide by zero error, by disabiling deriv term
+				// if execution time is zero.
 				diff = 0;
+				if (executionTime > 0)
+					diff = (err - olderr) / executionTime; // delta
+				else
+					diff = 0;
 
-			deriv = d * diff;
-			// }
+				deriv = d * diff;
+			}
 
 			// proportional term
 			prop = p * err;
@@ -1147,8 +1149,6 @@ public class PIDPosition implements TCPMessageInterface {
 				co = maxPosOutput;
 			if (co < maxNegOutput)
 				co = maxNegOutput;
-
-			coOld = co;
 
 			// FIXME : Make apart of method
 			if (Math.abs(err) < acceptErrorDiff) {

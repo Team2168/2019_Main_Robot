@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.I2C;
  * floating around\][\ */
 public class RobotMap {
 
-	public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
+
 
 	
 	/*************************************************************************
@@ -36,20 +36,10 @@ public class RobotMap {
 	// PWM (0 to 9) on RoboRio/////////////////////////////////////////////////
 	public static final int RIGHT_DRIVE_MOTOR_1 = 0; //Same as 2017
 	public static final int RIGHT_DRIVE_MOTOR_2 = 1; //Same as 2017
-	public static final int LEFT_DRIVE_MOTOR_1 = 2; //Same as 2017
-	public static final int LEFT_DRIVE_MOTOR_2 = 3; //Same as 2017
-	
-	public static final int LIFT_MOTOR_1 = 4; //2017 ball intake
-	public static final int LIFT_MOTOR_2 = 5; //2017 conveyor
-	public static final int LIFT_MOTOR_3 = 6; //2017 agitator
-	
-	public static final int CUBE_INTAKE_MOTOR_LEFT = 7; //2017 gear intake
-	public static final int CUBE_INTAKE_MOTOR_RIGHT = 8; //PWM 19 on board //2017 spare
-	
-	//public static final int CUBE_INTAKE_PIVOT_MOTOR = 9;
-	
-	public static final int WINCH_MOTOR_1 = 9;
-	public static final int WINCH_MOTOR_2 = 19;
+	public static final int RIGHT_DRIVE_MOTOR_3 = 2; //Same as 2017
+	public static final int LEFT_DRIVE_MOTOR_1 = 3; //Same as 2017
+	public static final int LEFT_DRIVE_MOTOR_2 = 4; //Same as 2017
+	public static final int LEFT_DRIVE_MOTOR_3 = 5; //Same as 2017
 	
 	
 	public static final int PLATFORM_MOTOR = 11; //2017 turret
@@ -76,6 +66,7 @@ public class RobotMap {
 
 
 	//Channels 10-25 on MXP (PWM and DIO)
+	public static final int CAN_BOT_JUMPER = 23; //Same as 2017
 	public static final int PRACTICE_BOT_JUMPER = 24;
 	public static final int PWM_LIGHTS = 18;
 
@@ -157,6 +148,14 @@ public class RobotMap {
 	public static final int PDP_CAN_ID = 0;
 	public static final int TALON_ID = 0;
 	public static final int TALON_ID_1 = 1;
+
+	public static final int DT_MAX_CAN_ID_LEFT_1 = 1;
+	public static final int DT_MAX_CAN_ID_LEFT_2 = 2;
+	public static final int DT_MAX_CAN_ID_LEFT_3 = 3;
+
+	public static final int DT_MAX_CAN_ID_RIGHT_1 = 4;
+	public static final int DT_MAX_CAN_ID_RIGHT_2 = 5;
+	public static final int DT_MAX_CAN_ID_RIGHT_3 = 6;
 	
 	
 	// Relay Channels///////////////////////////////////////////////////////////
@@ -194,8 +193,8 @@ public class RobotMap {
 	public static final CounterBase.EncodingType DRIVE_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and
 																										// falling edges
 																										// on
-	public static final AverageEncoder.PositionReturnType DRIVE_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.FEET;
-	public static final AverageEncoder.SpeedReturnType DRIVE_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.FPS;
+	public static final AverageEncoder.PositionReturnType DRIVE_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType DRIVE_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.IPS;
 	public static final int DRIVE_ENCODER_MIN_RATE = 0;
 	public static final int DRIVE_ENCODER_MIN_PERIOD = 1;
 	public static final boolean LEFT_DRIVE_TRAIN_ENCODER_REVERSE = true;
@@ -255,7 +254,7 @@ public class RobotMap {
 	
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.0; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 82.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 0.62; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0 = 0.66; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 0.0;
 	
 	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.0; //90 degrees
@@ -308,21 +307,25 @@ public class RobotMap {
 	public static final double DRIVE_TRAIN_RIGHT_SPEED_I = 0.0010526;
 	public static final double DRIVE_TRAIN_RIGHT_SPEED_D = 0.0543;
 
-	public static final double DRIVE_TRAIN_LEFT_POSITION_P = 0.2;
-	public static final double DRIVE_TRAIN_LEFT_POSITION_I = 0.0001412646174233;
-	public static final double DRIVE_TRAIN_LEFT_POSITION_D = 0.0074778888124088;
-
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_P = 0.25;
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_I = 0.0001412646174233;
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_D = 0.0074778888124088;
-
-	public static final double ROTATE_POSITION_P = 0.055;
-	public static final double ROTATE_POSITION_I = 0.001;
-	public static final double ROTATE_POSITION_D = 0.0064778888124088;
+//	public static final double DRIVE_TRAIN_LEFT_POSITION_P = 0.2;
+//	public static final double DRIVE_TRAIN_LEFT_POSITION_I = 0.0001412646174233;
+//	public static final double DRIVE_TRAIN_LEFT_POSITION_D = 0.0074778888124088;
 	
-	public static final double ROTATE_POSITION_P_Drive_Straight = 0.055; //0.055 comp
-	public static final double ROTATE_POSITION_I_Drive_Straight = 0.001; //0.001
-	public static final double ROTATE_POSITION_D_Drive_Straight = 0.0064778888124088;
+	public static final double DRIVE_TRAIN_LEFT_POSITION_P = 0.06;
+	public static final double DRIVE_TRAIN_LEFT_POSITION_I = 0.015;
+	public static final double DRIVE_TRAIN_LEFT_POSITION_D = 0.006;
+
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_P = 0.06;
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_I = 0.015;
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_D = 0.006;
+
+	public static final double ROTATE_POSITION_P = 0.075;
+	public static final double ROTATE_POSITION_I = 0.0025;
+	public static final double ROTATE_POSITION_D = 0.0;
+	
+	public static final double ROTATE_POSITION_P_Drive_Straight = 0.09; //0.055 comp
+	public static final double ROTATE_POSITION_I_Drive_Straight = 0.002; //0.001
+	public static final double ROTATE_POSITION_D_Drive_Straight = 0.001;
 	
 	
 
@@ -344,6 +347,8 @@ public class RobotMap {
 	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_SPEED = 1183;
 	public static final int TCP_SERVER_LIFT_POT_CONTROLLER = 1184;
 	public static final int TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT = 1185;
+	public static final int TCO_SERVER_RIGHT_DRIVE_TRAIN_POSITION = 1186;
+	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION = 1187;
 	
 
 	/******************************************************************
@@ -367,7 +372,7 @@ public class RobotMap {
 
 	/******************************************************************
 	 *                        Aiden Parameters                         *
-	 ********************************************`**********************/
+	 ******************************************************************/
 	
 	public static final String DID_AIDEN_PUSH_IT = "only if Liam said he could"; //so false
 	public static final boolean DID_AIDEN_WRITE_A_PATH = false;

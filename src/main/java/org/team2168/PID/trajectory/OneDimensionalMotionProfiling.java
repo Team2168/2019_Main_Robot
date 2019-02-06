@@ -23,9 +23,9 @@ public class OneDimensionalMotionProfiling {
 //	double aMax = 3000.0;
 //	double jMax =30000.0;
 	
-	double vMax = 8.0;
-	double aMax = 8.0;
-	double jMax = 100.0;
+	double vMax = 8.0*12;
+	double aMax = 8.0*12;
+	double jMax = 100.0*12;
 	
 	double vMin = -vMax;
 	double aMin = -aMax;
