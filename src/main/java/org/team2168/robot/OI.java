@@ -62,7 +62,7 @@ public class OI {
 	                                    {-.15,0.0},
 	                                    {.15,0.0},
 	                                    {1.0,1.0}};
-			
+
 	/**
 	 * Private constructor for singleton class which instantiates the OI object
 	 */
@@ -75,14 +75,11 @@ public class OI {
 		driverJoystick.ButtonA().whenPressed(new EngageStingers());     //attached to which button
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
-		////////////// Operator Joystick//////////////
-		
-		
+
 		/*************************************************************************
 		 *                         Operator Joystick         		              *
-		  *************************************************************************/
+		 *************************************************************************/
 
-		
 	}
 
 	/**
@@ -151,5 +148,4 @@ public class OI {
 		//TODO actually figure out which stick and axis will connect
 		return operatorJoystick.getRightStickRaw_Y();
 	}
-}    
-    
+}
