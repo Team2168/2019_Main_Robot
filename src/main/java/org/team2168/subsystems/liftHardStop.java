@@ -7,8 +7,9 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.LiftConstant;
-import org.team2168.commands.LiftJoystick;
+import org.team2168.commands.extendLiftBreak;
+import org.team2168.commands.retractLiftBreak;
+import org.team2168.robot.Robot;
 import org.team2168.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -25,19 +26,19 @@ public class LiftHardStop extends Subsystem {
     /**
    * a double solenoid with a rubber pad on the end to stop a gear in the lift gearbox to "lock" the lift at the specified position
    */
-  public static DoubleSolenoid liftDSolenoid;
+  public static DoubleSolenoid liftBreak;
 
 
 
   
   public LiftHardStop(){
-    liftDSolenoid=new DoubleSolenoid(RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
+    liftBreak=new DoubleSolenoid(RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private boolean getSolenoidPosition(){
+  private static boolean getSolenoidPosition(){
     boolean _solenoidPos;
-    if(liftDSolenoid.get()==Value.kForward){
+    if(liftBreak.get()==Value.kForward){
       _solenoidPos=true;
     }
     else{
@@ -45,36 +46,47 @@ public class LiftHardStop extends Subsystem {
     }
     return _solenoidPos;
   }
-  
-private static void baseExtendSolenoid(){
-  if(liftDSolenoid.get()!=Value.kForward){
-    liftDSolenoid.set(Value.kForward);
+  /**
+   * this method sets the value of the break to forward to extend the solenoid
+   */
+  public static void extendSolenoid(){
+    liftBreak.set(Value.kForward);
   }
-}
-private static void baseContractSolenoid(){
-  if(liftDSolenoid.get()!=Value.kReverse){
-    liftDSolenoid.set(Value.kReverse);
+  /**
+   * this method sets the value of the break to reverse to contract the solenoid
+   */
+  public static void contractSolenoid(){
+    liftBreak.set(Value.kReverse);
   }
-}
-public static void extendSolenoid(){
-  if (Lift.liftMotor1.get()==0.0 && Lift.liftMotor2.get()==0.0){
-    baseExtendSolenoid();
-  }
-}
-
-public static void contractSolenoid(){
-  if (Lift.liftMotor1.get()==0.0 && Lift.liftMotor2.get()==0.0){
-    baseContractSolenoid();
 
 
-    }
-}
+
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    
-    ;
+    setDefaultCommand(new extendLiftBreak());
+    setDefaultCommand(new retractLiftBreak());
   }
 }
+/**
+  private static void baseExtendSolenoid(){
+  if(getSolenoidPosition()==false){
+    liftBreak.set(Value.kForward);
+  }
+}
+private static void baseContractSolenoid(){
+  if(getSolenoidPosition()==true){
+    liftBreak.set(Value.kReverse);
+public static void extendSolenoid(){
+  if (Robot.lift.liftMotor1.get()==0.0 && Lift.liftMotor2.get()==0.0){
+    baseExtendSolenoid();
+  }
+}
+
+public static void contractSolenoid() {
+  if (Robot.lift.liftMotor1.get()>=0.0 && Lift.liftMotor2.get()>=0.0){
+    baseContractSolenoid();
+*/
+

@@ -7,7 +7,6 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.LiftConstant;
 import org.team2168.commands.LiftJoystick;
 import org.team2168.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -54,11 +53,6 @@ public class Lift extends Subsystem {
   /**
    * a variable which surns true if either a hall effect sensor or potentiometer reports true or at the maximum height
    */
- 
- 
-
-
-  private static double _liftMove;
   //default constructors
   public Lift(){
     liftMotor1=new VictorSP(RobotMap.LIFT_MOTOR_1);
@@ -66,13 +60,102 @@ public class Lift extends Subsystem {
     liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
     liftFullyUp=new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
     liftPosition=new AnalogPotentiometer(RobotMap.LIFT_POSITION_POT);
-    _liftMove=0.0;
-
- 
-
+  }
+  /**
+   * moves one motor of the lift at a given speed
+   * @param _liftSpeed is an input used to set the speed
+   */
+  private static void driveLiftMotor1(double _liftSpeed){
+    liftMotor1.set(_liftSpeed);
   }
 
-private static void driveLiftMotor1(double _liftSpeed){
+
+  /**
+   * moves one motor of the lift at a given speed
+   * @param _liftSpeed is an input used to set the speed
+   */
+private static void driveLiftMotor2(double _liftSpeed){
+    liftMotor1.set(_liftSpeed);
+  }
+/**
+ * uses both motors to move the lift up and down
+ * @param _liftSpeed is an input used to set the speed
+ */
+public static void driveLift (double _liftSpeed){
+    driveLiftMotor1(_liftSpeed);
+    driveLiftMotor2(_liftSpeed);
+  }
+/**
+ * checks if a hall effect sensor at the bottom of the lift acting as a digital input returns true
+ * @return _liftFullyDownHES, a boolean value where true is returned when the hall effect sensor returns true
+ */
+  private static boolean isLiftFullyDownHES(){
+    boolean _liftFullyDownHES;
+    if (liftFullyDown.get()==true){
+      _liftFullyDownHES=true;
+  }
+    else{
+      _liftFullyDownHES=false;
+    }
+    return _liftFullyDownHES;
+  }
+
+
+/**
+ * checks if a hall effect sensor at the top of the lift acting as a digital input returns true
+ * @return _liftFullyUpHES, a boolean value where true is returned when the hall effect sensor returns true
+ */
+private static boolean isLiftFullyUpHES(){
+  boolean _liftFullyUpHES;
+  if(liftFullyUp.get()==true){
+    _liftFullyUpHES=true;
+  }
+  else{
+    _liftFullyUpHES=false;
+  }
+  return _liftFullyUpHES;
+}
+
+
+/**
+ * checks if a potentiometer on the lift returns a voltage greater than or equal to the maximum voltage for the lift as set in RobotMap
+ * @return _liftMaxPot, a boolean where it will be true when the potentiometer is at a voltage greater than or equal to the predefined maximum voltage
+ */
+private static boolean isliftMaxPot(){
+  boolean _liftMaxPot;
+  if (liftPosition.get()>=RobotMap.LIFT_POT_VOLTAGE_MAX){
+    _liftMaxPot=true;
+  }
+  else{
+    _liftMaxPot=false;
+  }
+  return _liftMaxPot;
+}
+/**
+ * checks if a potentiometer on the lift returns a voltage less than or equal to the minimum voltage for the lift as set in RobotMap
+ * @return _liftMinPot, a boolean where it will be true when the potentiometer is at a voltage less than or equal to the predefined minimum voltage
+ */
+private static boolean isliftMinPot(){
+  boolean _liftMinPot;
+  if (liftPosition.get()<=RobotMap.LIFT_DOWN_MIN_VOLTAGE){
+    _liftMinPot=true;
+  }
+  else{
+    _liftMinPot=false;
+  }
+  return _liftMinPot;
+}
+
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new LiftJoystick());
+  }
+}
+
+/**
+ * private static void driveLiftMotor1(double _liftSpeed){
     liftMotor1.set(_liftSpeed);
   }
 
@@ -181,10 +264,4 @@ if(liftAtMax()==false){
     }
   }
 }
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new LiftJoystick());
-  }
-}
+ */

@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static OI m_oi;
   public static Lift lift;
-  public static LiftHardStop LiftHardStop;
+  public static LiftHardStop liftHardStop;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     m_oi=new OI();
     lift=new Lift();
-    LiftHardStop=new LiftHardStop();
+    liftHardStop=new LiftHardStop();
     System.out.println("Robot Initialization Complete!!");
   }
 
