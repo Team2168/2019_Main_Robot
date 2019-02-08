@@ -11,8 +11,8 @@ import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RotateMechanismUp extends Command {
-  public RotateMechanismUp() {
+public class LowerMechanism extends Command {
+  public LowerMechanism() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires (Robot.floorHatchMechanism);
@@ -26,13 +26,13 @@ public class RotateMechanismUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.floorHatchMechanism.raise();
+      Robot.floorHatchMechanism.lower();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.floorHatchMechanism.isSolenoidRaised();
+    return Robot.floorHatchMechanism.isLowered();
   }
 
   // Called once after isFinished returns true

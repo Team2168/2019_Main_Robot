@@ -24,54 +24,54 @@ public class FloorHatchMechanism extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private SpeedController intakeMotor;
+  private SpeedController runMotor;
   private DoubleSolenoid dsolenoidrotate;
-  private static DigitalInput MechanismUp;
-  private static DigitalInput MechanismDown;
+  private static DigitalInput hallEffectRaise;
+  private static DigitalInput hallEffectLower;
+  private static final boolean reverseValue = false;
 
   public FloorHatchMechanism() {
-    intakeMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
+    runMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
     dsolenoidrotate = new DoubleSolenoid(RobotMap.Hatch_Intake_Lower_pcm, RobotMap.Hatch_Intake_Raise_pcm);
-    MechanismUp = new DigitalInput(RobotMap.Mechanism_Raise_DIO);
-    MechanismDown = new DigitalInput(RobotMap.Mechanism_Lower_DIO);
-  
+    hallEffectRaise = new DigitalInput(RobotMap.Mechanism_Raise_DIO);
+    hallEffectLower = new DigitalInput(RobotMap.Mechanism_Lower_DIO);
   }
 
-  public void raiseMechanism() {
+
+  public void raise() {
     dsolenoidrotate.set(Value.kReverse);
   }
 
-  public void lowerMechanism() {
+  public void lower() {
     dsolenoidrotate.set(Value.kForward);
   }
-
+  //Positive values will cause the motor to spin.
   public void intakeHatchPanel(double speed) {
-    intakeMotor.set(speed);
+    if (reverseValue) {
+      runMotor.set(-speed);
+    }
+    else {
+      runMotor.set(speed);
+    }
+  
   }
 
-  public boolean isMechanismExtended(){
+  public boolean isSolenoidLowered(){
     return dsolenoidrotate.get() == Value.kForward;
   }
 
-  public boolean isMechanismRetracted(){
+  public boolean isSolenoidRaised(){
     return dsolenoidrotate.get() == Value.kReverse;
   }
 
- // ConsolePrinter.putBoolean("Is the mechanism up" , () -> ) {
-  //  return FloorHatchMechanism1.isMechanismUp();
- // }
-
- // ConsolePrinter.putBoolean("Is the mechanism down" , () -> ) {
-//    return Robot.FloorHatchMechanism1.isMechanismDown();
-//  }
-
   public boolean isMechanismUp() {
-    return !MechanismUp.get();
+    return !hallEffectRaise.get();
   }
 
-  public boolean isMechanismDown() {
-    return !MechanismDown.get();
-  }
+    public boolean inMechanismLowered(){
+      return !hallEffectLower.get();
+    }
+
 
   @Override
   public void initDefaultCommand() {

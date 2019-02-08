@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystick extends Command {
   public DriveWithJoystick() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.floorHatchMechanism);
   }
 
@@ -28,7 +26,7 @@ public class DriveWithJoystick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.floorHatchMechanism.intakeHatchPanel(OI.getFloorIntakeMechanism());
+    Robot.floorHatchMechanism.intakeHatchPanel(OI.getFloorIntakeMechanismJoystickValue());
   }
 
   // Make this return true when this Command no longer needs to run execute()

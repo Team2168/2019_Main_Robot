@@ -45,6 +45,8 @@ public class RobotMap {
 	
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 7; //2017 gear intake
 	public static final int CUBE_INTAKE_MOTOR_RIGHT = 8; //PWM 19 on board //2017 spare
+
+	public static final int Hatch_Intake_Belt_CAN=14;
 	
 	//public static final int CUBE_INTAKE_PIVOT_MOTOR = 9;
 	
@@ -72,6 +74,10 @@ public class RobotMap {
 	public static final int LIFT_FULLY_DOWN_LIMIT = 7; //2018 proto
 	public static final int LIFT_RATCHET_ENGAGE_LIMIT = 8;
 	public static final int LINE_DETECTOR = 9;
+
+	public static final int Mechanism_Raise_DIO=7;
+	public static final int Mechanism_Lower_DIO=8;
+
 	//public static final int TX1_ON_STATUS = 9;
 
 
@@ -103,6 +109,8 @@ public class RobotMap {
 	public static final int LIFT_BRAKE_DISENGAGE_PCM = 2;
 	public static final int LIFT_HIGH_GEAR_PCM = 4;
 	public static final int LIFT_LOW_GEAR_PCM = 5;
+	public static final int Hatch_Intake_Lower_pcm=2;
+	public static final int Hatch_Intake_Raise_pcm=3;
 	
 	
 
@@ -371,15 +379,4 @@ public class RobotMap {
 	
 	public static final String DID_AIDEN_PUSH_IT = "only if Liam said he could"; //so false
 	public static final boolean DID_AIDEN_WRITE_A_PATH = false;
-	
-	/*********************************************************************
-	 * 						Floor Intake Parameters
-	 *//******************************************************************** */
-	public static final int Hatch_Intake_Lower_pcm=2;
-	public static final int Hatch_Intake_Raise_pcm=3;
-	public static final int Hatch_Intake_Belt_CAN=14;
-	public static final int Mechanism_Raise_DIO=7;
-	public static final int Mechanism_Lower_DIO=8;
-	
-	
 }
