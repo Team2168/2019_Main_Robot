@@ -1,13 +1,9 @@
 package org.team2168.subsystem;
-
 import org.team2168.Commands.DriveCargoIntakeJoystick;
 import org.team2168.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
