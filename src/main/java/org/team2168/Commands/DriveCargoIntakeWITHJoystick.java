@@ -21,14 +21,14 @@ public class DriveCargoIntakeWITHJoystick extends Command {
 	@Override
 	protected void initialize() {
 
-		Robot.cargointake.driveCargoMotor1(0);
+		
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.cargointake.driveCargoMotor1(OI.getDriveCargoIntakeJoystickValue());
+		Robot.cargointake.drive(OI.getDriveCargoIntakeJoystickValue());
 
 	}
 
@@ -41,7 +41,7 @@ public class DriveCargoIntakeWITHJoystick extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.cargointake.driveCargoMotor1(0.0);//0.0 because its a double
+		Robot.cargointake.drive(0.0);//0.0 because its a double
 	}
 
 	// Called when another command which requires one or more of the same
