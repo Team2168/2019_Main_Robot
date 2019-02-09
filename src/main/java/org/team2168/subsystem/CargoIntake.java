@@ -1,5 +1,5 @@
 package org.team2168.subsystem;
-import org.team2168.Commands.DriveCargoIntakeJoystick;
+import org.team2168.Commands.DriveCargoIntakeWithJoystick;
 import org.team2168.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -50,7 +50,7 @@ public class CargoIntake extends Subsystem {
         return _sharpIRSensor.getVoltage();
     }
 
-    public boolean isCargoPresence()//presence because in the readme it says that it will sense the "presence" of the cargo ;)
+    public boolean isCargoPresent()//presence because in the readme it says that it will sense the "presence" of the cargo ;)
     {
         return (getRawIRVoltage() >= RobotMap.CARGO_IR_SENSOR_THRESHOLD);
     }
@@ -61,6 +61,6 @@ public class CargoIntake extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveCargoIntakeJoystick());
+		setDefaultCommand(new DriveCargoIntakeWithJoystick());
 	}
 }
