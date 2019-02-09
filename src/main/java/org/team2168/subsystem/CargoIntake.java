@@ -19,7 +19,7 @@ public class CargoIntake extends Subsystem {
     /**
      * Positive value moves cargo inwards?
      */
-    private SpeedController drive;
+    private SpeedController _drive;
     /**
      * negative value moves cargo outwards?
      */
@@ -27,13 +27,13 @@ public class CargoIntake extends Subsystem {
     /**
      * the sharp IR Sensor will detect the presence of the cargo or measure the distance from the sensor to the cargo in volts
      */
-    private AnalogInput sharpIRSensor;
+    private AnalogInput _sharpIRSensor;
 
     
     
 	public CargoIntake() {
-        drive = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR);
-        sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
+        _drive = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR);
+        _sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
     }
     
 
@@ -42,7 +42,7 @@ public class CargoIntake extends Subsystem {
     //(positive moves ball out, negative moves ball in)
     public void drive(double speed)
     {
-        drive.set(speed);
+        _drive.set(speed);
     }
 
 
@@ -51,7 +51,7 @@ public class CargoIntake extends Subsystem {
 
     public double getRawIRVoltage()
     {
-        return sharpIRSensor.getVoltage();
+        return _sharpIRSensor.getVoltage();
     }
 
     public boolean isCargoPresence()//presence because in the readme it says that it will sense the "presence" of the cargo ;)
