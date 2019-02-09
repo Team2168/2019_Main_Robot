@@ -6,13 +6,13 @@ import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * The purpose of this class is to drive the CargoIntake with Joysticks
  */
-public class DriveCargoIntakeWITHJoystick extends Command {
+public class DriveCargoIntakeWithJoystick extends Command {
 
 
     
-	public DriveCargoIntakeWITHJoystick() {
+	public DriveCargoIntakeWithJoystick() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.cargointake);
 	}
