@@ -97,7 +97,7 @@ public class OI {
 		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y();
 	}
 
-	public static double getDriveIntakeWheelsJoystickValue() {//use the top one for joystick value, make one of ur own
+	public static double getDriveIntakeWheelsJoystickValue() {
 		return operatorJoystick.getRightStickRaw_Y();
 	}
 
