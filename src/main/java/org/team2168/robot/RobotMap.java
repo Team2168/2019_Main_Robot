@@ -45,16 +45,14 @@ public class RobotMap {
 	
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 7; //2017 gear intake
 	public static final int CUBE_INTAKE_MOTOR_RIGHT = 8; //PWM 19 on board //2017 spare
-	
+	public static final int CARGO_INTAKE_MOTOR = 9;
 	//public static final int CUBE_INTAKE_PIVOT_MOTOR = 9;
 	
-	public static final int CARGO_INTAKE_MOTOR = 0;
+	
 	public static final int WINCH_MOTOR_2 = 19;
 	
 	
 	public static final int PLATFORM_MOTOR = 11; //2017 turret
-
-	///////////////////CARGO INTAKE MOTORS///////////////////////////////
 	
 	
 	
