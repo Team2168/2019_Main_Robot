@@ -48,15 +48,15 @@ public class RobotMap {
 	
 	//public static final int CUBE_INTAKE_PIVOT_MOTOR = 9;
 	
-	public static final int WINCH_MOTOR_1 = 9;
+	public static final int CARGO_INTAKE_MOTOR = 0;
 	public static final int WINCH_MOTOR_2 = 19;
 	
 	
 	public static final int PLATFORM_MOTOR = 11; //2017 turret
 
 	///////////////////CARGO INTAKE MOTORS///////////////////////////////
-	public static final int CARGO_INTAKE_MOTOR_1 = 0;
-	public static final int CARGO_INTAKE_MOTOR_2 = 1;
+	
+	
 	
 	
 
@@ -91,12 +91,12 @@ public class RobotMap {
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_LOW_GEAR_PCM = 0;
 	public final static int DRIVETRAIN_HIGH_GEAR_PCM = 1;
+	public static final int CARGO_PUNCH_BALL_EXTENDED_PCM = 2;
+	public static final int CARGO_PUNCH_BALL_RETRACTED_PCM = 3;
 	public static final int CUBE_INTAKE_GRIPPER_EXTENDED_PCM = 4;
 	public static final int CUBE_INTAKE_GRIPPER_RETRACTED_PCM = 5;
 	public static final int CUBE_INATKE_PIVOT_PISTON_EXTEND = 6;
 	public static final int CUBE_INTAKE_PIVOT_PISTON_RETRACT = 7;
-	public static final int CARGO_PUNCH_BALL_EXTENDED_PCM = 0;
-	public static final int CARGO_PUNCH_BALL_RETRACTED_PCM = 1;
 	
 	public static final int FLIPPY_FLOOPED = 3;
 	public static final int FLIPPER_FLUPED = 2;//Forklift
@@ -115,12 +115,14 @@ public class RobotMap {
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
-	public static final int LIFT_POSITION_POT = 0;
+	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
 	public static final int CUBE_INTAKE_IR_SENSOR1 = 1;
 	public static final int DRIVETRAIN_SONAR_SENSOR = 2;
 	public static final int CUBE_INTAKE_IR_SENSOR2 = 3;
 	public static final int PRESSURE_SENSOR = 4;
-	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
+	public static final int CARGO_IR_SENSOR_THRESHOLD = 5;
+
+	
 	
 	
 
