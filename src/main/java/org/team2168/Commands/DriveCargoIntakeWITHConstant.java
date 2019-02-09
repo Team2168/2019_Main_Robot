@@ -6,12 +6,13 @@ import org.team2168.robot.Robot;
 /**
  * The purpose of this class is to control the CargoIntake with code instead of joysticks/controller.
  */
-public class DriveCargoIntakeWITHConstant extends Command {
+public class DriveCargoIntakeWithConstant extends Command {
 
 	int counter;
 	double speed;
 
-	public DriveCargoIntakeWITHConstant(double speed) {
+
+	public DriveCargoIntakeWithConstant(double speed) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.cargointake);
 		this.speed = speed;
