@@ -37,10 +37,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	// PWM (0 to 9) on RoboRio/////////////////////////////////////////////////
 	public static final int RIGHT_DRIVE_MOTOR_1 = 0; //Same as 2017
 	public static final int RIGHT_DRIVE_MOTOR_2 = 1; //Same as 2017
-	public static final int RIGHT_DRIVE_MOTOR_3 = 2; //NEW: HOW TO INTEGRATE
+	public static final int RIGHT_DRIVE_MOTOR_3 = 2; 
 	public static final int LEFT_DRIVE_MOTOR_1 = 3; //Same as 2017
 	public static final int LEFT_DRIVE_MOTOR_2 = 4; //Same as 2017
-	public static final int LEFT_DRIVE_MOTOR_3 = 5; //NEW: HOW TO INTEGRATE
+	public static final int LEFT_DRIVE_MOTOR_3 = 5; 
 
 	public static final int LIFT_MOTOR_1 = 6; 
 	public static final int LIFT_MOTOR_2 = 7; 
@@ -50,14 +50,34 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int CARGO_INTAKE_MOTOR = 9;
 
 
-	// Can PWM Ports
-	public static final int RIGHT_DRIVE_MOTOR_1_CAN = 0; 
-	public static final int RIGHT_DRIVE_MOTOR_2_CAN = 1; 
-	public static final int RIGHT_DRIVE_MOTOR_3_CAN = 2;
-	public static final int LEFT_DRIVE_MOTOR_1_CAN = 3; 
-	public static final int LEFT_DRIVE_MOTOR_2_CAN = 4;
-	public static final int LEFT_DRIVE_MOTOR_3_CAN = 5;
+	// Can Ports ////////////////////////////////////
+	public static final int RIGHT_DRIVE_MOTOR_1_CAN = 1; 
+	public static final int RIGHT_DRIVE_MOTOR_2_CAN = 2; 
+	public static final int RIGHT_DRIVE_MOTOR_3_CAN = 3;
+	public static final int LEFT_DRIVE_MOTOR_1_CAN = 4; 
+	public static final int LEFT_DRIVE_MOTOR_2_CAN = 5;
+	public static final int LEFT_DRIVE_MOTOR_3_CAN = 6;
+	
+	public static final int LIFT_MOTOR_1 = 7; 
+	public static final int LIFT_MOTOR_2 = 8; 
+	
+	
+	public static final int CUBE_INTAKE_MOTOR_LEFT = 9; 
+	public static final int CUBE_INTAKE_MOTOR_RIGHT = 10; 
+	
+  public static final int PLATFORM_MOTOR = 11; 
 
+	public static final int STINGER_WINCH_MOTOR_1 = 12;
+	public static final int STRINGER_WINCH_MOTOR_2 = 13;
+	
+  
+  
+	//CAN Device IDs///////////////////////////////////////////////////////////
+	public static final int PCM_CAN_ID = 0;
+	public static final int PCM_CAN_ID_2 = 1;
+	public static final int PDP_CAN_ID = 0;
+	public static final int TALON_ID = 0;
+	public static final int TALON_ID_1 = 1;
 
 	//SPI Channels/////////////////////////////////////////////////////////////
 	public static final int GYRO = 0;
@@ -78,9 +98,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	//Channels 10-25 on MXP (PWM and DIO)
+  public static final int PWM_LIGHTS = 18;
 	public static final int CAN_DRIVETRAIN_JUMPER = 23; 
 	public static final int PRACTICE_BOT_JUMPER = 24;
-	public static final int PWM_LIGHTS = 18;
+	
 
 	// PBOT Differences 
 	// public static final int GEAR_INTAKE_ARM_HALL_EFECT_PBOT = 0;
@@ -90,35 +111,27 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
 	public final static int STINGERS_ENGAGED_PCM = 1;
-	public static final int CUBE_INTAKE_GRIPPER_EXTENDED_PCM = 4;
-	public static final int CUBE_INTAKE_GRIPPER_RETRACTED_PCM = 5;
-	public static final int CUBE_INATKE_PIVOT_PISTON_EXTEND = 6;
-	public static final int CUBE_INTAKE_PIVOT_PISTON_RETRACT = 7;
-
-	public static final int FLIPPY_FLOOPED = 3;
-	public static final int FLIPPER_FLUPED = 2;//Forklift
-
-	public static final int PLUNGER_ARM_BREAK_EXTENDED_PCM = 4; // TODO check ports
-	public static final int PLUNGER_ARM_BREAK_RETRACTED_PCM = 5; //these look open but not positive
-
-
+	public static final int HATCH_INTAKE_LOWER_PCM = 2;
+	public static final int HATCH_INTAKE_RAISE_PCM = 3;
+	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
+	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
+	public static final int LIFT_BRAKE_ENGAGE_PCM = 6;
+	public static final int LIFE_BRAKE_DISENGAGE = 7;
+	
 	//Double Soldenoids PCM ID = 1
-	public static final int LIFT_RACHET_ENGAGE_PCM = 0;
-	public static final int LIFT_RACHET_DISENGAGE_PCM = 1;
-	public static final int LIFT_BRAKE_ENGAGE_PCM = 3;
-	public static final int LIFT_BRAKE_DISENGAGE_PCM = 2;
-	public static final int LIFT_HIGH_GEAR_PCM = 4;
-	public static final int LIFT_LOW_GEAR_PCM = 5;
-
-
+	//0
+	//1
+	public static final int BALL_PUNCH_EXTEND_PCM = 2;
+	public static final int BALL_PUNCH_RETRACT_PCM = 3;
+	public static final int PROBE_EXTEND_PCM = 4;
+	public static final int PROBE_RETRACT_PCM = 5;
+	public static final int PROBE_ENGAGE_PCM = 6;
+	public static final int PROBE_DISENGAGE_PCM = 7;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
 	public static final int LIFT_POSITION_POT = 0;
-	public static final int CUBE_INTAKE_IR_SENSOR1 = 1;
-	public static final int DRIVETRAIN_SONAR_SENSOR = 2;
-	public static final int CUBE_INTAKE_IR_SENSOR2 = 3;
 	public static final int PRESSURE_SENSOR = 4;
 	public static final int PIVOT_POSITION_POT = 7; //TODO set input channel (NOT ON ROBOTMAP whiteboard pictures)
 
@@ -152,18 +165,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int AUX_POWER = 8;
 
-
-
-
 	public static final int PCM_POWER_PCM = 7;;
 
 
-	//CAN Device IDs///////////////////////////////////////////////////////////
-	public static final int PCM_CAN_ID = 0;
-	public static final int PCM_CAN_ID_2 = 1;
-	public static final int PDP_CAN_ID = 0;
-	public static final int TALON_ID = 0;
-	public static final int TALON_ID_1 = 1;
 
 
 	// Relay Channels///////////////////////////////////////////////////////////

@@ -326,12 +326,13 @@ public class Drivetrain extends Subsystem {
      * @param rightSpeed
      */
     public void tankDrive(double leftSpeed, double rightSpeed)
-    {
-      //if (Robot.lift.getPotPos() > 30)     //Won't work until lift is integrated
-      //{
+    {c
+      if (Robot.lift.getPotPos() > 30)     //Won't work until lift is integrated
+      {
         leftSpeed = leftSpeed * 0.3;
         rightSpeed = rightSpeed * 0.3;
-      //}
+      }
+
 
       driveLeftMotors(leftSpeed);
       driveRightMotors(rightSpeed);
@@ -454,28 +455,6 @@ public class Drivetrain extends Subsystem {
       resetLeftPosition();
       resetRightPosition();
     }
-
-    // Code from last year that I don't know if we will use, and I can't find the associated classes
-  //   /**
-  //  * Gets the voltage given by the sonar sensor on the Gear Intake.
-  //  * 
-  //  * @return the raw voltage from the gear presence sensor
-  //  */
-  // public double getSonarVoltage() {
-  //  return DrivetrainSonarSensor.getVoltage();
-  // }
-
-  // /**
-  //  * Gets the status of the line detector 
-  //  * @return true if line is detected
-  //  */
-  // public boolean getLinedectorStatus() {
-  //  if(INVERT_LINE_SENSOR) {
-  //    return !lineDetector.get();
-  //  } else {
-  //    return lineDetector.get();
-  //  }
-  // }
 
   /**
    * returns the last commanded voltage of Left motor 1
