@@ -66,7 +66,8 @@ public class OI {
 	/**
 	 * Private constructor for singleton class which instantiates the OI object
 	 */
-	private OI() {
+	private OI() 
+  {
 
 		/*************************************************************************
 		 *                         Driver Joystick			                       *

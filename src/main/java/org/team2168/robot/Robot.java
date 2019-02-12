@@ -9,11 +9,14 @@ package org.team2168.robot;
 
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
+import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.LiftHardStop;
 import org.team2168.subsystems.PlungerArmHardStop;
 import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,6 +46,8 @@ public class Robot extends TimedRobot {
   //Subsystems
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
+  public static Lift lift;
+  public static LiftHardStop liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
 
@@ -62,13 +67,15 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    
+
     practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
     canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
 
     //Instantiate the subsystems
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
+    lift = Lift.getInstance();
+    liftHardStop = LiftHardStopgetInstance();
     plungerArmPivot = PlungerArmPivot.getInstance();
     plungerArmHardStop = PlungerArmHardStop.getInstance();
 

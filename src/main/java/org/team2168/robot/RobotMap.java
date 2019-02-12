@@ -128,7 +128,6 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int PROBE_ENGAGE_PCM = 6;
 	public static final int PROBE_DISENGAGE_PCM = 7;
 
-
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
 	public static final int LIFT_POSITION_POT = 0;
@@ -168,8 +167,6 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int PCM_POWER_PCM = 7;;
 
 
-
-
 	// Relay Channels///////////////////////////////////////////////////////////
 	public static final int FLASHLIGHT_RELAY = 0;
 
@@ -198,16 +195,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	// TODO find ratio
 	private static final double DRIVE_GEAR_RATIO = 1.0 / 1.0; // ratio between wheel over encoder
 	private static final double DRIVE_WHEEL_DIAMETER = 6.0;   //6.0;
-	public static final int DRIVE_ENCODER_PULSE_PER_ROT = (int) (DRIVE_PULSE_PER_ROTATION * DRIVE_GEAR_RATIO); // pulse
-																												// per
-																												// rotation
-																												// *
-																												// gear																					// ratio
-	public static final double DRIVE_ENCODER_DIST_PER_TICK = (Math.PI * DRIVE_WHEEL_DIAMETER
-			/ DRIVE_ENCODER_PULSE_PER_ROT);
-	public static final CounterBase.EncodingType DRIVE_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and
-																										// falling edges
-																										// on
+	public static final int DRIVE_ENCODER_PULSE_PER_ROT = (int) (DRIVE_PULSE_PER_ROTATION * DRIVE_GEAR_RATIO); // pulse per rotation * gear																					// ratio
+	public static final double DRIVE_ENCODER_DIST_PER_TICK = (Math.PI * DRIVE_WHEEL_DIAMETER / DRIVE_ENCODER_PULSE_PER_ROT);
+	public static final CounterBase.EncodingType DRIVE_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
 	public static final AverageEncoder.PositionReturnType DRIVE_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.FEET;
 	public static final AverageEncoder.SpeedReturnType DRIVE_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.FPS;
 	public static final int DRIVE_ENCODER_MIN_RATE = 0;
