@@ -32,7 +32,7 @@ public class RaiseMechanism extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.floorHatchMechanism.isRaised();
+    return Robot.floorHatchMechanism.isSolenoidRaised();
   }
 
   // Called once after isFinished returns true
