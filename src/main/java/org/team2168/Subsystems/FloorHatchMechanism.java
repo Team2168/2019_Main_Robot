@@ -24,13 +24,14 @@ public class FloorHatchMechanism extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  private static FloorHatchMechanism instance = null;
   private SpeedController runMotor;
   private DoubleSolenoid dsolenoidrotate;
   private static DigitalInput hallEffectRaise;
   private static DigitalInput hallEffectLower;
   private static final boolean reverseValue = false;
 
-  public FloorHatchMechanism() {
+  private FloorHatchMechanism() {
     runMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
     dsolenoidrotate = new DoubleSolenoid(RobotMap.Hatch_Intake_Lower_pcm, RobotMap.Hatch_Intake_Raise_pcm);
     hallEffectRaise = new DigitalInput(RobotMap.Mechanism_Raise_DIO);
@@ -71,7 +72,11 @@ public class FloorHatchMechanism extends Subsystem {
     public boolean inMechanismLowered(){
       return !hallEffectLower.get();
     }
-
+    public static FloorHatchMechanism getInstance(){
+        if (instance == null)
+          instance = new FloorHatchMechanism();
+        return instance;
+    }
 
   @Override
   public void initDefaultCommand() {
