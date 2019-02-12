@@ -103,7 +103,6 @@ Powers the robot's movement, controlling speed and direction of travel. The moto
 <img src="http://yuml.me/diagram/scruffy/class/[Drivetrain |-SpeedController _leftMotor1; -SpeedController _leftMotor2;-SpeedController _leftMotor3;-SpeedController _rightMotor1; -SpeedController _rightMotor2;-SpeedController _rightMotor3; -ADXRS453Gyro _gyroSPI;
     -AverageEncoder _drivetrainLeftEncoder; -AverageEncoder _drivetrainRightEncoder; +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage; +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |-Drivetrain(); +getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed); +driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed  double rightSpeed); +tankDrive(double leftSpeed double rightSpeed); +getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated; +isGyroCalibrating; +stopGyroCalibrating(); +getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition(); +getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
  
-
 ### DrivetrainStingerShifter (DSS)
 Serves dual function of climbing to 3rd level on endgame and intaking cargo during match. This system will need to work in tandem with the stingers in order to lift the robothorizontally onto the 3rd level.
 
@@ -126,3 +125,51 @@ Serves dual function of climbing to 3rd level on endgame and intaking cargo duri
 | Functionality + External | DrivetrainStingerShifter (DSS) | _drivetrainShifter  | Drivetrain (D), Stingers (S) | During end game, the shifter will have to engage the stingers to raise the robot, and then re-engage the drivetrain to pull the chassis onto the 3rd stage of the HAB  |
 
 <img src="http://yuml.me/diagram/scruffy/class/[DrivetrainStingerShifter|-DoubleSolenoid _drivetrainShifter;-DrivetrainStingerShifter _instance |-DrivetrainStingerShifter(); +getInstance(); +engageDrivetrain(); +engageStingers(); +isDrivetrainEngaged(); +isStingerEngaged(); +initDefaultCommand()]" >
+
+### PlungerArmPivot (PAP)
+Rotates the hatch plunger arm from the front of the robot to the back and vice versa. This allows the hatch panels to be grabbed on one side from the human player station and scored on the other. It has to be controlled so the pivot will only rotate when it will not hit the crossbar of the lift. 
+
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| PAP01 | private | VictorSP | _plungerArmPivotMotor | powers the arm to rotate 180 degrees from front to back and vice versa |
+| PAP02 | private | AveragePotetiometer | _pivotPot | gives the rotary position of the plunger arm |
+| PAP03 | private | PlungerArmPivot | _instance | object designed to create a singleton object of the PlungerArmPivot |
+
+
+#### Requirements: Interlocks, Functionality, or External
+**Interlocks** represent scenarios where the robot may be capable of harming itself by its own subsystem action or by the action of another subsystem (e.g. Intake may not lift higher than the crossbar of the lift when it is rotated towards the back of the robot).<br>
+**Functionality** is a capability the subsystem needs to have (e.g. The intake shall hold the cargo in place until it is commanded to shoot or drop the cargo).<br>
+**External** represent scenarios when a subsystem will need to collaborate with or consider another subsystem for a particular action (e.g. Stingers shall lower at the same rate as MonkeyBars to horizontally lift the robot to the third stage).<br>
+
+| Requirement Type | Subsystem | Component | Interfaces with | Description |
+|------------------|-----------|-----------|-----------------|-------------|
+| Command | PlungerArmPivot:DrivePlungerArmPivotWithConstant | _plungerArmPivotMotor | Hatch Plunger (P) | sends a constant speed to the pivot (based into the command during instantiation in OI) |
+| Command | PlungerArmPivot:DrivePlungerArmPivotWithJoysticks | _plungerArmPivotMotor | Hatch Plunger (P) | sends a speed from an axis of the operator joystick to the pivot (determined in OI method getDrivePlungerArmPivotJoystickValue()) |
+| Interlock | PlungerArmPivot | _plungerArmPivotMotor, _pivotPot, _plungerArmBrake | Lift (L), PlungerArmHardStop (PAHS) | If Pivot turns when the lift is at one of several wrong heights (still TBD), the pivot will hit the crossbar of the lift |
+| Functionality + External | PlungerArmPivot | _plungerArmPivotMotor | HatchPlunger (P) | The pivot controls the rotational position of the hatch plunger, which has to deliver hatch panels to the rocket and cargo ship, as well as receive panels from the human player station  |
+| Functionality + External | PlungerArmPivot | _plungerArmPivotMotor | HatchPlunger (P), FloorIntake (FI) | The pivot controls the rotational position of the hatch plunger, which has receive hatch panels from the floor intake |
+
+<img src="http://yuml.me/diagram/scruffy/class/[PlungerArmPivot |-VictorSP _plungerArmPivotMotor; -AveragePotentiometer _pivotPot; -PlungerArmPivot _instance |-PlungerArmPivot(); +getInstance(); +drivePlungerArmPivotMotor(double speed); +getRawPot(); +getPotPos(); +initDefaultCommand()]" >
+
+### PlungerArmHardStop (PAHS)
+Hard stop for the Plunger Arm Pivot. Probably involved in cut-offs for interlock preventing the plunger arm from turning into the lift (see above).
+
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| PAHS01 | private | DoubleSolenoid | _plungerArmBrake | hard stop for the plunger arm pivot |
+| PAHS02 | private | PlungerArmHardStop | _instance | object designed to create a singleton object of the PlungerArmHardStop |
+
+
+#### Requirements: Interlocks, Functionality, or External
+**Interlocks** represent scenarios where the robot may be capable of harming itself by its own subsystem action or by the action of another subsystem (e.g. Intake may not lift higher than the crossbar of the lift when it is rotated towards the back of the robot).<br>
+**Functionality** is a capability the subsystem needs to have (e.g. The intake shall hold the cargo in place until it is commanded to shoot or drop the cargo).<br>
+**External** represent scenarios when a subsystem will need to collaborate with or consider another subsystem for a particular action (e.g. Stingers shall lower at the same rate as MonkeyBars to horizontally lift the robot to the third stage).<br>
+
+| Requirement Type | Subsystem | Component | Interfaces with | Description |
+|------------------|-----------|-----------|-----------------|-------------|
+| Command | PlungerArmHardStop:EnablePlungerArmBrake | _plungerArmBrake | PlungerArmPivot (PAP) | engages the brake to stop the plunger arm pivot |
+| Command | PlungerArmHardStop:DisablePlungerArmBrake | _plungerArmBrake | Hatch Plunger (P) | disengages brake to re-allow movement to the plunger arm pivot |
+| Functionality + External | PlungerArmHardStop | _plungerArmBrake | PlungerArmPivot (PAP) | The brake stops the movement of the PlungerArmPivot  |
+
+<img src="http://yuml.me/diagram/scruffy/class/[PlungerArmHardStop |-DoubleSolnoid _plungerArmBrake; -PlungerArmHardStop _instance |-PlungerArmHardStop(); +getInstance(); +enablePlungerArmBrake; +disablePlungerArmBrake; +isEnabledPlungerArmBrake; +isDisabledPlungerArmBrake; +initDefaultCommand()]" >
+
