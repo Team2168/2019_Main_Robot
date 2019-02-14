@@ -9,6 +9,7 @@ package org.team2168.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.AnalogInput;
 import org.team2168.robot.RobotMap;
 
@@ -27,10 +28,10 @@ public class HatchPlunger extends Subsystem {
     doublesolenoidFingers = new DoubleSolenoid(RobotMap.PLUNGER_ENGAGE_PCM, RobotMap.PLUNGER_DISENGAGE_PCM);
     HatchSensor = new AnalogInput(RobotMap.HATCH__INTAKE_IR_THRESHOLD );
   }
-  public void ExtendArm() {
+  public void ExtendPlunger() {
     doublesolenoidArm.set(DoubleSolenoid.Value.kForward);
   }
-  public void RetractArm() {
+  public void RetractPlunger() {
     doublesolenoidArm.set(DoubleSolenoid.Value.kReverse);
   }
   public void HatchEngaged() {
@@ -45,7 +46,18 @@ public class HatchPlunger extends Subsystem {
   public boolean isHatchPresent() {
       return (getRawIRVoltage() >= RobotMap.HATCH__INTAKE_IR_THRESHOLD);
   }
-  
+  public boolean isArmExtended(){
+    return doublesolenoidArm.get() == Value.kForward;
+  }
+  public boolean isArmRetracted(){
+    return doublesolenoidArm.get() == Value.kReverse;
+  }
+  public boolean isHatchEngaged(){
+    return doublesolenoidFingers.get() == Value.kForward;
+  }
+  public boolean isHatchDisengaged(){
+    return doublesolenoidFingers.get() == Value.kReverse;
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

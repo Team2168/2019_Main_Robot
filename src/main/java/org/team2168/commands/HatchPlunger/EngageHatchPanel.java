@@ -10,18 +10,18 @@ package org.team2168.commands.HatchPlunger;
 import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-public class RetractFingers extends Command {
-  public RetractFingers() {
+//this command grabs the hatch 
+public class EngageHatchPanel extends Command {
+  public EngageHatchPanel() {
     requires(Robot.hatchPlunger);
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    // eg. requires(chassis); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      Robot.hatchPlunger.HatchDisengaged();
+    Robot.hatchPlunger.HatchEngaged();
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -9,7 +9,7 @@ package org.team2168.commands.HatchPlunger;
 
 import org.team2168.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-
+//This command retracts the arm 
 public class RetractArm extends Command {
   public RetractArm() {
     requires(Robot.hatchPlunger);
@@ -26,7 +26,7 @@ public class RetractArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hatchPlunger.RetractArm();
+    Robot.hatchPlunger.RetractPlunger();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -10,7 +10,7 @@ package org.team2168.commands.HatchPlunger;
 import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+//this command extends the arm outward 
 public class ExtendArm extends Command {
   public ExtendArm() {
     requires(Robot.hatchPlunger);
@@ -21,7 +21,7 @@ public class ExtendArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.hatchPlunger.ExtendArm();
+    Robot.hatchPlunger.ExtendPlunger();
   }
 
   // Called repeatedly when this Command is scheduled to run
