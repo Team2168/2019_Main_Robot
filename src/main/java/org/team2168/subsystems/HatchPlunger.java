@@ -20,12 +20,12 @@ public class HatchPlunger extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private DoubleSolenoid doublesolenoidArm;
-  private DoubleSolenoid doublesolenoidFingers;
+  private DoubleSolenoid doublesolenoidPlunger;
   private AnalogInput HatchSensor;
   //Constructor
   public HatchPlunger(){
     doublesolenoidArm = new DoubleSolenoid(RobotMap.PLUNGER_EXTEND_PCM ,RobotMap.PLUNGER_RETRACT_PCM);
-    doublesolenoidFingers = new DoubleSolenoid(RobotMap.PLUNGER_ENGAGE_PCM, RobotMap.PLUNGER_DISENGAGE_PCM);
+    doublesolenoidPlunger = new DoubleSolenoid(RobotMap.PLUNGER_ENGAGE_PCM, RobotMap.PLUNGER_DISENGAGE_PCM);
     HatchSensor = new AnalogInput(RobotMap.HATCH__INTAKE_IR_THRESHOLD );
   }
   public void ExtendPlunger() {
@@ -35,10 +35,10 @@ public class HatchPlunger extends Subsystem {
     doublesolenoidArm.set(DoubleSolenoid.Value.kReverse);
   }
   public void HatchEngaged() {
-    doublesolenoidFingers.set(DoubleSolenoid.Value.kForward);
+    doublesolenoidPlunger.set(DoubleSolenoid.Value.kForward);
   }
 	public void HatchDisengaged() {
-    doublesolenoidFingers.set(DoubleSolenoid.Value.kReverse);
+    doublesolenoidPlunger.set(DoubleSolenoid.Value.kReverse);
   }
   public double getRawIRVoltage(){
     return HatchSensor.getVoltage();
@@ -53,10 +53,10 @@ public class HatchPlunger extends Subsystem {
     return doublesolenoidArm.get() == Value.kReverse;
   }
   public boolean isHatchEngaged(){
-    return doublesolenoidFingers.get() == Value.kForward;
+    return doublesolenoidPlunger.get() == Value.kForward;
   }
   public boolean isHatchDisengaged(){
-    return doublesolenoidFingers.get() == Value.kReverse;
+    return doublesolenoidPlunger.get() == Value.kReverse;
   }
   @Override
   public void initDefaultCommand() {
