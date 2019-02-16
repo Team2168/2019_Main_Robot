@@ -9,6 +9,7 @@ package org.team2168.subsystems;
 
 import org.team2168.commands.FloorHatchMechanism.DriveWithJoystick;
 import org.team2168.robot.RobotMap;
+import org.team2168.robot.Robot;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -31,6 +32,7 @@ public class FloorHatchMechanism extends Subsystem {
   private static DigitalInput _hallEffectRaise;
   private static DigitalInput _hallEffectLower;
   private static final boolean _reverseValue = false;
+  public static volatile double _intakeMotorVoltage;
 
   private FloorHatchMechanism() {
     _runMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
@@ -42,6 +44,7 @@ public class FloorHatchMechanism extends Subsystem {
     ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
     ConsolePrinter.putBoolean("Is Mechanism Up",() -> {return isMechanismUp();},true, false);
     ConsolePrinter.putBoolean("Is Mechanism Lowered",() -> {return isMechanismLowered();},true, false);
+    ConsolePrinter.putNumber("Intake motor voltage",() -> {return _intakeMotorVoltage;},true, false);
   }
 
 
@@ -60,7 +63,7 @@ public class FloorHatchMechanism extends Subsystem {
     else {
       _runMotor.set(speed);
     }
-  
+    _intakeMotorVoltage = Robot.pdp.getBatteryVoltage() * speed;
   }
 
   public boolean isSolenoidLowered(){
