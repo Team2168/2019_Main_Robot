@@ -29,7 +29,7 @@ public class DriveCargoIntakeWithConstant extends Command {
 	protected void execute() {
 		Robot.cargointake.drive(speed);
 		
-		//adds 1 counter then, goes to boolean, and since its not greater than 200 its gonna return false and come back here and add 1 more each time, until its greaqter than 200 than its gonna return true
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
