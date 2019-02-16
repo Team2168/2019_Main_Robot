@@ -58,8 +58,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_MOTOR_2_CAN = 5;
 	public static final int LEFT_DRIVE_MOTOR_3_CAN = 6;
 	
-	public static final int LIFT_MOTOR_1 = 7; 
-	public static final int LIFT_MOTOR_2 = 8; 
+	public static final int LIFT_MOTOR_1_CAN= 7; 
+	public static final int LIFT_MOTOR_2_CAN= 8; 
 	
 	
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 9; 
@@ -119,8 +119,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFE_BRAKE_DISENGAGE = 7;
 	
 	//Double Soldenoids PCM ID = 1
-	//0
-	//1
+	public static final int PLUNGER_ARM_BREAK_EXTENDED_PCM = 0;
+	public static final int PLUNGER_ARM_BREAK_RETRACTED_PCM = 1;
 	public static final int BALL_PUNCH_EXTEND_PCM = 2;
 	public static final int BALL_PUNCH_RETRACT_PCM = 3;
 	public static final int PROBE_EXTEND_PCM = 4;
@@ -144,22 +144,25 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	///////////////////40 Amp////////////////////////////////
 	public static final int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 0;
 	public static final int DRIVETRAIN_RIGHT_MOTOR_2_PDP = 1;
-	//public static final int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 3;
+	public static final int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 2;
 	public static final int DRIVETRAIN_LEFT_MOTOR_1_PDP = 15;
 	public static final int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
-	//public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 13;
+	public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 13;
+
+	public static final int LIFT_MOTOR_1_PDP = 3;
+	public static final int LIFT_MOTOR_2_PDP = 12;
 	//public static final int PLATFORM_1_PDP = 3;
 	//public static final int PLATFORM_2_PDP = 12;
 
-	public static final int WINCH_1_PDP = 2;
-	public static final int WINCH_2_PDP = 13;
+	// public static final int WINCH_1_PDP = 2;
+	// public static final int WINCH_2_PDP = 13;
 
 	///////////20-30 Amp/////////////////////////////////////
-	public static final int LIFT_MOTOR_1_PDP = 9;
-	public static final int LIFT_MOTOR_2_PDP = 10;
-	public static final int LIFT_MOTOR_3_PDP = 11;
-	public static final int INTAKE_MOTOR_1_PDP = 4;
-	public static final int INTAKE_MOTOR_2_PDP = 5;
+	public static final int PLUNGER_ARM_PIVOT_MOTOR_PDP = 4;
+	public static final int INTAKE_MOTOR_PDP = 5;
+
+
+	
 	public static final int INTAKE_PIVOT_MOTOR_PDP = 6;
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int AUX_POWER = 8;
