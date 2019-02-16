@@ -21,14 +21,14 @@ public class DriveCargoIntakeWithConstant extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		counter = 0;
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		Robot.cargointake.drive(speed);
-		counter ++;
+		
 		//adds 1 counter then, goes to boolean, and since its not greater than 200 its gonna return false and come back here and add 1 more each time, until its greaqter than 200 than its gonna return true
 	}
 
