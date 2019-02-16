@@ -9,7 +9,9 @@ package org.team2168.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import org.team2168.robot.Robot;
 import org.team2168.robot.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -28,6 +30,9 @@ public class DrivetrainStingerShifter extends Subsystem {
   private DrivetrainStingerShifter()
   {
     _drivetrainShifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.DRIVETRAIN_ENGAGED_PCM, RobotMap.STINGERS_ENGAGED_PCM);
+
+    ConsolePrinter.putBoolean("Drivetrain Enagaged", () -> {return Robot.drivetrainStingerShifter.isDrivetrainEngaged();}, true, false);
+		ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.drivetrainStingerShifter.isStingerEngaged();}, true, false);
   }
 
   /**
