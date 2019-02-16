@@ -27,6 +27,7 @@ public class DriveCargoIntakeWithConstant extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+
 		Robot.cargointake.drive(speed);
 		
 		
@@ -49,6 +50,7 @@ public class DriveCargoIntakeWithConstant extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		
 		end();
 	}
 }
