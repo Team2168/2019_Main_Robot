@@ -13,11 +13,14 @@ import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.LiftHardStop;
 import org.team2168.subsystems.PlungerArmHardStop;
 import org.team2168.subsystems.PlungerArmPivot;
+import org.team2168.utils.Debouncer;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -51,12 +54,27 @@ public class Robot extends TimedRobot {
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
 
+  // Variables for initializing and calibrating the Gyro
+  static boolean autoMode;
+  private static boolean matchStarted = false;
+  public static int gyroReinits;
+  private double lastAngle;
+  private Debouncer gyroDriftDetector = new Debouncer(1.0);
+  public static boolean gyroCalibrating = false;
+  private boolean lastGyroCalibrating = false;
+  private double curAngle = 0.0;
+
   //PDP Instance
   public static PowerDistribution pdp;
+
+  //Driverstation Instance
+	public static DriverStation driverstation;
 
   //Driver Joystick Chooser
   static int controlStyle;
   public static SendableChooser<Number> controlStyleChooser;
+
+  double runTime = Timer.getFPGATimestamp();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -103,53 +121,115 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
   }
 
+  //
   /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to
-   * the switch structure below with additional strings. If using the
-   * SendableChooser make sure to add them to the chooser code above as well.
+   * This method is called once each time the robot enters Disabled mode. You can
+   * use it to reset any subsystem information you want to clear when the robot is
+   * disabled.
    */
-  @Override
-  public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+  public void disabledInit() 
+  {
+    autoMode = false;
+    matchStarted = false;
+    
+    //If we are not in a match allow Gyro to be recalibrated in Disabled even if a previous 
+    //calibration was performed, we disable this in a match so that if we ever die in a match,
+    //we don't try to recalibrate a moving robot. 
+    if(driverstation.isFMSAttached())
+    	drivetrain.startGyroCalibrating();
+    
+    drivetrain.calibrateGyro();
+    
+    
   }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
-  @Override
-  public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+  public void disabledPeriodic() 
+  {
+
+    //Keep track of Gunstyle Controller Variables
+    
+    //callArduino();
+    getControlStyleInt();
+    controlStyle = (int) controlStyleChooser.getSelected();
+    // autoPriority = (int) autoPriorityChooser.getSelected();
+    // autonomousCommand = (Command) autoChooser.getSelected();
+    
+    // Kill all active commands
+    Scheduler.getInstance().run();
+
+  }
+
+
+    public void autonomousInit() 
+    {
+      autoMode = true;
+      
+    matchStarted = true;
+    drivetrain.stopGyroCalibrating();
+    drivetrain.resetGyro();
+    
+    
+    // autonomousCommand = (Command) autoChooser.getSelected();
+      
+    //     // schedule the autonomous command
+    //     if (autonomousCommand != null) 
+    //       autonomousCommand.start();
     }
-  }
 
-  /**
-   * This function is called periodically during operator control.
-   */
-  @Override
-  public void teleopPeriodic() {
-  }
+    /**
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic() {
+      autoMode = true;
+        Scheduler.getInstance().run();
+      //  Scheduler.getInstance().add(new AutoWithoutCube());
+        
+    }	
 
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
-  }
+    /**
+     * This function called prior to robot entering Teleop Mode
+     */
+  public void teleopInit() 
+  {
+    //callArduino();
+        autoMode = false;
+      matchStarted = true;
+      drivetrain.stopGyroCalibrating();
+        
+        // This makes sure that the autonomous stops running when
+          // teleop starts running. If you want the autonomous to 
+          // continue until interrupted by another command, remove
+          // this line or comment it out.
+          // if (autonomousCommand != null) autonomousCommand.cancel();
+
+        // Select the control style
+          controlStyle = (int) controlStyleChooser.getSelected();
+          
+          runTime = Timer.getFPGATimestamp();
+          //Scheduler.getInstance().add(new TeleopWithoutCube());     
+    }
+      
+
+      /**
+       * This function is called periodically during operator control
+       */
+      public void teleopPeriodic() {
+        
+          SmartDashboard.putNumber("TeleopLoopTime", Timer.getFPGATimestamp()-runTime);
+          runTime = Timer.getFPGATimestamp();
+      
+        autoMode = false;
+        Scheduler.getInstance().run();
+        
+        controlStyle = (int) controlStyleChooser.getSelected();
+        // updateLights();
+        // callArduino();
+        //Robot.i2c.write(8, 97);
+        
+      }
+            
+          
+          
 
   /**
    * Returns the status of DIO pin 24
@@ -217,5 +297,33 @@ public class Robot extends TimedRobot {
 
     public static int getControlStyleInt() {
       return (int) controlStyleChooser.getSelected();
+    }
+
+    /**
+     * Method which checks to see if gyro drifts and resets the gyro. Call this in a
+     * loop.
+     */
+    private void gyroReinit() {
+      // Check to see if the gyro is drifting, if it is re-initialize it.
+      // Thanks FRC254 for orig. idea.
+      curAngle = drivetrain.getHeading();
+      gyroCalibrating = drivetrain.isGyroCalibrating();
+
+      if (lastGyroCalibrating && !gyroCalibrating) {
+        // if we've just finished calibrating the gyro, reset
+        gyroDriftDetector.reset();
+        curAngle = drivetrain.getHeading();
+        System.out.println("Finished auto-reinit gyro");
+      } else if (gyroDriftDetector.update(Math.abs(curAngle - lastAngle) > (0.75 / 50.0)) && !matchStarted
+          && !gyroCalibrating) {
+        // && gyroReinits < 3) {
+        gyroReinits++;
+        System.out.println("!!! Sensed drift, about to auto-reinit gyro (" + gyroReinits + ")");
+        drivetrain.calibrateGyro();
+      }
+
+      lastAngle = curAngle;
+      lastGyroCalibrating = gyroCalibrating;
+
     }
 }
