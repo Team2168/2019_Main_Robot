@@ -1,4 +1,4 @@
-package org.team2168.subsystem;
+package org.team2168.subsystems;
 import org.team2168.Commands.DriveCargoIntakeWithJoystick;
 import org.team2168.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;

@@ -1,6 +1,15 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.team2168.robot;
 
-
+import org.team2168.PID.trajectory.OneDimensionalRotation;
+import org.team2168.commands.drivetrain.EngageDrivetrain;
+import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -53,12 +62,25 @@ public class OI {
 	                                    {-.15,0.0},
 	                                    {.15,0.0},
 	                                    {1.0,1.0}};
-			
+
 	/**
 	 * Private constructor for singleton class which instantiates the OI object
 	 */
-	private OI() {
-		
+	private OI() 
+  {
+
+		/*************************************************************************
+		 *                         Driver Joystick			                       *
+		 *************************************************************************/
+		driverJoystick.ButtonStart().whenPressed(new EngageDrivetrain());  //???? Which command should
+		driverJoystick.ButtonA().whenPressed(new EngageStingers());     //attached to which button
+		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
+
+
+		/*************************************************************************
+		 *                         Operator Joystick         		              *
+		 *************************************************************************/
+
 	}
 
 	/**
@@ -125,5 +147,10 @@ public class OI {
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return operatorJoystick.getRightStickRaw_X();
 	}
-	
+
+	public static double getDrivePlungerArmPivotJoystickValue()
+	{
+		//TODO actually figure out which stick and axis will connect
+		return operatorJoystick.getRightStickRaw_Y();
+	}
 }
