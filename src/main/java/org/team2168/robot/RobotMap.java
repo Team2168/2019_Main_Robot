@@ -110,7 +110,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
-	public final static int STINGERS_ENGAGED_PCM = 1;
+	
 	public static final int HATCH_INTAKE_LOWER_PCM = 2;
 	public static final int HATCH_INTAKE_RAISE_PCM = 3;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
