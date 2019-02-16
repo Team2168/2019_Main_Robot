@@ -9,6 +9,7 @@ package org.team2168.Subsystems;
 
 import org.team2168.Commands.FloorHatchMechanism.DriveWithJoystick;
 import org.team2168.robot.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -25,58 +26,65 @@ public class FloorHatchMechanism extends Subsystem {
   // here. Call these from Commands.
 
   private static FloorHatchMechanism instance = null;
-  private SpeedController runMotor;
-  private DoubleSolenoid dsolenoidrotate;
-  private static DigitalInput hallEffectRaise;
-  private static DigitalInput hallEffectLower;
-  private static final boolean reverseValue = false;
+  private SpeedController _runMotor;
+  private DoubleSolenoid _dSolenoidRotate;
+  private static DigitalInput _hallEffectRaise;
+  private static DigitalInput _hallEffectLower;
+  private static final boolean _reverseValue = false;
 
   private FloorHatchMechanism() {
-    runMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
-    dsolenoidrotate = new DoubleSolenoid(RobotMap.Hatch_Intake_Lower_pcm, RobotMap.Hatch_Intake_Raise_pcm);
-    hallEffectRaise = new DigitalInput(RobotMap.Mechanism_Raise_DIO);
-    hallEffectLower = new DigitalInput(RobotMap.Mechanism_Lower_DIO);
+    _runMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
+    _dSolenoidRotate = new DoubleSolenoid(RobotMap.Hatch_Intake_Lower_pcm, RobotMap.Hatch_Intake_Raise_pcm);
+    _hallEffectRaise = new DigitalInput(RobotMap.Mechanism_Raise_DIO);
+    _hallEffectLower = new DigitalInput(RobotMap.Mechanism_Lower_DIO);
+
+    ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
+    ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
+    ConsolePrinter.putBoolean("Is Mechanism Up",() -> {return isMechanismUp();},true, false);
+    ConsolePrinter.putBoolean("Is Mechanism Lowered",() -> {return isMechanismLowered();},true, false);
   }
 
 
   public void raise() {
-    dsolenoidrotate.set(Value.kReverse);
+    _dSolenoidRotate.set(Value.kReverse);
   }
 
   public void lower() {
-    dsolenoidrotate.set(Value.kForward);
+    _dSolenoidRotate.set(Value.kForward);
   }
   //Positive values will cause the motor to spin.
   public void intakeHatchPanel(double speed) {
-    if (reverseValue) {
-      runMotor.set(-speed);
+    if (_reverseValue) {
+      _runMotor.set(-speed);
     }
     else {
-      runMotor.set(speed);
+      _runMotor.set(speed);
     }
   
   }
 
   public boolean isSolenoidLowered(){
-    return dsolenoidrotate.get() == Value.kForward;
+    return _dSolenoidRotate.get() == Value.kForward;
   }
 
   public boolean isSolenoidRaised(){
-    return dsolenoidrotate.get() == Value.kReverse;
+    return _dSolenoidRotate.get() == Value.kReverse;
   }
 
   public boolean isMechanismUp() {
-    return !hallEffectRaise.get();
+    return !_hallEffectRaise.get();
   }
 
-    public boolean inMechanismLowered(){
-      return !hallEffectLower.get();
+    public boolean isMechanismLowered(){
+      return !_hallEffectLower.get();
     }
     public static FloorHatchMechanism getInstance(){
         if (instance == null)
           instance = new FloorHatchMechanism();
         return instance;
     }
+
+  
 
   @Override
   public void initDefaultCommand() {

@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithConstant extends Command {
 
-  private int speed;
+  private int _speed;
   public DriveWithConstant(int inputSpeed) {
     requires(Robot.floorHatchMechanism);
-    speed = inputSpeed;
+    _speed = inputSpeed;
   }
 
  
@@ -27,7 +27,7 @@ public class DriveWithConstant extends Command {
 
   @Override
   protected void execute() {
-    Robot.floorHatchMechanism.intakeHatchPanel(speed);
+    Robot.floorHatchMechanism.intakeHatchPanel(_speed);
   }
 
 
