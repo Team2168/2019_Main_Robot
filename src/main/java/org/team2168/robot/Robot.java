@@ -10,6 +10,16 @@ package org.team2168.robot;
 import org.team2168.subsystems.LEDs;
 
 import edu.wpi.first.wpilibj.I2C;
+import org.team2168.subsystems.Drivetrain;
+import org.team2168.subsystems.DrivetrainStingerShifter;
+import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.LiftHardStop;
+import org.team2168.subsystems.PlungerArmHardStop;
+import org.team2168.subsystems.PlungerArmPivot;
+import org.team2168.utils.PowerDistribution;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +38,30 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static LEDs leds;
 
+  //Digital Jumper to Identify if this is practice bot or comp bot
+  private static DigitalInput practiceBot;
+
+  //Digital Jumper to Identify if this uses a CAN drivetrain
+  private static DigitalInput canDrivetrain;
+  
+  //Operator Interface
+  public static OI oi;
+
+  //Subsystems
+  public static Drivetrain drivetrain;
+  public static DrivetrainStingerShifter drivetrainStingerShifter;
+  public static Lift lift;
+  public static LiftHardStop liftHardStop;
+  public static PlungerArmPivot plungerArmPivot;
+  public static PlungerArmHardStop plungerArmHardStop;
+
+  //PDP Instance
+  public static PowerDistribution pdp;
+
+  //Driver Joystick Chooser
+  static int controlStyle;
+  public static SendableChooser<Number> controlStyleChooser;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -42,6 +76,26 @@ public class Robot extends TimedRobot {
     //leds.writePatternOneColor(6, 0, 255, 200);
 
 
+    practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
+    canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
+
+    //Instantiate the subsystems
+    drivetrain = Drivetrain.getInstance();
+    drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
+   // lift = Lift.getInstance();
+   // liftHardStop = LiftHardStopgetInstance();
+    plungerArmPivot = PlungerArmPivot.getInstance();
+    plungerArmHardStop = PlungerArmHardStop.getInstance();
+
+    pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
+    pdp.startThread();
+
+    //Start Operator Interface
+    oi = OI.getInstance();
+    
+    //Initialize Control Selector Choices
+    controlStyleSelectInit();
+    
     System.out.println("Robot Initialization Complete!!");
   }
 
@@ -105,4 +159,72 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     
   }
+
+  /**
+   * Returns the status of DIO pin 24
+   *
+   * @return true if this is the practice robot
+   */
+  public static boolean isPracticeRobot() {
+    return !practiceBot.get();
+
+  }
+
+  /**
+   * Returns the status of DIO pin 25 
+   * 
+   * @return true if this has a CAN drivetrain
+   */
+  public static boolean isCanDrivetrain(){
+    return !canDrivetrain.get();
+  }
+
+
+  /**
+   * Get the name of a contron style.
+   * 
+   * @return the name of the control style.
+   */
+  public static String getControlStyleName() {
+    String retVal = "";
+
+    switch (controlStyle) {
+    case 0:
+      retVal = "Tank Drive";
+      break;
+    case 1:
+      retVal = "Gun Style";
+      break;
+    case 2:
+      retVal = "Arcade Drive";
+      break;
+    case 3:
+      retVal = "GTA Drive";
+      break;
+    case 4:
+      retVal = "New Gun Style";
+      break;
+    default:
+      retVal = "Invalid Control Style";
+    }
+
+
+      return retVal;
+    }
+
+  /**
+     * Adds control styles to the selector
+     */
+    public void controlStyleSelectInit() {
+      controlStyleChooser = new SendableChooser<>();
+      controlStyleChooser.addOption("Tank Drive", 0);
+      controlStyleChooser.setDefaultOption("Gun Style Controller", 1);
+      controlStyleChooser.addOption("Arcade Drive", 2);
+      controlStyleChooser.addOption("GTA Drive", 3);
+      controlStyleChooser.setDefaultOption("New Gun Style", 4);
+    }
+
+    public static int getControlStyleInt() {
+      return (int) controlStyleChooser.getSelected();
+    }
 }
