@@ -8,7 +8,7 @@ import org.team2168.robot.Robot;
  */
 public class DriveCargoIntakeWithConstant extends Command {
 
-	int counter;
+	
 	double speed;
 
 
@@ -50,7 +50,7 @@ public class DriveCargoIntakeWithConstant extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		
+
 		end();
 	}
 }
