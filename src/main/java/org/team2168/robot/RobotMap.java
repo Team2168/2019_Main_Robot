@@ -167,8 +167,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
-	public static final int PCM_CAN_ID = 0;
-	public static final int PCM_CAN_ID_2 = 1;
+	public static final int PCM_HATCHARM_ID = 0;
+	public static final int PCM_HATCHPLUNGER_ID = 1;
 	public static final int PDP_CAN_ID = 0;
 	public static final int TALON_ID = 0;
 	public static final int TALON_ID_1 = 1;
