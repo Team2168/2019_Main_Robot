@@ -45,6 +45,7 @@ public class FloorHatchMechanism extends Subsystem {
     ConsolePrinter.putBoolean("Is Mechanism Up",() -> {return isMechanismUp();},true, false);
     ConsolePrinter.putBoolean("Is Mechanism Lowered",() -> {return isMechanismLowered();},true, false);
     ConsolePrinter.putNumber("Intake motor voltage",() -> {return _intakeMotorVoltage;},true, false);
+    ConsolePrinter.putBoolean("Intake Motor", () -> {return !Robot.pdp.isIntakeMotorTrip();}, true, false);
   }
 
 
