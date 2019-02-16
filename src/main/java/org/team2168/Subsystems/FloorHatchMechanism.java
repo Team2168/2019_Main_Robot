@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.Subsystems;
+package org.team2168.subsystems;
 
-import org.team2168.Commands.FloorHatchMechanism.DriveWithJoystick;
+import org.team2168.commands.FloorHatchMechanism.DriveWithJoystick;
 import org.team2168.robot.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
