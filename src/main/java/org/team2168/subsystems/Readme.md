@@ -1,4 +1,4 @@
-# Subsystems
+ # Subsystems
 ## Actuator summary per subsystem
 | Subsystem                      | Motors | Pneumatics | Sensors |
 |--------------------------------|--------|------------|---------|
@@ -48,6 +48,43 @@ Serves dual function of climbing to 3rd level on endgame and intaking cargo duri
 | MB05 | private | DoubleSolenoid | _brake | Break to hold Monkey Bar arms in a fixed position |
 | MB06 | private | DigitalInput | _isFullyRaised | Boolean sensor to indicate if MB is raised fully or not |
 | MB07 | private | AverageEncoder | _currPosition | Rotary position sensor (Potentiometer) to indicate the current position of the MB |
+
+| Pin | PDP | Pin | DIO | Pin | Analog | PIN | CAN_ID | Pin | PCM1 | Pin | PCM2 | SPI | I2C |
+|-----|-----|-----|-----|-----|--------|-----|--------|-----|------|-----|-----|------|-----|
+| NA  | 40 AMP | 0 | RDT A Encoder | 0 |  | 0 | RDT 1 | 0 | DT Disable | 0 |  | NAVX IMU |
+| 0 | RDT 1 | 1 | RDT B Encoder | 1 |  | 1 | RDT 2 | 1 | Stinger PTO Engage | 1 |  | LED Lights |
+| 1 | RDT 2 | 2 | LDT A Encoder | 2 |  | 2 | RDT 3 | 2 | Hatch Intake Lower | 2 | Ball Punch Extend |  |
+| 2 | RDT 3 | 3 | LDT B Encoder | 3 |  | 3 | LDT 1 | 3 | Hatch Intake Rise | 3 | Ball Punch Retract |  |
+| 3 | LIFT 1 | 4 | Lift Raised | X | IR Sensor Cargo | 4 | LDT 2 | 4 |  | 4 | Harpoon Extend |  |
+| 12 | LIFT 2 | 5 | Lift Lowered | X | IR Sensor Hatch | 5 | LDT 3 | 5 |  | 5 | Harpoon Retract |  |
+| 13 | LDT 1 | 6 | Monkey Bar Raised | X | Stinger Pos R | 6 | LIFT 1 | 6 | Lift Brake Engage | 6 | Harpoon Engage |  |
+| 14 | LDT 2 | 7 |  | X | Stinger Pos L | 7 | LIFT 2 | 7 | Lift Brake Disengage | 7 | Harpoon Disengage |  |
+| 15 | LDT 3 | 8 |  | X | Lift Pos | 8 | Intake Rotate |  |  |  |  |  |
+| NA | 30-20 AMP | 9 |  | X | Hatch Intake IR | 9 | Ball Intake |  |  |  |  |  |
+| 4 | Intake Rotation Motor |  |  | X | Monkey Bar Pos | 10 | Monkey Bar Raise 1 |  |  |  |  |  |
+| 5 | Ball Intake |  |  | X | Hab Sensor FWD | 11 | Monkey Bar Raise 2 |  |  |  |  |  |
+| 6 | PENDING |  |  | X | Hab Sensor AFT | 12 | Monkey Bar Wheels 1 |  |  |  |  |  |
+| 7 | Monkey Bar Raise 1 |  |  |  |  | 13 | Monkey Bar Wheels 2 |  |  |  |  |  |
+| 8 | Monkey Bar Raise 2 |  |  |  |  | 14 |  |  |  |  |  |  |
+| 9 | Monkey Bar Wheels 1 |  |  |  |  |  |  |  |  |  |  |  |
+| 10 | Monkey Bar Wheels 2 |  |  |  |  |  |  |  |  |  |  |  |
+| 11 | PENDING |  |  |  |  |  |  |  |  |  |  |  |
+
+
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| | public | VictorSP | liftMotor1 |a motor to raise/lower the lift (1 of 2) |
+| | public | VictorSP| liftMotor2 | a motor to raise/lower the lift (2 of 2) |
+| | private| DigitalInput | liftFullyDown | a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the minimum height |
+| | private | DigitalInput | liftFullyUp | a hall effect sensor to work in tandem with the potentiometer to ensure that the lift stays within the maximum height
+ |
+| | private | AnalogPotientometer | liftPosition | tracks the position of the lift |
+
+liftHardStop
+| ID | Scope | Type | Name | Description |
+|----|-------|------|------|-------------|
+| | public | DoubleSolenoid | liftDSolenoid | a double solenoid with a rubber pad on the end to stop a gear in the lift gearbox to "lock" the lift at the specified position |
+
 
 #### Requirements: Interlocks, Functionality, or External
 **Interlocks** represent scenarios where the robot may be capable of harming itself by its own subsystem action or by the action of another subsystem (e.g. Intake may not lift higher than the crossbar of the lift when it is rotated towards the back of the robot).<br>
@@ -100,13 +137,9 @@ Powers the robot's movement, controlling speed and direction of travel. The moto
 | Command | Drivetrain:DriveWithJoysticks | _leftMotor1, _leftMotor2, _leftMotor3, _rightMotor1, _rightMotor2, _rightMotor3, _gyroSPI, _imu, _drivetrainPosController, _rotateDriveStraightController,  | Drivetrain (D) | Gives control of the drivetrain with a joystick using varying control styles |
 | External | Drivetrain (D) | _drivetrainShifter | Stingers, DrivetrainStingerShifter | during endgame the motor power is transferred from the drivetrain to the stingers and then back again using the DrivetrainStingerShifter  |
 
-<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain | -SpeedController _leftMotor1;-SpeedController _leftMotor2;-SpeedController _leftMotor3;-SpeedController _rightMotor1; -SpeedController _rightMotor2;-SpeedController _rightMotor3;-ADXRS453 Gyro _gyroSPI;-AverageEncoder _drivetrainLeftEncoder;-AverageEncoder _drivetrainRightEncoder |-Drivetrain();+getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed);+driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed, double rightSpeed); +tankDrive(double leftSpeed, double rightSpeed); +getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated(); +isGyroCalibrating; +stopGyroCalibrating()]" >
-
-
-<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain (con.) | +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage; +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |+getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition(); +getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
-
-
-
+<img src="http://yuml.me/diagram/scruffy/class/[Drivetrain |-SpeedController _leftMotor1; -SpeedController _leftMotor2;-SpeedController _leftMotor3;-SpeedController _rightMotor1; -SpeedController _rightMotor2;-SpeedController _rightMotor3; -ADXRS453Gyro _gyroSPI;
+    -AverageEncoder _drivetrainLeftEncoder; -AverageEncoder _drivetrainRightEncoder; +double _leftMotor1Voltage; +double _leftMotor2Voltage; +double _leftMotor3Voltage; +double _rightMotor1Voltage; +double _rightMotor2Voltage; +double _rightMotor3Voltage; +IMU _imu; +PIDPosition _drivetrainPosController; +PIDPosition _rotateDriveStraightController; -Drivetrain _instance |-Drivetrain(); +getInstance(); +driveLeftMotor1(double speed); +driveLeftMotor2(double speed); +driveLeftMotor3(double speed); +driveRightMotor1(double speed); +driveRightMotor2(double speed); +driveRightMotor3(double speed); +driveLeftMotors(double speed); +driveRightMotors(double speed); +dangerousTankDrive(double leftSpeed  double rightSpeed); +tankDrive(double leftSpeed double rightSpeed); +getHeading(); +resetGyro(); +calibrateGyro(); +startGyroCalibrating(); +isGyroCalibrated; +isGyroCalibrating; +stopGyroCalibrating(); +getRightPosition(); +getLeftPosition(); +getAverageDistance();+resetRightPosition(); +resetLeftPosition(); +resetPosition(); +getLeftMotor1Voltage(); +getLeftMotor2Voltage(); +getLeftMotor3Voltage(); +getRightMotor1Voltage(); +getRightMotor2Voltage(); +getRightMotor3Voltage(); +getRightEncoderRate(); +getLeftEncoderRate(); +getAverageEncoderRate(); +PIDVoltageFeedLeftMotor1(); +PIDVoltageFeedLeftMotor2(); +PIDVoltageFeedLeftMotor3(); +PIDVoltageFeedRightMotor1(); +PIDVoltageFeedRightMotor2(); +PIDVoltageFeedRightMotor3(); +initDefaultCommand()]" >
+ 
 ### DrivetrainStingerShifter (DSS)
 Serves dual function of climbing to 3rd level on endgame and intaking cargo during match. This system will need to work in tandem with the stingers in order to lift the robothorizontally onto the 3rd level.
 
@@ -176,3 +209,4 @@ Hard stop for the Plunger Arm Pivot. Probably involved in cut-offs for interlock
 | Functionality + External | PlungerArmHardStop | _plungerArmBrake | PlungerArmPivot (PAP) | The brake stops the movement of the PlungerArmPivot  |
 
 <img src="http://yuml.me/diagram/scruffy/class/[PlungerArmHardStop |-DoubleSolnoid _plungerArmBrake; -PlungerArmHardStop _instance |-PlungerArmHardStop(); +getInstance(); +enablePlungerArmBrake; +disablePlungerArmBrake; +isEnabledPlungerArmBrake; +isDisabledPlungerArmBrake; +initDefaultCommand()]" >
+

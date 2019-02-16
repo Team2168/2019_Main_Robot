@@ -9,11 +9,14 @@ package org.team2168.robot;
 
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
+import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.LiftHardStop;
 import org.team2168.subsystems.PlungerArmHardStop;
 import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,6 +47,8 @@ public class Robot extends TimedRobot {
   //Subsystems
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
+  public static Lift lift;
+  public static LiftHardStop liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
 
@@ -65,12 +70,15 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     hatchPlunger = new HatchPlunger();
     
+
     practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
     canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
 
     //Instantiate the subsystems
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
+    lift = Lift.getInstance();
+    liftHardStop = LiftHardStopgetInstance();
     plungerArmPivot = PlungerArmPivot.getInstance();
     plungerArmHardStop = PlungerArmHardStop.getInstance();
 
@@ -155,7 +163,7 @@ public class Robot extends TimedRobot {
     return !practiceBot.get();
 
   }
-  
+
   /**
    * Returns the status of DIO pin 25 
    * 
@@ -166,34 +174,34 @@ public class Robot extends TimedRobot {
   }
 
 
-
   /**
-     * Get the name of an control style.
-     * 
-     * @return the name of the control style.
-     */
-    public static String getControlStyleName() {
-      String retVal = "";
+   * Get the name of a contron style.
+   * 
+   * @return the name of the control style.
+   */
+  public static String getControlStyleName() {
+    String retVal = "";
 
-      switch (controlStyle) {
-      case 0:
-        retVal = "Tank Drive";
-        break;
-      case 1:
-        retVal = "Gun Style";
-        break;
-      case 2:
-        retVal = "Arcade Drive";
-        break;
-      case 3:
-        retVal = "GTA Drive";
-        break;
-      case 4:
-        retVal = "New Gun Style";
-        break;
-      default:
-        retVal = "Invalid Control Style";
-      }
+    switch (controlStyle) {
+    case 0:
+      retVal = "Tank Drive";
+      break;
+    case 1:
+      retVal = "Gun Style";
+      break;
+    case 2:
+      retVal = "Arcade Drive";
+      break;
+    case 3:
+      retVal = "GTA Drive";
+      break;
+    case 4:
+      retVal = "New Gun Style";
+      break;
+    default:
+      retVal = "Invalid Control Style";
+    }
+
 
       return retVal;
     }

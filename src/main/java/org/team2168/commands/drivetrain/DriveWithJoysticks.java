@@ -82,19 +82,7 @@ public class DriveWithJoysticks extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   /**
-   * ////////////QUESTION!!
-   * Why do we sometimes use tankDrive (which limits speed when 
-   * the lift is up as a protective measure) and sometimes use driveRight and driveLeft,
-   * separately, which don't have this protection?
    * 
-   * IE: in last year's code styles Tank Drive, arcade drive,
-   *  and GTA drive use driveRight and driveLeft separately
-   * 
-   * Just Gun Style and New Gun Style use tankDrive
-   * 
-   * Update: Aidan told me to go ahead and use tankDrive for all of them. Please correct if 
-   * someone else disagrees
-   * ////////////////////
    */
   @Override
   protected void execute() {
