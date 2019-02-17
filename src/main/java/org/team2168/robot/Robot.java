@@ -25,7 +25,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team2168.subsystems.Stinger;
 import org.team2168.subsystems.HatchPlunger;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -39,6 +41,8 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+	public static Stinger stinger;
   public static HatchPlunger hatchPlunger;
   public static FloorHatchMechanism floorHatchMechanism;
 
