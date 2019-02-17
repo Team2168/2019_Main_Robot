@@ -7,6 +7,10 @@
 
 package org.team2168.robot;
 
+
+import org.team2168.Subsystems.MonkeyBar;
+import org.team2168.subsystem.CargoIntake;
+import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.Lift;
@@ -18,12 +22,13 @@ import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.team2168.subsystems.HatchPlunger;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -32,10 +37,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */  
 public class Robot extends TimedRobot {
+  
   private static final String kDefaultAuto = "Default";
+  
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  
+
 
   //Digital Jumper to Identify if this is practice bot or comp bot
   private static DigitalInput practiceBot;
@@ -47,12 +56,18 @@ public class Robot extends TimedRobot {
   public static OI oi;
 
   //Subsystems
+  public static CargoIntake cargointake;
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
   public static Lift lift;
   public static LiftHardStop liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
+  public static HatchPlunger hatchPlunger;
+  public static FloorHatchMechanism floorHatchMechanism;
+  
+  //THIS IS INCORRECT
+  public static MonkeyBar monkeybar = new MonkeyBar();
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -74,7 +89,10 @@ public class Robot extends TimedRobot {
   static int controlStyle;
   public static SendableChooser<Number> controlStyleChooser;
 
+
   double runTime = Timer.getFPGATimestamp();
+
+  
 
   /**
    * This function is run when the robot is first started up and should be
@@ -82,9 +100,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    oi = OI.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    cargointake = new CargoIntake();
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    hatchPlunger = new HatchPlunger();
+    floorHatchMechanism = FloorHatchMechanism.getInstance();
 
     practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
     canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
@@ -93,7 +115,7 @@ public class Robot extends TimedRobot {
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
     lift = Lift.getInstance();
-    liftHardStop = LiftHardStopgetInstance();
+    liftHardStop = LiftHardStop.getInstance();
     plungerArmPivot = PlungerArmPivot.getInstance();
     plungerArmHardStop = PlungerArmHardStop.getInstance();
 
