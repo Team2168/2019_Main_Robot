@@ -6,8 +6,8 @@ import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveCargoIntakeWithJoystick extends Command {
-  public DriveCargoIntakeWithJoystick() {
+public class DriveCargoPickupWithJoystick extends Command {
+  public DriveCargoPickupWithJoystick() {
 
     requires(Robot.monkeybar);
   }
