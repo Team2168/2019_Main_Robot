@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.Commands.FloorHatchMechanism;
+package org.team2168.commands.FloorHatchMechanism;
 
 import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
