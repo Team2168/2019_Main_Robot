@@ -254,8 +254,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean FORKLIFT_LEFT_REVERSE = false;
 	public static final boolean FORKLIFT_RIGHT_REVERSE = false;
+  
+	/*************************************************************************
+	 *                             STINGER PARAMS                            *
+	 *************************************************************************/
+	public static final int STINGER_HALL_1 = 0;
+	public static final int STINGER_HALL_2 = 0;
 
-
+	public static final double STING_POT_VOLTAGE = 0;
 
 	/*************************************************************************
 	 *                         CUBE INTAKE PARAMETERS                        *
