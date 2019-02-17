@@ -326,8 +326,8 @@ public class Drivetrain extends Subsystem {
      * @param rightSpeed
      */
     public void tankDrive(double leftSpeed, double rightSpeed)
-    {c
-      if (Robot.lift.getPotPos() > 30)     //Won't work until lift is integrated
+    {
+      if (Robot.lift.getPotPos() > 30)     //TODO: Won't work until lift is integrated
       {
         leftSpeed = leftSpeed * 0.3;
         rightSpeed = rightSpeed * 0.3;
