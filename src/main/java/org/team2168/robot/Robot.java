@@ -7,6 +7,8 @@
 
 package org.team2168.robot;
 
+
+import org.team2168.Subsystems.MonkeyBar;
 import org.team2168.subsystem.CargoIntake;
 import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.Drivetrain;
@@ -18,6 +20,7 @@ import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -64,6 +67,7 @@ public class Robot extends TimedRobot {
   static int controlStyle;
   public static SendableChooser<Number> controlStyleChooser;
 
+  public static MonkeyBar monkeybar = new MonkeyBar();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.

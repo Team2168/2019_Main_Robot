@@ -64,6 +64,12 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int Hatch_Intake_Belt_CAN=14;
 	
 	
+
+	//Monkey Bar Motors////////////////////////////////////////////////////////
+	public static final int ROTATE_ARM_MOTOR_RIGHT = 20;
+	public static final int ROTATE_ARM_MOTOR_LEFT = 21;
+	public static final int INTAKE_ARM_MOTOR_RIGHT = 22;
+	public static final int INTAKE_ARM_MOTOR_LEFT = 23;
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 9; 
 	public static final int CUBE_INTAKE_MOTOR_RIGHT = 10; 
 	
@@ -158,8 +164,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFT_POSITION_POT = 0;
 	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
 	public static final int PRESSURE_SENSOR = 4;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER1 = 5;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER2 = 6;
 	public static final int PIVOT_POSITION_POT = 7; //TODO set input channel (NOT ON ROBOTMAP whiteboard pictures)
-
 
 	// Channels 4-7 on MXP
 
@@ -312,6 +319,21 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double CARGO_IR_SENSOR_THRESHOLD = 2.5;//this number has not been verified, testing required.
 	
+
+	/*************************************************************************
+	 *                      Monkey Bar PARAMETERS                            *
+	 *************************************************************************/
+	public static final double MONKEY_BAR_1_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_1_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_1_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_1_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_1_AVG_ENCODER_VAL = 5;
+	
+	public static final double MONKEY_BAR_2_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_2_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_2_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_2_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_2_AVG_ENCODER_VAL = 5;
 
 	/*************************************************************************
 	 *                         Winch PARAMETERS                               *
