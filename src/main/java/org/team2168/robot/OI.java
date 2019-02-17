@@ -125,7 +125,11 @@ public class OI {
 	public static double getDriveIntakeWheelsJoystickValue() {
 		return operatorJoystick.getRightStickRaw_Y();
 	}
- 
+
+	public static double getDriveCargoIntakeJoystickValue(){
+		return operatorJoystick.getLeftStickRaw_Y();
+	}
+
 	public static double getDriveIntakePivotJoystickValue() {
 		return testJoystick.getRightStickRaw_Y();
 	}

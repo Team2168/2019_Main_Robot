@@ -139,6 +139,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
 	public static final int LIFT_POSITION_POT = 0;
+	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
 	public static final int PRESSURE_SENSOR = 4;
 	public static final int PIVOT_POSITION_POT = 7; //TODO set input channel (NOT ON ROBOTMAP whiteboard pictures)
 
@@ -279,6 +280,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
+
+/*****************************************************************************
+ *                         Cargo Intake
+ ****************************************************************************/
+
+	public static final double CARGO_IR_SENSOR_THRESHOLD = 2.5;//this number has not been verified, testing required.
+	
 
 	/*************************************************************************
 	 *                         Winch PARAMETERS                               *

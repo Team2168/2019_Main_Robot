@@ -7,6 +7,7 @@
 
 package org.team2168.robot;
 
+import org.team2168.subsystem.CargoIntake;
 import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */  
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
+  public static CargoIntake cargointake;
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -68,6 +70,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = OI.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    cargointake = new CargoIntake();
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     floorHatchMechanism = FloorHatchMechanism.getInstance();
