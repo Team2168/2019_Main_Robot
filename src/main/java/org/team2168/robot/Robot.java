@@ -8,6 +8,7 @@
 package org.team2168.robot;
 
 import org.team2168.subsystem.CargoIntake;
+import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.Lift;
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static FloorHatchMechanism floorHatchMechanism;
 
   //Digital Jumper to Identify if this is practice bot or comp bot
   private static DigitalInput practiceBot;
@@ -66,10 +68,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    oi = OI.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     cargointake = new CargoIntake();
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    floorHatchMechanism = FloorHatchMechanism.getInstance();
 
     practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
     canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
@@ -78,7 +82,7 @@ public class Robot extends TimedRobot {
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
     lift = Lift.getInstance();
-    liftHardStop = LiftHardStopgetInstance();
+    liftHardStop = LiftHardStop.getInstance();
     plungerArmPivot = PlungerArmPivot.getInstance();
     plungerArmHardStop = PlungerArmHardStop.getInstance();
 
