@@ -125,6 +125,22 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFE_BRAKE_DISENGAGE = 7;
 	
 	//Double Soldenoids PCM ID = 1
+	public static final int PLUNGER_EXTEND_PCM = 4;
+	public static final int PLUNGER_RETRACT_PCM = 5;
+	public static final int PLUNGER_ENGAGE_PCM = 6;
+	public static final int PLUNGER_DISENGAGE_PCM = 7;
+
+	
+	
+	public static final int LIFT_RACHET_ENGAGE_PCM = 0;
+	public static final int LIFT_RACHET_DISENGAGE_PCM = 1;
+	public static final int LIFT_BRAKE_ENGAGE_PCM = 3;
+	public static final int LIFT_BRAKE_DISENGAGE_PCM = 2;
+	public static final int LIFT_HIGH_GEAR_PCM = 4;
+	public static final int LIFT_LOW_GEAR_PCM = 5;
+
+
+
 	//0
 	//1
 	public static final int BALL_PUNCH_EXTEND_PCM = 2;
@@ -138,6 +154,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
+	public static final int HATCH__INTAKE_IR_THRESHOLD = 1;
 	public static final int LIFT_POSITION_POT = 0;
 	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
 	public static final int PRESSURE_SENSOR = 4;
@@ -173,6 +190,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int AUX_POWER = 8;
 
 	public static final int PCM_POWER_PCM = 7;;
+
+
+	//CAN Device IDs///////////////////////////////////////////////////////////
+	public static final int PCM_HATCHARM_ID = 0;
+	public static final int PCM_HATCHPLUNGER_ID = 1;
+	public static final int PDP_CAN_ID = 0;
+	public static final int TALON_ID = 0;
+	public static final int TALON_ID_1 = 1;
 
 
 	// Relay Channels///////////////////////////////////////////////////////////
