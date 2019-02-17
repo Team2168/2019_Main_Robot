@@ -7,6 +7,10 @@
 
 package org.team2168.robot;
 
+
+import org.team2168.subsystems.MonkeyBar;
+import org.team2168.subsystems.CargoIntake;
+import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.Lift;
@@ -23,6 +27,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team2168.subsystems.Stinger;
+import org.team2168.subsystems.HatchPlunger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,9 +39,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */  
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
+  public static CargoIntake cargointake;
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
 
   //Digital Jumper to Identify if this is practice bot or comp bot
   private static DigitalInput practiceBot;
@@ -53,6 +61,10 @@ public class Robot extends TimedRobot {
   public static LiftHardStop liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
+  public static Stinger stinger;
+  public static HatchPlunger hatchPlunger;
+  public static FloorHatchMechanism floorHatchMechanism;
+  public static MonkeyBar monkeybar = new MonkeyBar();
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -76,13 +88,16 @@ public class Robot extends TimedRobot {
 
   double runTime = Timer.getFPGATimestamp();
 
+  
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    oi = OI.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    cargointake = new CargoIntake();
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
@@ -93,10 +108,13 @@ public class Robot extends TimedRobot {
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
     lift = Lift.getInstance();
-    liftHardStop = LiftHardStopgetInstance();
+    liftHardStop = LiftHardStop.getInstance();
     plungerArmPivot = PlungerArmPivot.getInstance();
     plungerArmHardStop = PlungerArmHardStop.getInstance();
+    hatchPlunger = new HatchPlunger();
+    floorHatchMechanism = FloorHatchMechanism.getInstance();
 
+    //Starting PDP
     pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
     pdp.startThread();
 

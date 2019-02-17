@@ -48,6 +48,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int PLUNGER_ARM_PIVOT_MOTOR = 8;
 
 	public static final int CARGO_INTAKE_MOTOR = 9;
+	
 
 
 	// Can Ports ////////////////////////////////////
@@ -58,10 +59,17 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_MOTOR_2_CAN = 5;
 	public static final int LEFT_DRIVE_MOTOR_3_CAN = 6;
 	
-	public static final int LIFT_MOTOR_1_CAN= 7; 
-	public static final int LIFT_MOTOR_2_CAN= 8; 
+	public static final int LIFT_MOTOR_1_CAN = 7; 
+	public static final int LIFT_MOTOR_2_CAN = 8; 
+	public static final int Hatch_Intake_Belt_CAN=14;
 	
 	
+
+	//Monkey Bar Motors////////////////////////////////////////////////////////
+	public static final int ROTATE_ARM_MOTOR_RIGHT = 20;
+	public static final int ROTATE_ARM_MOTOR_LEFT = 21;
+	public static final int INTAKE_ARM_MOTOR_RIGHT = 22;
+	public static final int INTAKE_ARM_MOTOR_LEFT = 23;
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 9; 
 	public static final int CUBE_INTAKE_MOTOR_RIGHT = 10; 
 	
@@ -94,6 +102,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFT_FULLY_DOWN_LIMIT = 7; //2018 proto
 	public static final int LIFT_RATCHET_ENGAGE_LIMIT = 8;
 	public static final int LINE_DETECTOR = 9;
+
+	public static final int Mechanism_Raise_DIO=7;
+	public static final int Mechanism_Lower_DIO=8;
+
 	//public static final int TX1_ON_STATUS = 9;
 
 
@@ -116,24 +128,34 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
 	public static final int LIFT_BRAKE_ENGAGE_PCM = 6;
-	public static final int LIFE_BRAKE_DISENGAGE = 7;
+	public static final int LIFE_BRAKE_DISENGAGE_PCM = 7;
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PLUNGER_ARM_BREAK_EXTENDED_PCM = 0;
 	public static final int PLUNGER_ARM_BREAK_RETRACTED_PCM = 1;
+	public static final int PLUNGER_EXTEND_PCM = 4;
+	public static final int PLUNGER_RETRACT_PCM = 5;
+	public static final int PLUNGER_ENGAGE_PCM = 6;
+	public static final int PLUNGER_DISENGAGE_PCM = 7;
+
 	public static final int BALL_PUNCH_EXTEND_PCM = 2;
 	public static final int BALL_PUNCH_RETRACT_PCM = 3;
-	public static final int PROBE_EXTEND_PCM = 4;
+	public static final int PROBE_EXTEND_PCM = 4; //TODO I assume plunger and probe are the same-fix
 	public static final int PROBE_RETRACT_PCM = 5;
 	public static final int PROBE_ENGAGE_PCM = 6;
 	public static final int PROBE_DISENGAGE_PCM = 7;
+	public static final int Hatch_Intake_Lower_pcm=2;
+	public static final int Hatch_Intake_Raise_pcm=3;
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
+	public static final int HATCH__INTAKE_IR_THRESHOLD = 1;
 	public static final int LIFT_POSITION_POT = 0;
+	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
 	public static final int PRESSURE_SENSOR = 4;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER1 = 5;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER2 = 6;
 	public static final int PIVOT_POSITION_POT = 7; //TODO set input channel (NOT ON ROBOTMAP whiteboard pictures)
-
 
 	// Channels 4-7 on MXP
 
@@ -148,9 +170,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int DRIVETRAIN_LEFT_MOTOR_1_PDP = 15;
 	public static final int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
 	public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 13;
-
-	public static final int LIFT_MOTOR_1_PDP = 3;
-	public static final int LIFT_MOTOR_2_PDP = 12;
+	
 	//public static final int PLATFORM_1_PDP = 3;
 	//public static final int PLATFORM_2_PDP = 12;
 
@@ -159,15 +179,20 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	///////////20-30 Amp/////////////////////////////////////
 	public static final int PLUNGER_ARM_PIVOT_MOTOR_PDP = 4;
+	public static final int LIFT_MOTOR_1_PDP = 9;
+	public static final int LIFT_MOTOR_2_PDP = 10;
+	public static final int LIFT_MOTOR_3_PDP = 11;
 	public static final int INTAKE_MOTOR_PDP = 5;
-
-
-	
 	public static final int INTAKE_PIVOT_MOTOR_PDP = 6;
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int AUX_POWER = 8;
 
 	public static final int PCM_POWER_PCM = 7;;
+
+
+	//CAN Device IDs///////////////////////////////////////////////////////////
+	public static final int PCM_HATCHARM_ID = 0; //TODO what is this
+	public static final int PCM_HATCHPLUNGER_ID = 1;
 
 
 	// Relay Channels///////////////////////////////////////////////////////////
@@ -219,8 +244,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean FORKLIFT_LEFT_REVERSE = false;
 	public static final boolean FORKLIFT_RIGHT_REVERSE = false;
+  
+	/*************************************************************************
+	 *                             STINGER PARAMS                            *
+	 *************************************************************************/
+	public static final int STINGER_HALL_1 = 0;
+	public static final int STINGER_HALL_2 = 0;
 
-
+	public static final double STING_POT_VOLTAGE = 0;
 
 	/*************************************************************************
 	 *                         CUBE INTAKE PARAMETERS                        *
@@ -275,6 +306,28 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
+
+/*****************************************************************************
+ *                         Cargo Intake
+ ****************************************************************************/
+
+	public static final double CARGO_IR_SENSOR_THRESHOLD = 2.5;//this number has not been verified, testing required.
+	
+
+	/*************************************************************************
+	 *                      Monkey Bar PARAMETERS                            *
+	 *************************************************************************/
+	public static final double MONKEY_BAR_1_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_1_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_1_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_1_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_1_AVG_ENCODER_VAL = 5;
+	
+	public static final double MONKEY_BAR_2_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_2_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_2_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_2_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_2_AVG_ENCODER_VAL = 5;
 
 	/*************************************************************************
 	 *                         Winch PARAMETERS                               *
@@ -397,8 +450,4 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final String DID_AIDEN_PUSH_IT = "only if Liam said he could"; //so false
 	public static final boolean DID_AIDEN_WRITE_A_PATH = false;
-
-
-
-
 }
