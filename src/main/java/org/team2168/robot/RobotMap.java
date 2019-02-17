@@ -48,6 +48,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int PLUNGER_ARM_PIVOT_MOTOR = 8;
 
 	public static final int CARGO_INTAKE_MOTOR = 9;
+	
 
 
 	// Can Ports ////////////////////////////////////
@@ -58,8 +59,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_MOTOR_2_CAN = 5;
 	public static final int LEFT_DRIVE_MOTOR_3_CAN = 6;
 	
-	public static final int LIFT_MOTOR_1 = 7; 
-	public static final int LIFT_MOTOR_2 = 8; 
+	public static final int LIFT_MOTOR_1_CAN = 7; 
+	public static final int LIFT_MOTOR_2_CAN = 8; 
+	public static final int Hatch_Intake_Belt_CAN=14;
 	
 	
 	public static final int CUBE_INTAKE_MOTOR_LEFT = 9; 
@@ -94,6 +96,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFT_FULLY_DOWN_LIMIT = 7; //2018 proto
 	public static final int LIFT_RATCHET_ENGAGE_LIMIT = 8;
 	public static final int LINE_DETECTOR = 9;
+
+	public static final int Mechanism_Raise_DIO=7;
+	public static final int Mechanism_Lower_DIO=8;
+
 	//public static final int TX1_ON_STATUS = 9;
 
 
@@ -143,11 +149,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int PROBE_RETRACT_PCM = 5;
 	public static final int PROBE_ENGAGE_PCM = 6;
 	public static final int PROBE_DISENGAGE_PCM = 7;
+	public static final int Hatch_Intake_Lower_pcm=2;
+	public static final int Hatch_Intake_Raise_pcm=3;
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
 	public static final int HATCH__INTAKE_IR_THRESHOLD = 1;
 	public static final int LIFT_POSITION_POT = 0;
+	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 0;
 	public static final int PRESSURE_SENSOR = 4;
 	public static final int PIVOT_POSITION_POT = 7; //TODO set input channel (NOT ON ROBOTMAP whiteboard pictures)
 
@@ -175,8 +184,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFT_MOTOR_1_PDP = 9;
 	public static final int LIFT_MOTOR_2_PDP = 10;
 	public static final int LIFT_MOTOR_3_PDP = 11;
-	public static final int INTAKE_MOTOR_1_PDP = 4;
-	public static final int INTAKE_MOTOR_2_PDP = 5;
+	public static final int INTAKE_MOTOR_PDP = 5;
 	public static final int INTAKE_PIVOT_MOTOR_PDP = 6;
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int AUX_POWER = 8;
@@ -297,6 +305,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
+
+/*****************************************************************************
+ *                         Cargo Intake
+ ****************************************************************************/
+
+	public static final double CARGO_IR_SENSOR_THRESHOLD = 2.5;//this number has not been verified, testing required.
+	
 
 	/*************************************************************************
 	 *                         Winch PARAMETERS                               *
@@ -419,8 +434,4 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final String DID_AIDEN_PUSH_IT = "only if Liam said he could"; //so false
 	public static final boolean DID_AIDEN_WRITE_A_PATH = false;
-
-
-
-
 }
