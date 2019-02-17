@@ -223,12 +223,14 @@ public class PowerDistribution {
 			return false;
 	}
 	
+
 	public boolean isIntakeMotorTrip() {
 		if (channelError[RobotMap.INTAKE_MOTOR_PDP] == 2)
 			return true;
 		else
 			return false;
 	}
+
 
 	public boolean isIntakePivotMotorTrip() {
 		if (channelError[RobotMap.INTAKE_PIVOT_MOTOR_PDP] == 2)

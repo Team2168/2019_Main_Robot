@@ -38,8 +38,9 @@ import org.team2168.subsystems.HatchPlunger;
  * project.
  */  
 public class Robot extends TimedRobot {
+  
   private static final String kDefaultAuto = "Default";
-  public static CargoIntake cargointake;
+  
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -55,15 +56,18 @@ public class Robot extends TimedRobot {
   public static OI oi;
 
   //Subsystems
+  public static CargoIntake cargointake;
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
   public static Lift lift;
   public static LiftHardStop liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
-  public static Stinger stinger;
   public static HatchPlunger hatchPlunger;
   public static FloorHatchMechanism floorHatchMechanism;
+  public static Stinger stinger;
+  
+  //THIS IS INCORRECT
   public static MonkeyBar monkeybar = new MonkeyBar();
 
   // Variables for initializing and calibrating the Gyro
