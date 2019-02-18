@@ -1,6 +1,9 @@
 package org.team2168.subsystems;
-import org.team2168.Commands.DriveCargoIntakeWithJoystick;
+import org.team2168.commands.CargoIntake.DriveCargoIntakeWithJoystick;
+import org.team2168.robot.Robot;
 import org.team2168.robot.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -25,11 +28,31 @@ public class CargoIntake extends Subsystem {
      */
     private AnalogInput _sharpIRSensor;
 
+    public static volatile double _driveVoltage;
+
+    private static CargoIntake _instance;
+
+
+
+
+
     
     
-	public CargoIntake() {
+	private CargoIntake() {
         _drive = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR);
         _sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
+
+        ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
+        ConsolePrinter.putBoolean("isCargoPresent", () -> {return isCargoPresent();}, true, false);
+        ConsolePrinter.putNumber("Intake motor voltage", () -> {return _driveVoltage;}, true, false);
+
+    }
+
+    public static CargoIntake getInstance(){
+        if(_instance == null) {
+            _instance = new CargoIntake();
+        }
+        return _instance;
     }
     
 
@@ -39,6 +62,7 @@ public class CargoIntake extends Subsystem {
     public void drive(double speed)
     {
         _drive.set(speed);
+        _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
     }
 
 

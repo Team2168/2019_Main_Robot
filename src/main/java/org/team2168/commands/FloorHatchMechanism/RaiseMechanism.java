@@ -5,50 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands;
+package org.team2168.commands.FloorHatchMechanism;
 
-import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
-import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftJoystick extends Command {
-  public LiftJoystick() {
+public class RaiseMechanism extends Command {
+  public RaiseMechanism() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift);
+    requires (Robot.floorHatchMechanism);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Lift.driveLift(0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Lift.driveLift(OI.getDriveLiftJoystickValue()*RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+    Robot.floorHatchMechanism.raise();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.floorHatchMechanism.isSolenoidRaised();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Lift.driveLift(0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

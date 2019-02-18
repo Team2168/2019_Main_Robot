@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.Commands.FloorHatchMechanism;
+package org.team2168.commands.FloorHatchMechanism;
 
 import org.team2168.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RaiseMechanism extends Command {
-  public RaiseMechanism() {
+public class LowerMechanism extends Command {
+  public LowerMechanism() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires (Robot.floorHatchMechanism);
@@ -26,13 +26,13 @@ public class RaiseMechanism extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.floorHatchMechanism.raise();
+      Robot.floorHatchMechanism.lower();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.floorHatchMechanism.isSolenoidRaised();
+    return Robot.floorHatchMechanism.isSolenoidLowered();
   }
 
   // Called once after isFinished returns true
