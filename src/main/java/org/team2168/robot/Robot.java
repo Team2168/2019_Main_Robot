@@ -10,6 +10,10 @@ package org.team2168.robot;
 import org.team2168.subsystems.LEDs;
 
 import edu.wpi.first.wpilibj.I2C;
+
+import org.team2168.subsystems.MonkeyBar;
+import org.team2168.subsystems.CargoIntake;
+import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.Lift;
@@ -20,9 +24,12 @@ import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team2168.subsystems.Stinger;
+import org.team2168.subsystems.HatchPlunger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,10 +40,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */  
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
+  public static CargoIntake cargointake;
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static LEDs leds;
+
+	public static Stinger stinger;
+  public static HatchPlunger hatchPlunger;
+  public static FloorHatchMechanism floorHatchMechanism;
+
 
   //Digital Jumper to Identify if this is practice bot or comp bot
   private static DigitalInput practiceBot;
@@ -62,19 +75,24 @@ public class Robot extends TimedRobot {
   static int controlStyle;
   public static SendableChooser<Number> controlStyleChooser;
 
+  public static MonkeyBar monkeybar = new MonkeyBar();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    oi = OI.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    cargointake = new CargoIntake();
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     leds = LEDs.getInstance();
     //for testing
     //leds.writePatternOneColor(6, 0, 255, 200);
 
+    hatchPlunger = new HatchPlunger();
+    floorHatchMechanism = FloorHatchMechanism.getInstance();
 
     practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
     canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
@@ -82,8 +100,8 @@ public class Robot extends TimedRobot {
     //Instantiate the subsystems
     drivetrain = Drivetrain.getInstance();
     drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
-   // lift = Lift.getInstance();
-   // liftHardStop = LiftHardStopgetInstance();
+    lift = Lift.getInstance();
+    liftHardStop = LiftHardStop.getInstance();
     plungerArmPivot = PlungerArmPivot.getInstance();
     plungerArmHardStop = PlungerArmHardStop.getInstance();
 
