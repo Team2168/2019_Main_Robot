@@ -223,7 +223,7 @@ public class PowerDistribution {
 
 
 	public boolean isPlungerArmPivotMotorTrip(){
-		if (channelError[RobotMap.PIVOT_MOTOR_PDP] ==2)
+		if (channelError[RobotMap.PLUNGER_PIVOT_MOTOR_PDP] ==2)
 			return true;
 		else 
 			return false;

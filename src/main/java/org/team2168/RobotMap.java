@@ -1,9 +1,10 @@
 package org.team2168;  
 
+import com.sun.org.apache.bcel.internal.generic.I2C;
+
 import org.team2168.PID.sensors.AverageEncoder;
 
 import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.I2C;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -56,6 +57,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int STINGER_LEFT_RATCHET_ENGAGED = 6;
 	public static final int STINGER_RIGHT_RATCHET_ENGAGED = 7;
 
+	public static final int HATCH_INTAKE_LOWERED_LIMIT = 8;
+	public static final int HATCH_INTAKE_RAISED_LIMIT = 9;
+
 
 	//Channels 10-25 on MXP (PWM and DIO)
   	public static final int PWM_LIGHTS = 18;
@@ -81,8 +85,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	*************************************************************************/
 	
 	//CAN Device IDs///////////////////////////////////////////////////////////
-	public static final int PCM_CAN_ID = 0;
-	public static final int PCM_CAN_ID_2 = 1;
+	public static final int PCM_CAN_ID_BELLYPAN = 0;
+	public static final int PCM_CAN_ID_LIFT = 1;
 	public static final int PDP_CAN_ID = 0;
 
 	/*************************************************************************
@@ -126,7 +130,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFT_MOTOR_2_PDP = 3;
 	public static final int MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP = 4;
 	public static final int MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP = 5;
-
+	public static final int HATCH_FLOOR_INTAKE_PDP= 6;
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int CARGO_INTAKE_MOTOR_PDP = 8;
 	public static final int PLUNGER_PIVOT_MOTOR_PDP = 9;
@@ -193,7 +197,12 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                         CARGO INTAKE PARAMETERS                        *
 	 *************************************************************************/
-	public static final boolean INTAKE_LEFT_REVERSE = true;
+	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = true;
+
+	/*************************************************************************
+	 *                         HATCH INTAKE PARAMETERS                        *
+	 *************************************************************************/
+	public static final boolean HATCH_INTAKE_LEFT_REVERSE = true;
 
 
 	/*************************************************************************
@@ -376,7 +385,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_SPEED = 1183;
 	public static final int TCP_SERVER_LIFT_POT_CONTROLLER = 1184;
 	public static final int TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT = 1185;
-
+	public static final int TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION = 1186;
+	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION = 1187;
 
 	/******************************************************************
 	 *                         ConsolePrinter PARAMETERS              *

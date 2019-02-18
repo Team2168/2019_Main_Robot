@@ -9,35 +9,20 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+private SpeedController _drive;
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * negative value moves cargo outwards?
+ */
+
+/**
+ * the sharp IR Sensor will detect the presence of the cargo or measure the distance from the sensor to the cargo in volts
  */
 public class CargoIntake extends Subsystem {
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
-    /**
-     * Positive value moves cargo inwards?
-     */
-    private SpeedController _drive;
-    /**
-     * negative value moves cargo outwards?
-     */
 
-    /**
-     * the sharp IR Sensor will detect the presence of the cargo or measure the distance from the sensor to the cargo in volts
-     */
     private AnalogInput _sharpIRSensor;
-
     public static volatile double _driveVoltage;
-
     private static CargoIntake _instance;
 
-
-
-
-
-    
-    
 	private CargoIntake() {
         _drive = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR);
         _sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);

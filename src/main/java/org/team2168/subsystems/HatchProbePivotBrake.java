@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
-  public class PlungerArmBrake extends Subsystem {
+  public class HatchProbePivotBrake extends Subsystem {
 
   private static DoubleSolenoid _plungerArmBrake;
-  private static PlungerArmBrake _instance;
+  private static HatchProbePivotBrake _instance;
 
-  private PlungerArmBrake()
+  private HatchProbePivotBrake()
   {
     _plungerArmBrake = new DoubleSolenoid(RobotMap.PLUNGER_ARM_BREAK_EXTENDED_PCM, RobotMap.PLUNGER_ARM_BREAK_RETRACTED_PCM);
 
@@ -33,9 +33,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
    * 
    */
 
-  public static PlungerArmBrake getInstance() {
+  public static HatchProbePivotBrake getInstance() {
     if (_instance == null)
-      _instance = new PlungerArmBrake();
+      _instance = new HatchProbePivotBrake();
     return _instance;
   }
 

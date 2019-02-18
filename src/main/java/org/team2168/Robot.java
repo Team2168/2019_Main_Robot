@@ -10,12 +10,12 @@ package org.team2168;
 import org.team2168.subsystems.CargoIntake;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
-import org.team2168.subsystems.HatchPlunger;
+import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.LiftBrake;
 import org.team2168.subsystems.MonkeyBar;
-import org.team2168.subsystems.PlungerArmBrake;
-import org.team2168.subsystems.PlungerArmPivot;
+import org.team2168.subsystems.HatchProbePivotBrake;
+import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.Stinger;
 import org.team2168.utils.Debouncer;
 import org.team2168.utils.PowerDistribution;
@@ -54,10 +54,10 @@ public class Robot extends TimedRobot {
   public static DrivetrainStingerShifter drivetrainStingerShifter;
   public static Lift lift;
   public static LiftBrake liftHardStop;
-  public static PlungerArmPivot plungerArmPivot;
-  public static PlungerArmBrake plungerArmBrake;
-  public static HatchPlunger hatchPlunger;
-  public static FloorHatchIntake floorHatchIntake;
+  public static HatchProbePivot plungerArmPivot;
+  public static HatchProbePivotBrake plungerArmBrake;
+  public static HatchProbePistons hatchPlunger;
+  public static HatchFloorIntake floorHatchIntake;
   public static Stinger stinger;
   public static MonkeyBar monkeybar;
 
@@ -111,10 +111,10 @@ public class Robot extends TimedRobot {
       drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
       lift = Lift.getInstance();
       liftHardStop = LiftBrake.getInstance();
-      plungerArmPivot = PlungerArmPivot.getInstance();
-      plungerArmBrake = PlungerArmBrake.getInstance();
-      hatchPlunger = new HatchPlunger();
-      floorHatchIntake = FloorHatchIntake.getInstance();
+      plungerArmPivot = HatchProbePivot.getInstance();
+      plungerArmBrake = HatchProbePivotBrake.getInstance();
+      hatchPlunger = new HatchProbePistons();
+      floorHatchIntake = HatchFloorIntake.getInstance();
       monkeyBar = new MonkeyBar.getInstance();
 
       i2c = new I2C(I2C.Port.kOnboard, 8);

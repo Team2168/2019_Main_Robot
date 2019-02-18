@@ -16,15 +16,15 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class PlungerArmPivot extends Subsystem {
+public class HatchProbePivot extends Subsystem {
   private static VictorSP _plungerArmPivotMotor;
   private static AveragePotentiometer _pivotPot;
   public volatile double _plungerArmPivotVoltage;
   
-  private static PlungerArmPivot _instance;
+  private static HatchProbePivot _instance;
 
 
-  private PlungerArmPivot()
+  private HatchProbePivot()
   {
     _plungerArmPivotMotor = new VictorSP(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
     
@@ -63,9 +63,9 @@ public class PlungerArmPivot extends Subsystem {
    * 
    */
 
-  public static PlungerArmPivot getInstance() {
+  public static HatchProbePivot getInstance() {
     if (_instance == null)
-      _instance = new PlungerArmPivot();
+      _instance = new HatchProbePivot();
     return _instance;
   }
 
