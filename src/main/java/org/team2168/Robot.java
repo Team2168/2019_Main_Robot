@@ -8,6 +8,7 @@
 package org.team2168;
 
 import org.team2168.subsystems.CargoIntake;
+import org.team2168.subsystems.CargoPunch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.HatchPlunger;
@@ -59,7 +60,8 @@ public class Robot extends TimedRobot {
   public static HatchPlunger hatchPlunger;
   public static FloorHatchIntake floorHatchIntake;
   public static Stinger stinger;
-  public static MonkeyBar monkeybar;
+  public static MonkeyBar monkeyBar;
+  public static CargoPunch cargoPunch;
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -115,7 +117,8 @@ public class Robot extends TimedRobot {
       plungerArmBrake = PlungerArmBrake.getInstance();
       hatchPlunger = new HatchPlunger();
       floorHatchIntake = FloorHatchIntake.getInstance();
-      monkeyBar = new MonkeyBar.getInstance();
+      monkeyBar = MonkeyBar.getInstance();
+      cargoPunch = CargoPunch.getInstance();
 
       i2c = new I2C(I2C.Port.kOnboard, 8);
 
