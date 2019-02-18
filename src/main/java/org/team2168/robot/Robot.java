@@ -66,9 +66,7 @@ public class Robot extends TimedRobot {
   public static HatchPlunger hatchPlunger;
   public static FloorHatchMechanism floorHatchMechanism;
   public static Stinger stinger;
-  
-  //THIS IS INCORRECT
-  public static MonkeyBar monkeybar = new MonkeyBar();
+  public static MonkeyBar monkeybar;
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
