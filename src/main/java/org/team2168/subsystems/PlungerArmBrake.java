@@ -7,8 +7,8 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -17,14 +17,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
   /**
    * Add your docs here.
    */
-  public class PlungerArmHardStop extends Subsystem {
+  public class engagePlungerArmBrake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static DoubleSolenoid _plungerArmBrake;
 
   private static PlungerArmHardStop _instance;
 
-  private PlungerArmHardStop()
+  private PlungerArmBrake()
   {
     _plungerArmBrake = new DoubleSolenoid(RobotMap.PLUNGER_ARM_BREAK_EXTENDED_PCM, 
           RobotMap.PLUNGER_ARM_BREAK_RETRACTED_PCM);

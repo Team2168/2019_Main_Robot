@@ -1,8 +1,8 @@
 
 package org.team2168.Commands;
 
-import org.team2168.robot.OI;
-import org.team2168.robot.Robot;
+import org.team2168.OI;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 

@@ -2,7 +2,7 @@
 package org.team2168.Subsystems;
 
 
-import org.team2168.robot.RobotMap;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;

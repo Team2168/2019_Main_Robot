@@ -9,8 +9,8 @@ package org.team2168.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;

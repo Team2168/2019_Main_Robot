@@ -8,7 +8,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.commands.LiftJoystick;
-import org.team2168.robot.RobotMap;
+import org.team2168.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.AnalogInput;
-import org.team2168.robot.RobotMap;
+import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 /**

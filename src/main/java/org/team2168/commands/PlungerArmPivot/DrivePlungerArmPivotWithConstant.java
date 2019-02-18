@@ -7,7 +7,7 @@
 
 package org.team2168.commands.PlungerArmPivot;
 
-import org.team2168.robot.Robot;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 

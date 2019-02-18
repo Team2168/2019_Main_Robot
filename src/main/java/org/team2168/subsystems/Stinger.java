@@ -3,7 +3,7 @@ package org.team2168.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.VictorSP;
 import org.team2168.PID.sensors.AveragePotentiometer;
-import org.team2168.robot.RobotMap;
+import org.team2168.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -23,12 +23,12 @@ public class Stinger extends Subsystem
         _stingPotRight = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
     }
 
-    public boolean isLeftStingDown()
+    public boolean isLeftStingerDown()
     {
         return _stingerHallLeft.get();
     }
 
-    public boolean isRightStingDown()
+    public boolean isRightStingerDown()
     {
         return _stingerHallRight.get();
     }
@@ -43,6 +43,6 @@ public class Stinger extends Subsystem
         return _stingPotRight.getRawPos();
     }
 
-    public static void initDefaultCommand() { 
+    public void initDefaultCommand() { 
     }
 }
