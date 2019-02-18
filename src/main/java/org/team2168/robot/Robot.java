@@ -18,7 +18,7 @@ import org.team2168.subsystems.MonkeyBar;
 import org.team2168.subsystems.PlungerArmHardStop;
 import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.subsystems.Stinger;
-
+import org.team2168.subsystems.StingerRatchet;
 import org.team2168.utils.Debouncer;
 import org.team2168.utils.PowerDistribution;
 import org.team2168.utils.PowerDistribution;
@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
   public static HatchPlunger hatchPlunger;
   public static FloorHatchMechanism floorHatchMechanism;
   public static Stinger stinger;
+  public static StingerRatchet stingerRatchet;
   public static MonkeyBar monkeybar;
 
   // Variables for initializing and calibrating the Gyro
@@ -115,6 +116,7 @@ public class Robot extends TimedRobot {
     plungerArmHardStop = PlungerArmHardStop.getInstance();
     hatchPlunger = new HatchPlunger();
     floorHatchMechanism = FloorHatchMechanism.getInstance();
+    stingerRatchet = StingerRatchet.getInstance();
 
     //Starting PDP
     pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
