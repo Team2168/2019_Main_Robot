@@ -7,7 +7,7 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.FloorHatchMechanism.DriveWithJoystick;
+import org.team2168.commands.FloorHatchIntake.DriveWithJoystick;
 import org.team2168.RobotMap;
 import org.team2168.Robot;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -22,78 +22,85 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Add your docs here.
  */
-public class FloorHatchMechanism extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  private static FloorHatchMechanism instance = null;
-  private SpeedController _runMotor;
+public class HatchFloorIntake extends Subsystem 
+{
+  private SpeedController _intakeMotor;
   private DoubleSolenoid _dSolenoidRotate;
   private static DigitalInput _hallEffectRaise;
   private static DigitalInput _hallEffectLower;
-  private static final boolean _reverseValue = false;
+
+  private static HatchFloorIntake instance = null;
   public static volatile double _intakeMotorVoltage;
 
-  private FloorHatchMechanism() {
-    _runMotor = new VictorSP(RobotMap.Hatch_Intake_Belt_CAN);
-    _dSolenoidRotate = new DoubleSolenoid(RobotMap.Hatch_Intake_Lower_pcm, RobotMap.Hatch_Intake_Raise_pcm);
-    _hallEffectRaise = new DigitalInput(RobotMap.Mechanism_Raise_DIO);
-    _hallEffectLower = new DigitalInput(RobotMap.Mechanism_Lower_DIO);
+  private HatchFloorIntake() 
+  {
+    _intakeMotor = new VictorSP(RobotMap.HATCH_FLOOR_INTAKE_PDP);
+    _dSolenoidRotate = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.HATCH_INTAKE_LOWER_PCM, RobotMap.HATCH_INTAKE_RAISE_PCM);
+    _hallEffectRaise = new DigitalInput(RobotMap.HATCH_INTAKE_RAISED_LIMIT);
+    _hallEffectLower = new DigitalInput(RobotMap.HATCH_INTAKE_LOWERED_LIMIT);
 
     ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
     ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
-    ConsolePrinter.putBoolean("Is Mechanism Up",() -> {return isMechanismUp();},true, false);
-    ConsolePrinter.putBoolean("Is Mechanism Lowered",() -> {return isMechanismLowered();},true, false);
+    ConsolePrinter.putBoolean("Is HatchIntake Up",() -> {return isHatchIntakeUp();},true, false);
+    ConsolePrinter.putBoolean("Is HatchIntake Lowered",() -> {return isHatchIntakeLowered();},true, false);
     ConsolePrinter.putNumber("Intake motor voltage",() -> {return _intakeMotorVoltage;},true, false);
     ConsolePrinter.putBoolean("Intake Motor", () -> {return !Robot.pdp.isIntakeMotorTrip();}, true, false);
   }
 
+  public static HatchFloorIntake getInstance()
+  {
+    if (instance == null)
+      instance = new HatchFloorIntake();
+    return instance;
+  }
 
-  public void raise() {
+  public void raise()
+  {
     _dSolenoidRotate.set(Value.kReverse);
   }
 
-  public void lower() {
+  public void lower()
+  {
     _dSolenoidRotate.set(Value.kForward);
   }
-  //Positive values will cause the motor to spin.
-  public void intakeHatchPanel(double speed) {
-    if (_reverseValue) {
-      _runMotor.set(-speed);
-    }
-    else {
-      _runMotor.set(speed);
-    }
+
+  // Positive values will cause the motor to spin.
+  public void intakeHatchPanel(double speed)
+  {
+    if (RobotMap.HATCH_INTAKE_MOTOR_REVERSE)
+      speed = -speed;
+
+    _intakeMotor.set(speed);
+
     _intakeMotorVoltage = Robot.pdp.getBatteryVoltage() * speed;
   }
 
-  public boolean isSolenoidLowered(){
+  public boolean isSolenoidLowered()
+  {
     return _dSolenoidRotate.get() == Value.kForward;
   }
 
-  public boolean isSolenoidRaised(){
+  public boolean isSolenoidRaised()
+  {
     return _dSolenoidRotate.get() == Value.kReverse;
   }
 
-  public boolean isMechanismUp() {
+  public boolean isHatchIntakeUp()
+  {
     return !_hallEffectRaise.get();
   }
 
-    public boolean isMechanismLowered(){
-      return !_hallEffectLower.get();
-    }
-    public static FloorHatchMechanism getInstance(){
-        if (instance == null)
-          instance = new FloorHatchMechanism();
-        return instance;
-    }
+  public boolean isHatchIntakeLowered()
+  {
+    return !_hallEffectLower.get();
+  }
 
-  
 
   @Override
-  public void initDefaultCommand() {
+  public void initDefaultCommand()
+  {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new DriveWithJoystick());
+    setDefaultCommand(new DriveHatchIntakeWithJoystick());
   }
 }
 // Commander Cody, the time has come.

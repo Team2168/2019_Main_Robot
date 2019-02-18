@@ -7,30 +7,20 @@
 
 package org.team2168.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
 public class DrivetrainStingerShifter extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
   private static DrivetrainStingerShifter _instance = null;
   private static Solenoid _drivetrainShifter; 
 
-  /**
-   * default constructor
-   */
   private DrivetrainStingerShifter()
   {
-    _drivetrainShifter = new Solenoid(RobotMap.PCM_CAN_ID_2, RobotMap.DRIVETRAIN_ENGAGED_PCM);
+    _drivetrainShifter = new Solenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.DRIVETRAIN_ENGAGED_PCM);
 
     ConsolePrinter.putBoolean("Drivetrain Enagaged", () -> {return Robot.drivetrainStingerShifter.isDrivetrainEngaged();}, true, false);
 		ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.drivetrainStingerShifter.isStingerEngaged();}, true, false);
@@ -80,7 +70,6 @@ public class DrivetrainStingerShifter extends Subsystem {
   {
     return _drivetrainShifter.get() == false;
   }
-
 
 
   @Override
