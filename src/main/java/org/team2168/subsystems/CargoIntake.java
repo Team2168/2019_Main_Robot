@@ -30,7 +30,7 @@ public class CargoIntake extends Subsystem {
 
     public static volatile double _driveVoltage;
 
-    private static CargoIntake instance;
+    private static CargoIntake _instance;
 
 
 
@@ -49,10 +49,10 @@ public class CargoIntake extends Subsystem {
     }
 
     public static CargoIntake getInstance(){
-        if(instance == null) {
-            instance = new CargoIntake();
+        if(_instance == null) {
+            _instance = new CargoIntake();
         }
-        return instance;
+        return _instance;
     }
     
 
