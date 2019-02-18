@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands;
+package org.team2168.commands.Lift;
 
 import org.team2168.robot.OI;
 import org.team2168.robot.Robot;
