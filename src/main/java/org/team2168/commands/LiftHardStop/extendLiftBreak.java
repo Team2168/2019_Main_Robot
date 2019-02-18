@@ -8,7 +8,7 @@
 package org.team2168.commands;
 
 import org.team2168.Robot;
-import org.team2168.subsystems.LiftHardStop;
+import org.team2168.subsystems.LiftBrake;
 
 import edu.wpi.first.wpilibj.command.Command;
 

@@ -1,51 +1,96 @@
 
-package org.team2168.Subsystems;
+package org.team2168.subsystems;
 
-
+import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.sensors.AveragePotentiometer;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.team2168.PID.sensors.AveragePotentiometer;
-
-
-
 
 public class MonkeyBar extends Subsystem 
 {
 
-  private static VictorSP MotorIntake1;
-  private static VictorSP MotorIntake2;
+  private VictorSP intakeLeft;
+  private VictorSP intakeRight;
   
-  private static VictorSP RotateBar1;
-  private static VictorSP RotateBar2;
+  private VictorSP rotateBarLeft;
+  private VictorSP rotateBarRight;
 
   
-  private static AveragePotentiometer monkeyBarRotation1;
-  private static AveragePotentiometer monkeyBarRotation2;
+  private AveragePotentiometer monkeyBarRotationLeft;
+  private AveragePotentiometer monkeyBarRotationRight;
 
-  private final boolean _isReversed1;
-  private final boolean _isReversed2;
-  
+  private double POT_MAX_HEIGHT_LEFT;
+  private double POT_MAX_HEIGHT_RIGHT;
+  private double POT_MIN_HEIGHT_LEFT;
+  private double POT_MIN_HEIGHT_RIGHT;
+
+  private static MonkeyBar _instance;
+
+
   //constructors for monkey bar
-  public MonkeyBar() 
+  private MonkeyBar() 
   { 
-    MotorIntake1 = new VictorSP(RobotMap.INTAKE_ARM_MOTOR_RIGHT);
-    MotorIntake2 = new VictorSP(RobotMap.INTAKE_ARM_MOTOR_LEFT);
+    intakeLeft = new VictorSP(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
+    intakeRight = new VictorSP(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
 
-    RotateBar1 = new VictorSP(RobotMap.ROTATE_ARM_MOTOR_RIGHT);
-    RotateBar2 = new VictorSP(RobotMap.ROTATE_ARM_MOTOR_LEFT);
+    rotateBarLeft = new VictorSP(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);
+    rotateBarRight = new VictorSP(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP);
     
-    monkeyBarRotation1 = new AveragePotentiometer
-    (RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER1, RobotMap.MONKEY_BAR_1_POT_VOLTAGE_0, 
-    RobotMap.MONKEY_BAR_1_ANGLE_DEGREES_0, RobotMap.MONKEY_BAR_1_POT_VOLTAGE_MAX, 
-    RobotMap.MONKEY_BAR_1_POT_MAX_ROTATION, RobotMap.MONKEY_BAR_1_AVG_ENCODER_VAL);
+    if(Robot.isPracticeRobot())
+    {
+      monkeyBarRotationLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT, 
+        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT, 
+        RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT, 
+        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT, 
+        RobotMap.MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT, 
+        RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
 
-    monkeyBarRotation2 = new AveragePotentiometer
-    (RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER2, -RobotMap.MONKEY_BAR_2_POT_VOLTAGE_0, 
-    -RobotMap.MONKEY_BAR_2_ANGLE_DEGREES_0, -RobotMap.MONKEY_BAR_2_POT_VOLTAGE_MAX, 
-    -RobotMap.MONKEY_BAR_2_POT_MAX_ROTATION, -RobotMap.MONKEY_BAR_2_AVG_ENCODER_VAL);
+      monkeyBarRotationRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT, 
+        RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT, 
+        RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT, 
+        RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT, 
+        RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT, 
+        RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
+
+        POT_MAX_HEIGHT_LEFT = RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT;
+        POT_MAX_HEIGHT_RIGHT = RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT;
+        POT_MIN_HEIGHT_LEFT = RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT;
+        POT_MIN_HEIGHT_RIGHT = RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT;
+    }
+    else
+    {
+      monkeyBarRotationLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT, 
+        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_0, 
+        RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0, 
+        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_MAX, 
+        RobotMap.MONKEY_BAR_LEFT_POT_MAX_ROTATION, 
+        RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
+
+      monkeyBarRotationRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT, 
+        RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_0, 
+        RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0, 
+        RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX, 
+        RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION, 
+        RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
+
+      POT_MAX_HEIGHT_LEFT = RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION;
+      POT_MAX_HEIGHT_RIGHT = RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION;
+      POT_MIN_HEIGHT_LEFT = RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0;
+      POT_MIN_HEIGHT_RIGHT = RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0;
+    }
   }
+
+  /**
+  * Singleton constructor of the plunger arm pivot
+  * 
+  */
+  public static MonkeyBar getInstance() {
+   if (_instance == null)
+     _instance = new MonkeyBar();
+   return _instance;
+ }
 
   @Override
   public void initDefaultCommand() 
@@ -53,91 +98,86 @@ public class MonkeyBar extends Subsystem
 
   }
 
-  /**
-   * This program will rotate the monkey arm up and down
-   *  
-   */  
-  public void driveIntakeMotor1(double speed)
+  public void driveIntakeMotorLeft(double speed)
   {
-    MotorIntake1.set(speed);
+    if(RobotMap.MONKEY_BAR_INTAKE_LEFT_REVERSE)
+      speed = -speed;
+
+    intakeLeft.set(speed);
+
   }
 
-  public void driveIntakeMotor2(double speed)
+  public void driveIntakeMotorRight(double speed)
   {
-    MotorIntake2.set(speed);
+    if(RobotMap.MONKEY_BAR_INTAKE_RIGHT_REVERSE)
+      speed = -speed;
+
+    intakeRight.set(speed);
   }
 
   public void driveIntakeAll(double speed) 
   {
-    driveIntakeMotor1(speed);
-    driveIntakeMotor2(-speed);
+    driveIntakeMotorLeft(speed);
+    driveIntakeMotorRight(speed);
   }
   
-  public boolean isStowed()
+  public void driveRotateMotorLeft(double speed)
   {
-    monkeyBarRotation1.getPos();
-    monkeyBarRotation2.getPos();
+    if(RobotMap.MONKEY_BAR_ROTATE_LEFT_REVERSE)
+      speed = -speed;
 
-    boolean checkPositionUp1 = monkeyBarRotation1.getPos() <= 
-    RobotMap.MONKEY_BAR_1_POT_VOLTAGE_MAX;
-    
-    boolean checkPositionUp2 = monkeyBarRotation2.getPos() <= 
-    RobotMap.MONKEY_BAR_2_POT_VOLTAGE_MAX;
+    rotateBarLeft.set(speed);
 
-    return checkPositionUp1 && checkPositionUp2;
   }
 
-  public void driveBarRotate1(double speed)
+  public void driveRotateMotorRight(double speed)
   {
-    if (_isReversed1)
-    {
-      RotateBar1.set(-speed);
-    }
-    else 
-    {
-      RotateBar1.set(speed);
-    }
-  }
+    if(RobotMap.MONKEY_BAR_ROTATE_RIGHT_REVERSE)
+    speed = -speed;
 
-  public void driveBarRotate2(double speed)
-  {
-    if (isReversed2)
-    {
-      RotateBar2.set(-speed);
-    }
-    else
-    {
-      RotateBar2.set(speed);
-    }
+    rotateBarRight.set(speed);
+
   }
   
   public void driveRotateBarMotors(double speed) 
   {
-    driveBarRotate1(speed);
-    driveBarRotate2(speed);
+    driveRotateMotorLeft(speed);
+    driveRotateMotorRight(speed);
   }
 
   public boolean isLowered()
   {
-    monkeyBarRotation1.getPos();
-    monkeyBarRotation2.getPos();
-
-    boolean checkPositionDown1 = monkeyBarRotation1.getPos() >= 
-    RobotMap.MONKEY_BAR_1_POT_VOLTAGE_0;
-    
-    boolean checkPositionDown2 = monkeyBarRotation2.getPos() >= 
-    RobotMap.MONKEY_BAR_2_POT_VOLTAGE_0;
+    boolean checkPositionDown1 = monkeyBarRotationLeft.getPos() >= POT_MIN_HEIGHT_LEFT;
+    boolean checkPositionDown2 = monkeyBarRotationRight.getPos() >= POT_MIN_HEIGHT_RIGHT;
 
     return checkPositionDown1 && checkPositionDown2;
   }
 
-  public double checkCurrentPosition1()
+  public boolean isStowed()
   {
-    return monkeyBarRotation1.getPos();
+    boolean checkPositionUp1 = monkeyBarRotationLeft.getPos() == POT_MAX_HEIGHT_LEFT;
+    boolean checkPositionUp2 = monkeyBarRotationRight.getPos() == POT_MAX_HEIGHT_RIGHT;
+
+    return checkPositionUp1 && checkPositionUp2;
   }
 
-  public double checkCurrentPosition2()
+  public double getLeftPotPosRaw()
   {
-    return monkeyBarRotation2.getPos();
+    return monkeyBarRotationLeft.getRawPos();
+  }
+
+  public double getRightPotPosRaw()
+  {
+    return monkeyBarRotationLeft.getRawPos();
+  }
+
+  public double getLeftPotPos()
+  {
+    return monkeyBarRotationLeft.getPos();
+  }
+
+  public double getRightPotPos()
+  {
+    return monkeyBarRotationRight.getPos();
   }
 }

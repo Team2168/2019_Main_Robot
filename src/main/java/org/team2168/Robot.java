@@ -12,7 +12,7 @@ import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.HatchPlunger;
 import org.team2168.subsystems.Lift;
-import org.team2168.subsystems.LiftHardStop;
+import org.team2168.subsystems.LiftBrake;
 import org.team2168.subsystems.MonkeyBar;
 import org.team2168.subsystems.PlungerArmBrake;
 import org.team2168.subsystems.PlungerArmPivot;
@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
   public static Lift lift;
-  public static LiftHardStop liftHardStop;
+  public static LiftBrake liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmBrake plungerArmBrake;
   public static HatchPlunger hatchPlunger;
@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
       drivetrain = Drivetrain.getInstance();
       drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
       lift = Lift.getInstance();
-      liftHardStop = LiftHardStop.getInstance();
+      liftHardStop = LiftBrake.getInstance();
       plungerArmPivot = PlungerArmPivot.getInstance();
       plungerArmBrake = PlungerArmBrake.getInstance();
       hatchPlunger = new HatchPlunger();

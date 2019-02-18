@@ -42,12 +42,6 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_MOTOR_2 = 4; 
 	public static final int LEFT_DRIVE_MOTOR_3 = 5; 
 
-	public static final int LIFT_MOTOR_1 = 6; 
-	public static final int LIFT_MOTOR_2 = 7; 
-
-	public static final int PLUNGER_ARM_PIVOT_MOTOR = 8;
-
-	public static final int CARGO_INTAKE_MOTOR = 9;
 
 	// Digital IO Channels//////////////////////////////////////////////////////
 	// Channels 0-9 on RoboRio
@@ -58,6 +52,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int LIFT_FULLY_UP_LIMIT = 4;
 	public static final int LIFT_FULLY_DOWN_LIMIT = 5;
+
+	public static final int STINGER_LEFT_RATCHET_ENGAGED = 6;
+	public static final int STINGER_RIGHT_RATCHET_ENGAGED = 7;
 
 
 	//Channels 10-25 on MXP (PWM and DIO)
@@ -132,7 +129,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int CARGO_INTAKE_MOTOR_PDP = 8;
-	public static final int PIVOT_MOTOR_PDP = 9;
+	public static final int PLUNGER_PIVOT_MOTOR_PDP = 9;
 	public static final int MONKEY_BAR_ROTATE_LEFT_PDP = 10;
 	public static final int MONKEY_BAR_ROTATE_RIGHT_PDP = 11;
 
@@ -191,14 +188,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double WHEEL_BASE = 26; //units must match PositionReturnType (inch)
 
 
-  
-	/*************************************************************************
-	 *                             STINGER PARAMS                            *
-	 *************************************************************************/
-	public static final int STINGER_HALL_1 = 0;
-	public static final int STINGER_HALL_2 = 0;
 
-	public static final double STING_POT_VOLTAGE = 0;
 
 	/*************************************************************************
 	 *                         CARGO INTAKE PARAMETERS                        *
@@ -244,12 +234,32 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean MONKEY_BAR_INTAKE_RIGHT_REVERSE = false;
 	public static final boolean MONKEY_BAR_INTAKE_LEFT_REVERSE = false;
 
-	public static final double MONKEY_BAR_POT_VOLTAGE_MAX = 5.108; //130 degrees
-	public static final double MONKEY_BAR_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_POT_VOLTAGE_0 = 0.66; //0 degrees
-	public static final double MONKEY_BAR_ANGLE_DEGREES_0 = 0.0;
-	public static final int MONKEY_BAR_AVG_ENCODER_VAL = 5;
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
+	
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 5.108; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
+	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
+
+	//PBOT
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 5.108; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT = 130; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT = 0.66; //0 degrees
+	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT = 0.0;
+	
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 5.108; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 130; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.66; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
+	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
+
+
+	public static final int MONKEY_BAR_AVG_ENCODER_VAL = 5;
 
 	/*************************************************************************
 	 *                         Stinger Winch PARAMETERS                               *
@@ -258,6 +268,28 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean WINCH_MOTOR_LEFT_REVERSE = true;
 	public static final boolean WINCH_MOTOR_RIGHT_REVERSE = true;
 
+	public static final double STINGER_LEFT_POT_VOLTAGE_MAX = 4.0; //85 degrees
+	public static final double STINGER_LEFT_POT_MAX_HEIGHT_INCHES = 82.5;
+	public static final double STINGER_LEFT_POT_VOLTAGE_0 = 0.62; //0 degrees
+	public static final double STINGER_LEFT_POT_0_HEIGHT_INCHES = 0.0;
+
+	public static final double STINGER_RIGHT_POT_VOLTAGE_MAX = 4.0; //85 degrees
+	public static final double STINGER_RIGHT_POT_MAX_HEIGHT_INCHES = 82.5;
+	public static final double STINGER_RIGHT_POT_VOLTAGE_0 = 0.62; //0 degrees
+	public static final double STINGER_RIGHT_POT_0_HEIGHT_INCHES = 0.0;
+
+	//PBOT
+	public static final double STINGER_LEFT_POT_VOLTAGE_MAX_PBOT = 4.0; //85 degrees
+	public static final double STINGER_LEFT_POT_MAX_HEIGHT_INCHES_PBOT = 82.5;
+	public static final double STINGER_LEFT_POT_VOLTAGE_0_PBOT = 0.62; //0 degrees
+	public static final double STINGER_LEFT_POT_0_HEIGHT_INCHES_PBOT = 0.0;
+
+	public static final double STINGER_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.0; //85 degrees
+	public static final double STINGER_RIGHT_POT_MAX_HEIGHT_INCHES_PBOT = 82.5;
+	public static final double STINGER_RIGHT_POT_VOLTAGE_0_PBOT = 0.62; //0 degrees
+	public static final double STINGER_RIGHT_POT_0_HEIGHT_INCHES_PBOT = 0.0;
+
+	public static final int STINGER_AVG_ENCODER_VAL = 5;
 	/*************************************************************************
 	 *                         Plunger Arm Pivot PARAMETERS                   *
 	 *************************************************************************/
