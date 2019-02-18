@@ -16,8 +16,7 @@ public class NPointAverager {
 	/**
 	 * Constructor for end point average class
 	 * 
-	 * @param n
-	 *            the size of N point average (>= 1)
+	 * @param n the size of N point average (>= 1)
 	 */
 	public NPointAverager(int n) {
 		if (n < 1) {

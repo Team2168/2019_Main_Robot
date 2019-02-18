@@ -22,7 +22,7 @@ public class LoggableNamedSendable implements Loggable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.team2168.robot.utils.consoleprinter.Loggable#put(java.lang.String)
+	 * @see org.team2168.utils.consoleprinter.Loggable#put(java.lang.String)
 	 */
 	@Override
 	public void put(String key) {
@@ -32,7 +32,7 @@ public class LoggableNamedSendable implements Loggable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.team2168.robot.utils.consoleprinter.Loggable#valueToString()
+	 * @see org.team2168.utils.consoleprinter.Loggable#valueToString()
 	 */
 	@Override
 	public String valueToString() {

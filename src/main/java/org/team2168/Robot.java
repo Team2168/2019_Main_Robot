@@ -5,29 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.robot;
+package org.team2168;
 
 import org.team2168.subsystems.CargoIntake;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
-import org.team2168.subsystems.FloorHatchMechanism;
 import org.team2168.subsystems.HatchPlunger;
 import org.team2168.subsystems.Lift;
-import org.team2168.subsystems.LiftHardStop;
+import org.team2168.subsystems.LiftBrake;
 import org.team2168.subsystems.MonkeyBar;
-import org.team2168.subsystems.PlungerArmHardStop;
+import org.team2168.subsystems.PlungerArmBrake;
 import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.subsystems.Stinger;
 import org.team2168.subsystems.StingerRatchet;
 import org.team2168.utils.Debouncer;
 import org.team2168.utils.PowerDistribution;
-import org.team2168.utils.PowerDistribution;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,13 +40,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  
-  private static final String kDefaultAuto = "Default";
-  
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
   //Digital Jumper to Identify if this is practice bot or comp bot
   private static DigitalInput practiceBot;
 
@@ -60,14 +54,14 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
   public static Lift lift;
-  public static LiftHardStop liftHardStop;
+  public static LiftBrake liftHardStop;
   public static PlungerArmPivot plungerArmPivot;
-  public static PlungerArmHardStop plungerArmHardStop;
+  public static PlungerArmBrake plungerArmBrake;
   public static HatchPlunger hatchPlunger;
-  public static FloorHatchMechanism floorHatchMechanism;
+  public static FloorHatchIntake floorHatchIntake;
   public static Stinger stinger;
   public static StingerRatchet stingerRatchet;
-  public static MonkeyBar monkeybar;
+  public static MonkeyBar monkeyBar;
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -87,8 +81,11 @@ public class Robot extends TimedRobot {
 
   //Driver Joystick Chooser
   static int controlStyle;
+  static Command autonomousCommand;
+  public static SendableChooser<Command> autoChooser;
   public static SendableChooser<Number> controlStyleChooser;
 
+  //Keep track of time
   double runTime = Timer.getFPGATimestamp();
 
   
@@ -97,39 +94,91 @@ public class Robot extends TimedRobot {
    * used for any initialization code.
    */
   @Override
-  public void robotInit() {
-    oi = OI.getInstance();
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    cargointake = CargoIntake.getInstance();
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+  public void robotInit() 
+  {
 
-    practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
-    canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
+    try
+    {
+      //Stop all WPILib 2018 Telementry
+      LiveWindow.disableAllTelemetry();
+      
+      ConsolePrinter.init();
+      ConsolePrinter.setRate(RobotMap.CONSOLE_PRINTER_LOG_RATE_MS);
 
-    //Instantiate the subsystems
-    drivetrain = Drivetrain.getInstance();
-    drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
-    lift = Lift.getInstance();
-    liftHardStop = LiftHardStop.getInstance();
-    plungerArmPivot = PlungerArmPivot.getInstance();
-    plungerArmHardStop = PlungerArmHardStop.getInstance();
-    hatchPlunger = new HatchPlunger();
-    floorHatchMechanism = FloorHatchMechanism.getInstance();
-    stingerRatchet = StingerRatchet.getInstance();
+      practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
+      canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
 
-    //Starting PDP
-    pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
-    pdp.startThread();
+      //Instantiate the subsystems
+      drivetrain = Drivetrain.getInstance();
+      drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
+      lift = Lift.getInstance();
+      liftHardStop = LiftBrake.getInstance();
+      plungerArmPivot = PlungerArmPivot.getInstance();
+      plungerArmBrake = PlungerArmBrake.getInstance();
+      hatchPlunger = new HatchPlunger();
+      floorHatchIntake = FloorHatchIntake.getInstance();
+      monkeyBar = new MonkeyBar.getInstance();
+      stingerRatchet = new StingerRatchet.getInstance();
 
-    //Start Operator Interface
-    oi = OI.getInstance();
-    
-    //Initialize Control Selector Choices
-    controlStyleSelectInit();
-    
-    System.out.println("Robot Initialization Complete!!");
+      i2c = new I2C(I2C.Port.kOnboard, 8);
+
+      drivetrain.calibrateGyro();
+      driverstation = DriverStation.getInstance();
+
+      //Starting PDP
+      pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
+      pdp.startThread();
+
+      //Start Operator Interface
+      oi = OI.getInstance();
+      
+		  // enable compressor
+		  new StartCompressor();
+
+		  //Initialize Autonomous Selector Choices
+		  autoSelectInit();
+		  controlStyleSelectInit();
+      
+
+      ConsolePrinter.putSendable("Control Style Chooser", () -> {return Robot.controlStyleChooser;}, true, false);
+      ConsolePrinter.putSendable("Autonomous Mode Chooser", () -> {return Robot.autoChooser;}, true, false);
+      ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
+      ConsolePrinter.putString("AutoName", () -> {return Robot.getAutoName();}, true, false);
+      ConsolePrinter.putString("Control Style Name", () -> {return Robot.getControlStyleName();}, true, false);
+      ConsolePrinter.putNumber("gameClock", () -> {return driverstation.getMatchTime();}, true, false);
+      ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
+      ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
+      ConsolePrinter.putString("Switch_Scale_Switch orientation", () -> {return driverstation.getGameSpecificMessage();}, true, false); //Ill show you de wei
+
+      ConsolePrinter.startThread();
+      System.out.println("Robot Initialization Complete!!");
+    }
+    catch (Throwable throwable) 
+		{
+      Throwable cause = throwable.getCause();
+      if (cause != null) 
+        throwable = cause;
+      
+      System.err.println("Bad things occured, testing using our own stach trace catch");
+      System.err.println("Implement Logging function here");
+      System.err.flush();
+      
+      //Show Stack Trace on Driverstration like before
+      DriverStation.reportError("Unhandled exception instantiating robot" 
+              + throwable.toString(), throwable.getStackTrace());
+          DriverStation.reportWarning("Robots should not quit, but yours did!", false);
+          DriverStation.reportError("Could not instantiate robot!", false);
+          System.exit(1);
+      return;
+		}
+
   }
+
+    /************************************************************
+    *
+    * 				Robot State Machine
+    * 
+    ************************************************************/
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -226,9 +275,7 @@ public class Robot extends TimedRobot {
 
         // Select the control style
           controlStyle = (int) controlStyleChooser.getSelected();
-          
           runTime = Timer.getFPGATimestamp();
-          //Scheduler.getInstance().add(new TeleopWithoutCube());     
     }
       
 
@@ -249,9 +296,22 @@ public class Robot extends TimedRobot {
         //Robot.i2c.write(8, 97);
         
       }
-            
+ 	    
+	    /************************************************************
+	     *
+	     * 			HELPER FUNCTIONS FOR ENTIRE ROBOT
+	     * 
+	     ************************************************************/           
           
           
+  /**
+   * Returns the status of DIO pin 23 
+   * 
+   * @return true if this has a CAN drivetrain
+   */
+  public static boolean isCanDrivetrain(){
+    return !canDrivetrain.get();
+  }
 
   /**
    * Returns the status of DIO pin 24
@@ -262,16 +322,6 @@ public class Robot extends TimedRobot {
     return !practiceBot.get();
 
   }
-
-  /**
-   * Returns the status of DIO pin 25 
-   * 
-   * @return true if this has a CAN drivetrain
-   */
-  public static boolean isCanDrivetrain(){
-    return !canDrivetrain.get();
-  }
-
 
   /**
    * Get the name of a contron style.
@@ -305,7 +355,7 @@ public class Robot extends TimedRobot {
       return retVal;
     }
 
-  /**
+    /**
      * Adds control styles to the selector
      */
     public void controlStyleSelectInit() {
@@ -317,10 +367,44 @@ public class Robot extends TimedRobot {
       controlStyleChooser.setDefaultOption("New Gun Style", 4);
     }
 
+    /**
+     * Method which determines which control (joystick) style was selected
+     * returns int which is a enumeration for the control style to be implemented. The int is positive only.
+     */
     public static int getControlStyleInt() {
       return (int) controlStyleChooser.getSelected();
     }
 
+    /**
+		* Adds the autos to the selector
+		*/
+    public void autoSelectInit() 
+    {
+			autoChooser = new SendableChooser<Command>();
+			autoChooser.addDefault("Drive Straight", new DriveStraight(8.0));
+			// autoChooser.addObject("Do Nothing", new DoNothing());
+			// autoChooser.addObject("Center Auto 3 Cube", new AutoStartCenter3Cube());	        
+    }
+    
+    /**
+		* Get the name of an autonomous mode command.
+		* @return the name of the auto command.
+		*/
+    public static String getAutoName() 
+    {
+      if (autonomousCommand != null) 
+				return autonomousCommand.getName();
+			else
+				return "None";
+		}
+
+		/**
+		 * @return true if the robot is in auto mode
+		 */
+		public static boolean isAutoMode() {
+			return autoMode;
+
+}
     /**
      * Method which checks to see if gyro drifts and resets the gyro. Call this in a
      * loop.
@@ -331,13 +415,15 @@ public class Robot extends TimedRobot {
       curAngle = drivetrain.getHeading();
       gyroCalibrating = drivetrain.isGyroCalibrating();
 
-      if (lastGyroCalibrating && !gyroCalibrating) {
+      if (lastGyroCalibrating && !gyroCalibrating) 
+      {
         // if we've just finished calibrating the gyro, reset
         gyroDriftDetector.reset();
         curAngle = drivetrain.getHeading();
         System.out.println("Finished auto-reinit gyro");
-      } else if (gyroDriftDetector.update(Math.abs(curAngle - lastAngle) > (0.75 / 50.0)) && !matchStarted
-          && !gyroCalibrating) {
+      } 
+      else if (gyroDriftDetector.update(Math.abs(curAngle - lastAngle) > (0.75 / 50.0)) && !matchStarted && !gyroCalibrating) 
+      {
         // && gyroReinits < 3) {
         gyroReinits++;
         System.out.println("!!! Sensed drift, about to auto-reinit gyro (" + gyroReinits + ")");

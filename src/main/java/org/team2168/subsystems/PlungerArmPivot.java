@@ -7,50 +7,49 @@
 
 package org.team2168.subsystems;
 
+import org.team2168.Robot;
+import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
-import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
+import org.team2168.commands.PlungerArmPivot.DrivePlungerArmPivotWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
 public class PlungerArmPivot extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  //hardware
-  private static VictorSP _plungerArmPivotMotor; 
+  private static VictorSP _plungerArmPivotMotor;
   private static AveragePotentiometer _pivotPot;
-
-   public volatile double _plungerArmPivotVoltage; //not currently used
+  public volatile double _plungerArmPivotVoltage;
+  
   private static PlungerArmPivot _instance;
 
 
   private PlungerArmPivot()
   {
-    _plungerArmPivotMotor = new VictorSP(RobotMap.PLUNGER_ARM_PIVOT_MOTOR);
+    _plungerArmPivotMotor = new VictorSP(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
+    
     if (Robot.isPracticeRobot())
     {
-      _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT_PBOT, RobotMap.PIVOT_POT_VOLTAGE_0_PBOT,
-            RobotMap.PIVOT_POT_0_ROTATION_DEGREES_PBOT, RobotMap.PIVOT_POT_VOLTAGE_MAX_PBOT, 
-            RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES_PBOT, RobotMap.PIVOT_AVG_ENCODER_VAL);
+      _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT_PBOT, 
+        RobotMap.PIVOT_POT_VOLTAGE_0_PBOT,
+        RobotMap.PIVOT_POT_0_ROTATION_DEGREES_PBOT, 
+        RobotMap.PIVOT_POT_VOLTAGE_MAX_PBOT, 
+        RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES_PBOT, 
+        RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
     else 
     {
-      _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, RobotMap.PIVOT_POT_VOLTAGE_0,
-            RobotMap.PIVOT_POT_0_ROTATION_DEGREES, RobotMap.PIVOT_POT_VOLTAGE_MAX, 
-            RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, RobotMap.PIVOT_AVG_ENCODER_VAL);
+      _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, 
+        RobotMap.PIVOT_POT_VOLTAGE_0,
+        RobotMap.PIVOT_POT_0_ROTATION_DEGREES, 
+        RobotMap.PIVOT_POT_VOLTAGE_MAX, 
+        RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, 
+        RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
 
-    ConsolePrinter.putNumber("Plunger Arm Pivot", () -> {return Robot.oi.getDrivePlungerArmPivotJoystickValue();}, true, true);
+    ConsolePrinter.putNumber("Plunger Arm Pivot Joystick", () -> {return Robot.oi.getDrivePlungerArmPivotJoystickValue();}, true, true);
 		ConsolePrinter.putNumber("Plunger arm Pivot Motor Voltage", () -> {return _plungerArmPivotVoltage;}, true, true);
-		ConsolePrinter.putNumber("Plunger Arm Pivot Motor Current ", () -> {
-			return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_ARM_PIVOT_MOTOR_PDP);
-    }, true, true);
+		ConsolePrinter.putNumber("Plunger Arm Pivot Motor Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);}, true, true);
     ConsolePrinter.putBoolean("Plunger Arm Pivot Motor", () -> {return !Robot.pdp.isPlungerArmPivotMotorTrip();}, true, false);
 
 		ConsolePrinter.putNumber("Plunger Arm Pivot Raw Pot", () -> {return getRawPot();}, true, false);
@@ -110,6 +109,6 @@ public class PlungerArmPivot extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new DrivePlungerArmPivotWithJoystick());
   }
 }

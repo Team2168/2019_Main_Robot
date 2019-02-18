@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
- * Class to encapsulate all F310 functionality. No need to have multiple copies
+ * Class to encapsulate all TILaunch functionality. No need to have multiple copies
  * in OI all the time
  *
  * @author kevin

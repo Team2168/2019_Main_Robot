@@ -2,8 +2,8 @@ package org.team2168.commands.CargoIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.team2168.robot.OI;
-import org.team2168.robot.Robot;
+import org.team2168.OI;
+import org.team2168.Robot;
 
 /**
  * The purpose of this class is to drive the CargoIntake with Joysticks

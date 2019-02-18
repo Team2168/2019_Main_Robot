@@ -63,10 +63,6 @@ public class AveragePotentiometer implements PIDSensorInterface {
 
 	}
 
-	public AveragePotentiometer(double stingPotVoltage) {
-	}
-
-
 	@Override
 	public double getRate() {
 		// TODO Auto-generated method stub

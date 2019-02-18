@@ -1,6 +1,6 @@
 package org.team2168.PID.sensors;
 
-import org.team2168.robot.Robot;
+import org.team2168.Robot;
 
 /**
  * 

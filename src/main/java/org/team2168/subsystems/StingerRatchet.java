@@ -7,7 +7,9 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.robot.RobotMap;
+import org.team2168.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,6 +27,8 @@ public class StingerRatchet extends Subsystem {
   {
     _ratchet = new DoubleSolenoid(RobotMap.PCM_CAN_ID, 
       RobotMap.STINGER_RACHET_ENGAGE_PCM, RobotMap.STINGER_RACHET_DISENGAGE_PCM);
+      ConsolePrinter.putBoolean("Stinger Ratchet Enagaged", () -> {return Robot.stingerRatchet.isRatchetEngaged();}, true, false);
+      ConsolePrinter.putBoolean("Stinger Ratchet Disengaged", () -> {return Robot.stingerRatchet.isRatchetDisengaged();}, true, false);
   }
 
   /**
@@ -40,21 +44,35 @@ public class StingerRatchet extends Subsystem {
     return _instance;
   }
 
+  /**
+   * Engages the stinger ratchet to lock stingers
+   */
   public void engageRatchet()
   {
     _ratchet.set(DoubleSolenoid.Value.kForward);
   }
 
+  /**
+   * Disengages the stinger ratchet to allow the stingers to retract or extend
+   */
   public void disengageRatchet()
   {
     _ratchet.set(DoubleSolenoid.Value.kReverse);
   }
 
+  /**
+   * 
+   * @return true if last commanded shift was to engageRatchet
+   */
   public boolean isRatchetEngaged()
   {
     return _ratchet.get() == DoubleSolenoid.Value.kForward;
   }
     
+  /**
+   * 
+   * @return true if last commanded shift was to disengageRatchet
+   */
   public boolean isRatchetDisengaged()
   {
     return _ratchet.get() == DoubleSolenoid.Value.kReverse;
