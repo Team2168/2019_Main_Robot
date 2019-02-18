@@ -23,8 +23,7 @@ import org.team2168.subsystems.PlungerArmPivot;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -68,6 +67,9 @@ public class Robot extends TimedRobot {
   public static PlungerArmPivot plungerArmPivot;
   public static PlungerArmHardStop plungerArmHardStop;
 
+  //Driverstation Instance
+  public static DriverStation driverstation;
+  
   //PDP Instance
   public static PowerDistribution pdp;
 
@@ -76,6 +78,9 @@ public class Robot extends TimedRobot {
   public static SendableChooser<Number> controlStyleChooser;
 
   public static MonkeyBar monkeybar = new MonkeyBar();
+
+  //Variable to track blue alliance vs red alliance
+  private static boolean blueAlliance = false;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -107,6 +112,8 @@ public class Robot extends TimedRobot {
 
     pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
     pdp.startThread();
+
+    driverstation = DriverStation.getInstance();
 
     //Start Operator Interface
     oi = OI.getInstance();
@@ -196,6 +203,12 @@ public class Robot extends TimedRobot {
   public static boolean isCanDrivetrain(){
     return !canDrivetrain.get();
   }
+
+  public static boolean onBlueAlliance() {
+		return driverstation.getAlliance() == DriverStation.Alliance.Blue;
+
+	}
+	
 
 
   /**

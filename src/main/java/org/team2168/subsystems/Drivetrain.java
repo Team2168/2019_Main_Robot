@@ -333,7 +333,6 @@ public class Drivetrain extends Subsystem {
         rightSpeed = rightSpeed * 0.3;
       }
 
-
       driveLeftMotors(leftSpeed);
       driveRightMotors(rightSpeed);
     }

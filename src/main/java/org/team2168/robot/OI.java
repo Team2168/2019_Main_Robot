@@ -8,6 +8,18 @@
 package org.team2168.robot;
 
 import org.team2168.PID.trajectory.OneDimensionalRotation;
+import org.team2168.commands.LEDs.AutoWithoutGamePiece;
+import org.team2168.commands.LEDs.CargoWheelsInPattern;
+import org.team2168.commands.LEDs.CargoWheelsOutPattern;
+import org.team2168.commands.LEDs.DisabledPattern;
+import org.team2168.commands.LEDs.DisconnectPattern;
+import org.team2168.commands.LEDs.HABClimbPattern;
+import org.team2168.commands.LEDs.LiftLoweringPattern;
+import org.team2168.commands.LEDs.LiftRaisingPattern;
+import org.team2168.commands.LEDs.MonkeyBarPattern;
+import org.team2168.commands.LEDs.PivotingPattern;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiece;
+import org.team2168.commands.LEDs.WithGamePiece;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.utils.F310;
@@ -81,6 +93,21 @@ public class OI {
 		 *                         Operator Joystick         		              *
 		 *************************************************************************/
 
+
+
+		//leds testing
+		testJoystick.ButtonA().whenPressed(new DisabledPattern());
+		testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
+		testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiece());
+		testJoystick.ButtonY().whenPressed(new HABClimbPattern());
+		testJoystick.ButtonLeftTrigger().whenPressed(new DisconnectPattern());
+		testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
+		testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
+		testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
+		testJoystick.ButtonDownDPad().whenPressed(new CargoWheelsInPattern());
+		testJoystick.ButtonLeftDPad().whenPressed(new CargoWheelsOutPattern());
+		testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
+		testJoystick.ButtonUpDPad().whenPressed(new WithGamePiece());
 	}
 
 	/**
