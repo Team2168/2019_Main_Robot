@@ -1,4 +1,4 @@
-package org.team2168.Commands;
+package org.team2168.commands.CargoIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 

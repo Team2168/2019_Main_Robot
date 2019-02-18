@@ -8,25 +8,23 @@
 package org.team2168.robot;
 
 
-import org.team2168.Subsystems.MonkeyBar;
-import org.team2168.subsystem.CargoIntake;
-import org.team2168.subsystems.FloorHatchMechanism;
+import org.team2168.subsystems.CargoIntake;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
+import org.team2168.subsystems.FloorHatchMechanism;
+import org.team2168.subsystems.HatchPlunger;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.LiftHardStop;
+import org.team2168.subsystems.MonkeyBar;
 import org.team2168.subsystems.PlungerArmHardStop;
 import org.team2168.subsystems.PlungerArmPivot;
+import org.team2168.subsystems.Stinger;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.team2168.subsystems.Stinger;
-import org.team2168.subsystems.HatchPlunger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +32,7 @@ import org.team2168.subsystems.HatchPlunger;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
  * project.
- */  
+ */
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   public static CargoIntake cargointake;
@@ -42,7 +40,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-	public static Stinger stinger;
+  public static Stinger stinger;
   public static HatchPlunger hatchPlunger;
   public static FloorHatchMechanism floorHatchMechanism;
 
@@ -80,7 +78,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = OI.getInstance();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    cargointake = new CargoIntake();
+    cargointake = CargoIntake.getInstance();
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     hatchPlunger = new HatchPlunger();
