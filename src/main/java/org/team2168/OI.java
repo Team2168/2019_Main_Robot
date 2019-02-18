@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.robot;
+package org.team2168;
 
 import org.team2168.PID.trajectory.OneDimensionalRotation;
 import org.team2168.commands.LEDs.AutoWithoutGamePiece;
@@ -22,6 +22,8 @@ import org.team2168.commands.LEDs.TeleopWithoutGamePiece;
 import org.team2168.commands.LEDs.WithGamePiece;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.Drivetrain.EngageDrivetrain;
+import org.team2168.commands.Drivetrain.EngageStingers;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.consoleprinter.ConsolePrinter;

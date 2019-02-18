@@ -32,7 +32,7 @@ public class LoggableBoolean implements Loggable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.team2168.robot.utils.consoleprinter.Loggable#valueToString()
+	 * @see org.team2168.utils.consoleprinter.Loggable#valueToString()
 	 */
 	@Override
 	public String valueToString() {

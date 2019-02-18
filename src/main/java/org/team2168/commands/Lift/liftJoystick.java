@@ -5,11 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands;
+package org.team2168.commands.Lift;
 
-import org.team2168.robot.OI;
-import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
+import org.team2168.OI;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 

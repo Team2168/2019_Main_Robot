@@ -2,11 +2,10 @@ package org.team2168.utils;
 
 import java.util.TimerTask;
 
-import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-//import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -48,15 +47,10 @@ public class PowerDistribution {
 		channelPower = new double[NUM_OF_PDP_CHANNELS];
 		channelError = new int[NUM_OF_PDP_CHANNELS];
 
-		// ConsolePrinter.putNumber("Battery Voltage", () -> {
-		// 	return Robot.pdp.getBatteryVoltage();
-		// }, true, false);
-		// ConsolePrinter.putNumber("totalCurrent", () -> {
-		// 	return Robot.pdp.getTotalCurrent();
-		// }, true, false);
-		// ConsolePrinter.putNumber("pcmCurrent", () -> {
-		// 	return Robot.pdp.getChannelCurrent(RobotMap.PCM_POWER_PCM);
-		// }, true, false);
+		ConsolePrinter.putNumber("Battery Voltage", () -> {return Robot.pdp.getBatteryVoltage();}, true, false);
+		ConsolePrinter.putNumber("totalCurrent", () -> {return Robot.pdp.getTotalCurrent();}, true, false);
+		ConsolePrinter.putNumber("pcmCompressorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.COMPRESSOR_PDP);
+		}, true, false);
 
 	}
 
@@ -161,6 +155,13 @@ public class PowerDistribution {
 		return totalPower;
 	}
 
+	public boolean isRightMotorThreeTrip() {
+		if (channelError[RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP] == 2)
+			return true;
+		else 
+			return false;
+	}
+
 	public boolean isRightMotorTwoTrip() {
 		if (channelError[RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP] == 2)
 			return true;
@@ -176,8 +177,6 @@ public class PowerDistribution {
 	}
 
 	
-	
-
 	public boolean isLeftMotorOneTrip() {
 		if (channelError[RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP] == 2)
 			return true;
@@ -192,9 +191,14 @@ public class PowerDistribution {
 			return false;
 	}
 
-	
+	public boolean isLeftMotorThreeTrip() {
+		if (channelError[RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP] == 2)
+			return true;
+		else
+			return false;
+	}
 
-		
+	
 	public boolean isLiftMotorOneTrip() {
 		if (channelError[RobotMap.LIFT_MOTOR_1_PDP] == 2)
 			return true;
@@ -209,26 +213,21 @@ public class PowerDistribution {
 			return false;
 	}
 	
-	public boolean isLiftMotorThreeTrip() {
-		if (channelError[RobotMap.LIFT_MOTOR_3_PDP] == 2)
-			return true;
-		else
-			return false;
-	}
-	
+
 	public boolean isIntakeMotorTrip() {
-		if (channelError[RobotMap.INTAKE_MOTOR_PDP] == 2)
+		if (channelError[RobotMap.CARGO_INTAKE_MOTOR_PDP] == 2)
 			return true;
 		else
 			return false;
 	}
-	
-	
-	public boolean isIntakePivotMotorTrip() {
-		if (channelError[RobotMap.INTAKE_PIVOT_MOTOR_PDP] == 2)
+
+
+	public boolean isPlungerArmPivotMotorTrip(){
+		if (channelError[RobotMap.PLUNGER_PIVOT_MOTOR_PDP] ==2)
 			return true;
-		else
+		else 
 			return false;
 	}
+		
 	
 }

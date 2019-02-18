@@ -7,8 +7,8 @@
 
 package org.team2168.commands.PlungerArmPivot;
 
-import org.team2168.robot.OI;
-import org.team2168.robot.Robot;
+import org.team2168.OI;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -29,7 +29,7 @@ public class DrivePlungerArmPivotWithJoystick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.plungerArmPivot.drivePlungerArmPivotMotor(OI.getDrivePlungerArmPivotJoystickValue());
+    Robot.plungerArmPivot.drivePlungerArmPivotMotor(Robot.oi.getDrivePlungerArmPivotJoystickValue());
   }
 
   // Make this return true when this Command no longer needs to run execute()

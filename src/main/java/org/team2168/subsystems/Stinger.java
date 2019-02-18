@@ -1,48 +1,99 @@
 package org.team2168.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.VictorSP;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
-import org.team2168.robot.RobotMap;
-import edu.wpi.first.wpilibj.AnalogInput;
+
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
+public class Stinger extends Subsystem {
+    AveragePotentiometer _stingerPotLeft;
+    AveragePotentiometer _stingerPotRight;
+    DigitalInput _stingerRightRatchetEngagedHallEffect;
+    DigitalInput _stingerLeftRatchetEngagedHallEffect; 
 
-public class Stinger extends Subsystem 
-{
-    AveragePotentiometer _stingPotLeft;
-    AveragePotentiometer _stingPotRight;
-    DigitalInput _stingerHallLeft; //
-    DigitalInput _stingerHallRight; // 
-
+    private static Stinger _instance;
     private Stinger()
     {
-		_stingerHallLeft = new DigitalInput(RobotMap.STINGER_HALL_1);
-        _stingerHallRight = new DigitalInput(RobotMap.STINGER_HALL_2);
-        _stingPotLeft = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
-        _stingPotRight = new AveragePotentiometer(RobotMap.STING_POT_VOLTAGE);
+		_stingerLeftRatchetEngagedHallEffect  = new DigitalInput(RobotMap.STINGER_LEFT_RATCHET_ENGAGED);
+        _stingerRightRatchetEngagedHallEffect = new DigitalInput(RobotMap.STINGER_RIGHT_RATCHET_ENGAGED);
+
+        if (Robot.isPracticeRobot()) {
+            _stingerPotLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT,
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_0_PBOT,
+                RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES_PBOT, 
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX_PBOT,
+                RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES_PBOT, 
+                RobotMap.STINGER_AVG_ENCODER_VAL);
+
+            _stingerPotRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT, 
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_0_PBOT,
+                RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES_PBOT, 
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX_PBOT,
+                RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES_PBOT, 
+                RobotMap.STINGER_AVG_ENCODER_VAL);
+        } 
+        else 
+        {
+            _stingerPotLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT,
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_0,
+                RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES, 
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX,
+                RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES, 
+                RobotMap.STINGER_AVG_ENCODER_VAL);
+
+            _stingerPotRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT, 
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_0,
+                RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES, 
+                RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX,
+                RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES, 
+                RobotMap.STINGER_AVG_ENCODER_VAL);
+
+        }
+
     }
 
-    public boolean isLeftStingDown()
+    /**
+     * Singleton constructor of the plunger arm pivot
+    * 
+    */
+    public static Stinger getInstance() {
+        if (_instance == null)
+        _instance = new Stinger();
+        return _instance;
+    }
+
+    public boolean isLeftStingerRatchetEngaged()
     {
-        return _stingerHallLeft.get();
+        return _stingerLeftRatchetEngagedHallEffect.get();
     }
 
-    public boolean isRightStingDown()
+    public boolean isRightStingerRatchetEngaged()
     {
-        return _stingerHallRight.get();
+        return _stingerRightRatchetEngagedHallEffect.get();
     }
 
-    public double getRawLeftPot()
+    public double getLeftPotRaw()
     {
-        return _stingPotLeft.getRawPos();
+        return _stingerPotLeft.getRawPos();
     }
 
-    public double getRawRightPot()
+    public double getRightPotRaw()
     {
-        return _stingPotRight.getRawPos();
+        return _stingerPotRight.getRawPos();
     }
 
-    public static void initDefaultCommand() { 
+    public double getLeftPotPos()
+    {
+        return _stingerPotLeft.getPos();
+    }
+
+    public double getRightPotPos()
+    {
+        return _stingerPotRight.getPos();
+    }
+
+    public void initDefaultCommand() { 
     }
 }

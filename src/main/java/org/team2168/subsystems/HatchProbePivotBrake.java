@@ -7,25 +7,25 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.robot.RobotMap;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-  /**
-   * Add your docs here.
-   */
-  public class PlungerArmHardStop extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
+  public class HatchProbePivotBrake extends Subsystem {
+
   private static DoubleSolenoid _plungerArmBrake;
+  private static HatchProbePivotBrake _instance;
 
-  private static PlungerArmHardStop _instance;
-
-  private PlungerArmHardStop()
+  private HatchProbePivotBrake()
   {
-    _plungerArmBrake = new DoubleSolenoid(RobotMap.PLUNGER_ARM_BREAK_EXTENDED_PCM, 
-          RobotMap.PLUNGER_ARM_BREAK_RETRACTED_PCM);
+    _plungerArmBrake = new DoubleSolenoid(RobotMap.PLUNGER_ARM_BREAK_EXTENDED_PCM, RobotMap.PLUNGER_ARM_BREAK_RETRACTED_PCM);
+
+    ConsolePrinter.putBoolean("Plunger Arm Hard Stop Engaged", () -> {return Robot.plungerArmBrake.isEngaged();}, true, false);
+    ConsolePrinter.putBoolean("Plunger Arm Hard Stop Disengaged", () -> {return Robot.plungerArmBrake.isDisengaged();}, true, false);
   }
 
   /**
@@ -33,9 +33,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
    * 
    */
 
-  public static PlungerArmHardStop getInstance() {
+  public static HatchProbePivotBrake getInstance() {
     if (_instance == null)
-      _instance = new PlungerArmHardStop();
+      _instance = new HatchProbePivotBrake();
     return _instance;
   }
 

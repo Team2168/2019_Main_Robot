@@ -7,12 +7,12 @@
 
 package org.team2168.commands.PlungerArmHardStop;
 
-import org.team2168.robot.Robot;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DisengagePlungerArmBrake extends Command {
-  public DisengagePlungerArmBrake() {
+public class EngagePlungerArmBrake extends Command {
+  public EngagePlungerArmBrake() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.plungerArmHardStop);
@@ -21,7 +21,7 @@ public class DisengagePlungerArmBrake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.plungerArmHardStop.disengage();
+    Robot.plungerArmHardStop.engage();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,7 @@ public class DisengagePlungerArmBrake extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.plungerArmHardStop.isDisengaged();
+    return Robot.plungerArmHardStop.isEngaged();
   }
 
   // Called once after isFinished returns true
