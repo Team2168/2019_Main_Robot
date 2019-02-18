@@ -9,9 +9,12 @@ package org.team2168.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import org.team2168.robot.Robot;
 import org.team2168.robot.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Add your docs here.
@@ -20,14 +23,17 @@ public class DrivetrainStingerShifter extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static DrivetrainStingerShifter _instance = null;
-  private static DoubleSolenoid _drivetrainShifter; 
+  private static Solenoid _drivetrainShifter; 
 
   /**
    * default constructor
    */
   private DrivetrainStingerShifter()
   {
-    _drivetrainShifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.DRIVETRAIN_ENGAGED_PCM, RobotMap.STINGERS_ENGAGED_PCM);
+    _drivetrainShifter = new Solenoid(RobotMap.PCM_CAN_ID_2, RobotMap.DRIVETRAIN_ENGAGED_PCM);
+
+    ConsolePrinter.putBoolean("Drivetrain Enagaged", () -> {return Robot.drivetrainStingerShifter.isDrivetrainEngaged();}, true, false);
+		ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.drivetrainStingerShifter.isStingerEngaged();}, true, false);
   }
 
   /**
@@ -48,7 +54,7 @@ public class DrivetrainStingerShifter extends Subsystem {
    */
   public void engageDrivetrain()
   {
-    _drivetrainShifter.set(DoubleSolenoid.Value.kForward);
+    _drivetrainShifter.set(true);
   }
 
   /**
@@ -56,7 +62,7 @@ public class DrivetrainStingerShifter extends Subsystem {
    */
   public void engageStingers()
   {
-    _drivetrainShifter.set(DoubleSolenoid.Value.kReverse);
+    _drivetrainShifter.set(false);
   }
 
   /**
@@ -64,7 +70,7 @@ public class DrivetrainStingerShifter extends Subsystem {
    */
   public boolean isDrivetrainEngaged()
   {
-    return _drivetrainShifter.get() == DoubleSolenoid.Value.kForward;
+    return _drivetrainShifter.get() == true;
   }
 
   /**
@@ -72,7 +78,7 @@ public class DrivetrainStingerShifter extends Subsystem {
    */
   public boolean isStingerEngaged()
   {
-    return _drivetrainShifter.get() == DoubleSolenoid.Value.kReverse;
+    return _drivetrainShifter.get() == false;
   }
 
 

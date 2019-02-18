@@ -122,39 +122,29 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
-	public final static int STINGERS_ENGAGED_PCM = 1;
+	
 	public static final int HATCH_INTAKE_LOWER_PCM = 2;
 	public static final int HATCH_INTAKE_RAISE_PCM = 3;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
 	public static final int LIFT_BRAKE_ENGAGE_PCM = 6;
-	public static final int LIFE_BRAKE_DISENGAGE = 7;
+	public static final int LIFE_BRAKE_DISENGAGE_PCM = 7;
 	
 	//Double Soldenoids PCM ID = 1
-	public static final int PLUNGER_EXTEND_PCM = 4;
-	public static final int PLUNGER_RETRACT_PCM = 5;
-	public static final int PLUNGER_ENGAGE_PCM = 6;
-	public static final int PLUNGER_DISENGAGE_PCM = 7;
 
-	
-	
-	public static final int LIFT_RACHET_ENGAGE_PCM = 0;
-	public static final int LIFT_RACHET_DISENGAGE_PCM = 1;
-	public static final int LIFT_BRAKE_ENGAGE_PCM = 3;
-	public static final int LIFT_BRAKE_DISENGAGE_PCM = 2;
-	public static final int LIFT_HIGH_GEAR_PCM = 4;
-	public static final int LIFT_LOW_GEAR_PCM = 5;
-
-
-
-	//0
-	//1
+  
+  //THIS HAS INCORRECT VALUES
+  
+	public static final int PLUNGER_ARM_BREAK_EXTENDED_PCM = 0;
+	public static final int PLUNGER_ARM_BREAK_RETRACTED_PCM = 1;
 	public static final int BALL_PUNCH_EXTEND_PCM = 2;
 	public static final int BALL_PUNCH_RETRACT_PCM = 3;
 	public static final int PROBE_EXTEND_PCM = 4;
 	public static final int PROBE_RETRACT_PCM = 5;
 	public static final int PROBE_ENGAGE_PCM = 6;
 	public static final int PROBE_DISENGAGE_PCM = 7;
+  
+  
 	public static final int Hatch_Intake_Lower_pcm=2;
 	public static final int Hatch_Intake_Raise_pcm=3;
 
@@ -177,21 +167,25 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	///////////////////40 Amp////////////////////////////////
 	public static final int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 0;
 	public static final int DRIVETRAIN_RIGHT_MOTOR_2_PDP = 1;
-	//public static final int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 3;
+	public static final int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 2;
 	public static final int DRIVETRAIN_LEFT_MOTOR_1_PDP = 15;
 	public static final int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
-	//public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 13;
+	public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 13;
+	
 	//public static final int PLATFORM_1_PDP = 3;
 	//public static final int PLATFORM_2_PDP = 12;
 
-	public static final int WINCH_1_PDP = 2;
-	public static final int WINCH_2_PDP = 13;
+	// public static final int WINCH_1_PDP = 2;
+	// public static final int WINCH_2_PDP = 13;
 
 	///////////20-30 Amp/////////////////////////////////////
+
+	public static final int PLUNGER_ARM_PIVOT_MOTOR_PDP = 4;
+	public static final int INTAKE_MOTOR_PDP = 5;
+
 	public static final int LIFT_MOTOR_1_PDP = 9;
 	public static final int LIFT_MOTOR_2_PDP = 10;
 	public static final int LIFT_MOTOR_3_PDP = 11;
-	public static final int INTAKE_MOTOR_PDP = 5;
 	public static final int INTAKE_PIVOT_MOTOR_PDP = 6;
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int AUX_POWER = 8;
@@ -200,11 +194,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
-	public static final int PCM_HATCHARM_ID = 0;
+	public static final int PCM_HATCHARM_ID = 0; //TODO what is this
 	public static final int PCM_HATCHPLUNGER_ID = 1;
-	public static final int PDP_CAN_ID = 0;
-	public static final int TALON_ID = 0;
-	public static final int TALON_ID_1 = 1;
 
 
 	// Relay Channels///////////////////////////////////////////////////////////

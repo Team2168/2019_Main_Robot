@@ -10,6 +10,7 @@ package org.team2168.subsystems;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.robot.Robot;
 import org.team2168.robot.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,8 +26,9 @@ public class PlungerArmPivot extends Subsystem {
   private static VictorSP _plungerArmPivotMotor; 
   private static AveragePotentiometer _pivotPot;
 
-  // public volatile double _plungerArmPivotVoltage; //not currently used
+   public volatile double _plungerArmPivotVoltage; //not currently used
   private static PlungerArmPivot _instance;
+
 
   private PlungerArmPivot()
   {
@@ -43,6 +45,17 @@ public class PlungerArmPivot extends Subsystem {
             RobotMap.PIVOT_POT_0_ROTATION_DEGREES, RobotMap.PIVOT_POT_VOLTAGE_MAX, 
             RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
+
+    ConsolePrinter.putNumber("Plunger Arm Pivot", () -> {return Robot.oi.getDrivePlungerArmPivotJoystickValue();}, true, true);
+		ConsolePrinter.putNumber("Plunger arm Pivot Motor Voltage", () -> {return _plungerArmPivotVoltage;}, true, true);
+		ConsolePrinter.putNumber("Plunger Arm Pivot Motor Current ", () -> {
+			return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_ARM_PIVOT_MOTOR_PDP);
+    }, true, true);
+    ConsolePrinter.putBoolean("Plunger Arm Pivot Motor", () -> {return !Robot.pdp.isPlungerArmPivotMotorTrip();}, true, false);
+
+		ConsolePrinter.putNumber("Plunger Arm Pivot Raw Pot", () -> {return getRawPot();}, true, false);
+		ConsolePrinter.putNumber("Plunger Arm Pivot Degrees", () -> {return getPotPos();}, true, false);
+
   
   }
 
@@ -73,7 +86,7 @@ public class PlungerArmPivot extends Subsystem {
     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
       speed = -speed;
     _plungerArmPivotMotor.set(speed);
-    //_plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; //not currently used
+    _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; //not currently used
   }
 
   /**
