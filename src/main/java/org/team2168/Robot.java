@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
       hatchProbePivotBrake = HatchProbePivotBrake.getInstance();
       hatchProbePistons = HatchProbePistons.getInstance();
       hatchFloorIntake = HatchFloorIntake.getInstance();
-      monkeybar = MonkeyBar.getInstance();
+      monkeyBar = MonkeyBar.getInstance();
       stingerRatchet = StingerRatchet.getInstance();
 
       i2c = new I2C(I2C.Port.kOnboard, 8);

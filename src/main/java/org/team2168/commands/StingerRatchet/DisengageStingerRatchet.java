@@ -7,7 +7,7 @@
 
 package org.team2168.commands.StingerRatchet;
 
-import org.team2168.robot.Robot;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,7 +26,7 @@ public class DisengageStingerRatchet extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.stingerRatchet.disengageRatchet();;
+    Robot.stingerRatchet.disengageRatchet();
   }
 
   // Make this return true when this Command no longer needs to run execute()

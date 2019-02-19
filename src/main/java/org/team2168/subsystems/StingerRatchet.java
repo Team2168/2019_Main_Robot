@@ -14,9 +14,7 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
+
 public class StingerRatchet extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -25,7 +23,7 @@ public class StingerRatchet extends Subsystem {
 
   public StingerRatchet()
   {
-    _ratchet = new DoubleSolenoid(RobotMap.PCM_CAN_ID, 
+    _ratchet = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, 
       RobotMap.STINGER_RACHET_ENGAGE_PCM, RobotMap.STINGER_RACHET_DISENGAGE_PCM);
       ConsolePrinter.putBoolean("Stinger Ratchet Enagaged", () -> {return Robot.stingerRatchet.isRatchetEngaged();}, true, false);
       ConsolePrinter.putBoolean("Stinger Ratchet Disengaged", () -> {return Robot.stingerRatchet.isRatchetDisengaged();}, true, false);
