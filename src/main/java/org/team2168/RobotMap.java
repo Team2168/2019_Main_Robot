@@ -68,7 +68,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
-	public static final int HATCH__INTAKE_IR_THRESHOLD = 0;
+	public static final int HATCH_INTAKE_IR_SENSOR = 0;
 	public static final int LIFT_POSITION_POT = 1;
 	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 2;
 	public static final int PRESSURE_SENSOR = 3;
@@ -110,8 +110,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LIFT_BRAKE_DISENGAGE_PCM = 7;
 	
 	//Double Soldenoids PCM ID = 1
-	public static final int PLUNGER_ARM_BREAK_EXTENDED_PCM = 0;
-	public static final int PLUNGER_ARM_BREAK_RETRACTED_PCM = 1;
+	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
+	public static final int PROBE_ROTATE_BRAKE_RETRACTED_PCM = 1;
 	public static final int BALL_PUNCH_EXTEND_PCM = 2;
 	public static final int BALL_PUNCH_RETRACT_PCM = 3;
 	public static final int PROBE_EXTEND_PCM = 4;
@@ -198,12 +198,21 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         CARGO INTAKE PARAMETERS                        *
 	 *************************************************************************/
 	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = true;
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 0.0; 
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 0.0; 
+
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
 
 	/*************************************************************************
 	 *                         HATCH INTAKE PARAMETERS                        *
 	 *************************************************************************/
-	public static final boolean HATCH_INTAKE_LEFT_REVERSE = true;
+	public static final boolean HATCH_INTAKE_MOTOR_REVERSE = true;
+	public static final double HATCH_INTAKE_IR_THRESHOLD_MIN = 0.0; 
+	public static final double HATCH_INTAKE_IR_THRESHOLD_MAX = 0.0; 
 
+	public static final double HATCH_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
+	public static final double HATCH_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
 
 	/*************************************************************************
 	 *                         LIFT PARAMETERS                               *

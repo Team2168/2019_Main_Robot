@@ -5,44 +5,52 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.HatchPlunger;
+package org.team2168.commands.hatchProbePistons;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 //this command grabs the hatch 
-public class EngageHatchPanel extends Command {
-  public EngageHatchPanel() {
-    requires(Robot.hatchPlunger);
+public class EngageHatchPanel extends Command
+{
+  public EngageHatchPanel()
+  {
+    requires(Robot.hatchProbePistons);
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis); 
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    Robot.hatchPlunger.HatchEngaged();
+  protected void initialize()
+  {
+    Robot.hatchProbePistons.HatchEngaged();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  protected void execute()
+  {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  protected boolean isFinished()
+  {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }

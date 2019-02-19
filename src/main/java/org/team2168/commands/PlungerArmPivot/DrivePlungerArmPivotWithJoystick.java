@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.PlungerArmPivot;
+package org.team2168.commands.plungerArmPivot;
 
 import org.team2168.OI;
 import org.team2168.Robot;
@@ -16,7 +16,7 @@ public class DrivePlungerArmPivotWithJoystick extends Command {
   public DrivePlungerArmPivotWithJoystick() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.plungerArmPivot);
+    requires(Robot.hatchProbePivot);
 
   }
 
@@ -29,7 +29,7 @@ public class DrivePlungerArmPivotWithJoystick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.plungerArmPivot.drivePlungerArmPivotMotor(Robot.oi.getDrivePlungerArmPivotJoystickValue());
+    Robot.hatchProbePivot.drivePlungerArmPivotMotor(Robot.oi.getDrivePlungerArmPivotJoystickValue());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -41,7 +41,7 @@ public class DrivePlungerArmPivotWithJoystick extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.plungerArmPivot.drivePlungerArmPivotMotor(0.0);
+    Robot.hatchProbePivot.drivePlungerArmPivotMotor(0.0);
   }
 
   // Called when another command which requires one or more of the same

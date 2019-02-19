@@ -5,44 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.HatchPlunger;
+package org.team2168.commands.hatchProbePistons;
 
 import org.team2168.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
-//This command retracts the arm 
-public class RetractArm extends Command {
-  public RetractArm() {
-    requires(Robot.hatchPlunger);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
+//this command lets go of the hatch 
+public class DisengageHatchPanel extends Command
+{
+  public DisengageHatchPanel()
+  {
+    requires(Robot.hatchProbePistons);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    
+  protected void initialize()
+  {
+    Robot.hatchProbePistons.HatchDisengaged();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    Robot.hatchPlunger.RetractPlunger();
+  protected void execute()
+  {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  protected boolean isFinished()
+  {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }

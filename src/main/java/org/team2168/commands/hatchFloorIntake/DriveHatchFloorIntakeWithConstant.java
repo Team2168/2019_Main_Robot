@@ -5,46 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.FloorHatchMechanism;
+package org.team2168.commands.hatchFloorIntake;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveWithConstant extends Command {
+public class DriveHatchFloorIntakeWithConstant extends Command
+{
 
-  private int _speed;
-  public DriveWithConstant(int inputSpeed) {
-    requires(Robot.floorHatchMechanism);
+  private double _speed;
+
+  public DriveHatchFloorIntakeWithConstant(double inputSpeed)
+  {
+    requires(Robot.hatchFloorIntake);
     _speed = inputSpeed;
   }
 
- 
   @Override
-  protected void initialize() {
+  protected void initialize()
+  {
 
   }
 
   @Override
-  protected void execute() {
-    Robot.floorHatchMechanism.intakeHatchPanel(_speed);
+  protected void execute()
+  {
+    Robot.hatchFloorIntake.driveMotors(_speed);
   }
 
-
   @Override
-  protected boolean isFinished() {
-      return false;
-    }
-
-
-  @Override
-  protected void end() {
-    Robot.floorHatchMechanism.intakeHatchPanel(0);
+  protected boolean isFinished()
+  {
+    return false;
   }
 
+  @Override
+  protected void end()
+  {
+    Robot.hatchFloorIntake.driveMotors(0);
+  }
 
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
     end();
   }
 }

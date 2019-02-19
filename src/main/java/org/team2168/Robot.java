@@ -7,15 +7,16 @@
 
 package org.team2168;
 
-import org.team2168.subsystems.CargoIntake;
+
+import org.team2168.subsystems.CargoIntakeWheels;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
+import org.team2168.subsystems.HatchFloorIntake;
 import org.team2168.subsystems.HatchProbePistons;
-import org.team2168.subsystems.Lift;
-import org.team2168.subsystems.LiftBrake;
-import org.team2168.subsystems.MonkeyBar;
-import org.team2168.subsystems.HatchProbePivotBrake;
 import org.team2168.subsystems.HatchProbePivot;
+import org.team2168.subsystems.HatchProbePivotBrake;
+import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.MonkeyBar;
 import org.team2168.subsystems.Stinger;
 import org.team2168.utils.Debouncer;
 import org.team2168.utils.PowerDistribution;
@@ -24,7 +25,6 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -49,17 +49,16 @@ public class Robot extends TimedRobot {
   public static OI oi;
 
   //Subsystems
-  public static CargoIntake cargointake;
+  public static CargoIntakeWheels cargoIntakeWheels;
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
+  public static HatchProbePivot hatchProbePivot;
+  public static HatchProbePivotBrake hatchProbePivotBrake;
+  public static HatchProbePistons hatchProbePistons;
+  public static HatchFloorIntake hatchFloorIntake;
   public static Lift lift;
-  public static LiftBrake liftHardStop;
-  public static HatchProbePivot plungerArmPivot;
-  public static HatchProbePivotBrake plungerArmBrake;
-  public static HatchProbePistons hatchPlunger;
-  public static HatchFloorIntake floorHatchIntake;
-  public static Stinger stinger;
   public static MonkeyBar monkeybar;
+  public static Stinger stinger;
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -107,15 +106,15 @@ public class Robot extends TimedRobot {
       canDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
 
       //Instantiate the subsystems
+      cargoIntakeWheels = CargoIntakeWheels.getInstance();
       drivetrain = Drivetrain.getInstance();
       drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
       lift = Lift.getInstance();
-      liftHardStop = LiftBrake.getInstance();
-      plungerArmPivot = HatchProbePivot.getInstance();
-      plungerArmBrake = HatchProbePivotBrake.getInstance();
-      hatchPlunger = new HatchProbePistons();
-      floorHatchIntake = HatchFloorIntake.getInstance();
-      monkeyBar = new MonkeyBar.getInstance();
+      hatchProbePivot = HatchProbePivot.getInstance();
+      hatchProbePivotBrake = HatchProbePivotBrake.getInstance();
+      hatchProbePistons = HatchProbePistons.getInstance();
+      hatchFloorIntake = HatchFloorIntake.getInstance();
+      monkeybar = MonkeyBar.getInstance();
 
       i2c = new I2C(I2C.Port.kOnboard, 8);
 

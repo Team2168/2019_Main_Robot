@@ -22,10 +22,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
   private HatchProbePivotBrake()
   {
-    _plungerArmBrake = new DoubleSolenoid(RobotMap.PLUNGER_ARM_BREAK_EXTENDED_PCM, RobotMap.PLUNGER_ARM_BREAK_RETRACTED_PCM);
+    _plungerArmBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT,RobotMap.PROBE_ROTATE_BRAKE_EXTENDED_PCM, RobotMap.PROBE_ROTATE_BRAKE_RETRACTED_PCM);
 
-    ConsolePrinter.putBoolean("Plunger Arm Hard Stop Engaged", () -> {return Robot.plungerArmBrake.isEngaged();}, true, false);
-    ConsolePrinter.putBoolean("Plunger Arm Hard Stop Disengaged", () -> {return Robot.plungerArmBrake.isDisengaged();}, true, false);
+    ConsolePrinter.putBoolean("HatchProbePivotBrakeEngaged", () -> {return Robot.hatchProbePivotBrake.isEngaged();}, true, false);
   }
 
   /**

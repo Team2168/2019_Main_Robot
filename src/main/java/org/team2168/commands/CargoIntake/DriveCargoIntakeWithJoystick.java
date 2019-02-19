@@ -14,7 +14,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
     
 	public DriveCargoIntakeWithJoystick() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.cargointake);
+		requires(Robot.cargoIntake);
 	}
 
 	// Called just before this Command runs the first time
@@ -28,7 +28,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.cargointake.drive(OI.getDriveCargoIntakeJoystickValue());
+		Robot.cargoIntake.drive(Robot.oi.getDriveCargoIntakeJoystickValue());
 
 	}
 
@@ -41,7 +41,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.cargointake.drive(0.0);//0.0 because its a double
+		Robot.cargoIntake.drive(0.0);//0.0 because its a double
 	}
 
 	// Called when another command which requires one or more of the same

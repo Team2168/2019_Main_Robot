@@ -5,47 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.drivetrain;
+package org.team2168.commands.hatchFloorIntake;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Engages stingers and puts drivetrain in neutral
- */
-public class EngageStingers extends Command {
-  public EngageStingers() {
+public class HatchFloorIntakePivotRetract extends Command
+{
+  public HatchFloorIntakePivotRetract()
+  {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.drivetrainStingerShifter);
+    requires(Robot.hatchFloorIntake);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    Robot.drivetrainStingerShifter.engageStingers();
+  protected void initialize()
+  {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  protected void execute()
+  {
+    Robot.hatchFloorIntake.raise();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
-    return Robot.drivetrainStingerShifter.isStingerEngaged();
+  protected boolean isFinished()
+  {
+    return Robot.hatchFloorIntake.isSolenoidRaised();
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }

@@ -7,12 +7,14 @@
 
 package org.team2168.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.AnalogInput;
+import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
+
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HatchProbePistons extends Subsystem {
 
@@ -26,7 +28,7 @@ public class HatchProbePistons extends Subsystem {
   {
     _probePlungerPiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.PROBE_EXTEND_PCM,RobotMap.PROBE_RETRACT_PCM);
     _probeHatchEngagePiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.PROBE_ENGAGE_PCM,RobotMap.PROBE_DISENGAGE_PCM);
-    _HatchSensor = new AnalogInput(RobotMap.HATCH__INTAKE_IR_THRESHOLD);
+    _HatchSensor = new AnalogInput(RobotMap.HATCH_INTAKE_IR_SENSOR);
 
     ConsolePrinter.putNumber("HatchPlunger Raw IR", () -> {return getRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("Hatch is Present", () -> {return isHatchPresent();}, true, false);
@@ -39,46 +41,69 @@ public class HatchProbePistons extends Subsystem {
 	 * 
 	 */
 
-  public static HatchProbePistons GetInstance()
-	{
-		if (instance == null)
-			instance = new HatchProbePistons();
-		return instance;
-	}
+  public static HatchProbePistons getInstance()
+  {
+    if (instance == null)
+      instance = new HatchProbePistons();
+    return instance;
+  }
 
-  public void ExtendPlunger() {
+  public void ExtendPlunger()
+  {
     _probePlungerPiston.set(DoubleSolenoid.Value.kForward);
   }
-  public void RetractPlunger() {
+
+  public void RetractPlunger()
+  {
     _probePlungerPiston.set(DoubleSolenoid.Value.kReverse);
   }
-  public void HatchEngaged() {
+
+  public void HatchEngaged()
+  {
     _probeHatchEngagePiston.set(DoubleSolenoid.Value.kForward);
   }
-	public void HatchDisengaged() {
+
+  public void HatchDisengaged()
+  {
     _probeHatchEngagePiston.set(DoubleSolenoid.Value.kReverse);
   }
-  public double getRawIRVoltage(){
+
+  public double getRawIRVoltage()
+  {
     return _HatchSensor.getVoltage();
   }
-  public boolean isHatchPresent() {
-      return (getRawIRVoltage() >= RobotMap.HATCH__INTAKE_IR_THRESHOLD);
+
+  public boolean isHatchPresent()
+  {
+    if (Robot.isPracticeRobot())
+      return (getRawIRVoltage() >= RobotMap.HATCH_INTAKE_IR_THRESHOLD_MAX_PBOT);
+    else
+      return (getRawIRVoltage() >= RobotMap.HATCH_INTAKE_IR_THRESHOLD_MAX);
   }
-  public boolean isArmExtended(){
+
+  public boolean isArmExtended()
+  {
     return _probePlungerPiston.get() == Value.kForward;
   }
-  public boolean isArmRetracted(){
+
+  public boolean isArmRetracted()
+  {
     return _probePlungerPiston.get() == Value.kReverse;
   }
-  public boolean isHatchEngaged(){
+
+  public boolean isHatchEngaged()
+  {
     return _probeHatchEngagePiston.get() == Value.kForward;
   }
-  public boolean isHatchDisengaged(){
+
+  public boolean isHatchDisengaged()
+  {
     return _probeHatchEngagePiston.get() == Value.kReverse;
   }
 
   @Override
-  public void initDefaultCommand() {
+  public void initDefaultCommand()
+  {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }

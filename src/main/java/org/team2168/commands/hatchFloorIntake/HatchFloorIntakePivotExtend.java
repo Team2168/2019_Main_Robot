@@ -5,50 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.Lift;
+package org.team2168.commands.hatchFloorIntake;
 
-import org.team2168.OI;
 import org.team2168.Robot;
-import org.team2168.RobotMap;
-import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftJoystick extends Command {
-  public LiftJoystick() {
+public class HatchFloorIntakePivotExtend extends Command
+{
+  public HatchFloorIntakePivotExtend()
+  {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift);
+    requires(Robot.hatchFloorIntake);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    Lift.driveLift(0.0);
+  protected void initialize()
+  {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    Lift.driveLift(OI.getDriveLiftJoystickValue()*RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+  protected void execute()
+  {
+    Robot.hatchFloorIntake.lower();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
-    return false;
+  protected boolean isFinished()
+  {
+    return Robot.hatchFloorIntake.isSolenoidLowered();
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
-    Lift.driveLift(0.0);
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
-    end();
+  protected void interrupted()
+  {
   }
 }
