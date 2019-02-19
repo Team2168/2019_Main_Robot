@@ -1,4 +1,4 @@
-package org.team2168.commands.CargoIntake;
+package org.team2168.commands.cargoIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -14,7 +14,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
     
 	public DriveCargoIntakeWithJoystick() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.cargoIntake);
+		requires(Robot.cargoIntakeWheels);
 	}
 
 	// Called just before this Command runs the first time
@@ -28,7 +28,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.cargoIntake.drive(Robot.oi.getDriveCargoIntakeJoystickValue());
+		Robot.cargoIntakeWheels.drive(Robot.oi.getDriveCargoIntakeJoystickValue());
 
 	}
 
@@ -41,7 +41,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.cargoIntake.drive(0.0);//0.0 because its a double
+		Robot.cargoIntakeWheels.drive(0.0);//0.0 because its a double
 	}
 
 	// Called when another command which requires one or more of the same

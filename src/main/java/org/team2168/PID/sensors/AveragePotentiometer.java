@@ -1,5 +1,6 @@
 package org.team2168.PID.sensors;
 
+import org.team2168.RobotMap;
 import org.team2168.utils.LinearInterpolator;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -99,7 +100,7 @@ public class AveragePotentiometer implements PIDSensorInterface {
 	 *
 	 * @return the Average
 	 */
-	public synchronized double getAverage() {
+	private synchronized double getAverage() {
 		double sum = 0;
 
 		for (int i = 0; i < averagorSize; i++)
@@ -118,7 +119,7 @@ public class AveragePotentiometer implements PIDSensorInterface {
 	 *            the value being inserted into the array to be averaged.
 	 */
 
-	public synchronized void putData(double value) {
+	private synchronized void putData(double value) {
 
 		averagorArray[arrayPos] = value;
 		arrayPos++;

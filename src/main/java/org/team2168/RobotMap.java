@@ -1,10 +1,11 @@
 package org.team2168;  
 
-import com.sun.org.apache.bcel.internal.generic.I2C;
 
 import org.team2168.PID.sensors.AverageEncoder;
 
 import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.I2C;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
