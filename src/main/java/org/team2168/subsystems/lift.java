@@ -25,10 +25,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  **/
  
 public class Lift extends Subsystem {
-	private static Lift instance = null;
+	
 	private static VictorSP liftMotor1;
 	private static VictorSP liftMotor2;
-	private static VictorSP liftMotor3;
+
+
 	private DoubleSolenoid liftBrake;
 	private static AveragePotentiometer liftPot;
 	private static DigitalInput liftFullyUp; // hall effect sensors
@@ -42,28 +43,24 @@ public class Lift extends Subsystem {
 
 	public volatile double liftMotor1Voltage;
 	public volatile double liftMotor2Voltage;
-	public volatile double liftMotor3Voltage;
+
 
 	private boolean liftMotor1Fault = false;
 	private boolean liftMotor2Fault = false;
-	private boolean liftMotor3Fault = false;
+
 
 	private boolean liftMotor1HighCurrent = false;
 	private boolean liftMotor2HighCurrent = false;
-	private boolean liftMotor3HighCurrent = false;
+
 
 	private boolean liftMotor1HighThenZeroCurrent = false;
 	private boolean liftMotor2HighThenZeroCurrent = false;
-	private boolean liftMotor3HighThenZeroCurrent = false;
+
 
 	private boolean isLiftMotor1BreakerTrip = false;
 	private boolean isLiftMotor2BreakerTrip = false;
-	private boolean isLiftMotor3BreakerTrip = false;
 
-	private static LinearInterpolator liftPotInterpolator;
-	// TODO get these values plez format for points: (volts, inches)
-	private double[][] liftPotRange = { { RobotMap.LIFT_POT_VOLTAGE_0, RobotMap.LIFT_POT_0_HEIGHT_INCHES },
-			{ RobotMap.LIFT_POT_VOLTAGE_MAX, RobotMap.LIFT_POT_MAX_HEIGHT_INCHES } };
+	private static Lift instance = null;
 
 	private int timeCounter = 0;
 
@@ -74,7 +71,7 @@ public class Lift extends Subsystem {
 		liftMotor1 = new VictorSP(RobotMap.LIFT_MOTOR_1_PDP);
 		liftMotor2 = new VictorSP(RobotMap.LIFT_MOTOR_2_PDP);
 		
-		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_2, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
+		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
 		liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
 
@@ -119,54 +116,23 @@ public class Lift extends Subsystem {
 
 		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getDriveLiftJoystickValue();}, true, true);
 		ConsolePrinter.putNumber("Lift motor 1 voltage", () -> {return liftMotor1Voltage;}, true, true);
-		ConsolePrinter.putNumber("Lift motor 2 voltage", () -> {
-			return liftMotor2Voltage;
-		}, true, true);
-		ConsolePrinter.putNumber("Lift motor 3 voltage", () -> {
-			return liftMotor3Voltage;
-		}, true, true);
-		ConsolePrinter.putNumber("Lift Motor 1 Current ", () -> {
-			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP);
-		}, true, true);
-		ConsolePrinter.putNumber("Lift Motor 2 Current ", () -> {
-			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP);
-		}, true, true);
-		ConsolePrinter.putNumber("Lift Motor 3 Current ", () -> {
-			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_3_PDP);
-		}, true, true);
+		ConsolePrinter.putNumber("Lift motor 2 voltage", () -> {return liftMotor2Voltage;}, true, true);
 
-		ConsolePrinter.putBoolean("Is Lift Fully Up", () -> {
-			return Robot.lift.isLiftFullyUp();
-		}, true, false);
-		ConsolePrinter.putBoolean("Is Lift Fully Down", () -> {
-			return Robot.lift.isLiftFullyDown();
-		}, true, false);
-		ConsolePrinter.putNumber("Lift Raw Pot", () -> {
-			return getRawPot();
-		}, true, false);
-		ConsolePrinter.putNumber("Lift Pot Inches", () -> {
-			return getPotPos();
-		}, true, false);
+		ConsolePrinter.putNumber("Lift Motor 1 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP);}, true, true);
+		ConsolePrinter.putNumber("Lift Motor 2 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP);}, true, true);
 
-		ConsolePrinter.putBoolean("Lift Motor1_FAULT", () -> {
-			return liftMotor1Fault;
-		}, true, true);
-		ConsolePrinter.putBoolean("Lift Motor2_FAULT", () -> {
-			return liftMotor2Fault;
-		}, true, true);
-		ConsolePrinter.putBoolean("Lift Motor3_FAULT", () -> {
-			return liftMotor3Fault;
-		}, true, true);
 
-		ConsolePrinter.putBoolean("Lift Motor1_Breaker_Trip", () -> {
-			return isLiftMotor1BreakerTrip;
-		}, true, true);
-		ConsolePrinter.putBoolean("Lift Motor2_Breaker_Trip", () -> {
-			return isLiftMotor2BreakerTrip;
-		}, true, true);
-		ConsolePrinter.putBoolean("Lift Motor3_Breaker_Trip", () -> {
-			return isLiftMotor3BreakerTrip;
-		}, true, true);
+		ConsolePrinter.putBoolean("Is Lift Fully Up", () -> {return Robot.lift.isLiftFullyUp();}, true, false);
+	  ConsolePrinter.putBoolean("Is Lift Fully Down", () -> {return Robot.lift.isLiftFullyDown();}, true, false);
+		ConsolePrinter.putNumber("Lift Raw Pot", () -> {return getRawPot();}, true, false);
+		ConsolePrinter.putNumber("Lift Pot Inches", () -> {return getPotPos();}, true, false);
+
+		ConsolePrinter.putBoolean("Lift Motor1_FAULT", () -> {return liftMotor1Fault;}, true, true);
+		ConsolePrinter.putBoolean("Lift Motor2_FAULT", () -> {return liftMotor2Fault;}, true, true);
+
+
+		ConsolePrinter.putBoolean("Lift Motor1_Breaker_Trip", () -> {return isLiftMotor1BreakerTrip;}, true, true);
+		ConsolePrinter.putBoolean("Lift Motor2_Breaker_Trip", () -> {return isLiftMotor2BreakerTrip;}, true, true);
 
 	}
 
@@ -175,7 +141,8 @@ public class Lift extends Subsystem {
 	 * 
 	 */
 
-	public static Lift GetInstance() {
+  	public static Lift getInstance()
+	{
 		if (instance == null)
 			instance = new Lift();
 		return instance;
@@ -185,7 +152,8 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return pot position in volts
 	 */
-	public double getRawPot() {
+	public double getRawPot()
+	{
 		return liftPot.getRawPos();
 	}
 
@@ -193,7 +161,8 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return pot position in inches
 	 */
-	public double getPotPos() {
+	public double getPotPos()
+	{
 		return liftPot.getPos();
 	}
 
@@ -202,7 +171,8 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return true if pressed, false if not
 	 */
-	public boolean isLiftFullyUp() {
+	public boolean isLiftFullyUp()
+	{
 		return !liftFullyUp.get();
 	}
 
@@ -211,7 +181,8 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return true if pressed, false if not
 	 */
-	public boolean isLiftFullyDown() {
+	public boolean isLiftFullyDown()
+	{
 		return !liftFullyDown.get();
 	}
 
@@ -221,7 +192,8 @@ public class Lift extends Subsystem {
 	 * 
 	 * @param speed
 	 */
-	private void driveLiftMotor1(double speed) {
+	private void driveLiftMotor1(double speed)
+	{
 		if (RobotMap.LIFT_MOTOR1_REVERSE)
 			speed = -speed;
 		liftMotor1.set(speed);
@@ -234,7 +206,8 @@ public class Lift extends Subsystem {
 	 * 
 	 * @param speed
 	 */
-	private void driveLiftMotor2(double speed) {
+	private void driveLiftMotor2(double speed)
+	{
 		if (RobotMap.LIFT_MOTOR2_REVERSE)
 			speed = -speed;
 		liftMotor2.set(speed);
@@ -242,113 +215,114 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 * Drives the third Lift motor at a speed from -1 to 1 where 1 is forward and
-	 * negative 1 is backwards
-	 * 
-	 * @param speed
-	 */
-	private void driveLiftMotor3(double speed) {
-		if (RobotMap.LIFT_MOTOR3_REVERSE)
-			speed = -speed;
-		liftMotor3.set(speed);
-		liftMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
-	}
-
-	/**
 	 * Drives all lift Motors at a speed from -1 to 1 where 1 is up and negative 1
 	 * is down, and ratchet is not engaged
 	 * 
-	 * @param speed
-	 *            is +1 up and -1 down
+	 * @param speed is +1 up and -1 down
 	 */
-	public void driveAllMotors(double speed) {
+	public void driveAllMotors(double speed)
+	{
 
 		double stallLimit = 35;
 		// lift is stalling
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > stallLimit)
-        || (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > stallLimit)) 
-        {
+				|| (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > stallLimit))
+		{
 			enableBrake();
 			timeCounter++;
 
 			// wait for brake to actuate then stop motors
-			if (timeCounter >= 1 / .02) {
+			if (timeCounter >= 1 / .02)
+			{
 				driveLiftMotor1(0.0);
 				driveLiftMotor2(0.0);
-				driveLiftMotor3(0.0);
 			}
-		} else {
+		}
+		else
+		{
 			timeCounter = 0;
 
-			if (RobotMap.ENABLE_LIFT_POT_SAFETY) 
+			if (RobotMap.ENABLE_LIFT_POT_SAFETY) //use pot value as additional sensor check
 			{
-				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp()
-						&& Robot.liftRatchetShifter.isRatchetDisEngaged() && !liftPot.isAtUpperLimit())
-						|| ((speed < -RobotMap.LIFT_MIN_SPEED))) {
-					if (Robot.isAutoMode()) 
-					{
-						if (Robot.lift.getPotPos() > 70 && (speed > 0)) {
-							Robot.intakePivotPiston.retracPivotPiston();
-						}
-					}
-					if (!Robot.isAutoMode() && !Robot.flipperyFloopyFlupy.getHardStopStatus()) {
-						if (Robot.lift.getPotPos() > 15 && (speed > 0)) {
-							Robot.intakePivotPiston.retracPivotPiston();
-						}
-					}
-					disableBrake();
-					driveLiftMotor1(speed);
-					driveLiftMotor2(speed);
-					driveLiftMotor3(speed);
-					if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
-						Robot.i2c.write(8, 8);
-					if(Robot.lift.getPotPos() > 30.0 && Robot.lift.getPotPos() < 60.0)
-						Robot.i2c.write(8, 3);
-					if(Robot.lift.getPotPos() > 60.0 && Robot.lift.getPotPos() < 82.5)
-						Robot.i2c.write(8, 11);
-					
 
-				} else {
-					enableBrake();
-					driveLiftMotor1(0.0);
-					driveLiftMotor2(0.0);
-					driveLiftMotor3(0.0);
-				}
-			} else {
+				// TODO: Implement interlocks for
+
 				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp()
-						&& Robot.liftRatchetShifter.isRatchetDisEngaged())
-						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown())) {
-					if (Robot.isAutoMode())
-						if (Robot.lift.getPotPos() > 70 && (speed > 0)) {
-							Robot.intakePivotPiston.retracPivotPiston();
-						}
-					if (!Robot.isAutoMode())
-						if (Robot.lift.getPotPos() > 15 && (speed > 0)) {
-							Robot.intakePivotPiston.retracPivotPiston();
-						}
+						&& !liftPot.isAtUpperLimit())
+						|| ((speed < -RobotMap.LIFT_MIN_SPEED)))
+				{
+
+					//todo: Add lift interlocks
+					// if (Robot.isAutoMode())
+					// {
+					// 	if (Robot.lift.getPotPos() > 70 && (speed > 0))
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// }
+
+					// if (!Robot.isAutoMode() && !Robot.flipperyFloopyFlupy.getHardStopStatus())
+					// {
+					// 	if (Robot.lift.getPotPos() > 15 && (speed > 0))
+					// 	{
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// 	}
+					// }
 					disableBrake();
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
-					driveLiftMotor3(speed);
+
 					// if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
-					// 	Robot.i2c.write(8, 8);
+					// Robot.i2c.write(8, 8);
 					// if(Robot.lift.getPotPos() > 30.0 && Robot.lift.getPotPos() < 60.0)
-					// 	Robot.i2c.write(8, 3);
+					// Robot.i2c.write(8, 3);
 					// if(Robot.lift.getPotPos() > 60.0 && Robot.lift.getPotPos() < 82.5)
-					// 	Robot.i2c.write(8, 11);
+					// Robot.i2c.write(8, 11);
 
-				} else {
+				}
+				else
+				{
 					enableBrake();
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
-					driveLiftMotor3(0.0);
+
+				}
+			}
+			else
+			{
+				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp())
+						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown()))
+				{
+					// if (Robot.isAutoMode())
+					// 	if (Robot.lift.getPotPos() > 70 && (speed > 0))
+					// 	{
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// 	}
+					// if (!Robot.isAutoMode())
+					// 	if (Robot.lift.getPotPos() > 15 && (speed > 0))
+					// 	{
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// 	}
+					disableBrake();
+					driveLiftMotor1(speed);
+					driveLiftMotor2(speed);
+					// if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
+					// Robot.i2c.write(8, 8);
+					// if(Robot.lift.getPotPos() > 30.0 && Robot.lift.getPotPos() < 60.0)
+					// Robot.i2c.write(8, 3);
+					// if(Robot.lift.getPotPos() > 60.0 && Robot.lift.getPotPos() < 82.5)
+					// Robot.i2c.write(8, 11);
+
+				}
+				else
+				{
+					enableBrake();
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
 				}
 			}
 		}
 
 		isLiftMotor1Failure();
 		isLiftMotor2Failure();
-
 
 		isLiftMotor1BreakerTrip();
 		isLiftMotor2BreakerTrip();
@@ -358,7 +332,8 @@ public class Lift extends Subsystem {
 	/**
 	 * Enables the pneumatic brake
 	 */
-	public void enableBrake() {
+	public void enableBrake()
+	{
 		liftBrake.set(Value.kForward);
 	}
 
@@ -367,14 +342,16 @@ public class Lift extends Subsystem {
 	 *
 	 * @return True when brake is enabled
 	 */
-	public boolean isBrakeEnabled() {
+	public boolean isBrakeEnabled()
+	{
 		return liftBrake.get() == Value.kForward;
 	}
 
 	/**
 	 * Disables the pneumatic brake
 	 */
-	public void disableBrake() {
+	public void disableBrake()
+	{
 		liftBrake.set(Value.kReverse);
 	}
 
@@ -383,7 +360,8 @@ public class Lift extends Subsystem {
 	 *
 	 * @return True when brake is disabled
 	 */
-	public boolean isBrakeDisabled() {
+	public boolean isBrakeDisabled()
+	{
 		return liftBrake.get() == Value.kReverse;
 	}
 
@@ -399,14 +377,16 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return
 	 */
-	private void isLiftMotor1Failure() {
+	private void isLiftMotor1Failure()
+	{
 		// create a comparison
 		double conditionLimtPercent = 0.5;
-		if (!this.liftMotor1Fault && this.liftMotor1Voltage >= RobotMap.LIFT_MIN_SPEED) {
+		if (!this.liftMotor1Fault && this.liftMotor1Voltage >= RobotMap.LIFT_MIN_SPEED)
+		{
 			this.liftMotor1Fault = ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) <= conditionLimtPercent
 					* Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP)
 					&& Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > 2));
-    }
+		}
 	}
 
 	/**
@@ -421,17 +401,17 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return
 	 */
-	private void isLiftMotor2Failure() {
+	private void isLiftMotor2Failure()
+	{
 		// create a comparison
 		double conditionLimtPercent = 0.5;
-		if (!this.liftMotor2Fault && this.liftMotor2Voltage >= RobotMap.LIFT_MIN_SPEED) {
+		if (!this.liftMotor2Fault && this.liftMotor2Voltage >= RobotMap.LIFT_MIN_SPEED)
+		{
 			this.liftMotor2Fault = ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) <= conditionLimtPercent
 					* Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP)
 					&& Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > 2));
 		}
 	}
-
-	
 
 	/**
 	 * The purpose of this method is to compare the try and determine if we had a
@@ -447,9 +427,11 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return
 	 */
-	private void isLiftMotor1BreakerTrip() {
+	private void isLiftMotor1BreakerTrip()
+	{
 		// we are trying to drive motor
-		if (this.liftMotor1Voltage >= RobotMap.LIFT_MIN_SPEED) {
+		if (this.liftMotor1Voltage >= RobotMap.LIFT_MIN_SPEED)
+		{
 			// did motor ever get to a high current?
 			if (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > 15)
 				liftMotor1HighCurrent = true;
@@ -477,9 +459,11 @@ public class Lift extends Subsystem {
 	 * 
 	 * @return
 	 */
-	private void isLiftMotor2BreakerTrip() {
+	private void isLiftMotor2BreakerTrip()
+	{
 		// we are trying to drive motor
-		if (this.liftMotor2Voltage >= RobotMap.LIFT_MIN_SPEED) {
+		if (this.liftMotor2Voltage >= RobotMap.LIFT_MIN_SPEED)
+		{
 			// did motor ever get to a high current?
 			if (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > 35)
 				liftMotor2HighCurrent = true;
@@ -493,10 +477,8 @@ public class Lift extends Subsystem {
 		}
 	}
 
-
-	}
-
-	public void initDefaultCommand() {
+	public void initDefaultCommand()
+	{
 		// Set the default command for a subsystem here.
 		setDefaultCommand(new DriveLiftWithJoysticks());
 	}

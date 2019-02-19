@@ -8,8 +8,8 @@
 package org.team2168;
 
 import org.team2168.PID.trajectory.OneDimensionalRotation;
-import org.team2168.commands.Drivetrain.EngageDrivetrain;
-import org.team2168.commands.Drivetrain.EngageStingers;
+import org.team2168.commands.drivetrain.EngageDrivetrain;
+import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -101,7 +101,7 @@ public class OI {
 	 * 
 	 * @author Krystina
 	 */
-	public static double getDriveTrainLeftJoystick() {
+	public double getDriveTrainLeftJoystick() {
 		return driverJoystick.getLeftStickRaw_Y();
 	}
 
@@ -111,47 +111,47 @@ public class OI {
 	 * 
 	 * @author Krystina
 	 */
-	public static double getDriveTrainRightJoystick() {
+	public double getDriveTrainRightJoystick() {
 		return driverJoystick.getRightStickRaw_Y();
 	}
 
-	public static double getDriveLiftJoystickValue() {
+	public double getDriveLiftJoystickValue() {
 		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y();
 	}
 
-	public static double getFloorIntakeMechanismJoystickValue() {
+	public double getHatchFloorIntakeJoystickValue() {
 		return operatorJoystick.getLeftStickRaw_Y();
 	}
-	public static double getDriveIntakeWheelsJoystickValue() {
+	public double getDriveIntakeWheelsJoystickValue() {
 		return operatorJoystick.getRightStickRaw_Y();
 	}
 
-	public static double getDriveCargoIntakeJoystickValue(){
+	public double getDriveCargoIntakeJoystickValue(){
 		return operatorJoystick.getLeftStickRaw_Y();
 	}
 
-	public static double getDriveIntakePivotJoystickValue() {
+	public double getDriveIntakePivotJoystickValue() {
 		return testJoystick.getRightStickRaw_Y();
 	}
 
-	public static double getGunStyleYValue() {
+	public double getGunStyleYValue() {
 		// return
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return driverJoystick.getLeftStickRaw_Y();
 	}
 
-	public static double getGunStyleXValue() {
+	public double getGunStyleXValue() {
 		// return
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return -gunStyleInterpolator.interpolate(driverJoystick.getLeftStickRaw_X());
 	}
-	public static double getDriveWinchJoystickValue() {
+	public double getDriveWinchJoystickValue() {
 		// return
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return operatorJoystick.getRightStickRaw_X();
 	}
 
-	public static double getDrivePlungerArmPivotJoystickValue()
+	public double getDrivePlungerArmPivotJoystickValue()
 	{
 		//TODO actually figure out which stick and axis will connect
 		return operatorJoystick.getRightStickRaw_Y();

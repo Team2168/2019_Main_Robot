@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.PlungerArmHardStop;
+package org.team2168.commands.plungerArmHardStop;
 
 import org.team2168.Robot;
 
