@@ -40,7 +40,10 @@ public class Drivetrain extends Subsystem {
 
 	private ADXRS453Gyro _gyroSPI;
 	private AverageEncoder _drivetrainLeftEncoder;
-	private AverageEncoder _drivetrainRightEncoder;
+  private AverageEncoder _drivetrainRightEncoder;
+  
+  private AnalogInput _drivetrainFrontIRSensor;
+  private AnalogInput _drivetrainBackIRSensor;
 
   //Leave these wihtout _name convention to work with past code base
 	private double RightMotor1FPS;
@@ -220,7 +223,10 @@ public class Drivetrain extends Subsystem {
 				RobotMap.DRIVE_AVG_ENCODER_VAL);
 
 		_gyroSPI = new ADXRS453Gyro();
-		_gyroSPI.startThread();
+    _gyroSPI.startThread();
+    
+    _drivetrainFrontIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_FRONT_IR_SENSOR);
+    _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
 		imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
 
@@ -372,7 +378,12 @@ public class Drivetrain extends Subsystem {
 		ConsolePrinter.putBoolean("Left Motor One Trip", () -> {return !Robot.pdp.isLeftMotorOneTrip();}, true, false);
 		ConsolePrinter.putBoolean("Left Motor Two Trip", () -> {return !Robot.pdp.isLeftMotorTwoTrip();}, true, false);
 		ConsolePrinter.putBoolean("Right Motor One Trip", () -> {return !Robot.pdp.isRightMotorOneTrip();}, true, false);
-		ConsolePrinter.putBoolean("Right Motor Two Trip", () -> {return !Robot.pdp.isRightMotorTwoTrip();}, true, false);
+    ConsolePrinter.putBoolean("Right Motor Two Trip", () -> {return !Robot.pdp.isRightMotorTwoTrip();}, true, false);
+    
+    ConsolePrinter.putNumber("DT Front Raw IR", () -> {return getFrontRawIRVoltage();}, true, false);
+    ConsolePrinter.putBoolean("Front HAB is Present", () -> {return isHABPresentFront();}, true, false);
+    ConsolePrinter.putNumber("DT Back Raw IR", () -> {return getBackRawIRVoltage();}, true, false);
+    ConsolePrinter.putBoolean("Back HAB is Present", () -> {return isHABPresentBack();}, true, false);
 		
 	}
 
@@ -671,6 +682,44 @@ public class Drivetrain extends Subsystem {
   public void stopGyroCalibrating()
   {
     _gyroSPI.stopCalibrating();
+  }
+
+  /**
+   * @return raw voltage from the front Sharp IR sensor to sense the HAB
+   */
+  public double getFrontRawIRVoltage()
+  {
+    return _drivetrainFrontIRSensor.getVoltage();
+  }
+
+  /**
+   * @return true when the HAB is present
+   */
+  public boolean isHABPresentFront()
+  {
+    if (Robot.isPracticeRobot())
+      return (getFrontRawIRVoltage() >= RobotMap.DRIVETRAIN_FRONT_IR_THRESHOLD_MAX_PBOT);
+    else
+      return (getFrontRawIRVoltage() >= RobotMap.DRIVETRAIN_FRONT_IR_THRESHOLD_MAX);
+  }
+
+  /**
+   * @return raw voltage from the back Sharp IR sensor to sense the HAB
+   */
+  public double getBackRawIRVoltage()
+  {
+    return _drivetrainBackIRSensor.getVoltage();
+  }
+
+  /**
+   * @return true when the HAB is present
+   */
+  public boolean isHABPresentBack()
+  {
+    if (Robot.isPracticeRobot())
+      return (getBackRawIRVoltage() >= RobotMap.DRIVETRAIN_BACK_IR_THRESHOLD_MAX_PBOT);
+    else
+      return (getBackRawIRVoltage() >= RobotMap.DRIVETRAIN_BACK_IR_THRESHOLD_MAX);
   }
 
   /**
