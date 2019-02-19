@@ -124,7 +124,7 @@ public class Robot extends TimedRobot
       hatchFloorIntake = HatchFloorIntake.getInstance();
       monkeybar = MonkeyBar.getInstance();
       pneumatics = Pneumatics.getInstance();
-      
+
       i2c = new I2C(I2C.Port.kOnboard, 8);
 
       drivetrain.calibrateGyro();
@@ -155,8 +155,7 @@ public class Robot extends TimedRobot
       ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
       ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
-      ConsolePrinter.putString("Switch_Scale_Switch orientation", () -> {return driverstation.getGameSpecificMessage();}, true, false); //Ill show you de wei
-
+     
       ConsolePrinter.startThread();
       System.out.println("Robot Initialization Complete!!");
     }
