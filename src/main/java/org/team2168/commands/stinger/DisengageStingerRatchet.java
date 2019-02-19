@@ -5,52 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.plungerArmPivot;
+package org.team2168.commands.stinger;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DrivePlungerArmPivotWithConstant extends Command {
-  private double speed;
-
-  public DrivePlungerArmPivotWithConstant(double inputSpeed) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.hatchProbePivot);
-    speed = inputSpeed;
+public class DisengageStingerRatchet extends Command
+{
+  public DisengageStingerRatchet()
+  {
+    requires(Robot.stinger);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    
-
+  protected void initialize()
+  {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    Robot.hatchProbePivot.drivePlungerArmPivotMotor(speed);
-
+  protected void execute()
+  {
+    Robot.stinger.disengageRatchet();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
-    return false;
+  protected boolean isFinished()
+  {
+    return Robot.stinger.isRatchetDisengaged();
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
-    Robot.hatchProbePivot.drivePlungerArmPivotMotor(0.0);
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
-    end();
+  protected void interrupted()
+  {
   }
 }

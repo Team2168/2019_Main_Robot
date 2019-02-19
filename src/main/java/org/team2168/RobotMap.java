@@ -1,10 +1,11 @@
 package org.team2168;  
 
-import com.sun.org.apache.bcel.internal.generic.I2C;
 
 import org.team2168.PID.sensors.AverageEncoder;
 
 import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.I2C;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -112,8 +113,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
 	public static final int PROBE_ROTATE_BRAKE_RETRACTED_PCM = 1;
-	public static final int BALL_PUNCH_EXTEND_PCM = 2;
-	public static final int BALL_PUNCH_RETRACT_PCM = 3;
+	public static final int CARGO_PUNCH_EXTEND_PCM = 2;
+	public static final int CARGO_PUNCH_RETRACT_PCM = 3;
 	public static final int PROBE_EXTEND_PCM = 4;
 	public static final int PROBE_RETRACT_PCM = 5;
 	public static final int PROBE_ENGAGE_PCM = 6;

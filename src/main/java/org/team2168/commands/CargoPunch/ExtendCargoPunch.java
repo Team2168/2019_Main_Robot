@@ -5,34 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.plungerArmHardStop;
+package org.team2168.commands.cargoPunch;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DisengagePlungerArmBrake extends Command {
-  public DisengagePlungerArmBrake() {
+public class ExtendCargoPunch extends Command {
+  public ExtendCargoPunch() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.plungerArmHardStop);
+    requires(Robot.cargoPunch);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.plungerArmHardStop.disengage();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.cargoPunch.extendPunch();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.plungerArmHardStop.isDisengaged();
+    return Robot.cargoPunch.isExtended();
   }
 
   // Called once after isFinished returns true

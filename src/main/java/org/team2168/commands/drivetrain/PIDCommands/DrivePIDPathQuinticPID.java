@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-public class DrivePIDPathQuinticPID extends Command {
+public class DrivePIDPathQuinticPID extends Command
+{
 
 	private double[] setPointLeftPos;
 	private double[] setPointRightPos;
@@ -21,13 +21,13 @@ public class DrivePIDPathQuinticPID extends Command {
 	OneDimensionalMotionProfiling wheels;
 	OneDimensionalMotionProfiling angleRot;
 
-	//	double vMax = 2500.0;
-	//	double aMax = 3000.0;
-	//	double jMax =30000.0;
+	// double vMax = 2500.0;
+	// double aMax = 3000.0;
+	// double jMax =30000.0;
 
 	double vMax = 300.0;
 	double aMax = 2000.0;
-	double jMax =15000.0;
+	double jMax = 15000.0;
 
 	int counter;
 	double ff_term = 0.037;
@@ -42,16 +42,16 @@ public class DrivePIDPathQuinticPID extends Command {
 	private boolean positonGiven = false;
 	double finalRotDistance;
 
-	public DrivePIDPathQuinticPID(double distance )
+	public DrivePIDPathQuinticPID(double distance)
 	{
-		this(distance,false);
+		this(distance, false);
 	}
 
-	public DrivePIDPathQuinticPID(double distance, boolean reverseDirection )
+	public DrivePIDPathQuinticPID(double distance, boolean reverseDirection)
 	{
 		requires(Robot.drivetrain);
 		motion = new OneDimensionalMotionProfiling(distance);
-		this.setPointLeftVel =  motion.getVelArray();
+		this.setPointLeftVel = motion.getVelArray();
 		this.setPointLeftPos = motion.getPosArray();
 		this.setPointRightPos = motion.getPosArray();
 		this.setPointRightVel = motion.getVelArray();
@@ -61,72 +61,73 @@ public class DrivePIDPathQuinticPID extends Command {
 		ff_term = SmartDashboard.getNumber("FF_term", 0);
 	}
 
-	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel){
+	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel)
+	{
 		requires(Robot.drivetrain);
 
-		this.setPointLeftVel =setPointLeftVel;
+		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
 
 		direction = false;
 
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
-	} 
+	}
 
-	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel,  double[] setPointHeading){
+	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel, double[] setPointHeading)
+	{
 		requires(Robot.drivetrain);
 
-		this.setPointLeftVel =setPointLeftVel;
+		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
 		this.setPointHeading = setPointHeading;
 
 		direction = false;
-		this.headingByArray= true;
-
+		this.headingByArray = true;
 
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
-	} 
+	}
 
-
-	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel,  double[] setPointHeading, boolean direction){
+	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel, double[] setPointHeading,
+			boolean direction)
+	{
 		requires(Robot.drivetrain);
 
 		this.direction = direction;
 
-		this.setPointLeftVel =setPointLeftVel;
+		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
 		this.setPointHeading = setPointHeading;
 
-
-		if(!direction)
+		if (!direction)
 		{
 			this.setPointLeftVel = setPointLeftVel;
 			this.setPointRightVel = setPointRightVel;
 			this.setPointHeading = setPointHeading;
 
 		}
-		//we want to drive the path backwards
+		// we want to drive the path backwards
 		// swap the left and right wheels, and negate the velocitys, also correct
-		//heading to be 180 from current position
+		// heading to be 180 from current position
 		else
 		{
 			this.setPointLeftVel = setPointRightVel;
 			this.setPointRightVel = setPointLeftVel;
 			this.setPointHeading = setPointHeading;
 
-			for (int i=0; i<this.setPointHeading.length; i++)
+			for (int i = 0; i < this.setPointHeading.length; i++)
 			{
-				this.setPointHeading[i] = 180+this.setPointHeading[i];
+				this.setPointHeading[i] = 180 + this.setPointHeading[i];
 			}
 		}
 
-		this.headingByArray= true;
-
+		this.headingByArray = true;
 
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
 	}
 
-
-	public DrivePIDPathQuinticPID(double[] setPointLeftPos, double[] setPointRightPos,double[] setPointLeftVel, double[] setPointRightVel,  double[] setPointHeading){
+	public DrivePIDPathQuinticPID(double[] setPointLeftPos, double[] setPointRightPos, double[] setPointLeftVel,
+			double[] setPointRightVel, double[] setPointHeading)
+	{
 		requires(Robot.drivetrain);
 
 		this.positonGiven = true;
@@ -134,19 +135,17 @@ public class DrivePIDPathQuinticPID extends Command {
 
 		this.setPointLeftPos = setPointLeftPos;
 		this.setPointRightPos = setPointRightPos;
-		this.setPointLeftVel =setPointLeftVel;
+		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
 		this.setPointHeading = setPointHeading;
 
-		this.headingByArray= true;
+		this.headingByArray = true;
 
 		SmartDashboard.putNumber("FF_term", this.ff_term);
 		ff_term = SmartDashboard.getNumber("FF_term", this.ff_term);
 
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
 	}
-
-
 
 	public DrivePIDPathQuinticPID(double start, double distance, double v_max, double accel_max, double j_max)
 	{
@@ -155,88 +154,83 @@ public class DrivePIDPathQuinticPID extends Command {
 		this.finalRotDistance = distance;
 		rotateInPlace = true;
 		double circumference;
-		if(distance>start) //rotate clockwise
+		if (distance > start) // rotate clockwise
 		{
-			circumference = (Math.PI*3*(distance-start)/180.0)/12.0;
-			angleRot = new OneDimensionalMotionProfiling( start,  distance,  v_max,  accel_max,  j_max);
+			circumference = (Math.PI * 3 * (distance - start) / 180.0) / 12.0;
+			angleRot = new OneDimensionalMotionProfiling(start, distance, v_max, accel_max, j_max);
 		}
 		else
 		{
-			circumference = (Math.PI*3*(start-distance)/180.0)/12.0;
-			angleRot = new OneDimensionalMotionProfiling( distance,  start,  v_max,  accel_max,  j_max);
+			circumference = (Math.PI * 3 * (start - distance) / 180.0) / 12.0;
+			angleRot = new OneDimensionalMotionProfiling(distance, start, v_max, accel_max, j_max);
 			this.direction = true;
 		}
-
 
 		angleRot.S_curves();
 		System.out.println(circumference);
 		wheels = new OneDimensionalMotionProfiling(circumference, 8.0, 8.0, 100.0);
 		wheels.S_curves();
 
-
-
 		this.setPointLeftVel = new double[wheels.getVelArray().length];
 		this.setPointRightVel = new double[wheels.getVelArray().length];
 
-		for (int i = 0; i<setPointLeftVel.length; i++)
+		for (int i = 0; i < setPointLeftVel.length; i++)
 		{
 			this.setPointLeftVel[i] = wheels.getVelArray()[i];
 			this.setPointRightVel[i] = -wheels.getVelArray()[i];
 		}
 
-
-		int counterAngle = angleRot.time.length-1;
-		int counterWheels = wheels.time.length-1;
+		int counterAngle = angleRot.time.length - 1;
+		int counterWheels = wheels.time.length - 1;
 
 		this.setPointHeading = new double[wheels.getTimeArray().length];
 
-		//if angle array larger
-		if(counterAngle >= counterWheels)
+		// if angle array larger
+		if (counterAngle >= counterWheels)
 		{
 
-
-			for(int i=setPointHeading.length-1; i>=0; i--)
+			for (int i = setPointHeading.length - 1; i >= 0; i--)
 			{
 				setPointHeading[i] = angleRot.pos[counterAngle];
 				counterAngle--;
 			}
-		}	
-		else //wheels is greater than angle
+		}
+		else // wheels is greater than angle
 		{
-			for(int i=counterAngle; i>=0; i-- )
+			for (int i = counterAngle; i >= 0; i--)
 			{
 				setPointHeading[counterWheels] = angleRot.pos[i];
 				counterWheels--;
 			}
 
-			for(int i=counterWheels; i>=0; i--)
-				setPointHeading[i]=angleRot.pos[0];;
+			for (int i = counterWheels; i >= 0; i--)
+				setPointHeading[i] = angleRot.pos[0];;
 
-				System.out.println("that");
+			System.out.println("that");
 		}
 
-		this.headingByArray= true;
+		this.headingByArray = true;
 		this.rotateInPlace = true;
 
-		if(!direction)
+		if (!direction)
 		{
 			this.setPointLeftVel = setPointLeftVel;
 			this.setPointRightVel = setPointRightVel;
 			this.setPointHeading = setPointHeading;
 
 		}
-		//we want to drive the path backwards
+		// we want to drive the path backwards
 		// swap the left and right wheels, and negate the velocitys, also correct
-		//heading to be 180 from current position
-		else //invert heading
+		// heading to be 180 from current position
+		else // invert heading
 		{
 			this.setPointLeftVel = setPointRightVel;
 			this.setPointRightVel = setPointLeftVel;
 			this.setPointHeading = setPointHeading;
 
 			double[] temp = new double[this.setPointHeading.length];
-			int counter = this.setPointHeading.length-1;
-			for (int i=0; i<temp.length; i++)
+			int counter = this.setPointHeading.length - 1;
+			for (int i = 0; i < temp.length; i++)
 			{
 				temp[i] = this.setPointHeading[counter];
 				counter--;
@@ -250,7 +244,8 @@ public class DrivePIDPathQuinticPID extends Command {
 
 	}
 
-	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel, double ff_gain){
+	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel, double ff_gain)
+	{
 		requires(Robot.drivetrain);
 		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
@@ -258,10 +253,10 @@ public class DrivePIDPathQuinticPID extends Command {
 
 		direction = false;
 
+	}
 
-	} 
-
-	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel, boolean reverseDirection){
+	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel, boolean reverseDirection)
+	{
 		requires(Robot.drivetrain);
 		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
@@ -270,91 +265,78 @@ public class DrivePIDPathQuinticPID extends Command {
 
 		direction = reverseDirection;
 
-
 	}
 
 	// Called just before this Command runs the first time
-	protected void initialize() {
+	protected void initialize()
+	{
 
-		//absolute rotate
-		if(this.rotateInPlace)
+		// absolute rotate
+		if (this.rotateInPlace)
 		{
 			double distance = this.finalRotDistance;
 			double start = Robot.drivetrain.getHeading();
 			double circumference;
-			if(distance>start) //rotate clockwise
+			if (distance > start) // rotate clockwise
 			{
-				circumference = (Math.PI*3*(distance-start)/180.0)/12.0;
-				angleRot = new OneDimensionalMotionProfiling( start,  distance,  vMax,  aMax,  jMax);
+				circumference = (Math.PI * 3 * (distance - start) / 180.0) / 12.0;
+				angleRot = new OneDimensionalMotionProfiling(start, distance, vMax, aMax, jMax);
 			}
 			else
 			{
-				circumference = (Math.PI*3*(start-distance)/180.0)/12.0;
-				angleRot = new OneDimensionalMotionProfiling( distance,  start,  vMax,  aMax,  jMax);
+				circumference = (Math.PI * 3 * (start - distance) / 180.0) / 12.0;
+				angleRot = new OneDimensionalMotionProfiling(distance, start, vMax, aMax, jMax);
 				this.direction = true;
 			}
-
 
 			angleRot.S_curves();
 			System.out.println(circumference);
 			wheels = new OneDimensionalMotionProfiling(circumference, 8.0, 8.0, 100.0);
 			wheels.S_curves();
 
-
-
 			this.setPointLeftVel = new double[wheels.getVelArray().length];
 			this.setPointRightVel = new double[wheels.getVelArray().length];
 
-			for (int i = 0; i<setPointLeftVel.length; i++)
+			for (int i = 0; i < setPointLeftVel.length; i++)
 			{
 				this.setPointLeftVel[i] = wheels.getVelArray()[i];
 				this.setPointRightVel[i] = -wheels.getVelArray()[i];
 			}
 
-
-			int counterAngle = angleRot.time.length-1;
-			int counterWheels = wheels.time.length-1;
+			int counterAngle = angleRot.time.length - 1;
+			int counterWheels = wheels.time.length - 1;
 
 			this.setPointHeading = new double[wheels.getTimeArray().length];
 
-			//if angle array larger
-			if(counterAngle >= counterWheels)
+			// if angle array larger
+			if (counterAngle >= counterWheels)
 			{
 
-
-				for(int i=setPointHeading.length-1; i>=0; i--)
+				for (int i = setPointHeading.length - 1; i >= 0; i--)
 				{
 					setPointHeading[i] = angleRot.pos[counterAngle];
 					counterAngle--;
 				}
-			}	
-			else //wheels is greater than angle
+			}
+			else // wheels is greater than angle
 			{
-				for(int i=counterAngle; i>=0; i-- )
+				for (int i = counterAngle; i >= 0; i--)
 				{
 					setPointHeading[counterWheels] = angleRot.pos[i];
 					counterWheels--;
 				}
 
-				for(int i=counterWheels; i>=0; i--)
-					setPointHeading[i]=angleRot.pos[0];;
+				for (int i = counterWheels; i >= 0; i--)
+					setPointHeading[i] = angleRot.pos[0];;
 
-					System.out.println("that");
+				System.out.println("that");
 			}
 
-			this.headingByArray= true;
+			this.headingByArray = true;
 			this.rotateInPlace = true;
 		}
 
-
-
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
-
-
-
-
-
-
 
 		if (this.positonGiven)
 		{
@@ -376,20 +358,18 @@ public class DrivePIDPathQuinticPID extends Command {
 		}
 
 		Robot.drivetrain.rotateDriveStraightController.reset();
-		if(this.headingByArray)
+		if (this.headingByArray)
 			Robot.drivetrain.rotateDriveStraightController.setSetPoint(setPointHeading);
 
 		Robot.drivetrain.rotateDriveStraightController.Enable();
 
-
 		counter = 0;
 		oldClock = Timer.getFPGATimestamp();
-
 
 		Robot.drivetrain.resetPosition();
 		Robot.drivetrain.resetGyro();
 
-		//reset controller
+		// reset controller
 		Robot.drivetrain.imu.reset();
 		Robot.drivetrain.driveTrainPosController.reset();
 		Robot.drivetrain.rotateDriveStraightController.reset();
@@ -397,10 +377,7 @@ public class DrivePIDPathQuinticPID extends Command {
 		angle = Robot.drivetrain.getHeading();
 		this.lastRotateOutput = 0;
 
-
-
-
-		//if true we want to reverse else we want to go forward
+		// if true we want to reverse else we want to go forward
 		if (direction)
 			directionValue = -1;
 		else
@@ -409,82 +386,87 @@ public class DrivePIDPathQuinticPID extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 
-	protected void execute() 
+	protected void execute()
 	{
-		//Robot.drivetrain.tankDrive(Robot.drivetrain.leftSpeedController.getControlOutput(),
-		//Robot.drivetrain.rightSpeedController.getControlOutput());
+		// Robot.drivetrain.tankDrive(Robot.drivetrain.leftSpeedController.getControlOutput(),
+		// Robot.drivetrain.rightSpeedController.getControlOutput());
 
-		double currTime = Timer.getFPGATimestamp(); 
+		double currTime = Timer.getFPGATimestamp();
 		SmartDashboard.putNumber("Command Execution Time", (currTime - oldClock));
 		oldClock = currTime;
 
 		ff_term = SmartDashboard.getNumber("FF_term", 0);
 
-		//lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
+		// lastRotateOutput =
+		// Robot.drivetrain.rotateDriveStraightController.getControlOutput();
 		double leftPID = 0;
-		double rightPID = 0; 
+		double rightPID = 0;
 
-		if(this.positonGiven)
+		if (this.positonGiven)
 		{
 			leftPID = Robot.drivetrain.leftPosController.getControlOutput();
 			rightPID = Robot.drivetrain.rightPosController.getControlOutput();
 		}
 
-		double headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput()) ;
+		double headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
 
-		if(counter<setPointLeftVel.length)
+		if (counter < setPointLeftVel.length)
 		{
-			double speedLeft = (ff_term*directionValue*setPointLeftVel[counter])/(Robot.pdp.getBatteryVoltage());
-			double speedRight = (ff_term*directionValue*setPointRightVel[counter])/(Robot.pdp.getBatteryVoltage());
+			double speedLeft = (ff_term * directionValue * setPointLeftVel[counter]) / (Robot.pdp.getBatteryVoltage());
+			double speedRight = (ff_term * directionValue * setPointRightVel[counter])
+					/ (Robot.pdp.getBatteryVoltage());
 
-			if(!this.rotateInPlace)
+			if (!this.rotateInPlace)
 			{
-				if (Math.abs(speedLeft)<0.15 && counter!=0)
-					speedLeft = directionValue*0.15;
+				if (Math.abs(speedLeft) < 0.15 && counter != 0)
+					speedLeft = directionValue * 0.15;
 
-				if (Math.abs(speedRight)<0.15 && counter!=0)
-					speedRight = directionValue*0.15;
+				if (Math.abs(speedRight) < 0.15 && counter != 0)
+					speedRight = directionValue * 0.15;
 			}
-			Robot.drivetrain.tankDrive(speedLeft+headingCorrection+leftPID,speedRight-headingCorrection+rightPID);
-			//Robot.drivetrain.tankDrive(speedLeft+leftPID,speedRight+rightPID);
+			Robot.drivetrain.tankDrive(speedLeft + headingCorrection + leftPID,
+					speedRight - headingCorrection + rightPID);
+			// Robot.drivetrain.tankDrive(speedLeft+leftPID,speedRight+rightPID);
 			counter++;
 
-					}
+		}
 		else
 		{
-			Robot.drivetrain.tankDrive(0.0,0.0);
+			Robot.drivetrain.tankDrive(0.0, 0.0);
 		}
 
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 
-	protected boolean isFinished() {
+	protected boolean isFinished()
+	{
 
-
-		return (counter>=setPointLeftVel.length);
+		return (counter >= setPointLeftVel.length);
 	}
 
 	// Called once after isFinished returns true
 
-	protected void end() {
-		//		Robot.drivetrain.leftPosController.Pause();
-		//		Robot.drivetrain.rightPosController.Pause();
-		//		Robot.drivetrain.leftSpeedController.Pause();
-		//		Robot.drivetrain.rightSpeedController.Pause();
-		//		Robot.drivetrain.rotateDriveStraightController.Pause();
-		////		Robot.drivetrain.rotateDriveStraightController.reset();
-		////		Robot.drivetrain.leftPosController.reset();
-		////		Robot.drivetrain.rightPosController.reset();
+	protected void end()
+	{
+		// Robot.drivetrain.leftPosController.Pause();
+		// Robot.drivetrain.rightPosController.Pause();
+		// Robot.drivetrain.leftSpeedController.Pause();
+		// Robot.drivetrain.rightSpeedController.Pause();
+		// Robot.drivetrain.rotateDriveStraightController.Pause();
+		//// Robot.drivetrain.rotateDriveStraightController.reset();
+		//// Robot.drivetrain.leftPosController.reset();
+		//// Robot.drivetrain.rightPosController.reset();
 		Robot.drivetrain.tankDrive(0, 0);
 
 	}
 
-	//delete me
+	// delete me
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 
-	protected void interrupted() {
+	protected void interrupted()
+	{
 		end();
 	}
 }

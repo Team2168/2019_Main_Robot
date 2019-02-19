@@ -8,8 +8,7 @@
 package org.team2168;
 
 import org.team2168.PID.trajectory.OneDimensionalRotation;
-import org.team2168.commands.drivetrain.EngageDrivetrain;
-import org.team2168.commands.drivetrain.EngageStingers;
+
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -21,7 +20,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {
+public class OI
+{
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a joystick.
 	// You create one by telling it which joystick it's on and which button
@@ -50,35 +50,33 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	private static OI instance = null;
 
-	public static F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
-	public static F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
+	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
+	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 
-	public static F310 driverOperatorEJoystick = new F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
+	public F310 driverOperatorEJoystick = new F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
-	public static F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
-	public static F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
-	private static LinearInterpolator gunStyleInterpolator;
-	private double[][] gunStyleArray = {{-1.0, -1.0},
-	                                    {-.15,0.0},
-	                                    {.15,0.0},
-	                                    {1.0,1.0}};
+	public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
+	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
+	private LinearInterpolator gunStyleInterpolator;
+	private double[][] gunStyleArray = { { -1.0, -1.0}, 
+			{ -.15, 0.0}, 
+			{ .15, 0.0}, 
+			{ 1.0, 1.0}};
 
 	/**
 	 * Private constructor for singleton class which instantiates the OI object
 	 */
-	private OI() 
-  {
+	private OI()
+	{
 
 		/*************************************************************************
-		 *                         Driver Joystick			                       *
+		 * Driver Joystick *
 		 *************************************************************************/
-		driverJoystick.ButtonStart().whenPressed(new EngageDrivetrain());  //???? Which command should
-		driverJoystick.ButtonA().whenPressed(new EngageStingers());     //attached to which button
+
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
-
 		/*************************************************************************
-		 *                         Operator Joystick         		              *
+		 * Operator Joystick *
 		 *************************************************************************/
 
 	}
@@ -88,7 +86,8 @@ public class OI {
 	 * 
 	 * @return is the current OI object
 	 */
-	public static OI getInstance() {
+	public static OI getInstance()
+	{
 		if (instance == null)
 			instance = new OI();
 
@@ -101,7 +100,8 @@ public class OI {
 	 * 
 	 * @author Krystina
 	 */
-	public double getDriveTrainLeftJoystick() {
+	public double getDriveTrainLeftJoystick()
+	{
 		return driverJoystick.getLeftStickRaw_Y();
 	}
 
@@ -111,26 +111,33 @@ public class OI {
 	 * 
 	 * @author Krystina
 	 */
-	public double getDriveTrainRightJoystick() {
+	public double getDriveTrainRightJoystick()
+	{
 		return driverJoystick.getRightStickRaw_Y();
 	}
 
-	public double getDriveLiftJoystickValue() {
+	public double getDriveLiftJoystickValue()
+	{
 		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y();
 	}
 
-	public double getHatchFloorIntakeJoystickValue() {
+	public double getHatchFloorIntakeJoystickValue()
+	{
 		return operatorJoystick.getLeftStickRaw_Y();
 	}
-	public double getDriveIntakeWheelsJoystickValue() {
+
+	public double getDriveIntakeWheelsJoystickValue()
+	{
 		return operatorJoystick.getRightStickRaw_Y();
 	}
 
-	public double getDriveCargoIntakeJoystickValue(){
+	public double getDriveCargoIntakeJoystickValue()
+	{
 		return operatorJoystick.getLeftStickRaw_Y();
 	}
 
-	public double getDriveIntakePivotJoystickValue() {
+	public double getDriveIntakePivotJoystickValue()
+	{
 		return testJoystick.getRightStickRaw_Y();
 	}
 
@@ -144,12 +151,15 @@ public class OI {
 		return driverJoystick.getLeftStickRaw_Y();
 	}
 
-	public double getGunStyleXValue() {
+	public double getGunStyleXValue()
+	{
 		// return
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return -gunStyleInterpolator.interpolate(driverJoystick.getLeftStickRaw_X());
 	}
-	public double getDriveWinchJoystickValue() {
+
+	public double getDriveWinchJoystickValue()
+	{
 		// return
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
 		return operatorJoystick.getRightStickRaw_X();
@@ -157,7 +167,7 @@ public class OI {
 
 	public double getDrivePlungerArmPivotJoystickValue()
 	{
-		//TODO actually figure out which stick and axis will connect
+		// TODO actually figure out which stick and axis will connect
 		return operatorJoystick.getRightStickRaw_Y();
 	}
 }
