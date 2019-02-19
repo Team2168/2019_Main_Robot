@@ -7,7 +7,7 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.FloorHatchIntake.DriveWithJoystick;
+import org.team2168.commands.hatchFloorIntake.DriveHatchFloorIntakeWithJoystick;
 import org.team2168.RobotMap;
 import org.team2168.Robot;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -65,7 +65,7 @@ public class HatchFloorIntake extends Subsystem
   }
 
   // Positive values will cause the motor to spin.
-  public void intakeHatchPanel(double speed)
+  public void driveMotors(double speed)
   {
     if (RobotMap.HATCH_INTAKE_MOTOR_REVERSE)
       speed = -speed;
@@ -100,7 +100,7 @@ public class HatchFloorIntake extends Subsystem
   public void initDefaultCommand()
   {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new DriveHatchIntakeWithJoystick());
+    setDefaultCommand(new DriveHatchFloorIntakeWithJoystick());
   }
 }
 // Commander Cody, the time has come.

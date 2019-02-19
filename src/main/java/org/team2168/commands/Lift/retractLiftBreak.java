@@ -5,44 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.FloorHatchMechanism;
+package org.team2168.commands.lift;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LowerMechanism extends Command {
-  public LowerMechanism() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires (Robot.floorHatchMechanism);
+public class retractLiftBreak extends Command
+{
+  public retractLiftBreak()
+  {
+    requires(Robot.lift);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  protected void initialize()
+  {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-      Robot.floorHatchMechanism.lower();
+  protected void execute()
+  {
+    Robot.lift.disableBrake();;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
-    return Robot.floorHatchMechanism.isSolenoidLowered();
+  protected boolean isFinished()
+  {
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }

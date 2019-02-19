@@ -1,13 +1,13 @@
 
-package org.team2168.Commands;
+package org.team2168.commands.monkeyBar;
 
 import org.team2168.OI;
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveCargoPickupWithJoystick extends Command {
-  public DriveCargoPickupWithJoystick() {
+public class DriveCargoIntakeWithJoystick extends Command {
+  public DriveCargoIntakeWithJoystick() {
 
     requires(Robot.monkeybar);
   }

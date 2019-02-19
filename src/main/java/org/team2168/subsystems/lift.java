@@ -141,7 +141,7 @@ public class Lift extends Subsystem {
 	 * 
 	 */
 
-  	public static Lift GetInstance()
+  	public static Lift getInstance()
 	{
 		if (instance == null)
 			instance = new Lift();

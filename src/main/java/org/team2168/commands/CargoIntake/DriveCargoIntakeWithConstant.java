@@ -1,55 +1,60 @@
-package org.team2168.commands.CargoIntake;
+package org.team2168.commands.cargoIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team2168.Robot;
 
 /**
- * The purpose of this class is to control the CargoIntake with code instead of joysticks/controller.
+ * The purpose of this class is to control the CargoIntake with code instead of
+ * joysticks/controller.
  */
-public class DriveCargoIntakeWithConstant extends Command {
+public class DriveCargoIntakeWithConstant extends Command
+{
 
-	
-	double speed;
+	double _speed;
 
-
-	public DriveCargoIntakeWithConstant(double speed) {
+	public DriveCargoIntakeWithConstant(double speed)
+	{
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.cargointake);
-		this.speed = speed;
+		requires(Robot.cargoIntake);
+		this._speed = speed;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
-	protected void initialize() {
-		
+	protected void initialize()
+	{
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void execute() {
+	protected void execute()
+	{
 
-		Robot.cargointake.drive(speed);
-		
-		
+		Robot.cargoIntake.drive(_speed);
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
-	protected boolean isFinished() {
-		
+	protected boolean isFinished()
+	{
+
 		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
-	protected void end() {
-		Robot.cargointake.drive(0);
+	protected void end()
+	{
+		Robot.cargoIntake.drive(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
-	protected void interrupted() {
+	protected void interrupted()
+	{
 
 		end();
 	}
