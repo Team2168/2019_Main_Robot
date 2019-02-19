@@ -5,44 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.StingerRatchet;
+package org.team2168.commands.stinger;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DisengageStingerRatchet extends Command {
-  public DisengageStingerRatchet() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.stingerRatchet);
+public class EngageStingerRatchet extends Command
+{
+  public EngageStingerRatchet()
+  {
+    requires(Robot.stinger);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  protected void initialize()
+  {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    Robot.stingerRatchet.disengageRatchet();
+  protected void execute()
+  {
+    Robot.stinger.engageRatchet();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
-    return Robot.stingerRatchet.isRatchetDisengaged();
+  protected boolean isFinished()
+  {
+    return Robot.stinger.isRatchetEngaged();
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }

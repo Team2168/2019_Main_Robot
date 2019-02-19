@@ -9,6 +9,7 @@ package org.team2168;
 
 import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
+import org.team2168.subsystems.CargoPunch;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.HatchFloorIntake;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot
 
   // Subsystems
   public static CargoIntakeWheels cargoIntakeWheels;
+  public static CargoPunch cargoPunch;
   public static Drivetrain drivetrain;
   public static DrivetrainStingerShifter drivetrainStingerShifter;
   public static HatchProbePivot hatchProbePivot;
@@ -115,6 +117,7 @@ public class Robot extends TimedRobot
 
       // Instantiate the subsystems
       cargoIntakeWheels = CargoIntakeWheels.getInstance();
+      cargoPunch = CargoPunch.getInstance();
       drivetrain = Drivetrain.getInstance();
       drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
       lift = Lift.getInstance();

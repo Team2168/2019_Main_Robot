@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.CargoPunch;
+package org.team2168.commands.cargoPunch;
 
 import org.team2168.Robot;
 
