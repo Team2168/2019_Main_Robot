@@ -102,7 +102,7 @@ public class Drivetrain extends Subsystem {
      */
     if (Robot.isPracticeRobot())
     {
-      if (Robot.isPWMDrive())
+      if (Robot.isPWMDrivetrain())
       {
         if (RobotMap.DT_3_MOTORS_PER_SIDE)
         {
@@ -147,7 +147,7 @@ public class Drivetrain extends Subsystem {
     }
     else // Comp Robot
     {
-      if (Robot.isPWMDrive())
+      if (Robot.isPWMDrivetrain())
       {
         if (RobotMap.DT_3_MOTORS_PER_SIDE)
         {

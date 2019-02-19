@@ -10,7 +10,7 @@ package org.team2168.subsystems;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
-import org.team2168.commands.PlungerArmPivot.DrivePlungerArmPivotWithJoystick;
+import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.VictorSP;
@@ -109,6 +109,6 @@ public class HatchProbePivot extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new DrivePlungerArmPivotWithJoystick());
+    setDefaultCommand(new DriveHatchProbePivotWithJoystick());
   }
 }
