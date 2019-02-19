@@ -114,7 +114,7 @@ public class Lift extends Subsystem {
 		TCPLiftPOTController = new TCPSocketSender(RobotMap.TCP_SERVER_LIFT_POT_CONTROLLER, liftPOTController);
 		TCPLiftPOTController.start();
 
-		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getDriveLiftJoystickValue();}, true, true);
+		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getLiftJoystickValue();}, true, true);
 		ConsolePrinter.putNumber("Lift motor 1 voltage", () -> {return liftMotor1Voltage;}, true, true);
 		ConsolePrinter.putNumber("Lift motor 2 voltage", () -> {return liftMotor2Voltage;}, true, true);
 

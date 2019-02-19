@@ -25,8 +25,7 @@ public class CargoPunch extends Subsystem {
 
   private CargoPunch()
   {
-    _cargoPunchPiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_2, 
-        RobotMap.CARGO_PUNCH_EXTEND_PCM, RobotMap.CARGO_PUNCH_RETRACT_PCM);
+    _cargoPunchPiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.CARGO_PUNCH_EXTEND_PCM, RobotMap.CARGO_PUNCH_RETRACT_PCM);
     ConsolePrinter.putBoolean("Cargo Punch Extended", () -> {return Robot.cargoPunch.isExtended();}, true, false);
     ConsolePrinter.putBoolean("Cargo Punch Retracted", () -> {return Robot.cargoPunch.isRetracted();}, true, false);
   }

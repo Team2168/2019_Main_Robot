@@ -151,7 +151,7 @@ public class Drivetrain extends Subsystem {
       {
         if (RobotMap.DT_3_MOTORS_PER_SIDE)
         {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 6 motors");
+          System.out.println("PWM Comp Bot Drivetrain enabled - 6 motors");
           _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
           _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
           _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
@@ -161,7 +161,7 @@ public class Drivetrain extends Subsystem {
         }
         else
         {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 4 motors");
+          System.out.println("PWM Comp Bot Drivetrain enabled - 4 motors");
           _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
           _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
           _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
@@ -172,7 +172,7 @@ public class Drivetrain extends Subsystem {
       {
         if (RobotMap.DT_3_MOTORS_PER_SIDE)
         {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 6 motors");
+          System.out.println("CAN Comp Bot Drivetrain enabled - 6 motors");
           _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
           _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
           _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
@@ -182,7 +182,7 @@ public class Drivetrain extends Subsystem {
         }
         else
         {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 4 motors");
+          System.out.println("CAN Comp Bot Drivetrain enabled - 4 motors");
           _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
           _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
           _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);

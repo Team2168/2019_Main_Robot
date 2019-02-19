@@ -27,7 +27,7 @@ public class DriveCargoIntakeWithJoystick extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.cargoIntakeWheels.drive(Robot.oi.getDriveCargoIntakeJoystickValue());
+		Robot.cargoIntakeWheels.drive(Robot.oi.getCargoIntakeJoystickValue());
 
 	}
 

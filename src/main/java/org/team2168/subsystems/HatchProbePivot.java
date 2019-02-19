@@ -47,13 +47,13 @@ public class HatchProbePivot extends Subsystem {
         RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
 
-    ConsolePrinter.putNumber("Plunger Arm Pivot Joystick", () -> {return Robot.oi.getDrivePlungerArmPivotJoystickValue();}, true, true);
-		ConsolePrinter.putNumber("Plunger arm Pivot Motor Voltage", () -> {return _plungerArmPivotVoltage;}, true, true);
-		ConsolePrinter.putNumber("Plunger Arm Pivot Motor Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);}, true, true);
-    ConsolePrinter.putBoolean("Plunger Arm Pivot Motor", () -> {return !Robot.pdp.isPlungerArmPivotMotorTrip();}, true, false);
+    ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {return Robot.oi.getHatchProbePivotJoystickValue();}, true, true);
+		ConsolePrinter.putNumber("HatchProbe Pivot Motor Voltage", () -> {return _plungerArmPivotVoltage;}, true, true);
+		ConsolePrinter.putNumber("HatchProbe Pivot Motor Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);}, true, true);
+    ConsolePrinter.putBoolean("HatchProbe Pivot Motor", () -> {return !Robot.pdp.isPlungerArmPivotMotorTrip();}, true, false);
 
-		ConsolePrinter.putNumber("Plunger Arm Pivot Raw Pot", () -> {return getRawPot();}, true, false);
-		ConsolePrinter.putNumber("Plunger Arm Pivot Degrees", () -> {return getPotPos();}, true, false);
+		ConsolePrinter.putNumber("HatchProbe Pivot Raw Pot", () -> {return getRawPot();}, true, false);
+		ConsolePrinter.putNumber("HatchProbe Pivot Degrees", () -> {return getPotPos();}, true, false);
 
   
   }
