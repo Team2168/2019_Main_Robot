@@ -1,16 +1,16 @@
 
-package org.team2168.Commands;
+package org.team2168.commands.MonkeyBarPivot;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveRotateMonkeyBarWithConstant extends Command {
-  double speed;
+  double _speed;
   public DriveRotateMonkeyBarWithConstant(double inputspeed) {
 
-    requires(Robot.monkeybar);
-    speed = inputspeed;
+    requires(Robot.monkeyBarPivot);
+    _speed = inputspeed;
 
   }
 
@@ -20,7 +20,7 @@ public class DriveRotateMonkeyBarWithConstant extends Command {
 
   @Override
   protected void execute() {
-    Robot.monkeybar.driveRotateBarMotors(speed);
+    Robot.monkeyBarPivot.driveRotateBarMotors(_speed);
   }
 
   @Override
@@ -30,7 +30,7 @@ public class DriveRotateMonkeyBarWithConstant extends Command {
 
   @Override
   protected void end() {
-    Robot.monkeybar.driveRotateBarMotors(0.0);
+    Robot.monkeyBarPivot.driveRotateBarMotors(0.0);
   }
 
 

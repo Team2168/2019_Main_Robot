@@ -1,4 +1,4 @@
-package org.team2168.Commands;
+package org.team2168.commands.MonkeyBarIntakeWheels;
 
 import org.team2168.Robot;
 
@@ -9,7 +9,7 @@ public class DriveCargoIntakeWithConstant extends Command {
   double _speed;
   public DriveCargoIntakeWithConstant(double inputspeed) {
 
-    requires(Robot.monkeybar);
+    requires(Robot.monkeyBarIntakeWheels);
     _speed = inputspeed;
   }
 
@@ -19,7 +19,7 @@ public class DriveCargoIntakeWithConstant extends Command {
 
   @Override
   protected void execute() {
-    Robot.monkeybar.driveIntakeAll(_speed);
+    Robot.monkeyBarIntakeWheels.driveIntakeAll(_speed);
   }
 
   @Override
@@ -30,7 +30,7 @@ public class DriveCargoIntakeWithConstant extends Command {
 
   @Override
   protected void end() {
-    Robot.monkeybar.driveIntakeAll(0.0);
+    Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
   }
 
 

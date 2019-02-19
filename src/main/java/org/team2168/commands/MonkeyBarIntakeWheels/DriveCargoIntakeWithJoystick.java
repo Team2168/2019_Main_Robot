@@ -1,7 +1,6 @@
 
-package org.team2168.commands.monkeyBar;
+package org.team2168.commands.MonkeyBarIntakeWheels;
 
-import org.team2168.OI;
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,18 +8,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCargoIntakeWithJoystick extends Command {
   public DriveCargoIntakeWithJoystick() {
 
-    requires(Robot.monkeybar);
+    requires(Robot.monkeyBarIntakeWheels);
   }
 
   @Override
   protected void initialize() {
-    Robot.monkeybar.driveIntakeAll(0.0);
+    Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
   }
 
 
   @Override
   protected void execute() {
-    Robot.monkeybar.driveIntakeAll(OI.getDriveIntakeWheelsJoystickValue());
+    Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getDriveIntakeWheelsJoystickValue());
   }
 
 
@@ -32,7 +31,7 @@ public class DriveCargoIntakeWithJoystick extends Command {
 
   @Override
   protected void end() {
-    Robot.monkeybar.driveIntakeAll(0.0);
+    Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
   }
 
 

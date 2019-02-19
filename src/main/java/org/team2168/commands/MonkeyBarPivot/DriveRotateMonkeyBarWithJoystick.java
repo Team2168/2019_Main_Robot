@@ -1,5 +1,5 @@
 
-package org.team2168.Commands;
+package org.team2168.commands.MonkeyBarPivot;
 
 import org.team2168.OI;
 import org.team2168.Robot;
@@ -9,17 +9,17 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveRotateMonkeyBarWithJoystick extends Command {
   public DriveRotateMonkeyBarWithJoystick() {
 
-    requires(Robot.monkeybar);
+    requires(Robot.monkeyBarPivot);
   }
 
   @Override
   protected void initialize() {
-    Robot.monkeybar.driveRotateBarMotors(0.0);
+    Robot.monkeyBarPivot.driveRotateBarMotors(0.0);
   }
 
   @Override
   protected void execute() {
-    Robot.monkeybar.driveRotateBarMotors(OI.getDriveIntakePivotJoystickValue());
+    Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getDriveMonkeyBarPivotJoystickValue());
   }
 
   @Override
@@ -29,7 +29,7 @@ public class DriveRotateMonkeyBarWithJoystick extends Command {
 
   @Override
   protected void end() {
-    Robot.monkeybar.driveRotateBarMotors(0.0);
+    Robot.monkeyBarPivot.driveRotateBarMotors(0.0);
   }
 
 

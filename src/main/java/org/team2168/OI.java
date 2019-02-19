@@ -134,6 +134,10 @@ public class OI {
 		return testJoystick.getRightStickRaw_Y();
 	}
 
+	public double getDriveMonkeyBarPivotJoystickValue() {
+		return operatorJoystick.getLeftStickRaw_X();
+	}
+
 	public double getGunStyleYValue() {
 		// return
 		// gunStyleInterpolator.interpolate(Robot.oi.driverJoystick.getLeftStickRaw_X());
