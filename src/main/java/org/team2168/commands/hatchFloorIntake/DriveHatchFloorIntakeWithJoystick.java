@@ -7,7 +7,6 @@
 
 package org.team2168.commands.hatchFloorIntake;
 
-import org.team2168.OI;
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

@@ -1,20 +1,20 @@
 package org.team2168.subsystems;
 
-import org.team2168.OI;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
-import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -26,8 +26,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  
 public class Lift extends Subsystem {
 	
-	private static VictorSP liftMotor1;
-	private static VictorSP liftMotor2;
+	private static TalonSRX liftMotor1;
+	private static VictorSPX liftMotor2;
 
 
 	private DoubleSolenoid liftBrake;
@@ -68,8 +68,8 @@ public class Lift extends Subsystem {
 	 * Default constructor for the lift
 	 */
 	private Lift() {
-		liftMotor1 = new VictorSP(RobotMap.LIFT_MOTOR_1_PDP);
-		liftMotor2 = new VictorSP(RobotMap.LIFT_MOTOR_2_PDP);
+		liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PDP);
+		liftMotor2 = new VictorSPX(RobotMap.LIFT_MOTOR_2_PDP);
 		
 		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
@@ -196,7 +196,7 @@ public class Lift extends Subsystem {
 	{
 		if (RobotMap.LIFT_MOTOR1_REVERSE)
 			speed = -speed;
-		liftMotor1.set(speed);
+		liftMotor1.set(ControlMode.PercentOutput,speed);
 		liftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
@@ -210,7 +210,7 @@ public class Lift extends Subsystem {
 	{
 		if (RobotMap.LIFT_MOTOR2_REVERSE)
 			speed = -speed;
-		liftMotor2.set(speed);
+		liftMotor2.set(ControlMode.PercentOutput,speed);
 		liftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 

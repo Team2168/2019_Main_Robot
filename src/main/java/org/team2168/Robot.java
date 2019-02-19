@@ -238,6 +238,8 @@ public class Robot extends TimedRobot
 
     Scheduler.getInstance().run();
 
+    // Check to see if the gyro is drifting, if it is re-initialize it.
+    gyroReinit();
   }
 
   public void autonomousInit()

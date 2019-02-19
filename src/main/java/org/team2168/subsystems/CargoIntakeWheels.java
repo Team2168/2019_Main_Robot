@@ -1,12 +1,14 @@
 package org.team2168.subsystems;
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -19,13 +21,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CargoIntakeWheels extends Subsystem {
 
-    private SpeedController _intakeMotor;
+    private TalonSRX _intakeMotor;
     private AnalogInput _sharpIRSensor;
     public static volatile double _driveVoltage;
     private static CargoIntakeWheels _instance;
 
 	private CargoIntakeWheels() {
-        _intakeMotor = new VictorSP(RobotMap.CARGO_INTAKE_MOTOR_PDP);
+        _intakeMotor = new TalonSRX(RobotMap.CARGO_INTAKE_MOTOR_PDP);
         _sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
 
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
@@ -52,7 +54,7 @@ public class CargoIntakeWheels extends Subsystem {
         if (RobotMap.CARGO_INTAKE_MOTOR_REVERSE)
             speed = -speed;
 
-        _intakeMotor.set(speed);
+        _intakeMotor.set(ControlMode.PercentOutput,speed);
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
     }
 

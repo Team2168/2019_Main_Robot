@@ -4,6 +4,7 @@ import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.monkeyBar.DriveMonkeyBarWheelsWithConstant;
+import org.team2168.commands.monkeyBar.DriveRotateMonkeyBarWithJoystick;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
@@ -80,9 +81,17 @@ public class OI
 		//////////////// Lower Platform///////////////////////////////////////
 		// operatorJoystick.ButtonBack().whenPressed(new LowerPlatform());
 
-		operatorJoystick.ButtonRightBumper().whileHeld(new DriveCargoIntakeWithConstant(0.5));
-		operatorJoystick.ButtonRightBumper().whileHeld(new DriveMonkeyBarWheelsWithConstant(0.5));
+		operatorJoystick.ButtonRightBumper().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		operatorJoystick.ButtonRightBumper().whileHeld(new DriveMonkeyBarWheelsWithConstant(1.0));
+		operatorJoystick.ButtonLeftBumper().whileHeld(new DriveCargoIntakeWithConstant(-1.0));
+		operatorJoystick.ButtonLeftBumper().whileHeld(new DriveMonkeyBarWheelsWithConstant(-1.0));
+		operatorJoystick.ButtonRightBumper().whenReleased(new DriveCargoIntakeWithConstant(0.0));
+		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarWheelsWithConstant(0.0));
+		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveCargoIntakeWithConstant(0.0));
+		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarWheelsWithConstant(0.0));
 
+		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
+		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 
 		/////////////// Intake and pivot up
 		/////////////// afterwards/////////////////////////////////////////////////////////////////////////

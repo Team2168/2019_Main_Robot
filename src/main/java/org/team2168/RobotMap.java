@@ -130,7 +130,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int DRIVETRAIN_LEFT_MOTOR_1_PDP = 2;
 	public static final int LIFT_MOTOR_2_PDP = 3;
 	public static final int MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP = 4;
-	public static final int MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP = 5;
+	public static final int MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP = 5; //has to be swapped or inverted or something
 	public static final int HATCH_FLOOR_INTAKE_PDP= 6;
 	public static final int COMPRESSOR_PDP = 7;
 	public static final int CARGO_INTAKE_MOTOR_PDP = 8;
@@ -198,7 +198,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                         CARGO INTAKE PARAMETERS                        *
 	 *************************************************************************/
-	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = true;
+	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = false;
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 0.0; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 0.0; 
 
@@ -218,8 +218,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                         LIFT PARAMETERS                               *
 	 *************************************************************************/
-	public static final boolean LIFT_MOTOR1_REVERSE = false;
-	public static final boolean LIFT_MOTOR2_REVERSE = false;
+	public static final boolean LIFT_MOTOR1_REVERSE = true;
+	public static final boolean LIFT_MOTOR2_REVERSE = true;
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 
@@ -247,10 +247,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                      Monkey Bar PARAMETERS                            *
 	 *************************************************************************/
-	public static final boolean MONKEY_BAR_ROTATE_RIGHT_REVERSE = false;
+	public static final boolean MONKEY_BAR_ROTATE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_ROTATE_LEFT_REVERSE = false;
 	
-	public static final boolean MONKEY_BAR_INTAKE_RIGHT_REVERSE = false;
+	public static final boolean MONKEY_BAR_INTAKE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_INTAKE_LEFT_REVERSE = false;
 
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 5.108; //130 degrees
@@ -313,7 +313,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         Plunger Arm Pivot PARAMETERS                   *
 	 *************************************************************************/
 	////TODO set these values
-	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = false; //TODO set
+	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
 	public static final double PIVOT_POT_VOLTAGE_0 = 0;
 	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;

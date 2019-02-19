@@ -1,22 +1,27 @@
 
 package org.team2168.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.commands.monkeyBar.DriveRotateMonkeyBarWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class MonkeyBar extends Subsystem 
 {
 
-  private VictorSP intakeLeft;
-  private VictorSP intakeRight;
+  private VictorSPX intakeLeft;
+  private VictorSPX intakeRight;
   
-  private VictorSP rotateBarLeft;
-  private VictorSP rotateBarRight;
+  private TalonSRX rotateBarLeft;
+  private TalonSRX rotateBarRight;
+  
 
   
   private AveragePotentiometer monkeyBarRotationLeft;
@@ -33,11 +38,11 @@ public class MonkeyBar extends Subsystem
   //constructors for monkey bar
   private MonkeyBar() 
   { 
-    intakeLeft = new VictorSP(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
-    intakeRight = new VictorSP(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
+    intakeLeft = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
+    intakeRight = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
 
-    rotateBarLeft = new VictorSP(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);
-    rotateBarRight = new VictorSP(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP);
+    rotateBarLeft = new TalonSRX(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);
+    rotateBarRight = new TalonSRX(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP);
     
     if(Robot.isPracticeRobot())
     {
@@ -114,7 +119,7 @@ public class MonkeyBar extends Subsystem
   @Override
   public void initDefaultCommand() 
   {
-
+    setDefaultCommand(new DriveRotateMonkeyBarWithJoystick());
   }
 
   public void driveIntakeMotorLeft(double speed)
@@ -122,7 +127,7 @@ public class MonkeyBar extends Subsystem
     if(RobotMap.MONKEY_BAR_INTAKE_LEFT_REVERSE)
       speed = -speed;
 
-    intakeLeft.set(speed);
+    intakeLeft.set(ControlMode.PercentOutput,speed);
 
   }
 
@@ -131,7 +136,7 @@ public class MonkeyBar extends Subsystem
     if(RobotMap.MONKEY_BAR_INTAKE_RIGHT_REVERSE)
       speed = -speed;
 
-    intakeRight.set(speed);
+    intakeRight.set(ControlMode.PercentOutput,speed);
   }
 
   public void driveIntakeAll(double speed) 
@@ -145,7 +150,7 @@ public class MonkeyBar extends Subsystem
     if(RobotMap.MONKEY_BAR_ROTATE_LEFT_REVERSE)
       speed = -speed;
 
-    rotateBarLeft.set(speed);
+    rotateBarLeft.set(ControlMode.PercentOutput,speed);
 
   }
 
@@ -154,7 +159,7 @@ public class MonkeyBar extends Subsystem
     if(RobotMap.MONKEY_BAR_ROTATE_RIGHT_REVERSE)
     speed = -speed;
 
-    rotateBarRight.set(speed);
+    rotateBarRight.set(ControlMode.PercentOutput,speed);
 
   }
   

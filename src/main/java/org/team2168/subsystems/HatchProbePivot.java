@@ -7,17 +7,19 @@
 
 package org.team2168.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HatchProbePivot extends Subsystem {
-  private static VictorSP _plungerArmPivotMotor;
+  private static TalonSRX _plungerArmPivotMotor;
   private static AveragePotentiometer _pivotPot;
   public volatile double _plungerArmPivotVoltage;
   
@@ -26,7 +28,7 @@ public class HatchProbePivot extends Subsystem {
 
   private HatchProbePivot()
   {
-    _plungerArmPivotMotor = new VictorSP(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
+    _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
     
     if (Robot.isPracticeRobot())
     {
@@ -84,7 +86,7 @@ public class HatchProbePivot extends Subsystem {
   { 
     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
       speed = -speed;
-    _plungerArmPivotMotor.set(speed);
+    _plungerArmPivotMotor.set(ControlMode.PercentOutput,speed);
     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; //not currently used
   }
 
