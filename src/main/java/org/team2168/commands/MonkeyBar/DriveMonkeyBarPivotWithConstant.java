@@ -1,13 +1,13 @@
 
-package org.team2168.Commands;
+package org.team2168.commands.monkeyBar;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveRotateMonkeyBarWithConstant extends Command {
+public class DriveMonkeyBarPivotWithConstant extends Command {
   double speed;
-  public DriveRotateMonkeyBarWithConstant(double inputspeed) {
+  public DriveMonkeyBarPivotWithConstant(double inputspeed) {
 
     requires(Robot.monkeybar);
     speed = inputspeed;

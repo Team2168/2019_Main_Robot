@@ -15,7 +15,7 @@ public class DriveCargoIntakeWithConstant extends Command
 	public DriveCargoIntakeWithConstant(double speed)
 	{
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.cargoIntake);
+		requires(Robot.cargoIntakeWheels);
 		this._speed = speed;
 	}
 
@@ -31,7 +31,7 @@ public class DriveCargoIntakeWithConstant extends Command
 	protected void execute()
 	{
 
-		Robot.cargoIntake.drive(_speed);
+		Robot.cargoIntakeWheels.drive(_speed);
 
 	}
 
@@ -47,7 +47,7 @@ public class DriveCargoIntakeWithConstant extends Command
 	@Override
 	protected void end()
 	{
-		Robot.cargoIntake.drive(0);
+		Robot.cargoIntakeWheels.drive(0);
 	}
 
 	// Called when another command which requires one or more of the same

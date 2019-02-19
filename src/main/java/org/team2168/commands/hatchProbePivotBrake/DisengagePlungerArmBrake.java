@@ -5,52 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.plungerArmPivot;
+package org.team2168.commands.hatchProbePivotBrake;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DrivePlungerArmPivotWithConstant extends Command {
-  private double speed;
-
-  public DrivePlungerArmPivotWithConstant(double inputSpeed) {
+public class DisengagePlungerArmBrake extends Command {
+  public DisengagePlungerArmBrake() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.hatchProbePivot);
-    speed = inputSpeed;
+    requires(Robot.hatchProbePivotBrake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
-
+    Robot.hatchProbePivotBrake.disengage();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hatchProbePivot.drivePlungerArmPivotMotor(speed);
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.hatchProbePivotBrake.isDisengaged();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hatchProbePivot.drivePlungerArmPivotMotor(0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

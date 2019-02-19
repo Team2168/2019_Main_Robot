@@ -4,6 +4,7 @@ package org.team2168.subsystems;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -80,6 +81,24 @@ public class MonkeyBar extends Subsystem
       POT_MIN_HEIGHT_LEFT = RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0;
       POT_MIN_HEIGHT_RIGHT = RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0;
     }
+
+    ConsolePrinter.putNumber("Left Monkey Bar Pot Position", () -> {return getLeftPotPos();}, true, false);
+    ConsolePrinter.putNumber("Left Monkey Bar Raw Pot Position", () -> {return getLeftPotPosRaw();}, true, false);
+    ConsolePrinter.putNumber("Right Monkey Bar Pot Position", () -> {return getRightPotPos();}, true, false);
+    ConsolePrinter.putNumber("Right Monkey Bar Raw Pot Position", () -> {return getRightPotPosRaw();}, true, false);
+
+
+    // ConsolePrinter.putNumber("Intake right motor voltage", () -> {return intakeMotorRightVoltage;}, true, false);
+    // ConsolePrinter.putNumber("Intake left motor voltage", () -> {return intakeMotorLeftVoltage;}, true, false);
+
+    // ConsolePrinter.putNumber("Rotate bar right motor voltage", () -> {return barRotateMotorRightVoltage;}, true, false);
+    // ConsolePrinter.putNumber("Rotate bar left motor voltage", () -> {return barRotateMotorLeftVoltage;}, true, false);
+
+    ConsolePrinter.putNumber("MonkeyBar Intake right motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);}, true, false);
+    ConsolePrinter.putNumber("MonkeyBar Intake left motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);}, true, false);
+
+    ConsolePrinter.putNumber("MonkeyBar Pivot left motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);}, true, false);
+    ConsolePrinter.putNumber("MonkeyBar Pivot right motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP);}, true, false);
   }
 
   /**
