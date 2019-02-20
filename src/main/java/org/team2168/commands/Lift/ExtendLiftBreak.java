@@ -11,9 +11,9 @@ import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class extendLiftBreak extends Command
+public class ExtendLiftBreak extends Command
 {
-  public extendLiftBreak()
+  public ExtendLiftBreak()
   {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
