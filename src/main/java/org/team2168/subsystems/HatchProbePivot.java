@@ -8,6 +8,8 @@
 package org.team2168.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
@@ -30,6 +32,8 @@ public class HatchProbePivot extends Subsystem
   private HatchProbePivot()
   {
     _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
+    _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+    _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
     if (Robot.isPracticeRobot())
     {
@@ -130,6 +134,7 @@ public class HatchProbePivot extends Subsystem
   {
     return _pivotHallEffectSensors.getReverseLimit();
   }
+
 
   @Override
   public void initDefaultCommand()
