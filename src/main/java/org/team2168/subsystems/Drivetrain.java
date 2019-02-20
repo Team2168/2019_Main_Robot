@@ -31,64 +31,64 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 
-	private static SpeedController _leftMotor1;
-	private static SpeedController _leftMotor2;
-	private static SpeedController _leftMotor3;
-	private static SpeedController _rightMotor1;
-	private static SpeedController _rightMotor2;
-	private static SpeedController _rightMotor3;
+  private static SpeedController _leftMotor1;
+  private static SpeedController _leftMotor2;
+  private static SpeedController _leftMotor3;
+  private static SpeedController _rightMotor1;
+  private static SpeedController _rightMotor2;
+  private static SpeedController _rightMotor3;
 
-	private ADXRS453Gyro _gyroSPI;
-	private AverageEncoder _drivetrainLeftEncoder;
+  private ADXRS453Gyro _gyroSPI;
+  private AverageEncoder _drivetrainLeftEncoder;
   private AverageEncoder _drivetrainRightEncoder;
-  
+
   private AnalogInput _drivetrainFrontIRSensor;
   private AnalogInput _drivetrainBackIRSensor;
 
   //Leave these wihtout _name convention to work with past code base
-	private double RightMotor1FPS;
-	private double RightMotor2FPS;
-	private double leftMotor1FPS;
-	private double lefttMotor1FPS;
-	public IMU imu;
-	
-
-	// declare position/speed controllers
-	public PIDPosition driveTrainPosController;
-	public PIDPosition rotateController;
-	public PIDPosition rotateDriveStraightController;
-	
-	public PIDPosition rightPosController;
-	public PIDPosition leftPosController;
-
-	// declare speed controllers
-	public PIDSpeed rightSpeedController;
-	public PIDSpeed leftSpeedController;
-
-	private static Drivetrain instance = null;
-
-	// declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR
-	// COMPITITION
-	TCPSocketSender TCPdrivePosController;
-	TCPSocketSender TCPrightSpeedController;
-	TCPSocketSender TCPleftSpeedController;
-	TCPSocketSender TCProtateController;
-	TCPSocketSender TCPleftPosController;
-	TCPSocketSender TCPrightPosController;
-
-	public volatile double leftMotor1Voltage;
-	public volatile double leftMotor2Voltage;
-	public volatile double leftMotor3Voltage;
-	public volatile double rightMotor1Voltage;
-	public volatile double rightMotor2Voltage;
-	public volatile double rightMotor3Voltage;
-
-	double runTime = Timer.getFPGATimestamp();
+  private double RightMotor1FPS;
+  private double RightMotor2FPS;
+  private double leftMotor1FPS;
+  private double lefttMotor1FPS;
+  public IMU imu;
 
 
-	/**
-	 * Default constructors for Drivetrain
-	 */
+  // declare position/speed controllers
+  public PIDPosition driveTrainPosController;
+  public PIDPosition rotateController;
+  public PIDPosition rotateDriveStraightController;
+
+  public PIDPosition rightPosController;
+  public PIDPosition leftPosController;
+
+  // declare speed controllers
+  public PIDSpeed rightSpeedController;
+  public PIDSpeed leftSpeedController;
+
+  private static Drivetrain instance = null;
+
+  // declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR
+  // COMPITITION
+  TCPSocketSender TCPdrivePosController;
+  TCPSocketSender TCPrightSpeedController;
+  TCPSocketSender TCPleftSpeedController;
+  TCPSocketSender TCProtateController;
+  TCPSocketSender TCPleftPosController;
+  TCPSocketSender TCPrightPosController;
+
+  public volatile double leftMotor1Voltage;
+  public volatile double leftMotor2Voltage;
+  public volatile double leftMotor3Voltage;
+  public volatile double rightMotor1Voltage;
+  public volatile double rightMotor2Voltage;
+  public volatile double rightMotor3Voltage;
+
+  double runTime = Timer.getFPGATimestamp();
+
+
+  /**
+   * Default constructors for Drivetrain
+   */
   private Drivetrain()
   {
 
@@ -199,195 +199,195 @@ public class Drivetrain extends Subsystem {
       // rightMotor3.setCANTimeout(100);
 
     }
-		
-		_drivetrainRightEncoder = new AverageEncoder(
-				RobotMap.RIGHT_DRIVE_ENCODER_A,
-				RobotMap.RIGHT_DRIVE_ENCODER_B,
-				RobotMap.DRIVE_ENCODER_PULSE_PER_ROT,
-				RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
-				RobotMap.RIGHT_DRIVE_TRAIN_ENCODER_REVERSE,
-				RobotMap.DRIVE_ENCODING_TYPE,
-				RobotMap.DRIVE_SPEED_RETURN_TYPE,
-				RobotMap.DRIVE_POS_RETURN_TYPE,
-				RobotMap.DRIVE_AVG_ENCODER_VAL);
+    
+    _drivetrainRightEncoder = new AverageEncoder(
+        RobotMap.RIGHT_DRIVE_ENCODER_A,
+        RobotMap.RIGHT_DRIVE_ENCODER_B,
+        RobotMap.DRIVE_ENCODER_PULSE_PER_ROT,
+        RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
+        RobotMap.RIGHT_DRIVE_TRAIN_ENCODER_REVERSE,
+        RobotMap.DRIVE_ENCODING_TYPE,
+        RobotMap.DRIVE_SPEED_RETURN_TYPE,
+        RobotMap.DRIVE_POS_RETURN_TYPE,
+        RobotMap.DRIVE_AVG_ENCODER_VAL);
 
-		_drivetrainLeftEncoder = new AverageEncoder(
-				RobotMap.LEFT_DRIVE_ENCODER_A, 
-				RobotMap.LEFT_DRIVE_ENCODER_B,
-				RobotMap.DRIVE_ENCODER_PULSE_PER_ROT, 
-				RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
-				RobotMap.LEFT_DRIVE_TRAIN_ENCODER_REVERSE, 
-				RobotMap.DRIVE_ENCODING_TYPE,
-				RobotMap.DRIVE_SPEED_RETURN_TYPE, 
-				RobotMap.DRIVE_POS_RETURN_TYPE, 
-				RobotMap.DRIVE_AVG_ENCODER_VAL);
+    _drivetrainLeftEncoder = new AverageEncoder(
+        RobotMap.LEFT_DRIVE_ENCODER_A, 
+        RobotMap.LEFT_DRIVE_ENCODER_B,
+        RobotMap.DRIVE_ENCODER_PULSE_PER_ROT, 
+        RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
+        RobotMap.LEFT_DRIVE_TRAIN_ENCODER_REVERSE, 
+        RobotMap.DRIVE_ENCODING_TYPE,
+        RobotMap.DRIVE_SPEED_RETURN_TYPE, 
+        RobotMap.DRIVE_POS_RETURN_TYPE, 
+        RobotMap.DRIVE_AVG_ENCODER_VAL);
 
-		_gyroSPI = new ADXRS453Gyro();
+    _gyroSPI = new ADXRS453Gyro();
     _gyroSPI.startThread();
     
     _drivetrainFrontIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_FRONT_IR_SENSOR);
     _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
-		imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+    imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
 
-		// DriveStraight Controller
-		rotateController = new PIDPosition(
-				"RotationController", 
-				RobotMap.ROTATE_POSITION_P, 
-				RobotMap.ROTATE_POSITION_I,
-				RobotMap.ROTATE_POSITION_D, 
-				_gyroSPI, 
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    // DriveStraight Controller
+    rotateController = new PIDPosition(
+        "RotationController", 
+        RobotMap.ROTATE_POSITION_P, 
+        RobotMap.ROTATE_POSITION_I,
+        RobotMap.ROTATE_POSITION_D, 
+        _gyroSPI, 
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		
-		rotateDriveStraightController = new PIDPosition(
-				"RotationStraightController",
-				RobotMap.ROTATE_POSITION_P_Drive_Straight, 
-				RobotMap.ROTATE_POSITION_I_Drive_Straight,
-				RobotMap.ROTATE_POSITION_D_Drive_Straight, 
-				_gyroSPI, 
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    
+    rotateDriveStraightController = new PIDPosition(
+        "RotationStraightController",
+        RobotMap.ROTATE_POSITION_P_Drive_Straight, 
+        RobotMap.ROTATE_POSITION_I_Drive_Straight,
+        RobotMap.ROTATE_POSITION_D_Drive_Straight, 
+        _gyroSPI, 
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		driveTrainPosController = new PIDPosition(
-				"driveTrainPosController", 
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
-				imu,
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    driveTrainPosController = new PIDPosition(
+        "driveTrainPosController", 
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
+        imu,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		// Spawn new PID Controller
-		rightSpeedController = new PIDSpeed(
-				"rightSpeedController", 
-				RobotMap.DRIVE_TRAIN_RIGHT_SPEED_P,
-				RobotMap.DRIVE_TRAIN_RIGHT_SPEED_I, 
-				RobotMap.DRIVE_TRAIN_RIGHT_SPEED_D, 
-				1, 
-				_drivetrainRightEncoder,
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    // Spawn new PID Controller
+    rightSpeedController = new PIDSpeed(
+        "rightSpeedController", 
+        RobotMap.DRIVE_TRAIN_RIGHT_SPEED_P,
+        RobotMap.DRIVE_TRAIN_RIGHT_SPEED_I, 
+        RobotMap.DRIVE_TRAIN_RIGHT_SPEED_D, 
+        1, 
+        _drivetrainRightEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		leftSpeedController = new PIDSpeed(
-				"leftSpeedController", 
-				RobotMap.DRIVE_TRAIN_LEFT_SPEED_P,
-				RobotMap.DRIVE_TRAIN_LEFT_SPEED_I, 
-				RobotMap.DRIVE_TRAIN_LEFT_SPEED_D, 
-				1, 
-				_drivetrainLeftEncoder,
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    leftSpeedController = new PIDSpeed(
+        "leftSpeedController", 
+        RobotMap.DRIVE_TRAIN_LEFT_SPEED_P,
+        RobotMap.DRIVE_TRAIN_LEFT_SPEED_I, 
+        RobotMap.DRIVE_TRAIN_LEFT_SPEED_D, 
+        1, 
+        _drivetrainLeftEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-			// Spawn new PID Controller
-		rightPosController = new PIDPosition(
-				"rightPosController", 
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
-				RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
-				1, 
-				_drivetrainRightEncoder,
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+      // Spawn new PID Controller
+    rightPosController = new PIDPosition(
+        "rightPosController", 
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_P,
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_I, 
+        RobotMap.DRIVE_TRAIN_RIGHT_POSITION_D, 
+        1, 
+        _drivetrainRightEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		leftPosController = new PIDPosition(
-				"leftPosController", 
-				RobotMap.DRIVE_TRAIN_LEFT_POSITION_P,
-				RobotMap.DRIVE_TRAIN_LEFT_POSITION_I, 
-				RobotMap.DRIVE_TRAIN_LEFT_POSITION_D, 
-				1, 
-				_drivetrainLeftEncoder,
-				RobotMap.DRIVE_TRAIN_PID_PERIOD);
+    leftPosController = new PIDPosition(
+        "leftPosController", 
+        RobotMap.DRIVE_TRAIN_LEFT_POSITION_P,
+        RobotMap.DRIVE_TRAIN_LEFT_POSITION_I, 
+        RobotMap.DRIVE_TRAIN_LEFT_POSITION_D, 
+        1, 
+        _drivetrainLeftEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
-		// add min and max output defaults and set array size
-		rightSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		leftSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		rightPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		leftPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
-		rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    // add min and max output defaults and set array size
+    rightSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    leftSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    rightPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    leftPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
 
-		// start controller threads
-		rightSpeedController.startThread();
-		leftSpeedController.startThread();
-		rightPosController.startThread();
-		leftPosController.startThread();
-		driveTrainPosController.startThread();
-		rotateController.startThread();
-		rotateDriveStraightController.startThread();
+    // start controller threads
+    rightSpeedController.startThread();
+    leftSpeedController.startThread();
+    rightPosController.startThread();
+    leftPosController.startThread();
+    driveTrainPosController.startThread();
+    rotateController.startThread();
+    rotateDriveStraightController.startThread();
 
-		// start TCP Servers for DEBUGING ONLY
-		TCPdrivePosController = new TCPSocketSender(RobotMap.TCP_SERVER_DRIVE_TRAIN_POS, driveTrainPosController);
-		TCPdrivePosController.start();
+    // start TCP Servers for DEBUGING ONLY
+    TCPdrivePosController = new TCPSocketSender(RobotMap.TCP_SERVER_DRIVE_TRAIN_POS, driveTrainPosController);
+    TCPdrivePosController.start();
 
-		TCPrightSpeedController = new TCPSocketSender(RobotMap.TCO_SERVER_RIGHT_DRIVE_TRAIN_SPEED, rightSpeedController);
-		TCPrightSpeedController.start();
+    TCPrightSpeedController = new TCPSocketSender(RobotMap.TCO_SERVER_RIGHT_DRIVE_TRAIN_SPEED, rightSpeedController);
+    TCPrightSpeedController.start();
 
-		TCPleftSpeedController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_SPEED, leftSpeedController);
-		TCPleftSpeedController.start();
+    TCPleftSpeedController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_SPEED, leftSpeedController);
+    TCPleftSpeedController.start();
 
-		TCPrightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION, rightPosController);
-		TCPrightPosController.start();
+    TCPrightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION, rightPosController);
+    TCPrightPosController.start();
 
-		TCPleftPosController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION, leftPosController);
-		TCPleftPosController.start();
+    TCPleftPosController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION, leftPosController);
+    TCPleftPosController.start();
 
-		TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER, rotateController);
-		TCProtateController.start();
+    TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER, rotateController);
+    TCProtateController.start();
 
-		TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT,rotateDriveStraightController);
-		TCProtateController.start();
+    TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT,rotateDriveStraightController);
+    TCProtateController.start();
 
 
-		leftMotor1Voltage = 0;
-		leftMotor2Voltage = 0;
+    leftMotor1Voltage = 0;
+    leftMotor2Voltage = 0;
 
-		rightMotor1Voltage = 0;
-		rightMotor2Voltage = 0;
-		
+    rightMotor1Voltage = 0;
+    rightMotor2Voltage = 0;
+    
 
-		// Log sensor data
-		ConsolePrinter.putNumber("Left Encoder Distance", () -> {return Robot.drivetrain.getLeftPosition();}, true, true);
-		ConsolePrinter.putNumber("Right Encoder Distance:", () -> {return Robot.drivetrain.getRightPosition();}, true, true);
-		ConsolePrinter.putNumber("Average Drive Encoder Distance", () -> {return Robot.drivetrain.getAverageDistance();}, true, true);
-		ConsolePrinter.putNumber("Right Drive Encoder Rate", () -> {return Robot.drivetrain.getRightEncoderRate();}, true, true);
-		ConsolePrinter.putNumber("Left Drive Encoder Rate", () -> {return Robot.drivetrain.getLeftEncoderRate();}, true, true);
-		ConsolePrinter.putNumber("Average Drive Encoder Rate", () -> {return Robot.drivetrain.getAverageEncoderRate();}, true, true);
-		ConsolePrinter.putNumber("Gyro Angle:", () -> {return Robot.drivetrain.getHeading();}, true, true);	
-		ConsolePrinter.putNumber("Gunstyle X Value", () -> {return Robot.oi.getGunStyleXValue();}, true, true);
-		ConsolePrinter.putNumber("Gunstyle Y Value", () -> {return Robot.oi.getGunStyleYValue();}, true, true);
-		ConsolePrinter.putNumber("DTLeft1MotorVoltage", () -> {return Robot.drivetrain.getleftMotor1Voltage();}, true, true);
-		ConsolePrinter.putNumber("DTLeft2MotorVoltage", () -> {return Robot.drivetrain.getleftMotor2Voltage();}, true, true);
-		ConsolePrinter.putNumber("DTRight1MotorVoltage", () -> {return Robot.drivetrain.getrightMotor1Voltage();}, true, true);
-		ConsolePrinter.putNumber("DTRight2MotorVoltage", () -> {return Robot.drivetrain.getrightMotor2Voltage();}, true, true);
-		ConsolePrinter.putNumber("DTRight1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);}, true, true);
-		ConsolePrinter.putNumber("DTRight2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);}, true, true);
-		ConsolePrinter.putNumber("DTLeft1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);}, true, true);
-		ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, true);
-		ConsolePrinter.putNumber("PID right motor 1 voltage", () -> {return this.PIDVoltagefeedRightMotor1();}, true, true);
-		ConsolePrinter.putNumber("PID right motor 2 voltage", () -> {return this.PIDVoltagefeedRightMotor2();}, true, true);
-		ConsolePrinter.putNumber("PID left motor 1 voltage", () -> {return this.PIDVoltagefeedLeftMotor1();}, true, true);
-		ConsolePrinter.putNumber("PID left motor 2 voltage", () -> {return this.PIDVoltagefeedLeftMotor2();}, true, true);
-		
-		ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, true);
-		ConsolePrinter.putNumber("GYRO Driftrate:", () -> {return Robot.drivetrain._gyroSPI.driftRate;}, true, false);
-		ConsolePrinter.putNumber("GYRO Rate:", () -> {return Robot.drivetrain._gyroSPI.getRate();}, true, false);
-		ConsolePrinter.putNumber("GYRO Angle SPI:", () -> {return Robot.drivetrain._gyroSPI.getAngle();}, true, false);
-		ConsolePrinter.putNumber("GYRO reInits:", () -> {return (double) Robot.gyroReinits;}, true, false);
-		ConsolePrinter.putBoolean("Gyro Cal Status", () -> {return !Robot.gyroCalibrating;}, true, false);
-		ConsolePrinter.putNumber("GYRO Status:", () -> {return (double) Robot.drivetrain._gyroSPI.getStatus();}, true, false);
-		ConsolePrinter.putNumber("GYRO Temp:", () -> {return Robot.drivetrain._gyroSPI.getTemp();}, true, false);
-		
-		
-		ConsolePrinter.putBoolean("Left Motor One Trip", () -> {return !Robot.pdp.isLeftMotorOneTrip();}, true, false);
-		ConsolePrinter.putBoolean("Left Motor Two Trip", () -> {return !Robot.pdp.isLeftMotorTwoTrip();}, true, false);
-		ConsolePrinter.putBoolean("Right Motor One Trip", () -> {return !Robot.pdp.isRightMotorOneTrip();}, true, false);
+    // Log sensor data
+    ConsolePrinter.putNumber("Left Encoder Distance", () -> {return Robot.drivetrain.getLeftPosition();}, true, true);
+    ConsolePrinter.putNumber("Right Encoder Distance:", () -> {return Robot.drivetrain.getRightPosition();}, true, true);
+    ConsolePrinter.putNumber("Average Drive Encoder Distance", () -> {return Robot.drivetrain.getAverageDistance();}, true, true);
+    ConsolePrinter.putNumber("Right Drive Encoder Rate", () -> {return Robot.drivetrain.getRightEncoderRate();}, true, true);
+    ConsolePrinter.putNumber("Left Drive Encoder Rate", () -> {return Robot.drivetrain.getLeftEncoderRate();}, true, true);
+    ConsolePrinter.putNumber("Average Drive Encoder Rate", () -> {return Robot.drivetrain.getAverageEncoderRate();}, true, true);
+    ConsolePrinter.putNumber("Gyro Angle:", () -> {return Robot.drivetrain.getHeading();}, true, true);	
+    ConsolePrinter.putNumber("Gunstyle X Value", () -> {return Robot.oi.getGunStyleXValue();}, true, true);
+    ConsolePrinter.putNumber("Gunstyle Y Value", () -> {return Robot.oi.getGunStyleYValue();}, true, true);
+    ConsolePrinter.putNumber("DTLeft1MotorVoltage", () -> {return Robot.drivetrain.getleftMotor1Voltage();}, true, true);
+    ConsolePrinter.putNumber("DTLeft2MotorVoltage", () -> {return Robot.drivetrain.getleftMotor2Voltage();}, true, true);
+    ConsolePrinter.putNumber("DTRight1MotorVoltage", () -> {return Robot.drivetrain.getrightMotor1Voltage();}, true, true);
+    ConsolePrinter.putNumber("DTRight2MotorVoltage", () -> {return Robot.drivetrain.getrightMotor2Voltage();}, true, true);
+    ConsolePrinter.putNumber("DTRight1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);}, true, true);
+    ConsolePrinter.putNumber("DTRight2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);}, true, true);
+    ConsolePrinter.putNumber("DTLeft1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);}, true, true);
+    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, true);
+    ConsolePrinter.putNumber("PID right motor 1 voltage", () -> {return this.PIDVoltagefeedRightMotor1();}, true, true);
+    ConsolePrinter.putNumber("PID right motor 2 voltage", () -> {return this.PIDVoltagefeedRightMotor2();}, true, true);
+    ConsolePrinter.putNumber("PID left motor 1 voltage", () -> {return this.PIDVoltagefeedLeftMotor1();}, true, true);
+    ConsolePrinter.putNumber("PID left motor 2 voltage", () -> {return this.PIDVoltagefeedLeftMotor2();}, true, true);
+    
+    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, true);
+    ConsolePrinter.putNumber("GYRO Driftrate:", () -> {return Robot.drivetrain._gyroSPI.driftRate;}, true, false);
+    ConsolePrinter.putNumber("GYRO Rate:", () -> {return Robot.drivetrain._gyroSPI.getRate();}, true, false);
+    ConsolePrinter.putNumber("GYRO Angle SPI:", () -> {return Robot.drivetrain._gyroSPI.getAngle();}, true, false);
+    ConsolePrinter.putNumber("GYRO reInits:", () -> {return (double) Robot.gyroReinits;}, true, false);
+    ConsolePrinter.putBoolean("Gyro Cal Status", () -> {return !Robot.gyroCalibrating;}, true, false);
+    ConsolePrinter.putNumber("GYRO Status:", () -> {return (double) Robot.drivetrain._gyroSPI.getStatus();}, true, false);
+    ConsolePrinter.putNumber("GYRO Temp:", () -> {return Robot.drivetrain._gyroSPI.getTemp();}, true, false);
+    
+    
+    ConsolePrinter.putBoolean("Left Motor One Trip", () -> {return !Robot.pdp.isLeftMotorOneTrip();}, true, false);
+    ConsolePrinter.putBoolean("Left Motor Two Trip", () -> {return !Robot.pdp.isLeftMotorTwoTrip();}, true, false);
+    ConsolePrinter.putBoolean("Right Motor One Trip", () -> {return !Robot.pdp.isRightMotorOneTrip();}, true, false);
     ConsolePrinter.putBoolean("Right Motor Two Trip", () -> {return !Robot.pdp.isRightMotorTwoTrip();}, true, false);
     
     ConsolePrinter.putNumber("DT Front Raw IR", () -> {return getFrontRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("Front HAB is Present", () -> {return isHABPresentFront();}, true, false);
     ConsolePrinter.putNumber("DT Back Raw IR", () -> {return getBackRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("Back HAB is Present", () -> {return isHABPresentBack();}, true, false);
-		
-	}
+    
+  }
 
-	/**
+  /**
    * Calls instance object and makes it a singleton object of type Drivetrain
    * 
    * @returns Drivetrain object "instance"
