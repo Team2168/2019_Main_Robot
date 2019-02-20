@@ -10,8 +10,8 @@ package org.team2168.commands.hatchProbePistons;
 import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 //This command retracts the arm 
-public class RetractArm extends Command {
-  public RetractArm() {
+public class RetractHatchPlunger extends Command {
+  public RetractHatchPlunger() {
     requires(Robot.hatchProbePistons);
   }
 
@@ -30,7 +30,7 @@ public class RetractArm extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.hatchProbePistons.isArmRetracted();
   }
 
   // Called once after isFinished returns true

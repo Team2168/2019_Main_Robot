@@ -25,20 +25,21 @@ public class EngageHatchPanel extends Command
   @Override
   protected void initialize()
   {
-    Robot.hatchProbePistons.HatchEngaged();
+   
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute()
   {
+    Robot.hatchProbePistons.HatchEngaged();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished()
   {
-    return false;
+    return Robot.hatchProbePistons.isHatchEngaged();
   }
 
   // Called once after isFinished returns true

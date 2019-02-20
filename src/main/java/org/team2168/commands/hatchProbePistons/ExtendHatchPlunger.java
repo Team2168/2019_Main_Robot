@@ -12,9 +12,9 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 //this command extends the arm outward 
-public class ExtendArm extends Command
+public class ExtendHatchPlunger extends Command
 {
-  public ExtendArm()
+  public ExtendHatchPlunger()
   {
     requires(Robot.hatchProbePistons);
   }
@@ -23,20 +23,21 @@ public class ExtendArm extends Command
   @Override
   protected void initialize()
   {
-    Robot.hatchProbePistons.ExtendPlunger();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute()
   {
+    Robot.hatchProbePistons.ExtendPlunger();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished()
   {
-    return false;
+    return Robot.hatchProbePistons.isArmExtended();
   }
 
   // Called once after isFinished returns true
