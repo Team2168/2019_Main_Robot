@@ -3,6 +3,10 @@ package org.team2168;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
+import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
+import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
+import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.monkeyBar.DriveMonkeyBarWheelsWithConstant;
 import org.team2168.commands.monkeyBar.DriveRotateMonkeyBarWithJoystick;
 import org.team2168.utils.F310;
@@ -92,6 +96,11 @@ public class OI
 
 		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
+
+		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
+		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
+		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
+		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
 
 		/////////////// Intake and pivot up
 		/////////////// afterwards/////////////////////////////////////////////////////////////////////////

@@ -11,9 +11,9 @@ import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class retractLiftBreak extends Command
+public class RetractLiftBreak extends Command
 {
-  public retractLiftBreak()
+  public RetractLiftBreak()
   {
     requires(Robot.lift);
   }
