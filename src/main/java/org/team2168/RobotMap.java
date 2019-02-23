@@ -77,6 +77,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT = 5;
 	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
 	public static final int PIVOT_POSITION_POT = 7;
+	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 8;
+	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 9;
 
 	// Channels 4-7 on MXP
 	

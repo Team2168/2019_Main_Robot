@@ -31,24 +31,24 @@ public class Stinger extends Subsystem
 
         if (Robot.isPracticeRobot())
         {
-            _stingerPotLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT,
+            _stingerPotLeft = new AveragePotentiometer(RobotMap.STINGER_AVERAGE_POTENTIOMETER_LEFT,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_0_PBOT, RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES_PBOT,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX_PBOT, RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES_PBOT,
                     RobotMap.STINGER_AVG_ENCODER_VAL);
 
-            _stingerPotRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT,
+            _stingerPotRight = new AveragePotentiometer(RobotMap.STINGER_AVERAGE_POTENTIOMETER_RIGHT,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_0_PBOT, RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES_PBOT,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX_PBOT, RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES_PBOT,
                     RobotMap.STINGER_AVG_ENCODER_VAL);
         }
         else
         {
-            _stingerPotLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT,
+            _stingerPotLeft = new AveragePotentiometer(RobotMap.STINGER_AVERAGE_POTENTIOMETER_LEFT,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_0, RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX, RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES,
                     RobotMap.STINGER_AVG_ENCODER_VAL);
 
-            _stingerPotRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT,
+            _stingerPotRight = new AveragePotentiometer(RobotMap.STINGER_AVERAGE_POTENTIOMETER_RIGHT,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_0, RobotMap.STINGER_LEFT_POT_0_HEIGHT_INCHES,
                     RobotMap.STINGER_LEFT_POT_VOLTAGE_MAX, RobotMap.STINGER_LEFT_POT_MAX_HEIGHT_INCHES,
                     RobotMap.STINGER_AVG_ENCODER_VAL);
