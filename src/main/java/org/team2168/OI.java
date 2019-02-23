@@ -6,6 +6,8 @@ import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
+import org.team2168.commands.hatchProbePistons.HatchIntake;
+import org.team2168.commands.hatchProbePistons.PlaceHatch;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.monkeyBar.DriveMonkeyBarWheelsWithConstant;
 import org.team2168.commands.monkeyBar.DriveRotateMonkeyBarWithJoystick;
@@ -97,10 +99,15 @@ public class OI
 		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 
-		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
-		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
-		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
+		//operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
+		// operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
+		// operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
+
+		operatorJoystick.ButtonX().whenPressed(new HatchIntake());
+		operatorJoystick.ButtonX().whenPressed(new PlaceHatch());
+		operatorJoystick.ButtonX().whenReleased(new RetractHatchPlunger());
+
+
 
 		/////////////// Intake and pivot up
 		/////////////// afterwards/////////////////////////////////////////////////////////////////////////
