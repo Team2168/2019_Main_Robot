@@ -237,7 +237,7 @@ public class OneDimensionalMotionProfiling {
 	
 	public static void main(String[] args){
 		
-		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(0.4);
+		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(70);
 		
 		
 //		for(int i=0; i<oneDirection.getVelArray().length; i++)

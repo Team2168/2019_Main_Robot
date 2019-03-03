@@ -70,13 +70,17 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
 	public static final int HATCH_INTAKE_IR_SENSOR = 0;
-	public static final int LIFT_POSITION_POT = 1;
-	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 2;
-	public static final int PRESSURE_SENSOR = 3;
-
-	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT = 5;
+	public static final int LIFT_POSITION_POT = 3;
+	public static final int PIVOT_POSITION_POT = 2;
+	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
+	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 4;
+	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 5;
 	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
-	public static final int PIVOT_POSITION_POT = 7;
+	public static final int PRESSURE_SENSOR = 7;
+
+	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT_PBOT = 4;
+	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT_PBOT = 5;
+	
 
 	// Channels 4-7 on MXP
 	
@@ -107,8 +111,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int HATCH_INTAKE_RAISE_PCM = 3;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
-	public static final int LIFT_BRAKE_ENGAGE_PCM = 6;
-	public static final int LIFT_BRAKE_DISENGAGE_PCM = 7;
+	public static final int STINGER_ENGAGE_PCM = 7;
+	public static final int STINGER_DISENGAGE_PCM = 6;
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
@@ -228,10 +232,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_MIN_SPEED = 0.15;
 
 
-	public static final double LIFT_POT_VOLTAGE_MAX = 4.0; //85 degrees
-	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 82.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 0.62; //0 degrees
-	public static final double LIFT_POT_0_HEIGHT_INCHES = 0.0;
+	public static final double LIFT_POT_VOLTAGE_MAX = 4.8; //85 degrees
+	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 0;
+	public static final double LIFT_POT_VOLTAGE_0 = 1.85; //0 degrees
+	public static final double LIFT_POT_0_HEIGHT_INCHES = 58.5;
 
 	//PBOT LIFT
 	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.0; //90 degrees
@@ -240,7 +244,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 0.0;
 
 
-	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
+	public static final boolean ENABLE_LIFT_POT_SAFETY = false;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
 
@@ -253,14 +257,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean MONKEY_BAR_INTAKE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_INTAKE_LEFT_REVERSE = false;
 
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 5.108; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 3.95; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 180; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 3.33; //0 degrees
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 5.108; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 0.66; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 3.95; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 180; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 3.34; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 

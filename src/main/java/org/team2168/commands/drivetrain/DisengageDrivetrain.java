@@ -5,39 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.lift;
+package org.team2168.commands.drivetrain;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ExtendLiftBreak extends Command
+/**
+ * Engages drivetrain and puts stingers in neutral
+ */
+public class DisengageDrivetrain extends Command
 {
-  public ExtendLiftBreak()
+  public DisengageDrivetrain()
   {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.lift);
+    requires(Robot.shifterDrivetrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize()
   {
+    Robot.shifterDrivetrain.disengageDrivetrain();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute()
   {
-    Robot.lift.enableBrake();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished()
   {
-    return false;
+    return Robot.shifterDrivetrain.isDrivetrainDisengaged();
   }
 
   // Called once after isFinished returns true

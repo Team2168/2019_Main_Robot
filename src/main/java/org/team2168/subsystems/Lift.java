@@ -29,7 +29,7 @@ public class Lift extends Subsystem {
 	private static VictorSPX liftMotor2;
 
 
-	private DoubleSolenoid liftBrake;
+	//private DoubleSolenoid liftBrake;
 	private static AveragePotentiometer liftPot;
 	private static DigitalInput liftFullyUp; // hall effect sensors
 	private static DigitalInput liftFullyDown; // ^^^^^^^^^^^
@@ -70,7 +70,7 @@ public class Lift extends Subsystem {
 		liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PDP);
 		liftMotor2 = new VictorSPX(RobotMap.LIFT_MOTOR_2_PDP);
 		
-		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
+		//liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
 		liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
 
@@ -227,7 +227,7 @@ public class Lift extends Subsystem {
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > stallLimit)
 				|| (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > stallLimit))
 		{
-			enableBrake();
+			// enableBrake();
 			timeCounter++;
 
 			// wait for brake to actuate then stop motors
@@ -248,7 +248,7 @@ public class Lift extends Subsystem {
 
 				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp()
 						&& !liftPot.isAtUpperLimit())
-						|| ((speed < -RobotMap.LIFT_MIN_SPEED)))
+						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown()))
 				{
 
 					//todo: Add lift interlocks
@@ -265,7 +265,7 @@ public class Lift extends Subsystem {
 					// 		Robot.intakePivotPiston.retracPivotPiston();
 					// 	}
 					// }
-					disableBrake();
+					// disableBrake();
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
 
@@ -279,7 +279,7 @@ public class Lift extends Subsystem {
 				}
 				else
 				{
-					enableBrake();
+					// enableBrake();
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
 
@@ -300,7 +300,7 @@ public class Lift extends Subsystem {
 					// 	{
 					// 		Robot.intakePivotPiston.retracPivotPiston();
 					// 	}
-					disableBrake();
+					// disableBrake();
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
 					// if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
@@ -313,13 +313,14 @@ public class Lift extends Subsystem {
 				}
 				else
 				{
-					enableBrake();
+					// enableBrake();
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
 				}
 			}
 		}
 
+		
 		isLiftMotor1Failure();
 		isLiftMotor2Failure();
 
@@ -331,38 +332,38 @@ public class Lift extends Subsystem {
 	/**
 	 * Enables the pneumatic brake
 	 */
-	public void enableBrake()
-	{
-		liftBrake.set(Value.kForward);
-	}
+	// public void enableBrake()
+	// {
+	// 	liftBrake.set(Value.kForward);
+	// }
 
 	/**
 	 * Gets the current state of the pneumatic brake
 	 *
 	 * @return True when brake is enabled
 	 */
-	public boolean isBrakeEnabled()
-	{
-		return liftBrake.get() == Value.kForward;
-	}
+	// public boolean isBrakeEnabled()
+	// {
+	// 	return liftBrake.get() == Value.kForward;
+	// }
 
 	/**
 	 * Disables the pneumatic brake
 	 */
-	public void disableBrake()
-	{
-		liftBrake.set(Value.kReverse);
-	}
+	// public void disableBrake()
+	// {
+	// 	liftBrake.set(Value.kReverse);
+	// }
 
 	/**
 	 * Gets the current state of the pneumatic brake
 	 *
 	 * @return True when brake is disabled
 	 */
-	public boolean isBrakeDisabled()
-	{
-		return liftBrake.get() == Value.kReverse;
-	}
+	// public boolean isBrakeDisabled()
+	// {
+	// 	return liftBrake.get() == Value.kReverse;
+	// }
 
 	/**
 	 * The purpose of this method is to compare the current of this motor to that of

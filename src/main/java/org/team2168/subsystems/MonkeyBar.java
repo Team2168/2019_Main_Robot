@@ -24,7 +24,6 @@ public class MonkeyBar extends Subsystem
   
 
   
-  private AveragePotentiometer monkeyBarRotationLeft;
   private AveragePotentiometer monkeyBarRotationRight;
 
   private double POT_MAX_HEIGHT_LEFT;
@@ -46,12 +45,6 @@ public class MonkeyBar extends Subsystem
     
     if(Robot.isPracticeRobot())
     {
-      monkeyBarRotationLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT, 
-        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT, 
-        RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT, 
-        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT, 
-        RobotMap.MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT, 
-        RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
 
       monkeyBarRotationRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT, 
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT, 
@@ -67,12 +60,6 @@ public class MonkeyBar extends Subsystem
     }
     else
     {
-      monkeyBarRotationLeft = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_LEFT, 
-        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_0, 
-        RobotMap.MONKEY_BAR_LEFT_ANGLE_DEGREES_0, 
-        RobotMap.MONKEY_BAR_LEFT_POT_VOLTAGE_MAX, 
-        RobotMap.MONKEY_BAR_LEFT_POT_MAX_ROTATION, 
-        RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
 
       monkeyBarRotationRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT, 
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_0, 
@@ -87,8 +74,6 @@ public class MonkeyBar extends Subsystem
       POT_MIN_HEIGHT_RIGHT = RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0;
     }
 
-    ConsolePrinter.putNumber("Left Monkey Bar Pot Position", () -> {return getLeftPotPos();}, true, false);
-    ConsolePrinter.putNumber("Left Monkey Bar Raw Pot Position", () -> {return getLeftPotPosRaw();}, true, false);
     ConsolePrinter.putNumber("Right Monkey Bar Pot Position", () -> {return getRightPotPos();}, true, false);
     ConsolePrinter.putNumber("Right Monkey Bar Raw Pot Position", () -> {return getRightPotPosRaw();}, true, false);
 
@@ -171,33 +156,19 @@ public class MonkeyBar extends Subsystem
 
   public boolean isLowered()
   {
-    boolean checkPositionDown1 = monkeyBarRotationLeft.getPos() >= POT_MIN_HEIGHT_LEFT;
-    boolean checkPositionDown2 = monkeyBarRotationRight.getPos() >= POT_MIN_HEIGHT_RIGHT;
+    return monkeyBarRotationRight.getPos() >= POT_MIN_HEIGHT_RIGHT;
 
-    return checkPositionDown1 && checkPositionDown2;
+    
   }
 
   public boolean isStowed()
   {
-    boolean checkPositionUp1 = monkeyBarRotationLeft.getPos() == POT_MAX_HEIGHT_LEFT;
-    boolean checkPositionUp2 = monkeyBarRotationRight.getPos() == POT_MAX_HEIGHT_RIGHT;
-
-    return checkPositionUp1 && checkPositionUp2;
-  }
-
-  public double getLeftPotPosRaw()
-  {
-    return monkeyBarRotationLeft.getRawPos();
+    return monkeyBarRotationRight.getPos() == POT_MAX_HEIGHT_RIGHT;
   }
 
   public double getRightPotPosRaw()
   {
-    return monkeyBarRotationLeft.getRawPos();
-  }
-
-  public double getLeftPotPos()
-  {
-    return monkeyBarRotationLeft.getPos();
+    return monkeyBarRotationRight.getRawPos();
   }
 
   public double getRightPotPos()

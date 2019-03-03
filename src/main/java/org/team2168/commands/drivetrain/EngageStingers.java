@@ -18,14 +18,14 @@ public class EngageStingers extends Command
 {
   public EngageStingers()
   {
-    requires(Robot.drivetrainStingerShifter);
+    requires(Robot.shifterStinger);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize()
   {
-    Robot.drivetrainStingerShifter.engageStingers();
+    Robot.shifterStinger.engageStingers();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,7 +38,7 @@ public class EngageStingers extends Command
   @Override
   protected boolean isFinished()
   {
-    return Robot.drivetrainStingerShifter.isStingerEngaged();
+    return Robot.shifterStinger.isStingerEngaged();
   }
 
   // Called once after isFinished returns true

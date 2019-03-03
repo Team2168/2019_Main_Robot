@@ -43,7 +43,7 @@ public class HatchProbePivot extends Subsystem
     }
     else
     {
-      _pivotPot = new AveragePotentiometer(_plungerArmPivotMotor, RobotMap.PIVOT_POT_VOLTAGE_0,
+      _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, RobotMap.PIVOT_POT_VOLTAGE_0,
           RobotMap.PIVOT_POT_0_ROTATION_DEGREES, RobotMap.PIVOT_POT_VOLTAGE_MAX,
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, RobotMap.PIVOT_AVG_ENCODER_VAL);
     }

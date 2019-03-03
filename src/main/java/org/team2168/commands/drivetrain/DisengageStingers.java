@@ -5,37 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.lift;
+package org.team2168.commands.drivetrain;
 
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RetractLiftBreak extends Command
+/**
+ * Engages stingers and puts drivetrain in neutral
+ */
+public class DisengageStingers extends Command
 {
-  public RetractLiftBreak()
+  public DisengageStingers()
   {
-    requires(Robot.lift);
+    requires(Robot.shifterStinger);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize()
   {
+    Robot.shifterStinger.disengageStingers();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute()
   {
-    Robot.lift.disableBrake();;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished()
   {
-    return false;
+    return Robot.shifterStinger.isStingerDisengaged();
   }
 
   // Called once after isFinished returns true
