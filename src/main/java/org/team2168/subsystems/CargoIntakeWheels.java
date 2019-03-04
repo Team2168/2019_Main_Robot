@@ -5,10 +5,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.sensors.CanAnalogInput;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -22,13 +22,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CargoIntakeWheels extends Subsystem {
 
     private TalonSRX _intakeMotor;
-    private AnalogInput _sharpIRSensor;
+    private CanAnalogInput _sharpIRSensor;
     public static volatile double _driveVoltage;
     private static CargoIntakeWheels _instance;
 
 	private CargoIntakeWheels() {
         _intakeMotor = new TalonSRX(RobotMap.CARGO_INTAKE_MOTOR_PDP);
-        _sharpIRSensor = new AnalogInput(RobotMap.CARGO_INTAKE_SHARP_IR_SENSOR);
+        _sharpIRSensor = new CanAnalogInput(_intakeMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
 
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
         ConsolePrinter.putBoolean("isCargoPresent", () -> {return isCargoPresent();}, true, false);

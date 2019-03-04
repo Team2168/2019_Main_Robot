@@ -5,9 +5,9 @@ import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveRotateMonkeyBarWithJoystick extends Command
+public class DriveMonkeyBarPivotWithJoystick extends Command
 {
-  public DriveRotateMonkeyBarWithJoystick()
+  public DriveMonkeyBarPivotWithJoystick()
   {
 
     requires(Robot.monkeyBarPivot);

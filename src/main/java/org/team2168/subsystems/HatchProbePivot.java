@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HatchProbePivot extends Subsystem
 {
-  private static TalonSRX _plungerArmPivotMotor;
+  public TalonSRX _plungerArmPivotMotor; //made public so can be accessed as sensor reference in another subsystem
   private static AveragePotentiometer _pivotPot;
   public volatile double _plungerArmPivotVoltage;
   private CanDigitalInput _pivotHallEffectSensors;
@@ -32,8 +32,8 @@ public class HatchProbePivot extends Subsystem
   private HatchProbePivot()
   {
     _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
-    // _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
-    // _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+    _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+    _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
     if (Robot.isPracticeRobot())
     {

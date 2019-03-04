@@ -80,6 +80,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
 	public static final int PRESSURE_SENSOR = 7;
 
+
+
 	// Channels 4-7 on MXP
 	
 

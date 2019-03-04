@@ -10,6 +10,7 @@ package org.team2168.subsystems;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.VictorSP;
@@ -85,7 +86,7 @@ public class MonkeyBarPivot extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new DriveMonkeyBarPivotWithJoystick());
   }
 
   /**

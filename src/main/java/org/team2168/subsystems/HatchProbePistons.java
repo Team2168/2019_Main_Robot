@@ -9,9 +9,9 @@ package org.team2168.subsystems;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.sensors.CanAnalogInput;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,7 +20,7 @@ public class HatchProbePistons extends Subsystem {
 
   private DoubleSolenoid _probePlungerPiston;
   private DoubleSolenoid _probeHatchEngagePiston;
-  private AnalogInput _HatchSensor;
+  private CanAnalogInput _HatchSensor;
 
   private static HatchProbePistons instance = null;
 
@@ -28,7 +28,7 @@ public class HatchProbePistons extends Subsystem {
   {
     _probePlungerPiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.PROBE_EXTEND_PCM,RobotMap.PROBE_RETRACT_PCM);
     _probeHatchEngagePiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.PROBE_ENGAGE_PCM,RobotMap.PROBE_DISENGAGE_PCM);
-    _HatchSensor = new AnalogInput(RobotMap.HATCH_INTAKE_IR_SENSOR);
+    _HatchSensor = new CanAnalogInput(Robot.hatchProbePivot._plungerArmPivotMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
 
     ConsolePrinter.putNumber("HatchPlunger Raw IR", () -> {return getRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("Hatch is Present", () -> {return isHatchPresent();}, true, false);
