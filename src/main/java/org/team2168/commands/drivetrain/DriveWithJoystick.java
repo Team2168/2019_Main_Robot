@@ -169,8 +169,11 @@ public class DriveWithJoystick extends Command {
 			
 			//((Robot.oi.getGunStyleYValue() > 0.25 || Robot.oi.getGunStyleYValue() < -0.25)&&
 			//Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
-			
-			if ((Robot.oi.driverJoystick.getLeftStickRaw_X() < 0.1) && (Robot.oi.driverJoystick.getLeftStickRaw_X() > -0.1))
+			if(Robot.isClimbEnabled)
+			{ 
+				Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
+			}
+			else if ((Robot.oi.driverJoystick.getLeftStickRaw_X() < 0.1) && (Robot.oi.driverJoystick.getLeftStickRaw_X() > -0.1))
 			{
 				Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());	
 				
@@ -229,7 +232,12 @@ public class DriveWithJoystick extends Command {
 				lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
 				headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
 				
-				if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) {
+
+				if(Robot.isClimbEnabled)
+				{ 
+					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
+				}
+				else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) {
 					//Drive straight
 					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft),
 							-Robot.oi.driverJoystick.getY(Hand.kLeft));

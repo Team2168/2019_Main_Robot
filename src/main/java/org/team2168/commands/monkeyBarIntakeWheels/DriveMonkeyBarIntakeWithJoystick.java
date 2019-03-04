@@ -17,10 +17,20 @@ public class DriveMonkeyBarIntakeWithJoystick extends Command {
   }
 
 
-  @Override
+  /**
+   * Drives intake wheels with opertor manual control
+   * 
+   * When climb is enabled, the driver gun style trigger will command the motors to allow the driver to climb
+   */
   protected void execute() 
   {
-    Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getMonkeyBarIntakeJoystickValue());
+    if(Robot.isClimbEnabled)
+      if(Robot.oi.driverJoystick.getLeftStickRaw_Y()>0.1) //we only want to drive fwd, never reverse
+        Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.driverJoystick.getLeftStickRaw_Y()*0.75);
+      else
+        Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
+    else
+      Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getMonkeyBarIntakeJoystickValue());
   }
 
 
