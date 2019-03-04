@@ -96,6 +96,9 @@ public class Robot extends TimedRobot
   public static SendableChooser<Command> autoChooser;
   public static SendableChooser<Number> controlStyleChooser;
   public static SendableChooser<Number> throttleVibeChooser;
+  
+  //boolean to keep track of climb mode
+  public static boolean isClimbEnabled = false;
 
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
@@ -164,6 +167,7 @@ public class Robot extends TimedRobot
       ConsolePrinter.putNumber("gameClock", () -> {return driverstation.getMatchTime();}, true, false);
       ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
       ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
+      ConsolePrinter.putBoolean("Is Climb Bot", () -> {return isPracticeRobot();}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
      
       ConsolePrinter.startThread();
@@ -444,6 +448,15 @@ public class Robot extends TimedRobot
   public static boolean isAutoMode()
   {
     return autoMode;
+
+  }
+
+    /**
+   * @return true if the robot is in climb mode
+   */
+  public static boolean isClimbMode()
+  {
+    return isClimbEnabled;
 
   }
 

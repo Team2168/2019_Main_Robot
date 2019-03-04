@@ -7,12 +7,14 @@
 
 package org.team2168.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,8 +23,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class MonkeyBarIntakeWheels extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private VictorSP _intakeLeft;
-  private VictorSP _intakeRight;
+  private VictorSPX _intakeLeft;
+  private VictorSPX _intakeRight;
 
   public volatile double _intakeLeftVoltage;
   public volatile double _intakeRightVoltage;
@@ -32,9 +34,10 @@ public class MonkeyBarIntakeWheels extends Subsystem {
   //constructors for monkey bar
   private MonkeyBarIntakeWheels()
   {
-    _intakeLeft = new VictorSP(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
-    _intakeRight = new VictorSP(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
+    _intakeLeft = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
+    _intakeRight = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
 
+    ConsolePrinter.putNumber("Monkey Bar Intake Joystick value", () -> {return Robot.oi.getMonkeyBarIntakeJoystickValue();}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake right motor voltage", () -> {return _intakeRightVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake left motor voltage", () -> {return _intakeLeftVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake right motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);}, true, false);
@@ -66,7 +69,7 @@ public class MonkeyBarIntakeWheels extends Subsystem {
     if(RobotMap.MONKEY_BAR_INTAKE_LEFT_REVERSE)
       speed = -speed;
 
-    _intakeLeft.set(speed);
+    _intakeLeft.set(ControlMode.PercentOutput,speed);
     _intakeLeftVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
   }
@@ -80,7 +83,7 @@ public class MonkeyBarIntakeWheels extends Subsystem {
     if(RobotMap.MONKEY_BAR_INTAKE_RIGHT_REVERSE)
       speed = -speed;
 
-    _intakeRight.set(speed);
+    _intakeRight.set(ControlMode.PercentOutput,speed);
     _intakeRightVoltage = Robot.pdp.getBatteryVoltage() * speed;
   }
 

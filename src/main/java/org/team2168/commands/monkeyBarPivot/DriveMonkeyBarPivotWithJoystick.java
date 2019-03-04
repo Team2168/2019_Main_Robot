@@ -20,7 +20,7 @@ public class DriveMonkeyBarPivotWithJoystick extends Command
 
   @Override
   protected void execute() {
-    Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getDriveMonkeyBarPivotJoystickValue());
+    Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getMonkeyBarPivotJoystickValue());
   }
 
   @Override

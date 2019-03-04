@@ -7,16 +7,17 @@
 
 package org.team2168.subsystems;
 
-import org.team2168.commands.hatchFloorIntake.DriveHatchFloorIntakeWithJoystick;
-import org.team2168.RobotMap;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.commands.hatchFloorIntake.DriveHatchFloorIntakeWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -24,7 +25,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class HatchFloorIntake extends Subsystem 
 {
-  private SpeedController _intakeMotor;
+  private VictorSPX _intakeMotor;
   private DoubleSolenoid _dSolenoidRotate;
   private static DigitalInput _hallEffectRaise;
   private static DigitalInput _hallEffectLower;
@@ -34,7 +35,7 @@ public class HatchFloorIntake extends Subsystem
 
   private HatchFloorIntake() 
   {
-    _intakeMotor = new VictorSP(RobotMap.HATCH_FLOOR_INTAKE_PDP);
+    _intakeMotor = new VictorSPX(RobotMap.HATCH_FLOOR_INTAKE_PDP);
     _dSolenoidRotate = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.HATCH_INTAKE_LOWER_PCM, RobotMap.HATCH_INTAKE_RAISE_PCM);
     _hallEffectRaise = new DigitalInput(RobotMap.HATCH_INTAKE_RAISED_LIMIT);
     _hallEffectLower = new DigitalInput(RobotMap.HATCH_INTAKE_LOWERED_LIMIT);
@@ -70,7 +71,7 @@ public class HatchFloorIntake extends Subsystem
     if (RobotMap.HATCH_INTAKE_MOTOR_REVERSE)
       speed = -speed;
 
-    _intakeMotor.set(speed);
+    _intakeMotor.set(ControlMode.PercentOutput,speed);
 
     _intakeMotorVoltage = Robot.pdp.getBatteryVoltage() * speed;
   }

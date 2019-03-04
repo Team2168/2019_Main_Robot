@@ -105,10 +105,7 @@ public class OI
 		// operatorJoystick.ButtonLeftBumper().whenReleased(new DriveCargoIntakeWithConstant(0.0));
 		// operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarWheelsWithConstant(0.0));
 
-		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveMonkeyBarIntakeWithJoystick());
-		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveCargoIntakeWithJoystick());
-		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveCargoIntakeWithJoystick());
-		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveMonkeyBarIntakeWithJoystick());
+
 
 		// operatorJoystick.ButtonRightTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 		// operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
@@ -182,7 +179,7 @@ public class OI
 
 	public double getCargoIntakeJoystickValue()
 	{
-		return 0;//operatorJoystick.getRightStickRaw_X();
+		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw();//operatorJoystick.getRightStickRaw_X();
 	}
 
 	/*************************************************************************
@@ -193,22 +190,20 @@ public class OI
 		return 0;
 	}
 
-	public double getHatchFloorIntakeJoystickValue()
-	{
-		return 0;//operatorJoystick.getLeftStickRaw_X();
-	}
-
-	public double getDriveIntakeWheelsJoystickValue()
+	public double getMonkeyBarIntakeJoystickValue()
 	{
 	
 		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw();//operatorJoystick.getRightStickRaw_Y();
 	}
 
-	public double getDriveIntakePivotJoystickValue()
+	/*************************************************************************
+	 *Hatch Floor Motor*
+	*************************************************************************/
+	public double getHatchFloorIntakeJoystickValue()
 	{
-		return 0;
+		return 0;//operatorJoystick.getLeftStickRaw_X();
 	}
-	
+
 	/*************************************************************************
 	 * Drivetrain *
 	 *************************************************************************/
@@ -249,10 +244,6 @@ public class OI
 	public double getDriveTrainRightJoystick()
 	{
 		return driverJoystick.getRightStickRaw_Y();
-	}
-
-	public double getDriveMonkeyBarPivotJoystickValue() {
-		return operatorJoystick.getLeftStickRaw_X();
 	}
 
 }

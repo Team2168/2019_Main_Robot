@@ -18,13 +18,15 @@ public class DriveMonkeyBarIntakeWithJoystick extends Command {
 
 
   @Override
-  protected void execute() {
-    Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getDriveIntakeWheelsJoystickValue());
+  protected void execute() 
+  {
+    Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getMonkeyBarIntakeJoystickValue());
   }
 
 
   @Override
-  protected boolean isFinished() {
+  protected boolean isFinished() 
+  {
     return false;
   }
 

@@ -157,12 +157,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         PBOT DIFFERENCES  PARAMETERS                  *
 	 *************************************************************************/
 
-
-	public static final int LIFT_POSITION_POT_PBOT = 0;
-	public static final int PIVOT_POSITION_POT_PBOT = 7; //TODO SET THIS
 	public static final boolean LEFT_DRIVE_TRAIN_ENCODER_REVERSE_PBOT = true;
 	public static final boolean RIGHT_DRIVE_TRAIN_ENCODER_REVERSE_PBOT = true;
-
 
 	/*************************************************************************
 	 *                         DRIVETRAIN PARAMETERS                         *

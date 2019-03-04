@@ -7,13 +7,15 @@
 
 package org.team2168.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -22,8 +24,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class MonkeyBarPivot extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private VictorSP _rotateBarLeft;
-  private VictorSP _rotateBarRight;
+  private TalonSRX _rotateBarLeft;
+  private TalonSRX _rotateBarRight;
 
   private AveragePotentiometer _monkeyBarRotationRight;
 
@@ -36,8 +38,8 @@ public class MonkeyBarPivot extends Subsystem {
   //constructors for monkey bar
   private MonkeyBarPivot()
   {
-    _rotateBarLeft = new VictorSP(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);
-    _rotateBarRight = new VictorSP(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP);
+    _rotateBarLeft = new TalonSRX(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);
+    _rotateBarRight = new TalonSRX(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP);
     
     if(Robot.isPracticeRobot())
     {
@@ -61,6 +63,8 @@ public class MonkeyBarPivot extends Subsystem {
         RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
 
     }
+
+    ConsolePrinter.putNumber("Monkey Bar Pivot Joystick value", () -> {return Robot.oi.getMonkeyBarPivotJoystickValue();}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Pivot right motor voltage", () -> {return _rotateBarRightVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Pivot left motor voltage", () -> {return _rotateBarLeftVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Pivot right motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP);}, true, false);
@@ -98,7 +102,7 @@ public class MonkeyBarPivot extends Subsystem {
     if(RobotMap.MONKEY_BAR_ROTATE_LEFT_REVERSE)
       speed = -speed;
 
-    _rotateBarLeft.set(speed);
+    _rotateBarLeft.set(ControlMode.PercentOutput,speed);
     _rotateBarLeftVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
   }
@@ -112,7 +116,7 @@ public class MonkeyBarPivot extends Subsystem {
     if(RobotMap.MONKEY_BAR_ROTATE_RIGHT_REVERSE)
     speed = -speed;
 
-    _rotateBarRight.set(speed);
+    _rotateBarRight.set(ControlMode.PercentOutput,speed);
     _rotateBarRightVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
   }
