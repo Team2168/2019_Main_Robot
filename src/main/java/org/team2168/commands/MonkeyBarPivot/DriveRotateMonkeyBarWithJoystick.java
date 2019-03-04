@@ -1,5 +1,5 @@
 
-package org.team2168.commands.monkeyBar;
+package org.team2168.commands.monkeyBarPivot;
 
 import org.team2168.Robot;
 
@@ -10,19 +10,17 @@ public class DriveRotateMonkeyBarWithJoystick extends Command
   public DriveRotateMonkeyBarWithJoystick()
   {
 
-    requires(Robot.monkeybar);
+    requires(Robot.monkeyBarPivot);
   }
 
   @Override
-  protected void initialize()
-  {
-    Robot.monkeybar.driveRotateBarMotors(0.0);
+  protected void initialize() {
+    Robot.monkeyBarPivot.driveRotateBarMotors(0.0);
   }
 
   @Override
-  protected void execute()
-  {
-    Robot.monkeybar.driveRotateBarMotors(Robot.oi.getMonkeyBarPivotJoystickValue());
+  protected void execute() {
+    Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getDriveMonkeyBarPivotJoystickValue());
   }
 
   @Override
@@ -32,9 +30,8 @@ public class DriveRotateMonkeyBarWithJoystick extends Command
   }
 
   @Override
-  protected void end()
-  {
-    Robot.monkeybar.driveRotateBarMotors(0.0);
+  protected void end() {
+    Robot.monkeyBarPivot.driveRotateBarMotors(0.0);
   }
 
   @Override

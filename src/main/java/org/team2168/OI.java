@@ -9,9 +9,9 @@ import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
-import org.team2168.commands.monkeyBar.DriveMonkeyBarPivotWithConstant;
-import org.team2168.commands.monkeyBar.DriveMonkeyBarWheelsWithConstant;
-import org.team2168.commands.monkeyBar.DriveMonkeyBarWheelsWithJoystick;
+import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
+import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithJoystick;
+import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
@@ -105,10 +105,10 @@ public class OI
 		// operatorJoystick.ButtonLeftBumper().whenReleased(new DriveCargoIntakeWithConstant(0.0));
 		// operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarWheelsWithConstant(0.0));
 
-		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveMonkeyBarWheelsWithJoystick());
+		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveMonkeyBarIntakeWithJoystick());
 		operatorJoystick.ButtonRightTrigger().whenPressed(new DriveCargoIntakeWithJoystick());
 		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveCargoIntakeWithJoystick());
-		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveMonkeyBarWheelsWithJoystick());
+		operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveMonkeyBarIntakeWithJoystick());
 
 		// operatorJoystick.ButtonRightTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 		// operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
@@ -118,10 +118,10 @@ public class OI
 		operatorJoystick.ButtonLeftBumper().whileHeld(new DriveMonkeyBarPivotWithConstant(-0.75));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 
-		operatorJoystick.ButtonStart().whileHeld(new DriveMonkeyBarWheelsWithConstant(0.2));
-		operatorJoystick.ButtonStart().whenReleased(new DriveMonkeyBarWheelsWithConstant(0.0));
-		operatorJoystick.ButtonBack().whileHeld(new DriveMonkeyBarWheelsWithConstant(-0.2));
-		operatorJoystick.ButtonBack().whenReleased(new DriveMonkeyBarWheelsWithConstant(0.0));
+		operatorJoystick.ButtonStart().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.2));
+		operatorJoystick.ButtonStart().whenReleased(new DriveMonkeyBarIntakeWithConstant(0.0));
+		operatorJoystick.ButtonBack().whileHeld(new DriveMonkeyBarIntakeWithConstant(-0.2));
+		operatorJoystick.ButtonBack().whenReleased(new DriveMonkeyBarIntakeWithConstant(0.0));
 
 		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
@@ -208,8 +208,6 @@ public class OI
 	{
 		return 0;
 	}
-
-
 	
 	/*************************************************************************
 	 * Drivetrain *
@@ -251,6 +249,10 @@ public class OI
 	public double getDriveTrainRightJoystick()
 	{
 		return driverJoystick.getRightStickRaw_Y();
+	}
+
+	public double getDriveMonkeyBarPivotJoystickValue() {
+		return operatorJoystick.getLeftStickRaw_X();
 	}
 
 }
