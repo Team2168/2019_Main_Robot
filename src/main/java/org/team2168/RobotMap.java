@@ -69,18 +69,16 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	//Channels 0-3 on Roborio
-	public static final int HATCH_INTAKE_IR_SENSOR = 0;
-	public static final int LIFT_POSITION_POT = 3;
+	//public static final int HATCH_INTAKE_IR_SENSOR = 0;
+	//public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
+	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 0;
+	public static final int DRIVETRAIN_BACK_IR_SENSOR = 1;
 	public static final int PIVOT_POSITION_POT = 2;
-	public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
+	public static final int LIFT_POSITION_POT = 3;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 4;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 5;
 	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
 	public static final int PRESSURE_SENSOR = 7;
-
-	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT_PBOT = 4;
-	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT_PBOT = 5;
-	
 
 	// Channels 4-7 on MXP
 	
@@ -195,6 +193,16 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MIN_DRIVE_SPEED = 0.2;
 	public static final double AUTO_NORMAL_SPEED = 0.5;
 	public static final double WHEEL_BASE = 26; //units must match PositionReturnType (inch)
+
+	public static final double DRIVETRAIN_FRONT_IR_THRESHOLD_MAX = 0.0;//TODO set all of these
+	public static final double DRIVETRAIN_FRONT_IR_THRESHOLD_MIN = 0.0;
+	public static final double DRIVETRAIN_BACK_IR_THRESHOLD_MAX = 0.0;
+	public static final double DRIVETRAIN_BACK_IR_THRESHOLD_MIN = 0.0;
+
+	public static final double DRIVETRAIN_FRONT_IR_THRESHOLD_MAX_PBOT = 0.0;
+	public static final double DRIVETRAIN_FRONT_IR_THRESHOLD_MIN_PBOT = 0.0;
+	public static final double DRIVETRAIN_BACK_IR_THRESHOLD_MAX_PBOT = 0.0;
+	public static final double DRIVETRAIN_BACK_IR_THRESHOLD_MIN_PBOT = 0.0;
 
 
 
