@@ -33,7 +33,16 @@ public class DriveLiftWithJoysticks extends Command
   @Override
   protected void execute()
   {
-    Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+    if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
+    {
+      double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
+      if(Math.abs(Robot.oi.getLiftJoystickValue())<holdingSpeed)
+        Robot.lift.driveAllMotors(holdingSpeed);
+      else
+        Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+    }
+    else
+      Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
   }
 
   // Make this return true when this Command no longer needs to run execute()

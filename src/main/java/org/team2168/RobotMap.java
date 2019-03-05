@@ -230,24 +230,26 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean LIFT_MOTOR1_REVERSE = true;
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
+	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 
+	public static final double LIFT_HOLDING_VOLTAGE = 3.0; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_MIN_SPEED = 0.15;
 
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.8; //85 degrees
-	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 0;
+	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
 	public static final double LIFT_POT_VOLTAGE_0 = 1.85; //0 degrees
-	public static final double LIFT_POT_0_HEIGHT_INCHES = 58.5;
+	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.0; //90 degrees
-	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 82.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 0.82; //0 degrees
-	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 0.0;
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.8; //90 degrees
+	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.85; //0 degrees
+	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = false;
@@ -322,7 +324,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                         Plunger Arm Pivot PARAMETERS                   *
 	 *************************************************************************/
-	////TODO set these values
+	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = true;
+	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
+	
+	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
 	public static final double PIVOT_POT_VOLTAGE_0 = 0;
 	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
