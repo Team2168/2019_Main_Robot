@@ -7,13 +7,13 @@
 
 package org.team2168.commands.LEDs;
 
-import org.team2168.robot.Robot;
-import org.team2168.robot.RobotMap;
+import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CargoWheelsInPattern extends Command {
-  public CargoWheelsInPattern() {
+public class WheelsOutPattern extends Command {
+  public WheelsOutPattern() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.leds);
@@ -22,14 +22,13 @@ public class CargoWheelsInPattern extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //trigger when cargo intake wheels go in outside a certain threshhold from zero
+    //trigger when the floor hatch intake wheels go out a certain threshhold from zero
     if(RobotMap.LEDS_REVERSE)
     {
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 32, 255, 255);
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
     }
-    else 
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 32, 255, 255);
-  
+    else
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
   }
 
   // Called repeatedly when this Command is scheduled to run
