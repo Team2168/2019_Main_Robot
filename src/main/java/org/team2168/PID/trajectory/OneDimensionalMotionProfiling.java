@@ -1,8 +1,8 @@
 package org.team2168.PID.trajectory;
 
 import java.awt.Color;
-import java.time.zone.ZoneOffsetTransitionRule.TimeDefinition;
-import org.team2168.PID.pathplanner.*;
+
+import org.team2168.PID.pathplanner.FalconLinePlot;
 
 public class OneDimensionalMotionProfiling {
 
@@ -23,9 +23,9 @@ public class OneDimensionalMotionProfiling {
 //	double aMax = 3000.0;
 //	double jMax =30000.0;
 	
-	double vMax = 8.0;
-	double aMax = 8.0;
-	double jMax = 100.0;
+	double vMax = 50.0;
+	double aMax = 50.0;
+	double jMax = 300.0;
 	
 	double vMin = -vMax;
 	double aMin = -aMax;
@@ -41,7 +41,7 @@ public class OneDimensionalMotionProfiling {
 	double Tv = 0;
 	
 	// vector array thing
-	double spacing = 50.0;
+	double spacing = 50.0; //1/50 hz
 	
 	public double[] time;
 	public double[] pos;
@@ -90,9 +90,9 @@ public class OneDimensionalMotionProfiling {
 		
 		if(error<10)
 		{
-			this.vMax = 50;
-			this.aMax = 17;
-			this.jMax = 120;
+			this.vMax = v_max;
+			this.aMax = accel_max;
+			this.jMax = j_max;
 		}
 		else
 		{
@@ -110,19 +110,24 @@ public class OneDimensionalMotionProfiling {
 		if (((vMax- v0) * jMax ) < Math.pow(aMax, 2)){
 			Tj1 = Math.sqrt((vMax - v0)/jMax);
 			Ta = 2*Tj1;
+			System.out.println("A");
 		}
-		else {
+		else 
+		{
 			Tj1 = aMax/jMax;
 			Ta = Tj1 + ((vMax - v0)/aMax);
+			System.out.println("B");
 		}	
 		
 		if (((vMax- v1) * jMax ) < Math.pow(aMax, 2)){
 			Tj2 = Math.sqrt((vMax - v1)/jMax);
 			Td = 2 * Tj2;
+			System.out.println("C");
 		}
 		else {
 			Tj2 = aMax/jMax;
 			Td = Tj2 + ((vMax - v1) / aMax);
+			System.out.println("D");
 		}	
 		
 		
@@ -150,19 +155,28 @@ public class OneDimensionalMotionProfiling {
 		
 		double t1 = Ta + Tv + Td;
 		double	T = t1 - t0;
-				
-		 time = new double[(int)((T)*spacing)]; 
-		 pos = new double[(int)((T)*spacing)];
-		 vel = new double[(int)((T)*spacing)];		
-		 acc = new double[(int)((T)*spacing)];
-		 jerk = new double[(int)((T)*spacing)];
+			
+		System.out.println("Time:" + T);
+		System.out.println("Real Spacing: " + T*spacing);
+		System.out.println("Calc Spacing: " + (int)Math.ceil(((T)*spacing)));
+
+
+		 time = new double[(int)Math.ceil(((T)*spacing))+1]; 
+		 pos = new double[(int)Math.ceil(((T)*spacing))+1];
+		 vel = new double[(int)Math.ceil(((T)*spacing))+1];		
+		 acc = new double[(int)Math.ceil(((T)*spacing))+1];
+		 jerk = new double[(int)Math.ceil(((T)*spacing))+1];
 		
 		//Linspace time = new Linspace(t0, spacing, t1);
-		 for(int i=0; i<time.length; i++)
+		 for(int i=0; i<time.length-1; i++)
 			{
 				time[i]=i*1.0/spacing + t0;
+				//System.out.println(time[i]);
 			}
-			
+			//take care of last value
+			time[time.length-1] = T;
+			//System.out.println(time[time.length-1]);
+		
 
 		//Compute actual min/max a and vc
 		double aLimA = jMax*Tj1;
@@ -237,7 +251,7 @@ public class OneDimensionalMotionProfiling {
 	
 	public static void main(String[] args){
 		
-		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(70);
+		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(50);
 		
 		
 //		for(int i=0; i<oneDirection.getVelArray().length; i++)
