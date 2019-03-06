@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.monkeyBarPivot.interlocks;
+package org.team2168.commands.hatchProbePivot.interlock;
 
-import org.team2168.subsystems.MonkeyBarPivot;
+import org.team2168.subsystems.HatchProbePivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveMonkeyBarToSafePositionForLift extends Command {
+public class MovePivotToMBPosition extends Command {
 
   double counter = 0;
-  public MoveMonkeyBarToSafePositionForLift() {
+
+  public MovePivotToMBPosition() {
     // Use requires() here to declare subsystem dependencies
-    requires(MonkeyBarPivot.getInstance());
+    requires(HatchProbePivot.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -31,7 +32,7 @@ public class MoveMonkeyBarToSafePositionForLift extends Command {
     if (counter < 250)
     {
       counter++;
-      System.out.println("Moving Monkey Bar Pivot");
+      System.out.println("Moving Plunger Pivot");
     }
   }
   // Make this return true when this Command no longer needs to run execute()
@@ -45,7 +46,7 @@ public class MoveMonkeyBarToSafePositionForLift extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("*******************************Finished Moving Monkey Bar Pivot\n\n\n\n\n");
+    System.out.println("*******************************Finished Moving Plunger Pivot\n\n\n\n\n");
   }
 
   // Called when another command which requires one or more of the same

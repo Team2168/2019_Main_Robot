@@ -29,6 +29,8 @@ public class HatchProbePivot extends Subsystem
   private CanDigitalInput _pivotHallEffectSensors;
   private static HatchProbePivot _instance;
 
+ 
+
   private HatchProbePivot()
   {
     _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
@@ -141,6 +143,17 @@ public class HatchProbePivot extends Subsystem
     return _pivotHallEffectSensors.getReverseLimit();
   }
 
+  public boolean isOnMonkeyBarSide()
+  {
+    return getPotPos() >= 90.0;
+  }
+
+
+  public boolean isSafeToMoveLiftUp()
+  {
+    return getPotPos() < 90.0 || getPotPos() >= 135.0;
+
+  }
 
   @Override
   public void initDefaultCommand()

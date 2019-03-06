@@ -5,47 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.monkeyBarPivot.interlocks;
+package org.team2168.commands.monkeyBarPivot.interlock;
 
 import org.team2168.subsystems.MonkeyBarPivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveMonkeyBarToSafePositionForLift extends Command {
-
-  double counter = 0;
-  public MoveMonkeyBarToSafePositionForLift() {
+public class MoveToSafePositionForLift extends Command {
+  public MoveToSafePositionForLift() {
     // Use requires() here to declare subsystem dependencies
     requires(MonkeyBarPivot.getInstance());
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    counter = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (counter < 250)
-    {
-      counter++;
-      System.out.println("Moving Monkey Bar Pivot");
-    }
+    System.out.println("This command is running");
   }
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    
-    return counter >= 250;
+    System.out.println("Command ends");
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("*******************************Finished Moving Monkey Bar Pivot\n\n\n\n\n");
   }
 
   // Called when another command which requires one or more of the same

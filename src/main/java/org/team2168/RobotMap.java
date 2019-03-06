@@ -71,13 +71,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Channels 0-3 on Roborio
 	//public static final int HATCH_INTAKE_IR_SENSOR = 0;
 	//public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
-	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 0;
+	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 6;
 	public static final int DRIVETRAIN_BACK_IR_SENSOR = 1;
 	public static final int PIVOT_POSITION_POT = 2;
 	public static final int LIFT_POSITION_POT = 3;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 4;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 5;
-	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 0;
 	public static final int PRESSURE_SENSOR = 7;
 
 
@@ -230,7 +230,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean LIFT_MOTOR1_REVERSE = true;
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
-	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
+	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = false;
+
+	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
+	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 
@@ -252,7 +255,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
 
-	public static final boolean ENABLE_LIFT_POT_SAFETY = false;
+	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
 
@@ -296,7 +299,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
-	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 0; //TODO SET ALL
+	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 100.0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS_PBOT = 0;
 	public static final double MONKEY_BAR_SAFE_SCORING_POS_PBOT = 160; 
 	public static final double MONKEY_BAR_FLOOR_POS_PBOT = 0;
