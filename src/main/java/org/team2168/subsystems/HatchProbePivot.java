@@ -17,8 +17,11 @@ import org.team2168.RobotMap;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.PID.sensors.CanDigitalInput;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
+import org.team2168.commands.lift.interlocks.MoveLiftFullyDown;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HatchProbePivot extends Subsystem
@@ -29,12 +32,21 @@ public class HatchProbePivot extends Subsystem
   private CanDigitalInput _pivotHallEffectSensors;
   private static HatchProbePivot _instance;
 
+  private double _middlePosition;
+  private double _safePositionMonkeyBarSide;
+  private double _safePositionOtherSide;
+
+  MoveMonkeyBarToSafePositionForPivot moveMonkeyBarToSafePositionForPivot;
+  MoveLiftFullyDown moveLiftFullyDown;
+
   private HatchProbePivot()
   {
     _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
     _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
+    moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
+    moveLiftFullyDown = new MoveLiftFullyDown();
     if (Robot.isPracticeRobot())
     {
       _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, 
@@ -43,6 +55,9 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_POT_VOLTAGE_MAX_PBOT,
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES_PBOT, 
           RobotMap.PIVOT_AVG_ENCODER_VAL);
+          _middlePosition = RobotMap.PLUNGER_ARM_MIDDLE_POS_PBOT;
+          _safePositionMonkeyBarSide = RobotMap.PLUNGER_ARM_SAFE_POS_FRONT_PBOT;
+          _safePositionOtherSide = RobotMap.PLUNGER_ARM_SAFE_POS_BACK_PBOT;
     }
     else
     {
@@ -52,6 +67,9 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_POT_VOLTAGE_MAX,
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, 
           RobotMap.PIVOT_AVG_ENCODER_VAL);
+          _middlePosition = RobotMap.PLUNGER_ARM_MIDDLE_POS;
+          _safePositionMonkeyBarSide = RobotMap.PLUNGER_ARM_SAFE_POS_FRONT;
+          _safePositionOtherSide = RobotMap.PLUNGER_ARM_SAFE_POS_BACK;
     }
 
     ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {
@@ -75,10 +93,10 @@ public class HatchProbePivot extends Subsystem
     }, true, false);
 
     ConsolePrinter.putBoolean("HatchProbe Pivot isForward", () -> {
-      return isPivotHallEffectForward();
+      return isPivotHallEffectMonkeyBar();
     }, true, false);
     ConsolePrinter.putBoolean("HatchProbe Pivot isReverse", () -> {
-      return isPivotHallEffectReverse();
+      return isPivotHallEffectOpposite();
     }, true, false);
 
   }
@@ -115,20 +133,26 @@ public class HatchProbePivot extends Subsystem
 
   public void drivePlungerArmPivotMotor(double speed)
   {
-  //if(!Robot.Lift.safeToPivot)
-  //{
-  //  Scheduler.getInstance().add(new MoveLiftToSafeHeightForPivot());
-  //}
 
-  //if(!Robot.MonkeyBar.safeToPivot)
-  //{
-  //  Scheduler.getInstance().add(new MoveMonkeyBarToSafePositionForPivot)
-  //}
-  
-    if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
-      speed = -speed;
-    _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
-    _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+
+    if(!Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning())
+    {
+      moveLiftFullyDown.start();
+      //print out
+    }
+   
+    if(!Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
+    {
+      moveMonkeyBarToSafePositionForPivot.start();
+    }
+
+    if(Robot.monkeyBarPivot.isSafePivotPosition() && Robot.lift.isLiftFullyDown())
+    {
+      if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+        speed = -speed;
+      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+    }
   }
 
   /**
@@ -149,20 +173,26 @@ public class HatchProbePivot extends Subsystem
     return _pivotPot.getPos();
   }
 
-  public boolean isPivotHallEffectForward()
+  public boolean isPivotHallEffectMonkeyBar()
   {
     return _pivotHallEffectSensors.getForwardLimit();
   }
 
-  public boolean isPivotHallEffectReverse()
+  public boolean isPivotHallEffectOpposite()
   {
     return _pivotHallEffectSensors.getReverseLimit();
   }
 
-  public boolean isPivotOnMonkeyBarSide()
+  public boolean isOnMonkeyBarSide()
   {
-    return (getPotPos()<=RobotMap.PIVOT_ANGLE_MONKEY_BAR_SIDE);
+    return (getPotPos() <= _middlePosition);
   }
+
+  public boolean isSafeToMoveLiftUp()
+  {
+    return (getPotPos() <= _safePositionMonkeyBarSide || getPotPos()>=_safePositionOtherSide);
+  }
+  
 
   @Override
   public void initDefaultCommand()

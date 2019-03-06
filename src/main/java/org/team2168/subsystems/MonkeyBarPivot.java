@@ -41,7 +41,6 @@ public class MonkeyBarPivot extends Subsystem {
 
   private double _errorMargin = 3; //currently 3 degrees to either side of set positions returns true
 
-
   private static MonkeyBarPivot _instance;
 
   //constructors for monkey bar

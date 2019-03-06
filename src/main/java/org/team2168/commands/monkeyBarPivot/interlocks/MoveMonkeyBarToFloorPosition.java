@@ -7,12 +7,15 @@
 
 package org.team2168.commands.monkeyBarPivot.interlocks;
 
+import org.team2168.subsystems.MonkeyBarPivot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveMonkeyBarToFloorPosition extends Command {
   public MoveMonkeyBarToFloorPosition() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(MonkeyBarPivot.getInstance());
   }
 
   // Called just before this Command runs the first time

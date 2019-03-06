@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.monkeyBarPivot.interlocks;
+package org.team2168.commands.lift.interlocks;
 
-import org.team2168.subsystems.MonkeyBarPivot;
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveMonkeyBarToCargoIntakePosition extends Command {
-  public MoveMonkeyBarToCargoIntakePosition() {
+public class MoveLiftFullyDown extends Command {
+  public MoveLiftFullyDown() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(MonkeyBarPivot.getInstance());
+    requires(Lift.getInstance());
   }
 
   // Called just before this Command runs the first time

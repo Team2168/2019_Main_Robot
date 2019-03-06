@@ -347,12 +347,18 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
+	public static final double PLUNGER_ARM_MIDDLE_POS = 90;
+	public static final double PLUNGER_ARM_SAFE_POS_FRONT = 45;
+	public static final double PLUNGER_ARM_SAFE_POS_BACK = 135;
 
 	/////TODO set these values
 	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
 	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES_PBOT = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 180;
+	public static final double PLUNGER_ARM_MIDDLE_POS_PBOT = 90;
+	public static final double PLUNGER_ARM_SAFE_POS_FRONT_PBOT = 45;
+	public static final double PLUNGER_ARM_SAFE_POS_BACK_PBOT = 135;
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
