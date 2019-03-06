@@ -48,6 +48,7 @@ public class ShifterDrivetrain extends Subsystem {
    */
   public void engageDrivetrain()
   {
+    Robot.isClimbEnabled = false;
     _drivetrainShifter.set(false);
   }
 

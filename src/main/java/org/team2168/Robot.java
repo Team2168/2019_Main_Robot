@@ -167,7 +167,7 @@ public class Robot extends TimedRobot
       ConsolePrinter.putNumber("gameClock", () -> {return driverstation.getMatchTime();}, true, false);
       ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
       ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
-      ConsolePrinter.putBoolean("Is Climb Bot", () -> {return isPracticeRobot();}, true, false);
+      ConsolePrinter.putBoolean("Is Climb Mode", () -> {return isClimbMode();}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
      
       ConsolePrinter.startThread();

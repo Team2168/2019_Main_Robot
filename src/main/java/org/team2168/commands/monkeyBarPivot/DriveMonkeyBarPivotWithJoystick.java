@@ -3,6 +3,7 @@ package org.team2168.commands.monkeyBarPivot;
 
 import org.team2168.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveMonkeyBarPivotWithJoystick extends Command
@@ -20,7 +21,10 @@ public class DriveMonkeyBarPivotWithJoystick extends Command
 
   @Override
   protected void execute() {
-    Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getMonkeyBarPivotJoystickValue());
+    if(Robot.isClimbEnabled)
+      Robot.monkeyBarPivot.driveRotateBarMotors(-Robot.oi.driverJoystick.getX(Hand.kLeft)*0.75);
+    else
+      Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getMonkeyBarPivotJoystickValue());
   }
 
   @Override

@@ -46,11 +46,13 @@ public class ShifterStinger extends Subsystem {
 
   public void engageStingers()
   {
+    Robot.isClimbEnabled = true;
     _stingerShifter.set(Value.kForward);
   }
 
   public void disengageStingers()
   {
+    Robot.isClimbEnabled = false;
     _stingerShifter.set(Value.kReverse);
   }
 
@@ -60,6 +62,7 @@ public class ShifterStinger extends Subsystem {
    */
   public boolean isStingerEngaged()
   {
+    
     return _stingerShifter.get() == Value.kForward;
   }
 

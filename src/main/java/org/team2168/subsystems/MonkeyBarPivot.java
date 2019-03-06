@@ -29,9 +29,18 @@ public class MonkeyBarPivot extends Subsystem {
 
   private AveragePotentiometer _monkeyBarRotationRight;
 
-
   public volatile double _rotateBarLeftVoltage;
   public volatile double _rotateBarRightVoltage;
+
+  private double _safeLiftPosition;
+  private double _safePivotPosition;
+  private double _safeScoringPosition;
+  private double _floorPosition;
+  private double _cargoIntakePosition;
+  private double _stowPosition;
+
+  private double _errorMargin = 3; //currently 3 degrees to either side of set positions returns true
+
 
   private static MonkeyBarPivot _instance;
 
@@ -50,6 +59,13 @@ public class MonkeyBarPivot extends Subsystem {
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT,
         RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT,
         RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
+      
+      _safeLiftPosition = RobotMap.MONKEY_BAR_SAFE_LIFT_POS_PBOT;
+      _safePivotPosition = RobotMap.MONKEY_BAR_SAFE_PIVOT_POS_PBOT;
+      _safeScoringPosition = RobotMap.MONKEY_BAR_SAFE_SCORING_POS_PBOT;
+      _floorPosition = RobotMap.MONKEY_BAR_FLOOR_POS_PBOT;
+      _stowPosition = RobotMap.MONKEY_BAR_STOW_POS_PBOT;
+      _cargoIntakePosition = RobotMap.MONKEY_BAR_CARGO_INTAKE_POS_PBOT;
 
     }
     else
@@ -61,6 +77,13 @@ public class MonkeyBarPivot extends Subsystem {
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX,
         RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION,
         RobotMap.MONKEY_BAR_AVG_ENCODER_VAL);
+
+      _safeLiftPosition = RobotMap.MONKEY_BAR_SAFE_LIFT_POS;
+      _safePivotPosition = RobotMap.MONKEY_BAR_SAFE_PIVOT_POS;
+      _safeScoringPosition = RobotMap.MONKEY_BAR_SAFE_SCORING_POS;
+      _floorPosition = RobotMap.MONKEY_BAR_FLOOR_POS;
+      _stowPosition = RobotMap.MONKEY_BAR_STOW_POS;
+      _cargoIntakePosition = RobotMap.MONKEY_BAR_CARGO_INTAKE_POS;
 
     }
 
@@ -156,5 +179,35 @@ public class MonkeyBarPivot extends Subsystem {
   public double getRightPotPos()
   {
     return _monkeyBarRotationRight.getPos();
+  }
+
+  public boolean isSafeLiftPosition()
+  {
+    return (getRightPotPos() < _safeLiftPosition);
+  }
+
+  public boolean isSafePivotPosition()
+  {
+    return (getRightPotPos() < _safePivotPosition);
+  }
+
+  public boolean isSafeScoringPosition()
+  {
+    return Math.abs(getRightPotPos() - _safeScoringPosition) < _errorMargin;
+  }
+
+  public boolean isFloorPosition()
+  {
+    return Math.abs(getRightPotPos() - _floorPosition) < _errorMargin;
+  }
+
+  public boolean isStowPosition()
+  {
+    return Math.abs(getRightPotPos() - _stowPosition) < _errorMargin;
+  }
+
+  public boolean isCargoIntakePosition()
+  {
+    return Math.abs(getRightPotPos() - _cargoIntakePosition) < _errorMargin;
   }
 }

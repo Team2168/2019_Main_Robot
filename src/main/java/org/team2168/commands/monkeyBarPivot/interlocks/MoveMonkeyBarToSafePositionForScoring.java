@@ -5,65 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.lift;
-
-import org.team2168.Robot;
-import org.team2168.RobotMap;
-
+package org.team2168.commands.monkeyBarPivot.interlocks;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveLiftWithJoysticks extends Command
-{
-  public DriveLiftWithJoysticks()
-  {
+public class MoveMonkeyBarToSafePositionForScoring extends Command {
+  public MoveMonkeyBarToSafePositionForScoring() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize()
-  {
-    Robot.lift.driveAllMotors(0.0);
+  protected void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute()
-  {
-    if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
-    {
-      double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
-      if(Math.abs(Robot.oi.getLiftJoystickValue())<holdingSpeed)
-        Robot.lift.driveAllMotors(holdingSpeed);
-      else
-        Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
-    }
-    else
-      Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+  protected void execute() {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished()
-  {
+  protected boolean isFinished() {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end()
-  {
-    Robot.lift.driveAllMotors(0.0);
+  protected void end() {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted()
-  {
-    end();
+  protected void interrupted() {
   }
 }
