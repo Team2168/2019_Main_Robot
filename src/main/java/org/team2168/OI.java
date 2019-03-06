@@ -10,7 +10,6 @@ package org.team2168;
 import org.team2168.PID.trajectory.OneDimensionalRotation;
 import org.team2168.commands.LEDs.AutoWithoutGamePiece;
 import org.team2168.commands.LEDs.DisabledPattern;
-import org.team2168.commands.LEDs.DisconnectPattern;
 import org.team2168.commands.LEDs.HABClimbPattern;
 import org.team2168.commands.LEDs.LiftLoweringPattern;
 import org.team2168.commands.LEDs.LiftRaisingPattern;
@@ -102,7 +101,7 @@ public class OI {
 		testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
 		testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiece());
 		testJoystick.ButtonY().whenPressed(new HABClimbPattern());
-		testJoystick.ButtonLeftTrigger().whenPressed(new DisconnectPattern());
+		//left trigger
 		testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
 		testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
 		testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());

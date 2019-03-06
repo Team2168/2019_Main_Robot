@@ -8,6 +8,7 @@
 package org.team2168.commands.drivetrain;
 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,6 +26,20 @@ public class EngageStingers extends Command {
   @Override
   protected void initialize() {
     Robot.drivetrainStingerShifter.engageStingers();
+    if (Robot.onBlueAlliance())
+    {
+      if(RobotMap.LEDS_REVERSE)
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
+      else  
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
+    }
+    else
+    {
+      if(RobotMap.LEDS_REVERSE)
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
+      else  
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run

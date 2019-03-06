@@ -209,6 +209,15 @@ public class Robot extends TimedRobot {
     
     drivetrain.calibrateGyro();
     
+    if (Robot.onBlueAlliance())
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+    }
+    else
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+    }
+    
     
   }
 
@@ -236,6 +245,10 @@ public class Robot extends TimedRobot {
     matchStarted = true;
     drivetrain.stopGyroCalibrating();
     drivetrain.resetGyro();
+    if(RobotMap.LEDS_REVERSE)
+      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 192, 255, 200);
+    else 
+      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 192, 255, 200);
     
     
     // autonomousCommand = (Command) autoChooser.getSelected();

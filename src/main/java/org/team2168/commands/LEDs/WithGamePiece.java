@@ -23,6 +23,7 @@ public class WithGamePiece extends Command {
   @Override
   protected void initialize() {
     //add logic to trigger when hatchpanel or cargo is present
+    //add to command-intake until--
     Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 200);
   }
 
