@@ -15,6 +15,8 @@ public class DrivePIDPathQuinticPID extends Command
 	private double[] setPointRightPos;
 	private double[] setPointLeftVel;
 	private double[] setPointRightVel;
+	private double[] setPointLeftAcc;
+	private double[] setPointRightAcc;
 	private double[] setPointHeading;
 
 	OneDimensionalMotionProfiling motion;
@@ -30,7 +32,8 @@ public class DrivePIDPathQuinticPID extends Command
 	double jMax = 15000.0;
 
 	int counter;
-	double ff_term = 0.037;
+	double vff_term = 0.037;
+	double aff_term = 0.0;
 	double oldClock;
 	double angle;
 	double lastRotateOutput;
@@ -58,7 +61,7 @@ public class DrivePIDPathQuinticPID extends Command
 		this.direction = reverseDirection;
 		this.positonGiven = true;
 		SmartDashboard.putNumber("FF_term", 0);
-		ff_term = SmartDashboard.getNumber("FF_term", 0);
+		aff_term = SmartDashboard.getNumber("FF_term", 0);
 	}
 
 	public DrivePIDPathQuinticPID(double[] setPointLeftVel, double[] setPointRightVel)
@@ -126,7 +129,7 @@ public class DrivePIDPathQuinticPID extends Command
 	}
 
 	public DrivePIDPathQuinticPID(double[] setPointLeftPos, double[] setPointRightPos, double[] setPointLeftVel,
-			double[] setPointRightVel, double[] setPointHeading)
+			double[] setPointRightVel, double[] setPointLeftAcc,double[] setPointRightAcc, double[] setPointHeading)
 	{
 		requires(Robot.drivetrain);
 
@@ -137,12 +140,16 @@ public class DrivePIDPathQuinticPID extends Command
 		this.setPointRightPos = setPointRightPos;
 		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
+		this.setPointLeftAcc = setPointLeftAcc;
+		this.setPointRightAcc= setPointRightAcc;
 		this.setPointHeading = setPointHeading;
 
 		this.headingByArray = true;
 
-		SmartDashboard.putNumber("FF_term", this.ff_term);
-		ff_term = SmartDashboard.getNumber("FF_term", this.ff_term);
+		SmartDashboard.putNumber("VFF_term", this.vff_term);
+		vff_term = SmartDashboard.getNumber("VFF_term", this.vff_term);
+		SmartDashboard.putNumber("AFF_term", this.aff_term);
+		aff_term = SmartDashboard.getNumber("AFF_term", this.aff_term);
 
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
 	}
@@ -239,7 +246,7 @@ public class DrivePIDPathQuinticPID extends Command
 			this.setPointHeading = temp;
 		}
 
-		this.ff_term = 1.1;
+		this.vff_term = 1.1;
 		System.out.println("SetPointLength: " + setPointLeftVel.length);
 
 	}
@@ -249,7 +256,7 @@ public class DrivePIDPathQuinticPID extends Command
 		requires(Robot.drivetrain);
 		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
-		ff_term = ff_gain;
+		vff_term = ff_gain;
 
 		direction = false;
 
@@ -261,7 +268,7 @@ public class DrivePIDPathQuinticPID extends Command
 		this.setPointLeftVel = setPointLeftVel;
 		this.setPointRightVel = setPointRightVel;
 		SmartDashboard.putNumber("FF_term", 0);
-		ff_term = SmartDashboard.getNumber("FF_term", 0);
+		vff_term = SmartDashboard.getNumber("FF_term", 0);
 
 		direction = reverseDirection;
 
@@ -395,7 +402,8 @@ public class DrivePIDPathQuinticPID extends Command
 		SmartDashboard.putNumber("Command Execution Time", (currTime - oldClock));
 		oldClock = currTime;
 
-		ff_term = SmartDashboard.getNumber("FF_term", 0);
+		vff_term = SmartDashboard.getNumber("VFF_term", 0);
+		aff_term = SmartDashboard.getNumber("AFF_term", 0);
 
 		// lastRotateOutput =
 		// Robot.drivetrain.rotateDriveStraightController.getControlOutput();
@@ -412,9 +420,10 @@ public class DrivePIDPathQuinticPID extends Command
 
 		if (counter < setPointLeftVel.length)
 		{
-			double speedLeft = (ff_term * directionValue * setPointLeftVel[counter]) / (Robot.pdp.getBatteryVoltage());
-			double speedRight = (ff_term * directionValue * setPointRightVel[counter])
-					/ (Robot.pdp.getBatteryVoltage());
+			double speedLeft = (vff_term * setPointLeftVel[counter]) / (Robot.pdp.getBatteryVoltage());
+			double speedRight = (vff_term * setPointRightVel[counter]) / (Robot.pdp.getBatteryVoltage());
+			double accelLeft = (aff_term * setPointLeftAcc[counter]) / (Robot.pdp.getBatteryVoltage());
+			double accelRight = (aff_term * setPointRightAcc[counter]) / (Robot.pdp.getBatteryVoltage());
 
 			if (!this.rotateInPlace)
 			{
@@ -424,8 +433,8 @@ public class DrivePIDPathQuinticPID extends Command
 				if (Math.abs(speedRight) < 0.15 && counter != 0)
 					speedRight = directionValue * 0.15;
 			}
-			Robot.drivetrain.tankDrive(speedLeft + headingCorrection + leftPID,
-					speedRight - headingCorrection + rightPID);
+			Robot.drivetrain.tankDrive(speedLeft + accelLeft + headingCorrection + leftPID,
+					speedRight + accelRight - headingCorrection + rightPID);
 			// Robot.drivetrain.tankDrive(speedLeft+leftPID,speedRight+rightPID);
 			counter++;
 

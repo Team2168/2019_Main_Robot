@@ -96,6 +96,43 @@ public class Robot extends TimedRobot
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
 
+/***************************************************
+	 *                 autonomous
+	 **************************************************/
+
+	public static double[] leftVelQuinticPath;
+  public static double[] rightVelQuinticPath;
+  public static double[] leftPosQuinticPath;
+	public static double[] rightPosQuinticPath;
+	public static double[] leftAccQuinticPath;
+	public static double[] rightAccQuinticPath;
+	public static double[] headingQuinticPath;
+	public static boolean QuinticPath_Reverse = false;
+	
+  public static double[] leftVelQuinticPath2;
+  public static double[] rightVelQuinticPath2;
+  public static double[] leftPosQuinticPath2;
+	public static double[] rightPosQuinticPath2;
+	public static double[] leftAccQuinticPath2;
+	public static double[] rightAccQuinticPath2;
+	public static double[] headingQuinticPath2;
+	public static boolean QuinticPath2_Reverse = false;
+
+                                   
+  public static double[] leftVelQuinticPath3;
+  public static double[] rightVelQuinticPath3;
+  public static double[] leftPosQuinticPath3;
+	public static double[] rightPosQuinticPath3;
+	public static double[] leftAccQuinticPath3;
+	public static double[] rightAccQuinticPath3;
+	public static double[] headingQuinticPath3;
+	public static boolean QuinticPath3_Reverse = false;
+
+	 /**************************************************
+	  * 
+	  *************************************************/
+
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.

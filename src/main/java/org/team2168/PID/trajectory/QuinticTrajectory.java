@@ -79,8 +79,8 @@ public class QuinticTrajectory
 
 	private static PrintWriter log;
 
-	private static String directory = "/home/lvuser/Path/";
-	//private static String directory = "Path/";
+	//private static String directory = "/home/lvuser/Path/";
+	private static String directory = "Path/";
 
 	
 	public boolean reverse = false;
@@ -110,8 +110,9 @@ public class QuinticTrajectory
 			
 			// {48.0, 0.0, 0},
 			// {96.0, 0.0, 0},
-			{0.0, 90.0, 0},
-			{120.0, 90.0, 0},
+			{48.0, 210.0, 0},
+			{96.0, 210.0, 0},
+			{180.0, 294.0, Math.PI/6}
 			
 			// {204.0, 21.0, -Math.PI/6},
 			// {263.0, 32.0, Math.PI/3-0.001},
@@ -122,8 +123,9 @@ public class QuinticTrajectory
 		
 		
 		double[][] waypointPath2 = new double[][]{
-			{0.0, 26.5, 0},
-			{10.0, 28.5, Math.PI/2-0.001} //works with 19.3 on practice bot
+			{0, 0.0, 0},
+			{192.0, 6.0, Math.PI/6}
+			 //works with 19.3 on practice bot
 	};
 		
 	double[][] waypointPath3 = new double[][]{
@@ -136,6 +138,9 @@ public class QuinticTrajectory
 	};		
 		QuinticTrajectory quinticPath= new QuinticTrajectory("path1.txt", waypointPath, false);
 		quinticPath.calculate();
+
+		QuinticTrajectory quinticPath2= new QuinticTrajectory("path2.txt", waypointPath2, false);
+		quinticPath2.calculate();
 		//quinticPath.plotPath();
 		//System.out.println(quinticPath.traj.toStringEuclidean());
 
@@ -161,9 +166,7 @@ public class QuinticTrajectory
 //		fig3.addData(quinticPath.rightPath, Color.magenta);
 //		fig3.addData(quinticPath.leftPath, Color.blue);
 //
-//		//fi[g3.addData(quinticPath2.leftPath, Color.blue);
-//		//fig3.addData(quinticPath2.rightPath, Color.magenta);
-//		//fig3.addData(waypointPath2, null, Color.black);
+		
 // 
 //		fig3.addData(new double[][]{{4.667, 3}}, Color.black);
 
@@ -173,6 +176,9 @@ public class QuinticTrajectory
 		fig3.setYLabel("Y (feet)");
 		fig3.setXLabel("X (feet)");
 		fig3.setTitle("Quintic Path (Robot Complete Path)");
+		// fig3.addData(quinticPath2.leftPath, Color.blue);
+		// fig3.addData(quinticPath2.rightPath, Color.magenta);
+		// fig3.addData(waypointPath2, null, Color.black);
 		//fig3.setTitle("Top Down View of FRC Field (30ft x 27ft) \n shows global position of robot path, along with left and right wheel trajectories");
 
 
@@ -196,27 +202,63 @@ public class QuinticTrajectory
 		
 		fig3.addData(new double[][]{{4.667, 3}}, Color.black);
 		
-		fig3.setXTic(0.0, 348.0, 12.0);
-		fig3.setYTic(0.0, 348.0, 12.0);
+		fig3.setXTic(0.0, 324.0, 12.0);
+		fig3.setYTic(0.0, 324.0, 12.0);
 		
 		
 		//outline field perimeter
-		double[][] edge = {{336,12},{12,12},{12,336},{336,336}};
+		double[][] edge = {{324,0},{0,0},{0,324},{324,324}};
 		fig3.addData(edge, Color.black);
 		
-		edge = new double[][] {{324,146},{221,146},{221,202},{324,202}};
+		edge = new double[][] {{324,133},{220,133},{220,191},{324,191}};
 		fig3.addData(edge, Color.black);
 		
-		edge = new double[][] {{12,110},{60,110},{60,238},{12,238}};
+		edge = new double[][] {{0,98},{48,98},{48,226},{0,226}};
 		fig3.addData(edge, Color.black);
 		
-		edge = new double[][] {{60,110},{60,100},{108,100},{108,248},{60,248},{60,238}};
+		edge = new double[][] {{48,98},{48,88},{96,88},{96,236},{48,236},{48,226}};
 		fig3.addData(edge, Color.black);
 		
-		edge = new double[][] {{12,150},{60,150}};
+		edge = new double[][] {{0,138},{48,138}};
 		fig3.addData(edge, Color.black);
 		
-		edge = new double[][] {{12,198},{60,198}};
+		edge = new double[][] {{0,186},{48,186}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{210,7},{220,27},{238,27},{248,7}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{210,317},{220,297},{238,297},{248,317}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{261,133},{261,121}};
+		fig3.addData(edge, Color.black);
+		
+		edge = new double[][] {{283,133},{283,121}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{305,133},{305,121}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{261,191},{261,203}};
+		fig3.addData(edge, Color.black);
+		
+		edge = new double[][] {{283,191},{283,203}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{305,191},{305,203}};
+		fig3.addData(edge, Color.black);
+		
+		edge = new double[][] {{0,26},{12,26}};
+		fig3.addData(edge, Color.black);
+		
+		edge = new double[][] {{0,298},{12,298}};
+		fig3.addData(edge, Color.black);
+
+		edge = new double[][] {{220,151},{208,151}};
+		fig3.addData(edge, Color.black);
+		
+		edge = new double[][] {{220,173},{208,173}};
 		fig3.addData(edge, Color.black);
 		
 		
