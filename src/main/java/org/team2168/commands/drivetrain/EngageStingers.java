@@ -15,16 +15,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Engages stingers and puts drivetrain in neutral
  */
-public class EngageStingers extends Command {
-  public EngageStingers() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class EngageStingers extends Command
+{
+  public EngageStingers()
+  {
     requires(Robot.drivetrainStingerShifter);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  protected void initialize()
+  {
     Robot.drivetrainStingerShifter.engageStingers();
     if (Robot.onBlueAlliance())
     {
@@ -44,23 +45,27 @@ public class EngageStingers extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  protected void execute()
+  {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  protected boolean isFinished()
+  {
     return Robot.drivetrainStingerShifter.isStingerEngaged();
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }

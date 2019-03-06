@@ -14,38 +14,43 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Engages drivetrain and puts stingers in neutral
  */
-public class EngageDrivetrain extends Command {
-  public EngageDrivetrain() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class EngageDrivetrain extends Command
+{
+  public EngageDrivetrain()
+  {
     requires(Robot.drivetrainStingerShifter);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  protected void initialize()
+  {
     Robot.drivetrainStingerShifter.engageDrivetrain();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  protected void execute()
+  {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  protected boolean isFinished()
+  {
     return Robot.drivetrainStingerShifter.isDrivetrainEngaged();
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  protected void end()
+  {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted()
+  {
   }
 }
