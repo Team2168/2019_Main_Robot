@@ -276,6 +276,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
+	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
+	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 0;
+	public static final double MONKEY_BAR_SAFE_SCORING_POS = 160; 
+	public static final double MONKEY_BAR_FLOOR_POS = 0;
+	public static final double MONKEY_BAR_STOW_POS = 180;
+	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 10;
+
 
 	//PBOT
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 5.108; //130 degrees
@@ -288,6 +295,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.66; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
+
+	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 0; //TODO SET ALL
+	public static final double MONKEY_BAR_SAFE_PIVOT_POS_PBOT = 0;
+	public static final double MONKEY_BAR_SAFE_SCORING_POS_PBOT = 160; 
+	public static final double MONKEY_BAR_FLOOR_POS_PBOT = 0;
+	public static final double MONKEY_BAR_STOW_POS_PBOT = 180;
+	public static final double MONKEY_BAR_CARGO_INTAKE_POS_PBOT = 10;
 
 
 	public static final int MONKEY_BAR_AVG_ENCODER_VAL = 5;
