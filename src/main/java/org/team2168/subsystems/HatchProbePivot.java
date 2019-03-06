@@ -105,8 +105,26 @@ public class HatchProbePivot extends Subsystem
    *        front of the robot, negative values rotate pivot to the back of the
    *        robot, 0 is stationary
    */
+  public void drivePlungerArmPivotMotorUnsafe(double speed)
+  {
+    if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+      speed = -speed;
+    _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+    _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+  }
+
   public void drivePlungerArmPivotMotor(double speed)
   {
+  //if(!Robot.Lift.safeToPivot)
+  //{
+  //  Scheduler.getInstance().add(new MoveLiftToSafeHeightForPivot());
+  //}
+
+  //if(!Robot.MonkeyBar.safeToPivot)
+  //{
+  //  Scheduler.getInstance().add(new MoveMonkeyBarToSafePositionForPivot)
+  //}
+  
     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
       speed = -speed;
     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
@@ -141,6 +159,10 @@ public class HatchProbePivot extends Subsystem
     return _pivotHallEffectSensors.getReverseLimit();
   }
 
+  public boolean isPivotOnMonkeyBarSide()
+  {
+    return (getPotPos()<=RobotMap.PIVOT_ANGLE_MONKEY_BAR_SIDE);
+  }
 
   @Override
   public void initDefaultCommand()
