@@ -35,6 +35,9 @@ public class HatchProbePivot extends Subsystem
   private double _middlePosition;
   private double _safePositionMonkeyBarSide;
   private double _safePositionOtherSide;
+  //cargoPos is the angle to score on the cargo ship, error is so that going to that angle will not trigger lift to go down
+  private double _cargoPosition;
+  private double _error;
 
   MoveMonkeyBarToSafePositionForPivot moveMonkeyBarToSafePositionForPivot;
   MoveLiftFullyDown moveLiftFullyDown;
@@ -56,8 +59,10 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES_PBOT, 
           RobotMap.PIVOT_AVG_ENCODER_VAL);
           _middlePosition = RobotMap.PLUNGER_ARM_MIDDLE_POS_PBOT;
+          _cargoPosition = RobotMap.PLUNGER_ARM_CARGO_SHIP_POS_PBOT;
           _safePositionMonkeyBarSide = RobotMap.PLUNGER_ARM_SAFE_POS_FRONT_PBOT;
           _safePositionOtherSide = RobotMap.PLUNGER_ARM_SAFE_POS_BACK_PBOT;
+          _error = RobotMap.PLUNGER_ARM_ERROR_PBOT;
     }
     else
     {
@@ -68,8 +73,10 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, 
           RobotMap.PIVOT_AVG_ENCODER_VAL);
           _middlePosition = RobotMap.PLUNGER_ARM_MIDDLE_POS;
+          _cargoPosition = RobotMap.PLUNGER_ARM_CARGO_SHIP_POS;
           _safePositionMonkeyBarSide = RobotMap.PLUNGER_ARM_SAFE_POS_FRONT;
           _safePositionOtherSide = RobotMap.PLUNGER_ARM_SAFE_POS_BACK;
+          _error = RobotMap.PLUNGER_ARM_ERROR;
     }
 
     ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {
@@ -133,20 +140,28 @@ public class HatchProbePivot extends Subsystem
 
   public void drivePlungerArmPivotMotor(double speed)
   {
-
-
-    if(!Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning())
+    // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
     {
       moveLiftFullyDown.start();
       //print out
     }
-   
-    if(!Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
+   // move monkey bar out of way of pivot if not already
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
     {
       moveMonkeyBarToSafePositionForPivot.start();
     }
 
-    if(Robot.monkeyBarPivot.isSafePivotPosition() && Robot.lift.isLiftFullyDown())
+    // if monkey bar in safe pos, lift all the way down, or within angle needed to score on CS, drive the pivot
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && Robot.monkeyBarPivot.isSafePivotPosition() && Robot.lift.isLiftFullyDown() || Robot.monkeyBarPivot.isSafePivotPosition() && isWithinCargoAngle())
+    {
+      if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+        speed = -speed;
+      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+    }
+    //no interlocks
+    else if(!RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS)
     {
       if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
         speed = -speed;
@@ -186,6 +201,11 @@ public class HatchProbePivot extends Subsystem
   public boolean isOnMonkeyBarSide()
   {
     return (getPotPos() <= _middlePosition);
+  }
+
+  public boolean isWithinCargoAngle()
+  {
+    return (getPotPos() <= _cargoPosition+_error);
   }
 
   public boolean isSafeToMoveLiftUp()
