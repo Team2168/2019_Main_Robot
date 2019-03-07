@@ -230,7 +230,7 @@ public class Lift extends Subsystem {
 	public void driveAllMotors(double speed)
 	{
 
-		double stallLimit = 10000;
+		double stallLimit = 35;
 		// lift is stalling
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > stallLimit)
 				|| (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > stallLimit))
