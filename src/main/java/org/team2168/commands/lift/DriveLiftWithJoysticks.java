@@ -36,8 +36,11 @@ public class DriveLiftWithJoysticks extends Command
     if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
     {
       double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
-      if(Math.abs(Robot.oi.getLiftJoystickValue())<holdingSpeed)
+      if(Math.abs(Math.abs(Robot.oi.getLiftJoystickValue()))<holdingSpeed)
+      {
         Robot.lift.driveAllMotors(holdingSpeed);
+        System.out.println("Da lift is holding");
+      }
       else
         Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
     }

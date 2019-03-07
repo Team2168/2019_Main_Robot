@@ -116,13 +116,15 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
-	public static final int PROBE_ROTATE_BRAKE_RETRACTED_PCM = 1;
+	public static final int PROBE_ROTATE_BRAKE_RETRACTED_PCM = 5;
 	public static final int CARGO_PUNCH_EXTEND_PCM = 2;
-	public static final int CARGO_PUNCH_RETRACT_PCM = 3;
-	public static final int PROBE_EXTEND_PCM = 4;
-	public static final int PROBE_RETRACT_PCM = 5;
-	public static final int PROBE_ENGAGE_PCM = 6;
-	public static final int PROBE_DISENGAGE_PCM = 7;
+	public static final int CARGO_PUNCH_RETRACT_PCM = 7;
+
+	public static final int PROBE_EXTEND_PCM = 6;
+	public static final int PROBE_RETRACT_PCM = 1;
+
+	public static final int PROBE_ENGAGE_PCM = 3;
+	public static final int PROBE_DISENGAGE_PCM = 4;
 
 
 
@@ -230,28 +232,29 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean LIFT_MOTOR1_REVERSE = true;
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
-	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = false;
+	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
+	public static final boolean LIFT_ENABLE_INTERLOCKS = false;
 
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 
-	public static final double LIFT_HOLDING_VOLTAGE = 3.0; //volts divide by batt voltage. 
+	public static final double LIFT_HOLDING_VOLTAGE = 1.0; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2;
-	public static final double LIFT_MIN_SPEED = 0.15;
+	public static final double LIFT_MIN_SPEED = 0.075;
 
 
-	public static final double LIFT_POT_VOLTAGE_MAX = 4.8; //85 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX = 3.5; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 1.85; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0 = 0.8; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.8; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 3.5; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.85; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 0.8; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
 
@@ -341,7 +344,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                         Plunger Arm Pivot PARAMETERS                   *
 	 *************************************************************************/
-	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = true;
+	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
 	
 	 ////TODO set these values
@@ -366,7 +369,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final long PDPThreadPeriod = 100;
 	public static final double WARNING_CURRENT_LIMIT = 20;
-	public static final double STALL_CURRENT_LIMIT = 35;
+	public static final double STALL_CURRENT_LIMIT = 350;
 	public static final double CURRENT_LIMIT_TIME_THRESHOLD_SECONDS = 1;
 
 	/*************************************************************************

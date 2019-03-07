@@ -13,7 +13,6 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
   public DriveMonkeyBarPivotWithConstant(double inputspeed) {
 
     requires(MonkeyBarPivot.getInstance());
-    this.setInterruptible(false);
     _speed = inputspeed;
 
   }

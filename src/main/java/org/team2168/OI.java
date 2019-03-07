@@ -122,8 +122,9 @@ public class OI
 
 		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
-		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
+		operatorJoystick.ButtonX().whenPressed(new EngageHatchPanel());
+		operatorJoystick.ButtonA().whenPressed(new DisengageHatchPanel());
+		
 
 		/////////////// Intake and pivot up
 		/////////////// afterwards/////////////////////////////////////////////////////////////////////////

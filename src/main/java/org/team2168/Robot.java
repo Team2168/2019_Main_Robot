@@ -158,7 +158,7 @@ public class Robot extends TimedRobot
       controlStyleSelectInit();
       throttleVibeSelectInit();
       
-
+      ConsolePrinter.startThread();
       ConsolePrinter.putSendable("Control Style Chooser", () -> {return Robot.controlStyleChooser;}, true, false);
       ConsolePrinter.putSendable("Autonomous Mode Chooser", () -> {return Robot.autoChooser;}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
@@ -170,7 +170,7 @@ public class Robot extends TimedRobot
       ConsolePrinter.putBoolean("Is Climb Mode", () -> {return isClimbMode();}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
      
-      ConsolePrinter.startThread();
+      
       System.out.println("Robot Initialization Complete!!");
     }
     catch (Throwable throwable)
