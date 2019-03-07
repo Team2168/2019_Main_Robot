@@ -238,11 +238,11 @@ public class Robot extends TimedRobot
     
     if (Robot.onBlueAlliance())
     {
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+      leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
     }
     else
     {
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+      leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
     }
     
     
