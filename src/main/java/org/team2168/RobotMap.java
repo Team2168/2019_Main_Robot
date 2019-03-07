@@ -248,11 +248,23 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_POT_VOLTAGE_0 = 1.85; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
+	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
+	public static final double LIFT_LVL_2_POS = 0;
+	public static final double LIFT_LVL_3_POS = 0;
+	public static final double LIFT_CARGO_SHIP_POS = 0;
+	public static final double LIFT_BASE_POS = 0;
+
 	//PBOT LIFT
 	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.8; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
 	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.85; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
+
+	public static final double LIFT_LVL_1_POS_PBOT= 0; //TODO SET ALL in inches
+	public static final double LIFT_LVL_2_POS_PBOT = 0;
+	public static final double LIFT_LVL_3_POS_PBOT = 0;
+	public static final double LIFT_CARGO_SHIP_POS_PBOT = 0;
+	public static final double LIFT_BASE_POS_PBOT = 0;
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
@@ -351,11 +363,19 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
 
+	public static final double PIVOT_0_POS = 0;
+	public static final double PIVOT_180_POS = 180;
+	public static final double PIVOT_CARGO_SHIP_POS = 0; //TODO SET ALL
+
 	/////TODO set these values
 	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
 	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES_PBOT = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 180;
+
+	public static final double PIVOT_0_POS_PBOT = 0;
+	public static final double PIVOT_180_POS_PBOT = 180;
+	public static final double PIVOT_CARGO_SHIP_POS_PBOT = 0; //TODO SET ALL
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
@@ -418,6 +438,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MB_PIVOT_I = 0.027;
 	public static final double MB_PIVOT_D = 0.000000067;
 
+	public static final double HP_PIVOT_P = 0.024;
+	public static final double HP_PIVOT_I = 0.027;
+	public static final double HP_PIVOT_D = 000000067;
+
 
 	public static final long LIFT_PID_PERIOD = 20;
 	public static final int  LIFT_PID_ARRAY_SIZE = 30;
@@ -435,6 +459,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION = 1187;
 
 	public static final int TCP_SERVER_MB_POT_CONTROLLER = 1189;
+	public static final int TCP_SERVER_HP_POT_CONTROLLER = 1190;
 
 	/******************************************************************
 	 *                         ConsolePrinter PARAMETERS              *

@@ -44,7 +44,7 @@ public class MonkeyBarPivot extends Subsystem {
   private double _errorMargin = 3; //currently 3 degrees to either side of set positions returns true
 
 
-  public static PIDPosition monkeyBarPivotController;
+  public PIDPosition monkeyBarPivotController;
   TCPSocketSender TCPMonkeyBarPivotController;
 
   private static MonkeyBarPivot _instance;

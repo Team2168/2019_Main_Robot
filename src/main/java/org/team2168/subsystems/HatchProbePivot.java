@@ -14,9 +14,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.PID.sensors.CanDigitalInput;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
+import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,6 +30,9 @@ public class HatchProbePivot extends Subsystem
   public volatile double _plungerArmPivotVoltage;
   private CanDigitalInput _pivotHallEffectSensors;
   private static HatchProbePivot _instance;
+
+  public PIDPosition hatchProbePivotController;
+  TCPSocketSender TCPHatchProbePivotController;
 
  
 
@@ -56,6 +61,19 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_AVG_ENCODER_VAL);
     }
 
+    hatchProbePivotController = new PIDPosition("HatchProbePivotController", 
+      RobotMap.HP_PIVOT_P, 
+      RobotMap.HP_PIVOT_I, 
+      RobotMap.HP_PIVOT_D,
+      _pivotPot, 
+      RobotMap.LIFT_PID_PERIOD);
+
+    hatchProbePivotController.setSIZE(RobotMap.LIFT_PID_ARRAY_SIZE);
+
+    hatchProbePivotController.startThread();
+
+    TCPHatchProbePivotController = new TCPSocketSender(RobotMap.TCP_SERVER_HP_POT_CONTROLLER, hatchProbePivotController);
+    TCPHatchProbePivotController.start();
     ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {
       return Robot.oi.getHatchProbePivotJoystickValue();
     }, true, true);
