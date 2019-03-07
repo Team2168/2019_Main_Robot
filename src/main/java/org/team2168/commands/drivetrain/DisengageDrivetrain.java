@@ -8,39 +8,24 @@
 package org.team2168.commands.drivetrain;
 
 import org.team2168.Robot;
-import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Engages stingers and puts drivetrain in neutral
+ * Engages drivetrain and puts stingers in neutral
  */
-public class EngageStingers extends Command
+public class DisengageDrivetrain extends Command
 {
-  public EngageStingers()
+  public DisengageDrivetrain()
   {
-    requires(Robot.shifterStinger);
+    requires(Robot.shifterDrivetrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize()
   {
-    if (Robot.onBlueAlliance())
-    {
-      if(RobotMap.LEDS_REVERSE)
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
-    }
-    else
-    {
-      if(RobotMap.LEDS_REVERSE)
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
-    }
-    Robot.shifterStinger.engageStingers();
+    Robot.shifterDrivetrain.disengageDrivetrain();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -53,7 +38,7 @@ public class EngageStingers extends Command
   @Override
   protected boolean isFinished()
   {
-    return Robot.shifterStinger.isStingerEngaged();
+    return Robot.shifterDrivetrain.isDrivetrainDisengaged();
   }
 
   // Called once after isFinished returns true

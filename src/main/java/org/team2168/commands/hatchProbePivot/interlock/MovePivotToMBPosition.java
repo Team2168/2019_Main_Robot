@@ -5,65 +5,53 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.lift;
+package org.team2168.commands.hatchProbePivot.interlock;
 
-import org.team2168.Robot;
-import org.team2168.RobotMap;
-
+import org.team2168.subsystems.HatchProbePivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveLiftWithJoysticks extends Command
-{
-  public DriveLiftWithJoysticks()
-  {
+public class MovePivotToMBPosition extends Command {
+
+  double counter = 0;
+
+  public MovePivotToMBPosition() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.lift);
+    requires(HatchProbePivot.getInstance());
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize()
-  {
-    Robot.lift.driveAllMotors(0.0);
+  protected void initialize() {
+    counter = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute()
-  {
-    if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
+  protected void execute() {
+    if (counter < 250)
     {
-      double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
-      if(Math.abs(Robot.oi.getLiftJoystickValue())<holdingSpeed)
-        Robot.lift.driveAllMotors(holdingSpeed);
-      else
-        Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
+      counter++;
+      System.out.println("Moving Plunger Pivot");
     }
-    else
-      Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);
   }
-
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished()
-  {
-    return false;
+  protected boolean isFinished() {
+
+    
+    return counter >= 250;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end()
-  {
-    Robot.lift.driveAllMotors(0.0);
+  protected void end() {
+    System.out.println("*******************************Finished Moving Plunger Pivot\n\n\n\n\n");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted()
-  {
-    end();
+  protected void interrupted() {
   }
 }

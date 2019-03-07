@@ -8,13 +8,14 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.commands.hatchProbePivot.interlock.MovePivotToMBPosition;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
+import org.team2168.commands.monkeyBarPivot.interlock.MoveToSafePositionForLift;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForLift;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -29,7 +30,7 @@ public class Lift extends Subsystem {
 	private static VictorSPX liftMotor2;
 
 
-	private DoubleSolenoid liftBrake;
+	//private DoubleSolenoid liftBrake;
 	private static AveragePotentiometer liftPot;
 	private static DigitalInput liftFullyUp; // hall effect sensors
 	private static DigitalInput liftFullyDown; // ^^^^^^^^^^^
@@ -63,6 +64,10 @@ public class Lift extends Subsystem {
 
 	private int timeCounter = 0;
 
+	//interlock commands ()
+	MoveMonkeyBarToSafePositionForLift moveMonkeyBarToSafePositionForLift;
+	MovePivotToMBPosition movePivotToMBPosition;
+
 	/**
 	 * Default constructor for the lift
 	 */
@@ -70,13 +75,16 @@ public class Lift extends Subsystem {
 		liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PDP);
 		liftMotor2 = new VictorSPX(RobotMap.LIFT_MOTOR_2_PDP);
 		
-		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
+		//liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
 		liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
 
+		moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
+		movePivotToMBPosition = new MovePivotToMBPosition();				
+
     if (Robot.isPracticeRobot()) 
     {
-      liftPot = new AveragePotentiometer(RobotMap.LIFT_POSITION_POT_PBOT, 
+      liftPot = new AveragePotentiometer(RobotMap.LIFT_POSITION_POT, 
         RobotMap.LIFT_POT_VOLTAGE_0_PBOT,
         RobotMap.LIFT_POT_0_HEIGHT_INCHES_PBOT, 
         RobotMap.LIFT_POT_VOLTAGE_MAX_PBOT,
@@ -222,12 +230,197 @@ public class Lift extends Subsystem {
 	public void driveAllMotors(double speed)
 	{
 
+		double stallLimit = 10000;
+		// lift is stalling
+		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > stallLimit)
+				|| (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > stallLimit))
+		{
+			// enableBrake();
+			timeCounter++;
+
+			// wait for brake to actuate then stop motors
+			if (timeCounter >= 1 / .02)
+			{
+				driveLiftMotor1(0.0);
+				driveLiftMotor2(0.0);
+			}
+
+			System.out.println("We stalling Lift");
+		}
+		else
+		{
+			timeCounter = 0;
+
+			if (RobotMap.ENABLE_LIFT_POT_SAFETY) //use pot value as additional sensor check
+			{
+				//If we are commanding the lift, only allow it to go up if not at hard stop or the pot is not at max value
+				//Similarly only allow it to go down if we are not at the lower limit or the pot is not at its lowest limit
+				
+				boolean drivingUp = speed > RobotMap.LIFT_MIN_SPEED;
+				boolean drivingDown = speed < -RobotMap.LIFT_MIN_SPEED;
+
+				if (( drivingUp && !isLiftFullyUp() && !liftPot.isAtUpperLimit())
+						|| (drivingDown && !isLiftFullyDown() && !liftPot.isAtLowerLimit()))
+				{
+
+					// //Driving up but need to prevent crashing into lift support 
+					if(drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() && liftPot.getPos() >= RobotMap.LIFT_POT_CROSS_BAR_HEIGHT)
+					{
+						//Stop Moving lift
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+						System.out.println("Interlock: Lift trying to drive into Lift Cross Support");
+						return;
+					}
+
+					//we trying to drive up but pivit is not fully on one side on PivotSide. need to move pivot
+					if(drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.hatchProbePivot.isSafeToMoveLiftUp() && !movePivotToMBPosition.isRunning())
+					{
+						movePivotToMBPosition.start();
+						System.out.println("Interlock: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+						return;
+					}
+					else if(movePivotToMBPosition.isRunning())
+					{
+						//Stop Moving lift and wait for pivot to move
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+						System.out.println("Interlock: Lift trying to drive while hatch pivot safe down waiting for pivot to move.");
+						return;
+					}
+
+					//we trying to drive up but MonkeyBar in way
+					if(drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.monkeyBarPivot.isSafeLiftPosition() && !moveMonkeyBarToSafePositionForLift.isRunning())
+					{	
+						moveMonkeyBarToSafePositionForLift.start();
+						System.out.println("Interlock: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+						//movedMonkeyBar = true;
+					}
+					else if (moveMonkeyBarToSafePositionForLift.isRunning())
+					{
+						//Stop Moving lift and wait for pivot to move
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+						System.out.println("Interlock: Lift trying to drive while MB pivot not down waiting for pivot to move.");
+						return;
+				
+					}
+
+
+
+					
+					//
+					// if (Robot.isAutoMode())
+					// {
+					// 	if (Robot.lift.getPotPos() > 70 && (speed > 0))
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// }
+
+					// if (!Robot.isAutoMode() && !Robot.flipperyFloopyFlupy.getHardStopStatus())
+					// {
+					// 	if (Robot.lift.getPotPos() > 15 && (speed > 0))
+					// 	{
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// 	}
+					// }
+					// disableBrake();
+					System.out.println("Driving Lift");
+					driveLiftMotor1(speed);
+					driveLiftMotor2(speed);
+
+					
+
+					// if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
+					// Robot.i2c.write(8, 8);
+					// if(Robot.lift.getPotPos() > 30.0 && Robot.lift.getPotPos() < 60.0)
+					// Robot.i2c.write(8, 3);
+					// if(Robot.lift.getPotPos() > 60.0 && Robot.lift.getPotPos() < 82.5)
+					// Robot.i2c.write(8, 11);
+
+				}
+				else
+				{
+					// enableBrake();
+
+					//ABILITY TO PUT SUBSYSTEM BACK TO WHERE WE FOUND IT
+					// if(movedMOnkeyBAr)
+					// 	MoveBAckTo
+					// elseif(MonkeyNotRunning)
+					// 	movedMOnkeyBAr = false;
+
+					System.out.println("Not Driving Lift");
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
+					
+
+				}
+			}
+			else
+			{
+				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp())
+						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown()))
+				{
+					// if (Robot.isAutoMode())
+					// 	if (Robot.lift.getPotPos() > 70 && (speed > 0))
+					// 	{
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// 	}
+					// if (!Robot.isAutoMode())
+					// 	if (Robot.lift.getPotPos() > 15 && (speed > 0))
+					// 	{
+					// 		Robot.intakePivotPiston.retracPivotPiston();
+					// 	}
+					// disableBrake();
+					driveLiftMotor1(speed);
+					driveLiftMotor2(speed);
+					// if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
+					// Robot.i2c.write(8, 8);
+					// if(Robot.lift.getPotPos() > 30.0 && Robot.lift.getPotPos() < 60.0)
+					// Robot.i2c.write(8, 3);
+					// if(Robot.lift.getPotPos() > 60.0 && Robot.lift.getPotPos() < 82.5)
+					// Robot.i2c.write(8, 11);
+
+				}
+				else
+				{
+					// enableBrake();
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
+				}
+
+				
+			}
+		}
+
+		
+		isLiftMotor1Failure();
+		isLiftMotor2Failure();
+
+		isLiftMotor1BreakerTrip();
+		isLiftMotor2BreakerTrip();
+
+		
+		//Scheduler.getInstance().add(new MoveToSafePositionForLift());
+
+
+	}
+
+
+	/**
+	 * Drives all lift Motors at a speed from -1 to 1 where 1 is up and negative 1
+	 * is down, and ratchet is not engaged
+	 * 
+	 * @param speed is +1 up and -1 down
+	 */
+	public void driveAllMotorsNoInterlocks(double speed)
+	{
+
 		double stallLimit = 35;
 		// lift is stalling
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > stallLimit)
 				|| (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > stallLimit))
 		{
-			enableBrake();
+			// enableBrake();
 			timeCounter++;
 
 			// wait for brake to actuate then stop motors
@@ -248,7 +441,7 @@ public class Lift extends Subsystem {
 
 				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp()
 						&& !liftPot.isAtUpperLimit())
-						|| ((speed < -RobotMap.LIFT_MIN_SPEED)))
+						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown()))
 				{
 
 					//todo: Add lift interlocks
@@ -265,7 +458,7 @@ public class Lift extends Subsystem {
 					// 		Robot.intakePivotPiston.retracPivotPiston();
 					// 	}
 					// }
-					disableBrake();
+					// disableBrake();
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
 
@@ -279,7 +472,7 @@ public class Lift extends Subsystem {
 				}
 				else
 				{
-					enableBrake();
+					// enableBrake();
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
 
@@ -300,7 +493,7 @@ public class Lift extends Subsystem {
 					// 	{
 					// 		Robot.intakePivotPiston.retracPivotPiston();
 					// 	}
-					disableBrake();
+					// disableBrake();
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
 					// if(Robot.lift.getPotPos() > 0 && Robot.lift.getPotPos() < 30.0)
@@ -313,7 +506,7 @@ public class Lift extends Subsystem {
 				}
 				else
 				{
-					enableBrake();
+					// enableBrake();
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
 				}
@@ -345,43 +538,45 @@ public class Lift extends Subsystem {
 		isLiftMotor1BreakerTrip();
 		isLiftMotor2BreakerTrip();
 
+		System.out.println("This running?");
+
 	}
 
 	/**
 	 * Enables the pneumatic brake
 	 */
-	public void enableBrake()
-	{
-		liftBrake.set(Value.kForward);
-	}
+	// public void enableBrake()
+	// {
+	// 	liftBrake.set(Value.kForward);
+	// }
 
 	/**
 	 * Gets the current state of the pneumatic brake
 	 *
 	 * @return True when brake is enabled
 	 */
-	public boolean isBrakeEnabled()
-	{
-		return liftBrake.get() == Value.kForward;
-	}
+	// public boolean isBrakeEnabled()
+	// {
+	// 	return liftBrake.get() == Value.kForward;
+	// }
 
 	/**
 	 * Disables the pneumatic brake
 	 */
-	public void disableBrake()
-	{
-		liftBrake.set(Value.kReverse);
-	}
+	// public void disableBrake()
+	// {
+	// 	liftBrake.set(Value.kReverse);
+	// }
 
 	/**
 	 * Gets the current state of the pneumatic brake
 	 *
 	 * @return True when brake is disabled
 	 */
-	public boolean isBrakeDisabled()
-	{
-		return liftBrake.get() == Value.kReverse;
-	}
+	// public boolean isBrakeDisabled()
+	// {
+	// 	return liftBrake.get() == Value.kReverse;
+	// }
 
 	/**
 	 * The purpose of this method is to compare the current of this motor to that of

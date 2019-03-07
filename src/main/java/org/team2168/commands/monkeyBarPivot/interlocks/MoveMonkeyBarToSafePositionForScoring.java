@@ -5,49 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.lift;
-
-import org.team2168.Robot;
+package org.team2168.commands.monkeyBarPivot.interlocks;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RetractLiftBreak extends Command
-{
-  public RetractLiftBreak()
-  {
-    requires(Robot.lift);
+public class MoveMonkeyBarToSafePositionForScoring extends Command {
+  public MoveMonkeyBarToSafePositionForScoring() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize()
-  {
+  protected void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute()
-  {
-    Robot.lift.disableBrake();;
+  protected void execute() {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished()
-  {
+  protected boolean isFinished() {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end()
-  {
+  protected void end() {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted()
-  {
+  protected void interrupted() {
   }
 }

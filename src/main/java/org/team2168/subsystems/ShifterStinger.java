@@ -11,64 +11,64 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DrivetrainStingerShifter extends Subsystem {
-  private static DrivetrainStingerShifter _instance = null;
-  private static Solenoid _drivetrainShifter; 
+public class ShifterStinger extends Subsystem {
+  private static ShifterStinger _instance = null; 
+  private static DoubleSolenoid _stingerShifter;
 
-  private DrivetrainStingerShifter()
+  private ShifterStinger()
   {
-    _drivetrainShifter = new Solenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.DRIVETRAIN_ENGAGED_PCM);
+    _stingerShifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.STINGER_ENGAGE_PCM, RobotMap.STINGER_DISENGAGE_PCM);
 
-    ConsolePrinter.putBoolean("Drivetrain Enagaged", () -> {return Robot.drivetrainStingerShifter.isDrivetrainEngaged();}, true, false);
-		ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.drivetrainStingerShifter.isStingerEngaged();}, true, false);
+
+   	ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.shifterStinger.isStingerEngaged();}, true, false);
+    ConsolePrinter.putBoolean("Stingers Disengaged", () -> {return Robot.shifterStinger.isStingerDisengaged();}, true, false);
+
   }
 
   /**
    * Calls instance object and makes it a singleton object of type DrivetrainStingerShifter
    * @return DrivetrainStingerShifter object "instance"
    */
-  public static DrivetrainStingerShifter getInstance()
+  public static ShifterStinger getInstance()
   {
     if (_instance == null)
     {
-      _instance = new DrivetrainStingerShifter();
+      _instance = new ShifterStinger();
     }
     return _instance;
   }
 
-  /**
-   * Shifts the Drivetrain into engaged and the Stingers into neutral
-   */
-  public void engageDrivetrain()
-  {
-    _drivetrainShifter.set(true);
-  }
 
-  /**
-   * Shifts the Stingers into engaged and the Drivetrain into neutral
-   */
   public void engageStingers()
   {
-    _drivetrainShifter.set(false);
+    Robot.isClimbEnabled = true;
+    _stingerShifter.set(Value.kForward);
   }
 
-  /**
-   * @return true if last commanded shift was engageDrivetrain
-   */
-  public boolean isDrivetrainEngaged()
+  public void disengageStingers()
   {
-    return _drivetrainShifter.get() == true;
+    Robot.isClimbEnabled = false;
+    _stingerShifter.set(Value.kReverse);
   }
+
 
   /**
    * @return true if last commanded shift was engageStingers
    */
   public boolean isStingerEngaged()
   {
-    return _drivetrainShifter.get() == false;
+    
+    return _stingerShifter.get() == Value.kForward;
+  }
+
+  public boolean isStingerDisengaged()
+  {
+    return _stingerShifter.get() == Value.kReverse;
   }
 
 

@@ -11,15 +11,17 @@ import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
 import org.team2168.subsystems.CargoPunch;
 import org.team2168.subsystems.Drivetrain;
-import org.team2168.subsystems.DrivetrainStingerShifter;
 import org.team2168.subsystems.HatchFloorIntake;
 import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.HatchProbePivotBrake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.LEDs;
-import org.team2168.subsystems.MonkeyBar;
+import org.team2168.subsystems.MonkeyBarPivot;
+import org.team2168.subsystems.MonkeyBarIntakeWheels;
 import org.team2168.subsystems.Pneumatics;
+import org.team2168.subsystems.ShifterDrivetrain;
+import org.team2168.subsystems.ShifterStinger;
 import org.team2168.subsystems.Stinger;
 import org.team2168.utils.Debouncer;
 import org.team2168.utils.PowerDistribution;
@@ -59,16 +61,18 @@ public class Robot extends TimedRobot
   public static CargoIntakeWheels cargoIntakeWheels;
   public static CargoPunch cargoPunch;
   public static Drivetrain drivetrain;
-  public static DrivetrainStingerShifter drivetrainStingerShifter;
+  public static ShifterStinger shifterStinger;
+  public static ShifterDrivetrain shifterDrivetrain;
   public static HatchProbePivot hatchProbePivot;
   public static HatchProbePivotBrake hatchProbePivotBrake;
   public static HatchProbePistons hatchProbePistons;
   public static HatchFloorIntake hatchFloorIntake;
   public static Lift lift;
-  public static MonkeyBar monkeybar;
-  public static LEDs leds;
+  public static MonkeyBarPivot monkeyBarPivot;
+  public static MonkeyBarIntakeWheels monkeyBarIntakeWheels;
   public static Stinger stinger;
   public static Pneumatics pneumatics;
+  public static LEDs leds;
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -93,6 +97,9 @@ public class Robot extends TimedRobot
   public static SendableChooser<Command> autoChooser;
   public static SendableChooser<Number> controlStyleChooser;
   public static SendableChooser<Number> throttleVibeChooser;
+  
+  //boolean to keep track of climb mode
+  public static boolean isClimbEnabled = false;
 
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
@@ -120,14 +127,18 @@ public class Robot extends TimedRobot
       cargoIntakeWheels = CargoIntakeWheels.getInstance();
       cargoPunch = CargoPunch.getInstance();
       drivetrain = Drivetrain.getInstance();
-      drivetrainStingerShifter = DrivetrainStingerShifter.getInstance();
+      shifterStinger = ShifterStinger.getInstance();
+      shifterDrivetrain = ShifterDrivetrain.getInstance();
       lift = Lift.getInstance();
       hatchProbePivot = HatchProbePivot.getInstance();
       hatchProbePivotBrake = HatchProbePivotBrake.getInstance();
       hatchProbePistons = HatchProbePistons.getInstance();
       hatchFloorIntake = HatchFloorIntake.getInstance();
-      monkeybar = MonkeyBar.getInstance();
+      monkeyBarPivot = MonkeyBarPivot.getInstance();
+      monkeyBarIntakeWheels = MonkeyBarIntakeWheels.getInstance();
       pneumatics = Pneumatics.getInstance();
+      stinger = Stinger.getInstance();
+
       leds = LEDs.getInstance();
 
       drivetrain.calibrateGyro();
@@ -157,6 +168,7 @@ public class Robot extends TimedRobot
       ConsolePrinter.putNumber("gameClock", () -> {return driverstation.getMatchTime();}, true, false);
       ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
       ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
+      ConsolePrinter.putBoolean("Is Climb Mode", () -> {return isClimbMode();}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
      
       ConsolePrinter.startThread();
@@ -452,6 +464,15 @@ public class Robot extends TimedRobot
   public static boolean isAutoMode()
   {
     return autoMode;
+
+  }
+
+    /**
+   * @return true if the robot is in climb mode
+   */
+  public static boolean isClimbMode()
+  {
+    return isClimbEnabled;
 
   }
 

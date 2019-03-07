@@ -7,8 +7,9 @@
 
 package org.team2168.commands.hatchProbePivot;
 
-import org.team2168.OI;
+import org.team2168.OI; 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -28,8 +29,20 @@ public class DriveHatchProbePivotWithJoystick extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    Robot.hatchProbePivot.drivePlungerArmPivotMotor(Robot.oi.getHatchProbePivotJoystickValue());
+  protected void execute() 
+  {
+
+    if(RobotMap.PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD)
+    {
+      double holdingSpeed = RobotMap.PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
+      if(Math.abs(Robot.oi.getHatchProbePivotJoystickValue())<holdingSpeed)
+        Robot.hatchProbePivot.drivePlungerArmPivotMotor(Math.cos(Math.toRadians(Robot.hatchProbePivot.getPotPos()))*holdingSpeed);
+      else
+        Robot.hatchProbePivot.drivePlungerArmPivotMotor(Robot.oi.getHatchProbePivotJoystickValue());
+    }
+    else
+      Robot.hatchProbePivot.drivePlungerArmPivotMotor(Robot.oi.getHatchProbePivotJoystickValue());
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()

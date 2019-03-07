@@ -18,14 +18,14 @@ public class EngageDrivetrain extends Command
 {
   public EngageDrivetrain()
   {
-    requires(Robot.drivetrainStingerShifter);
+    requires(Robot.shifterDrivetrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize()
   {
-    Robot.drivetrainStingerShifter.engageDrivetrain();
+    Robot.shifterDrivetrain.engageDrivetrain();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,7 +38,7 @@ public class EngageDrivetrain extends Command
   @Override
   protected boolean isFinished()
   {
-    return Robot.drivetrainStingerShifter.isDrivetrainEngaged();
+    return Robot.shifterDrivetrain.isDrivetrainEngaged();
   }
 
   // Called once after isFinished returns true
