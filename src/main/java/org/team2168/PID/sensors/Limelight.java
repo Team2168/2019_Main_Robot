@@ -7,6 +7,7 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight implements PIDSensorInterface
 {
@@ -30,36 +31,48 @@ public class Limelight implements PIDSensorInterface
     {
         // Variables to get data from Limelight
         networkTable = NetworkTableInstance.getDefault().getTable("limelight");
-        tx = networkTable.getEntry("tx");
-        ta = networkTable.getEntry("ta");
-        camtran = networkTable.getEntry("camtran");
+        if(networkTable.containsKey("tx"))
+        {
+            SmartDashboard.putBoolean("IsLimeLightPresent", true);
+            networkTable = NetworkTableInstance.getDefault().getTable("limelight");
+            
+            
+            tx = networkTable.getEntry("tx");
+            ta = networkTable.getEntry("ta");
+            camtran = networkTable.getEntry("camtran");
 
-        currentPosition = 0.0;
-        previousPosition = 0.0;
 
-        // Variables to set data on Limelight
-        ledMode = networkTable.getEntry("ledMode");
-        camMode = networkTable.getEntry("camMode");
-        pipeline = networkTable.getEntry("pipeline");
+            currentPosition = 0.0;
+            previousPosition = 0.0;
 
-        // Sets the camera controls
-        ledMode.setNumber(0);
-        camMode.setNumber(0);
-        pipeline.setNumber(0);
+            // Variables to set data on Limelight
+            ledMode = networkTable.getEntry("ledMode");
+            camMode = networkTable.getEntry("camMode");
+            pipeline = networkTable.getEntry("pipeline");
 
-        // Testing only
-        ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
-        ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 1", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[0];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 2", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[1];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 3", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[2];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 4", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[3];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 5", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[4];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 6", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[5];}, true, false);
-        ConsolePrinter.putNumber("Limelight Controller Output", () -> {return Robot.drivetrain.limelightPosController.getControlOutput();}, true, false);
-        ConsolePrinter.putNumber("Limelight P", () -> {return RobotMap.LIMELIGHT_POSITION_P;}, true, true);
-        ConsolePrinter.putNumber("Limelight I", () -> {return RobotMap.LIMELIGHT_POSITION_I;}, true, true);
-        ConsolePrinter.putNumber("Limelight D", () -> {return RobotMap.LIMELIGHT_POSITION_D;}, true, true);
+            // Sets the camera controls
+            ledMode.setNumber(0);
+            camMode.setNumber(0);
+            pipeline.setNumber(0);
+
+            // Testing only
+            ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
+            ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
+            ConsolePrinter.putNumber("Vision Target Position 1", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[0];}, true, false);
+            ConsolePrinter.putNumber("Vision Target Position 2", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[1];}, true, false);
+            ConsolePrinter.putNumber("Vision Target Position 3", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[2];}, true, false);
+            ConsolePrinter.putNumber("Vision Target Position 4", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[3];}, true, false);
+            ConsolePrinter.putNumber("Vision Target Position 5", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[4];}, true, false);
+            ConsolePrinter.putNumber("Vision Target Position 6", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[5];}, true, false);
+            ConsolePrinter.putNumber("Limelight Controller Output", () -> {return Robot.drivetrain.limelightPosController.getControlOutput();}, true, false);
+            ConsolePrinter.putNumber("Limelight P", () -> {return RobotMap.LIMELIGHT_POSITION_P;}, true, true);
+            ConsolePrinter.putNumber("Limelight I", () -> {return RobotMap.LIMELIGHT_POSITION_I;}, true, true);
+            ConsolePrinter.putNumber("Limelight D", () -> {return RobotMap.LIMELIGHT_POSITION_D;}, true, true);
+        }
+        else
+        {
+            SmartDashboard.putBoolean("IsLimeLightPresent", false);
+        }
     }
 
     /**

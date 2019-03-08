@@ -144,8 +144,8 @@ public class OI
 		//////////////// commands////////////////////////////////////////////////////
 		// pidTestJoystick.ButtonA().whenPressed(new Drive14FeetForward_9FeetLeft());
 		// pidTestJoystick.ButtonB().whenPressed(new Drive10FeetBackward());
-		pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
-		pidTestJoystick.ButtonY().whenPressed(new TogglePipeline());
+		// pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
+		// pidTestJoystick.ButtonY().whenPressed(new TogglePipeline());
 
 
 	}
