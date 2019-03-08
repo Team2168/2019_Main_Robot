@@ -7,13 +7,21 @@
 
 package org.team2168.commands.monkeyBarPivot.interlocks;
 
+import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPID;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveMonkeyBarToCargoIntakePosition extends CommandGroup {
 
   public MoveMonkeyBarToCargoIntakePosition()
   {
-    
+    if(Robot.isPracticeRobot())
+      addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_CARGO_INTAKE_POS_PBOT, 1, 0, true));
+    else
+      addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_CARGO_INTAKE_POS, 1, 0, true));
+
   }
 
 
