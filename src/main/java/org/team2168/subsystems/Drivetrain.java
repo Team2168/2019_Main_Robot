@@ -308,7 +308,7 @@ public class Drivetrain extends Subsystem {
         RobotMap.LIMELIGHT_POSITION_P,
         RobotMap.LIMELIGHT_POSITION_I,
         RobotMap.LIMELIGHT_POSITION_D,
-        limelight,
+        _drivetrainLeftEncoder,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
     // add min and max output defaults and set array size

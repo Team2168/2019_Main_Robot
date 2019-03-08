@@ -280,6 +280,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                      Monkey Bar PARAMETERS                            *
 	 *************************************************************************/
+
+	public static final boolean ONE_TRIGGER_CLIMB_ENABLED = true;
 	public static final boolean MONKEY_BAR_ROTATE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_ROTATE_LEFT_REVERSE = false;
 	

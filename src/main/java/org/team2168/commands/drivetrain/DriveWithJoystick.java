@@ -169,6 +169,8 @@ public class DriveWithJoystick extends Command {
 			
 			//((Robot.oi.getGunStyleYValue() > 0.25 || Robot.oi.getGunStyleYValue() < -0.25)&&
 			//Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
+			
+
 			if(Robot.isClimbEnabled)
 			{ 
 				Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
