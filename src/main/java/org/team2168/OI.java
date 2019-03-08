@@ -9,6 +9,7 @@ import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+import org.team2168.commands.hatchProbeWheels.DriveHatchIntakeWithConstant;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithJoystick;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
@@ -91,7 +92,8 @@ public class OI
 		 * Operator Joystick *
 		 *************************************************************************/
 
-
+		// PID Test Joystick
+		pidTestJoystick.ButtonA().whenPressed(new DriveHatchIntakeWithConstant(0.3));
 
 		//////////////// Lower Platform///////////////////////////////////////
 		// operatorJoystick.ButtonBack().whenPressed(new LowerPlatform());

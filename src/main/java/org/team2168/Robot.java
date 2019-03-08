@@ -15,6 +15,7 @@ import org.team2168.subsystems.HatchFloorIntake;
 import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.HatchProbePivotBrake;
+import org.team2168.subsystems.HatchProbeWheels;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.MonkeyBarPivot;
 import org.team2168.subsystems.MonkeyBarIntakeWheels;
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot
   public static HatchProbePivotBrake hatchProbePivotBrake;
   public static HatchProbePistons hatchProbePistons;
   public static HatchFloorIntake hatchFloorIntake;
+  public static HatchProbeWheels hatchProbeWheels;
   public static Lift lift;
   public static MonkeyBarPivot monkeyBarPivot;
   public static MonkeyBarIntakeWheels monkeyBarIntakeWheels;
@@ -133,6 +135,7 @@ public class Robot extends TimedRobot
       hatchProbePivotBrake = HatchProbePivotBrake.getInstance();
       hatchProbePistons = HatchProbePistons.getInstance();
       hatchFloorIntake = HatchFloorIntake.getInstance();
+      hatchProbeWheels = HatchProbeWheels.getInstance();
       monkeyBarPivot = MonkeyBarPivot.getInstance();
       monkeyBarIntakeWheels = MonkeyBarIntakeWheels.getInstance();
       pneumatics = Pneumatics.getInstance();

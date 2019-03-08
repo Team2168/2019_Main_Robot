@@ -19,9 +19,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class HatchProbeWheels extends Subsystem {
   private TalonSRX _intakeMotor;
+  private static HatchProbeWheels _instance;
 
   private HatchProbeWheels() {
     _intakeMotor = new TalonSRX(RobotMap.HATCH_INTAKE_MOTOR_PDP);
+  }
+
+  public static HatchProbeWheels getInstance() {
+    if(_instance == null){
+      _instance = new HatchProbeWheels();
+    }
+    return _instance;
   }
 
   public void drive(double speed) {
