@@ -87,7 +87,7 @@ public class QuinticTrajectory
 
 	
 	double totalSplineLength = 0;
-	double wheelSpacing = 26.0; //inches
+	double wheelSpacing = 25.5; //inches
 
 	public static void main(String[] args)
 	{
@@ -123,8 +123,8 @@ public class QuinticTrajectory
 		
 		
 		double[][] waypointPath2 = new double[][]{
-			{0, 0.0, 0},
-			{192.0, 6.0, Math.PI/6}
+			{0, 300.0, 0},
+			{180.0, 294.0, Math.PI/6}
 			 //works with 19.3 on practice bot
 	};
 		
@@ -192,9 +192,9 @@ public class QuinticTrajectory
 		fig3.addData(quinticPath.leftPath, Color.blue);
 		
 
-	//	fig3.addData(quinticPath2.leftPath, Color.blue);
-	//	fig3.addData(quinticPath2.rightPath, Color.magenta);
-	//	fig3.addData(waypointPath2, null, Color.black);
+		fig3.addData(quinticPath2.leftPath, Color.blue);
+		fig3.addData(quinticPath2.rightPath, Color.magenta);
+		fig3.addData(waypointPath2, null, Color.black);
  
 //		fig3.addData(quinticPath2.leftPath, Color.blue);
 //		fig3.addData(quinticPath2.rightPath, Color.magenta);
