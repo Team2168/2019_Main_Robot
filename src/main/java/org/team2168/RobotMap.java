@@ -296,7 +296,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
-	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 0;
+	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
 	public static final double MONKEY_BAR_SAFE_SCORING_POS = 160; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
@@ -359,7 +359,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
-	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = false;
+	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = true;
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
