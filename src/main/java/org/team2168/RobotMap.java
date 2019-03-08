@@ -359,6 +359,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
+	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = false;
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
@@ -366,6 +367,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
+	public static final double PLUNGER_ARM_MIDDLE_POS = 90;
+	public static final double PLUNGER_ARM_SAFE_POS_FRONT = 45;
+	public static final double PLUNGER_ARM_SAFE_POS_BACK = 135;
+	public static final double PLUNGER_ARM_CARGO_SHIP_POS = 45;
 
 	public static final double PIVOT_0_POS = 0;
 	public static final double PIVOT_180_POS = 180;
@@ -376,12 +381,22 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES_PBOT = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 180;
+	public static final double PLUNGER_ARM_MIDDLE_POS_PBOT = 90;
+	public static final double PLUNGER_ARM_SAFE_POS_FRONT_PBOT = 45;
+	public static final double PLUNGER_ARM_SAFE_POS_BACK_PBOT = 135;
+	public static final double PLUNGER_ARM_CARGO_SHIP_POS_PBOT = 45;
 
 	public static final double PIVOT_0_POS_PBOT = 0;
 	public static final double PIVOT_180_POS_PBOT = 180;
 	public static final double PIVOT_CARGO_SHIP_POS_PBOT = 0; //TODO SET ALL
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
+
+	public static final double PLUNGER_ARM_ERROR = 5; //deg
+	public static final double PLUNGER_ARM_ERROR_PBOT = 5; //deg
+
+
+	public static final int PIVOT_ANGLE_MONKEY_BAR_SIDE = 90;
 
 	
 

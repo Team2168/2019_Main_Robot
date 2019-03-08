@@ -18,9 +18,12 @@ import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.PID.sensors.CanDigitalInput;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
-import org.team2168.utils.TCPSocketSender;
-import org.team2168.utils.consoleprinter.ConsolePrinter;
 
+import org.team2168.utils.TCPSocketSender;
+import org.team2168.commands.lift.MoveLiftToBasePosition;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
+
+import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HatchProbePivot extends Subsystem
@@ -31,10 +34,20 @@ public class HatchProbePivot extends Subsystem
   private CanDigitalInput _pivotHallEffectSensors;
   private static HatchProbePivot _instance;
 
+
   public PIDPosition hatchProbePivotController;
   TCPSocketSender TCPHatchProbePivotController;
 
- 
+  private double _middlePosition;
+  private double _safePositionMonkeyBarSide;
+  private double _safePositionOtherSide;
+  //cargoPos is the angle to score on the cargo ship, error is so that going to that angle will not trigger lift to go down
+  private double _cargoPosition;
+  private double _error;
+
+  MoveMonkeyBarToSafePositionForPivot moveMonkeyBarToSafePositionForPivot;
+  MoveLiftToBasePosition moveLiftFullyDown;
+
 
   private HatchProbePivot()
   {
@@ -42,6 +55,8 @@ public class HatchProbePivot extends Subsystem
     _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
+    moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
+    moveLiftFullyDown = new MoveLiftToBasePosition();
     if (Robot.isPracticeRobot())
     {
       _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, 
@@ -50,6 +65,11 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_POT_VOLTAGE_MAX_PBOT,
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES_PBOT, 
           RobotMap.PIVOT_AVG_ENCODER_VAL);
+          _middlePosition = RobotMap.PLUNGER_ARM_MIDDLE_POS_PBOT;
+          _cargoPosition = RobotMap.PLUNGER_ARM_CARGO_SHIP_POS_PBOT;
+          _safePositionMonkeyBarSide = RobotMap.PLUNGER_ARM_SAFE_POS_FRONT_PBOT;
+          _safePositionOtherSide = RobotMap.PLUNGER_ARM_SAFE_POS_BACK_PBOT;
+          _error = RobotMap.PLUNGER_ARM_ERROR_PBOT;
     }
     else
     {
@@ -59,6 +79,11 @@ public class HatchProbePivot extends Subsystem
           RobotMap.PIVOT_POT_VOLTAGE_MAX,
           RobotMap.PIVOT_POT_MAX_ROTATION_DEGREES, 
           RobotMap.PIVOT_AVG_ENCODER_VAL);
+          _middlePosition = RobotMap.PLUNGER_ARM_MIDDLE_POS;
+          _cargoPosition = RobotMap.PLUNGER_ARM_CARGO_SHIP_POS;
+          _safePositionMonkeyBarSide = RobotMap.PLUNGER_ARM_SAFE_POS_FRONT;
+          _safePositionOtherSide = RobotMap.PLUNGER_ARM_SAFE_POS_BACK;
+          _error = RobotMap.PLUNGER_ARM_ERROR;
     }
 
     hatchProbePivotController = new PIDPosition("HatchProbePivotController", 
@@ -95,10 +120,10 @@ public class HatchProbePivot extends Subsystem
     }, true, false);
 
     ConsolePrinter.putBoolean("HatchProbe Pivot isForward", () -> {
-      return isPivotHallEffectForward();
+      return isPivotHallEffectMonkeyBar();
     }, true, false);
     ConsolePrinter.putBoolean("HatchProbe Pivot isReverse", () -> {
-      return isPivotHallEffectReverse();
+      return isPivotHallEffectOpposite();
     }, true, false);
 
   }
@@ -125,12 +150,44 @@ public class HatchProbePivot extends Subsystem
    *        front of the robot, negative values rotate pivot to the back of the
    *        robot, 0 is stationary
    */
-  public void drivePlungerArmPivotMotor(double speed)
+  public void drivePlungerArmPivotMotorUnsafe(double speed)
   {
     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
       speed = -speed;
     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+  }
+
+  public void drivePlungerArmPivotMotor(double speed)
+  {
+    // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
+    {
+      moveLiftFullyDown.start();
+      //print out
+    }
+   // move monkey bar out of way of pivot if not already
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
+    {
+      moveMonkeyBarToSafePositionForPivot.start();
+    }
+
+    // if monkey bar in safe pos, lift all the way down, or within angle needed to score on CS, drive the pivot
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && Robot.monkeyBarPivot.isSafePivotPosition() && Robot.lift.isLiftFullyDown() || Robot.monkeyBarPivot.isSafePivotPosition() && isWithinCargoAngle())
+    {
+      if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+        speed = -speed;
+      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+    }
+    //no interlocks
+    else if(!RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS)
+    {
+      if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+        speed = -speed;
+      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+    }
   }
 
   /**
@@ -151,12 +208,12 @@ public class HatchProbePivot extends Subsystem
     return _pivotPot.getPos();
   }
 
-  public boolean isPivotHallEffectForward()
+  public boolean isPivotHallEffectMonkeyBar()
   {
     return _pivotHallEffectSensors.getForwardLimit();
   }
 
-  public boolean isPivotHallEffectReverse()
+  public boolean isPivotHallEffectOpposite()
   {
     return _pivotHallEffectSensors.getReverseLimit();
   }
@@ -166,12 +223,16 @@ public class HatchProbePivot extends Subsystem
     return getPotPos() >= 90.0;
   }
 
+  public boolean isWithinCargoAngle()
+  {
+    return (getPotPos() <= _cargoPosition+_error);
+  }
 
   public boolean isSafeToMoveLiftUp()
   {
-    return getPotPos() < 90.0 || getPotPos() >= 135.0;
-
+    return (getPotPos() <= _safePositionMonkeyBarSide || getPotPos()>=_safePositionOtherSide);
   }
+
 
   @Override
   public void initDefaultCommand()
