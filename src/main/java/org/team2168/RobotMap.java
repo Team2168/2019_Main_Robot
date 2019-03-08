@@ -24,9 +24,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	// Joysticks///////////////////////////////////////////////////////////////
 	public static final int DRIVER_JOYSTICK = 0;
 	public static final int OPERATOR_JOYSTICK = 1;
-	public static final int DRIVER_OPERATOR_E_BACKUP = 2;
-	public static final int BUTTON_BOX_1 = 3;
-	public static final int BUTTON_BOX_2 = 4;
+	public static final int DRIVER_OPERATOR_E_BACKUP = 4;
+	public static final int BUTTON_BOX_1 = 2;
+	public static final int BUTTON_BOX_2 = 3;
 	public static final int PID_TEST_JOYSTICK = 5;
 	public static final boolean ENABLE_BUTTON_BOX_PRINTS = true;
 
