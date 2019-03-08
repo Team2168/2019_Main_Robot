@@ -14,6 +14,7 @@ import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConst
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
+import org.team2168.utils.TILaunchPad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,6 +53,10 @@ public class OI
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 
+	public TILaunchPad buttonBox1;
+	public TILaunchPad buttonBox2;
+
+
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
@@ -71,6 +76,8 @@ public class OI
 	private OI()
 	{
 
+		//buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
+		//buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
 		/*************************************************************************
 		 * Driver Joystick *
 		 *************************************************************************/

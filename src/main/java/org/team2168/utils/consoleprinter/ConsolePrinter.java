@@ -223,6 +223,11 @@ public class ConsolePrinter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		catch (Throwable throwable)
+		{
+			throwable.printStackTrace();
+		}	
+		
 
 	}
 
@@ -251,20 +256,28 @@ public class ConsolePrinter {
 		String key;
 		String output = "";
 
-		if (RobotMap.PRINT_SD_DEBUG_DATA) {
-			i = fileKeys.iterator();
-			// Build string
-			while (i.hasNext()) {
-				key = i.next();
-				output = output.concat(data.get(key).valueToString() + "\t");
+		try 
+		{
+			if (RobotMap.PRINT_SD_DEBUG_DATA) 
+			{
+				i = fileKeys.iterator();
+				// Build string
+				while (i.hasNext()) {
+					key = i.next();
+					output = output.concat(data.get(key).valueToString() + "\t");
+				}
+				if (log != null) {
+					// send string to log file
+					log.println(output);
+					log.flush();
+				} else {
+					System.out.println("Log file is null");
+				}
 			}
-			if (log != null) {
-				// send string to log file
-				log.println(output);
-				log.flush();
-			} else {
-				System.out.println("Log file is null");
-			}
+		}
+		catch (Throwable throwable)
+		{
+			throwable.printStackTrace();
 		}
 	}
 
@@ -275,10 +288,17 @@ public class ConsolePrinter {
 	public static void dataToDashboard() {
 		Iterator<String> i = dashboardKeys.iterator();
 		String key;
-
-		while (i.hasNext()) {
-			key = i.next();
-			data.get(key).put(key);
+		try 
+		{
+			while (i.hasNext()) 
+			{
+				key = i.next();
+				data.get(key).put(key);
+			}
+		}
+		catch (Throwable throwable)
+		{
+			throwable.printStackTrace();
 		}
 	}
 
