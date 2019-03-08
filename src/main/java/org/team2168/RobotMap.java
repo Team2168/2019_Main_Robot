@@ -461,9 +461,15 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double HP_PIVOT_I = 0.027;
 	public static final double HP_PIVOT_D = 000000067;
 
-
+	public static final double LIMELIGHT_POSITION_P = 0.013;
+	public static final double LIMELIGHT_POSITION_I = 0.0;
+	public static final double LIMELIGHT_POSITION_D = 0.0;
+		
 	public static final long LIFT_PID_PERIOD = 20;
 	public static final int  LIFT_PID_ARRAY_SIZE = 30;
+
+
+
 
 	/****************************************************************
 	 *                         TCP Servers (ONLY FOR DEBUGGING)     *
@@ -476,7 +482,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT = 1185;
 	public static final int TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION = 1186;
 	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION = 1187;
-
+	public static final int TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA = 1188;
 	public static final int TCP_SERVER_MB_POT_CONTROLLER = 1189;
 	public static final int TCP_SERVER_HP_POT_CONTROLLER = 1190;
 

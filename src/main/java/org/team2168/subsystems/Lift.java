@@ -80,8 +80,7 @@ public class Lift extends Subsystem {
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
 		liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
 
-		moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
-		movePivotToMBPosition = new MovePivotToMBPosition();				
+			
 
     if (Robot.isPracticeRobot()) 
     {
@@ -241,7 +240,10 @@ public class Lift extends Subsystem {
 	 */
 	public void driveAllMotors(double speed)
 	{
-
+		if( moveMonkeyBarToSafePositionForLift == null)
+			moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
+		if( movePivotToMBPosition == null)
+			movePivotToMBPosition = new MovePivotToMBPosition();	
 		
 		// lift is stalling
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > RobotMap.STALL_CURRENT_LIMIT)

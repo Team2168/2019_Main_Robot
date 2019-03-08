@@ -7,8 +7,9 @@
 
 package org.team2168.commands.monkeyBarPivot.PIDCommands;
 
-import org.team2168.RobotMap;
 import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.subsystems.MonkeyBarPivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,7 +26,7 @@ public class EnableMonkeyBarPivotPID extends Command {
   public EnableMonkeyBarPivotPID() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.monkeyBarPivot);
+    requires(MonkeyBarPivot.getInstance());
     this.setPoint = Robot.monkeyBarPivot.monkeyBarPivotController.getSetPoint();
     this.maxSpeed = 1;
     this.minSpeed = 0;

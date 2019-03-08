@@ -19,7 +19,7 @@ public class DriveLiftWithJoysticks extends Command
   {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift);
+    requires(Lift.getInstance());
   }
 
   // Called just before this Command runs the first time

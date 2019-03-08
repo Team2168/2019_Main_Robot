@@ -1,16 +1,16 @@
 package org.team2168;
 
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.drivetrain.PIDCommands.RotatePIDLimelight;
+import org.team2168.commands.drivetrain.PIDCommands.TogglePipeline;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
-import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithJoystick;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
@@ -144,6 +144,8 @@ public class OI
 		//////////////// commands////////////////////////////////////////////////////
 		// pidTestJoystick.ButtonA().whenPressed(new Drive14FeetForward_9FeetLeft());
 		// pidTestJoystick.ButtonB().whenPressed(new Drive10FeetBackward());
+		pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
+		pidTestJoystick.ButtonY().whenPressed(new TogglePipeline());
 
 
 	}

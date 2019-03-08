@@ -8,13 +8,15 @@
 package org.team2168.commands.lift.PIDCommands;
 
 import org.team2168.Robot;
+import org.team2168.subsystems.Lift;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PauseLiftPID extends Command {
   public PauseLiftPID() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift);
+    requires(Lift.getInstance());
   }
 
   // Called just before this Command runs the first time

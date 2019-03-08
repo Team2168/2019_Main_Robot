@@ -3,6 +3,7 @@ package org.team2168.commands.lift.PIDCommands;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -22,7 +23,7 @@ public class EnableLiftPIDZZZ extends Command {
 	
     public EnableLiftPIDZZZ() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.lift);
+    	requires(Lift.getInstance());
     	this.setPoint = Robot.lift.liftPOTController.getSetPoint();
     	this.maxSpeed = 1;
     	this.minSpeed = 0;

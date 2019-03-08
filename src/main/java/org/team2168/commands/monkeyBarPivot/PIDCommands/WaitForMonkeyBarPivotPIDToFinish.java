@@ -8,14 +8,16 @@
 package org.team2168.commands.monkeyBarPivot.PIDCommands;
 
 import org.team2168.Robot;
+import org.team2168.subsystems.MonkeyBarPivot;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 
 public class WaitForMonkeyBarPivotPIDToFinish extends Command {
   public WaitForMonkeyBarPivotPIDToFinish() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.monkeyBarPivot);
+    requires(MonkeyBarPivot.getInstance());
   }
 
   // Called just before this Command runs the first time

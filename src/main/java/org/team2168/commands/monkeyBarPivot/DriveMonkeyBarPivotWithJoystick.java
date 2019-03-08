@@ -2,6 +2,7 @@
 package org.team2168.commands.monkeyBarPivot;
 
 import org.team2168.Robot;
+import org.team2168.subsystems.MonkeyBarPivot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,7 +12,7 @@ public class DriveMonkeyBarPivotWithJoystick extends Command
   public DriveMonkeyBarPivotWithJoystick()
   {
 
-    requires(Robot.monkeyBarPivot);
+    requires(MonkeyBarPivot.getInstance());
   }
 
   @Override

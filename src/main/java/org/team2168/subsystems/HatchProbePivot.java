@@ -55,8 +55,7 @@ public class HatchProbePivot extends Subsystem
     _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
-    moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
-    moveLiftFullyDown = new MoveLiftToBasePosition();
+
     if (Robot.isPracticeRobot())
     {
       _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, 
@@ -160,6 +159,12 @@ public class HatchProbePivot extends Subsystem
 
   public void drivePlungerArmPivotMotor(double speed)
   {
+    if(moveMonkeyBarToSafePositionForPivot == null)
+      moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
+
+    if(moveLiftFullyDown == null)
+      moveLiftFullyDown = new MoveLiftToBasePosition();
+
     // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
     if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
     {
