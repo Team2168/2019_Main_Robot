@@ -234,10 +234,12 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
 	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
 	public static final boolean LIFT_ENABLE_INTERLOCKS = false;
+	public static final boolean LIFT_ENABLE_INTERLOCKS_PBOT = false;
 
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
 	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 13.0;
+	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT_PBOT = 13.0;
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 
@@ -245,6 +247,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_MIN_SPEED = 0.075;
+	public static final double LIFT_MIN_SPEED_PBOT = 0.075;
 
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 3.5; //85 degrees
@@ -260,6 +263,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
+	public static final boolean ENABLE_LIFT_POT_SAFETY_PBOT = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
 
@@ -290,6 +294,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_STOW_POS = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 10;
 
+	public static final double MONKEY_BAR_PIVOT_MIN_SPEED = 0.075; //taken from lift
+
 
 	//PBOT
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 5.108; //130 degrees
@@ -310,6 +316,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_STOW_POS_PBOT = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS_PBOT = 10;
 
+	public static final double MONKEY_BAR_PIVOT_MIN_SPEED_PBOT = 0.075;
 
 	public static final int MONKEY_BAR_AVG_ENCODER_VAL = 5;
 
@@ -355,6 +362,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
 
+	public static final double PIVOT_MIN_SPEED = 0.075; //taken from lift
+
 	/////TODO set these values
 	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
 	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 5;
@@ -362,6 +371,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 180;
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
+
+	public static final double PIVOT_MIN_SPEED_PBOT = 0.075; //taken from lift
 
 	
 

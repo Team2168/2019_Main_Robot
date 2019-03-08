@@ -59,6 +59,9 @@ public class Lift extends Subsystem {
 	private boolean isLiftMotor1BreakerTrip = false;
 	private boolean isLiftMotor2BreakerTrip = false;
 
+	private boolean drivingUp;
+	private boolean drivingDown;
+
 	private static Lift instance = null;
 
 	private int timeCounter = 0;
@@ -258,18 +261,19 @@ public class Lift extends Subsystem {
 		{
 			timeCounter = 0;
 
-			if (RobotMap.ENABLE_LIFT_POT_SAFETY) //use pot value as additional sensor check
+			if (RobotMap.ENABLE_LIFT_POT_SAFETY && !Robot.isPracticeRobot()) //use pot value as additional sensor check
 			{
 				//If we are commanding the lift, only allow it to go up if not at hard stop or the pot is not at max value
 				//Similarly only allow it to go down if we are not at the lower limit or the pot is not at its lowest limit
 				
-				boolean drivingUp = speed > RobotMap.LIFT_MIN_SPEED;
-				boolean drivingDown = speed < -RobotMap.LIFT_MIN_SPEED;
+				drivingUp = speed > RobotMap.LIFT_MIN_SPEED;
+				drivingDown = speed < -RobotMap.LIFT_MIN_SPEED;
+				
 
 				if (( drivingUp && !isLiftFullyUp() && !liftPot.isAtLowerLimit() )
 						|| (drivingDown && !isLiftFullyDown() && !liftPot.isAtUpperLimit()))
 				{
-
+					
 					// //Driving up but need to prevent crashing into lift support 
 					if(RobotMap.LIFT_ENABLE_INTERLOCKS && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() && liftPot.getPos() >= RobotMap.LIFT_POT_CROSS_BAR_HEIGHT)
 					{
@@ -313,6 +317,7 @@ public class Lift extends Subsystem {
 						return;
 				
 					}
+					
 
 					//if we got here then we are driving lift
 					driveLiftMotor1(speed);
@@ -341,20 +346,237 @@ public class Lift extends Subsystem {
 
 				}
 			}
-			else
+			else if(RobotMap.ENABLE_LIFT_POT_SAFETY_PBOT && Robot.isPracticeRobot())
 			{
-				if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp())
-						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown()))
+				drivingUp = speed > RobotMap.LIFT_MIN_SPEED_PBOT;
+				drivingDown = speed < -RobotMap.LIFT_MIN_SPEED_PBOT;
+
+				if (( drivingUp && !isLiftFullyUp() && !liftPot.isAtLowerLimit() )
+						|| (drivingDown && !isLiftFullyDown() && !liftPot.isAtUpperLimit()))
 				{
-					driveLiftMotor1(speed);
-					driveLiftMotor2(speed);
+				
+						// //Driving up but need to prevent crashing into lift support 
+					if(RobotMap.LIFT_ENABLE_INTERLOCKS_PBOT && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() && liftPot.getPos() >= RobotMap.LIFT_POT_CROSS_BAR_HEIGHT_PBOT)
+					{
+						//Stop Moving lift
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+						System.out.println("Interlock:LIFT: Lift trying to drive into Lift Cross Support");
+						return;
+					}
+
+					//we trying to drive up but pivit is not fully on one side on PivotSide. need to move pivot
+					if(RobotMap.LIFT_ENABLE_INTERLOCKS_PBOT && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.hatchProbePivot.isSafeToMoveLiftUp() && !movePivotToMBPosition.isRunning())
+					{
+						movePivotToMBPosition.start();
+						System.out.println("Interlock:LIFT: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+						return;
+					}
+					else if(movePivotToMBPosition.isRunning())
+					{
+						//Stop Moving lift and wait for pivot to move
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+						System.out.println("Interlock:LIFT: Lift trying to drive while hatch pivot safe down waiting for pivot to move.");
+						return;
+					}
+
+					//we trying to drive up but MonkeyBar in way
+					if(RobotMap.LIFT_ENABLE_INTERLOCKS_PBOT && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.monkeyBarPivot.isSafeLiftPosition() && !moveMonkeyBarToSafePositionForLift.isRunning())
+					{
+						moveMonkeyBarToSafePositionForLift.start();
+						System.out.println("Interlock:LIFT: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+						//movedMonkeyBar = true;
+						return;
+					}
+					else if (moveMonkeyBarToSafePositionForLift.isRunning())
+					{
+						//Stop Moving lift and wait for pivot to move
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+						System.out.println("Interlock:LIFT: Lift trying to drive while MB pivot not down waiting for pivot to move.");
+						return;
+				
+					}
+						//if we got here then we are driving lift
+						driveLiftMotor1(speed);
+						driveLiftMotor2(speed);
+	
+						if(Math.abs(liftPot.getRate()) < 1.0)
+							isSensorValid = false;
+						else
+						isSensorValid = true;
+	
+						
 				}
 				else
 				{
+					// enableBrake();
+
+					//ABILITY TO PUT SUBSYSTEM BACK TO WHERE WE FOUND IT
+					// if(movedMOnkeyBAr)
+					// 	MoveBAckTo
+					// elseif(MonkeyNotRunning)
+					// 	movedMOnkeyBAr = false;
+
+
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
-				}
 
+				}
+					
+			}
+			else
+			{
+				//If we are commanding the lift, only allow it to go up if not at hard stop or the pot is not at max value
+				//Similarly only allow it to go down if we are not at the lower limit or the pot is not at its lowest limit
+				
+				if(Robot.isPracticeRobot())
+				{
+					drivingUp = speed > RobotMap.LIFT_MIN_SPEED_PBOT;
+					drivingDown = speed < -RobotMap.LIFT_MIN_SPEED_PBOT;
+					if ((drivingUp && !isLiftFullyUp())
+						|| (drivingDown && !isLiftFullyDown()))
+					{
+						// //Driving up but need to prevent crashing into lift support 
+						if(RobotMap.LIFT_ENABLE_INTERLOCKS_PBOT && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() && liftPot.getPos() >= RobotMap.LIFT_POT_CROSS_BAR_HEIGHT_PBOT)
+						{
+							//Stop Moving lift
+							driveLiftMotor1(0.0);
+							driveLiftMotor2(0.0);
+							System.out.println("Interlock:LIFT: Lift trying to drive into Lift Cross Support");
+							return;
+						}
+	
+						//we trying to drive up but pivit is not fully on one side on PivotSide. need to move pivot
+						if(RobotMap.LIFT_ENABLE_INTERLOCKS_PBOT && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.hatchProbePivot.isSafeToMoveLiftUp() && !movePivotToMBPosition.isRunning())
+						{
+							movePivotToMBPosition.start();
+							System.out.println("Interlock:LIFT: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+							return;
+						}
+						else if(movePivotToMBPosition.isRunning())
+						{
+							//Stop Moving lift and wait for pivot to move
+							driveLiftMotor1(0.0);
+							driveLiftMotor2(0.0);
+							System.out.println("Interlock:LIFT: Lift trying to drive while hatch pivot safe down waiting for pivot to move.");
+							return;
+						}
+	
+						//we trying to drive up but MonkeyBar in way
+						if(RobotMap.LIFT_ENABLE_INTERLOCKS_PBOT && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.monkeyBarPivot.isSafeLiftPosition() && !moveMonkeyBarToSafePositionForLift.isRunning())
+						{
+							moveMonkeyBarToSafePositionForLift.start();
+							System.out.println("Interlock:LIFT: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+							//movedMonkeyBar = true;
+							return;
+						}
+						else if (moveMonkeyBarToSafePositionForLift.isRunning())
+						{
+							//Stop Moving lift and wait for pivot to move
+							driveLiftMotor1(0.0);
+							driveLiftMotor2(0.0);
+							System.out.println("Interlock:LIFT: Lift trying to drive while MB pivot not down waiting for pivot to move.");
+							return;
+					
+						}
+							//if we got here then we are driving lift
+							driveLiftMotor1(speed);
+							driveLiftMotor2(speed);
+		
+							if(Math.abs(liftPot.getRate()) < 1.0)
+								isSensorValid = false;
+							else
+							isSensorValid = true;
+		
+							
+					}
+					else
+					{
+						// enableBrake();
+	
+						//ABILITY TO PUT SUBSYSTEM BACK TO WHERE WE FOUND IT
+						// if(movedMOnkeyBAr)
+						// 	MoveBAckTo
+						// elseif(MonkeyNotRunning)
+						// 	movedMOnkeyBAr = false;
+	
+	
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+	
+					}
+					
+				}
+				else
+				{
+					drivingUp = speed > RobotMap.LIFT_MIN_SPEED;
+					drivingDown = speed < -RobotMap.LIFT_MIN_SPEED;
+
+					
+					if ((speed > RobotMap.LIFT_MIN_SPEED && !isLiftFullyUp())
+						|| ((speed < -RobotMap.LIFT_MIN_SPEED) && !isLiftFullyDown()))
+					{
+						// //Driving up but need to prevent crashing into lift support 
+						if(RobotMap.LIFT_ENABLE_INTERLOCKS && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() && liftPot.getPos() >= RobotMap.LIFT_POT_CROSS_BAR_HEIGHT)
+						{
+							//Stop Moving lift
+							driveLiftMotor1(0.0);
+							driveLiftMotor2(0.0);
+							System.out.println("Interlock:LIFT: Lift trying to drive into Lift Cross Support");
+							return;
+						}
+
+						//we trying to drive up but pivit is not fully on one side on PivotSide. need to move pivot
+						if(RobotMap.LIFT_ENABLE_INTERLOCKS && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.hatchProbePivot.isSafeToMoveLiftUp() && !movePivotToMBPosition.isRunning())
+						{
+							movePivotToMBPosition.start();
+							System.out.println("Interlock:LIFT: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+							return;
+						}
+						else if(movePivotToMBPosition.isRunning())
+						{
+							//Stop Moving lift and wait for pivot to move
+							driveLiftMotor1(0.0);
+							driveLiftMotor2(0.0);
+							System.out.println("Interlock:LIFT: Lift trying to drive while hatch pivot safe down waiting for pivot to move.");
+							return;
+						}
+
+						//we trying to drive up but MonkeyBar in way
+						if(RobotMap.LIFT_ENABLE_INTERLOCKS && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.monkeyBarPivot.isSafeLiftPosition() && !moveMonkeyBarToSafePositionForLift.isRunning())
+						{
+							moveMonkeyBarToSafePositionForLift.start();
+							System.out.println("Interlock:LIFT: Lift trying to drive up while pivot not safe on MB side. Moving Pivot to safe angle");
+							//movedMonkeyBar = true;
+							return;
+						}
+						else if (moveMonkeyBarToSafePositionForLift.isRunning())
+						{
+							//Stop Moving lift and wait for pivot to move
+							driveLiftMotor1(0.0);
+							driveLiftMotor2(0.0);
+							System.out.println("Interlock:LIFT: Lift trying to drive while MB pivot not down waiting for pivot to move.");
+							return;
+					
+						}
+
+						//if we got here then we are driving lift
+						driveLiftMotor1(speed);
+						driveLiftMotor2(speed);
+
+						if(Math.abs(liftPot.getRate()) < 1.0)
+							isSensorValid = false;
+						else
+						isSensorValid = true;
+					}
+					else
+					{
+						driveLiftMotor1(0.0);
+						driveLiftMotor2(0.0);
+					}
+				}
 				
 			}
 		}
