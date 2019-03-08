@@ -33,6 +33,8 @@ public class CargoIntakeWheels extends Subsystem {
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
         ConsolePrinter.putBoolean("isCargoPresent", () -> {return isCargoPresent();}, true, false);
         ConsolePrinter.putNumber("Intake motor voltage", () -> {return _driveVoltage;}, true, false);
+        ConsolePrinter.putBoolean("Cargo Intake Motor Trip", () -> {return !Robot.pdp.isCargoIntakeMotorTrip();}, true, false);
+        ConsolePrinter.putNumber("Cargo Intake Motor Current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.CARGO_INTAKE_MOTOR_PDP);},true, true);
 
     }
 

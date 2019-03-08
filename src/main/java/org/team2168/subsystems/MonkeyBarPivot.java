@@ -117,6 +117,9 @@ public class MonkeyBarPivot extends Subsystem {
     
     ConsolePrinter.putBoolean("Monkey Bar Lowered", () -> {return isLowered();}, true, false);
     ConsolePrinter.putBoolean("Monkey Bar Stowed", () -> {return isStowed();}, true, false);
+
+    ConsolePrinter.putBoolean("Rotate Left Motor Trip", () -> {return !Robot.pdp.isRotateLeftMotorTrip();}, true, false);
+    ConsolePrinter.putBoolean("Rotate Right Motor Trip", () -> {return !Robot.pdp.isRotateRightMotorTrip();}, true, false);
   }
 
     /**

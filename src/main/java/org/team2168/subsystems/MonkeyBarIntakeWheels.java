@@ -42,6 +42,8 @@ public class MonkeyBarIntakeWheels extends Subsystem {
     ConsolePrinter.putNumber("Monkey Bar Intake left motor voltage", () -> {return _intakeLeftVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake right motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake left motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);}, true, false);
+    ConsolePrinter.putBoolean("Intake Left Motor Trip", () -> {return !Robot.pdp.isIntakeLeftMotorTrip();}, true, false);
+    ConsolePrinter.putBoolean("Intake Right Motor Trip", () -> {return !Robot.pdp.isIntakeRightMotorTrip();}, true, false);
   }
 
   /**

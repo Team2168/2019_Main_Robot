@@ -228,6 +228,35 @@ public class PowerDistribution {
 		else 
 			return false;
 	}
-		
-	
+	public boolean isIntakeLeftMotorTrip(){
+		if (channelError[RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP] ==2)
+			return true;
+		else	
+			return false;
+	}	
+	public boolean isIntakeRightMotorTrip(){
+		if (channelError[RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP] ==2)
+			return true;
+		else
+			return false;
+	}
+	public boolean isRotateLeftMotorTrip(){
+		if (channelError[RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP] ==2)
+			return true;
+		else
+			return false;
+	}
+	public boolean isRotateRightMotorTrip(){
+		if (channelError[RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP] ==2)
+			return true;
+		else
+			return false;
+	}
+	public boolean isCargoIntakeMotorTrip(){
+		if (channelError[RobotMap.CARGO_INTAKE_MOTOR_PDP] ==2)
+			return true;
+		else
+			return false;
+	}
+
 }
