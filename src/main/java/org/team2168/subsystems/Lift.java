@@ -204,6 +204,14 @@ public class Lift extends Subsystem {
 		return !liftFullyDown.get();
 	}
 
+	public boolean isLiftAboveSafeMonkeyBarPos()
+	{
+		if(Robot.isPracticeRobot())
+			return getPotPos() > RobotMap.LIFT_SAFE_ABOVE_MONKEY_BAR_POS_PBOT;
+		else
+			return getPotPos() > RobotMap.LIFT_SAFE_ABOVE_MONKEY_BAR_POS;
+	}
+
 	/**
 	 * Drives the first Lift motor at a speed from -1 to 1 where 1 is forward and
 	 * negative 1 is backwards

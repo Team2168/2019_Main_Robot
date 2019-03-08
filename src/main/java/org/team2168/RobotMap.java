@@ -258,6 +258,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_CARGO_SHIP_POS = 0;
 	public static final double LIFT_BASE_POS = 0;
 
+	public static final double LIFT_SAFE_ABOVE_MONKEY_BAR_POS = 0;
+
 	//PBOT LIFT
 	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 3.5; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
@@ -270,6 +272,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 0;
 	public static final double LIFT_BASE_POS_PBOT = 0;
 
+	public static final double LIFT_SAFE_ABOVE_MONKEY_BAR_POS_PBOT = 0;
+
+
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
@@ -280,6 +285,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean MONKEY_BAR_ROTATE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_ROTATE_LEFT_REVERSE = false;
+
+	public static final boolean MONKEY_BAR_ENABLE_INTERLOCKS = false;
+	public static final boolean MONKEY_BAR_ENABLE_INTERLOCKS_PBOT = false;
 	
 	public static final boolean MONKEY_BAR_INTAKE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_INTAKE_LEFT_REVERSE = false;

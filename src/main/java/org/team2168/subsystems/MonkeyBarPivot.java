@@ -14,6 +14,7 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.commands.lift.MoveLiftToBasePosition;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
@@ -47,6 +48,8 @@ public class MonkeyBarPivot extends Subsystem {
   TCPSocketSender TCPMonkeyBarPivotController;
 
   private static MonkeyBarPivot _instance;
+
+  MoveLiftToBasePosition moveLiftFullyDown;
 
   //constructors for monkey bar
   private MonkeyBarPivot()
@@ -167,6 +170,25 @@ public class MonkeyBarPivot extends Subsystem {
    */
   public void driveRotateBarMotors(double speed)
   {
+    if (moveLiftFullyDown == null)
+    moveLiftFullyDown = new MoveLiftToBasePosition();
+
+    if(RobotMap.MONKEY_BAR_ENABLE_INTERLOCKS && !Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning() && !Robot.lift.isLiftAboveSafeMonkeyBarPos() && Robot.hatchProbePivot.isOnMonkeyBarSide())
+    {
+      moveLiftFullyDown.start();
+    }
+
+    if(RobotMap.MONKEY_BAR_ENABLE_INTERLOCKS && (Robot.lift.isLiftFullyDown() || Robot.lift.isLiftAboveSafeMonkeyBarPos() || !Robot.hatchProbePivot.isOnMonkeyBarSide()))
+    {
+      driveRotateMotorLeft(speed);
+      driveRotateMotorRight(speed);
+    }
+    else if (!RobotMap.MONKEY_BAR_ENABLE_INTERLOCKS)
+    {
+      driveRotateMotorLeft(speed);
+      driveRotateMotorRight(speed);
+    }
+    
     driveRotateMotorLeft(speed);
     driveRotateMotorRight(speed);
   }
