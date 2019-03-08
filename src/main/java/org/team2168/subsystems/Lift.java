@@ -247,15 +247,10 @@ public class Lift extends Subsystem {
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > RobotMap.STALL_CURRENT_LIMIT)
 				|| (Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP) > RobotMap.STALL_CURRENT_LIMIT))
 		{
-			// enableBrake();
-			timeCounter++;
 
-			// wait for brake to actuate then stop motors
-			if (timeCounter >= 1 / .02)
-			{
 				driveLiftMotor1(0.0);
 				driveLiftMotor2(0.0);
-			}
+		
 
 			System.out.println("We stalling Lift");
 		}

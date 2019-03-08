@@ -237,6 +237,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
+	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 13.0;
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 

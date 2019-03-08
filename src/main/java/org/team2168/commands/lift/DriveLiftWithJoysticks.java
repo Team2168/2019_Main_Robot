@@ -9,7 +9,7 @@ package org.team2168.commands.lift;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -38,7 +38,14 @@ public class DriveLiftWithJoysticks extends Command
       double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
       if(Math.abs(Math.abs(Robot.oi.getLiftJoystickValue()))<holdingSpeed)
       {
-        Robot.lift.driveAllMotors(holdingSpeed);
+        if(Lift.getInstance().getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
+        {
+          Robot.lift.driveAllMotors(-holdingSpeed-0.01);
+        }
+        else
+        {
+          Robot.lift.driveAllMotors(holdingSpeed);
+        }
         System.out.println("Da lift is holding");
       }
       else
