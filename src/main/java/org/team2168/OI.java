@@ -1,7 +1,6 @@
 package org.team2168;
 
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
-import org.team2168.commands.cargoPunch.ExtendCargoPunch;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -15,12 +14,18 @@ import org.team2168.commands.hatchProbePistons.ReleaseHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo0Position;
 import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
+import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
+import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
 import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
+import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
+import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.TILaunchPad;
@@ -109,8 +114,8 @@ public class OI
 		 ***********************************************************************/
 		buttonBox1.Button1().whenPressed(new ExtendHatchPlunger());
 		buttonBox1.Button2().whenPressed(new EngageHatchPanel());
-		buttonBox1.Button3().whenPressed(new ExtendHatchPlunger());
-		buttonBox1.Button3().whenReleased(new RetractHatchPlunger()); //not legit
+		buttonBox1.Button3().whileHeld(new IntakeHatchPanel()); // IR sensor must be tuned
+		buttonBox1.Button3().whenReleased(new RetractHatchPlunger()); 
 		buttonBox1.Button4().whenPressed(new HatchFloorIntakePivotExtend()); //not legit
 		buttonBox1.Button5().whenPressed(new MoveLiftToLvl3Position()); //should move pivot too
 		buttonBox1.Button6().whenPressed(new MoveLiftToLvl2Position()); //should move pivot too
@@ -194,10 +199,12 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new Drive14FeetForward_9FeetLeft());
-		// pidTestJoystick.ButtonB().whenPressed(new Drive10FeetBackward());
-		// pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
-		// pidTestJoystick.ButtonY().whenPressed(new TogglePipeline());
+		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
 
 	}
@@ -221,7 +228,7 @@ public class OI
 
 	public double getLiftJoystickValue()
 	{
-		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y();
+		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y(); //+ buttonBox1.getAnalogRaw_Channel2();
 	}
 
 	/*************************************************************************
