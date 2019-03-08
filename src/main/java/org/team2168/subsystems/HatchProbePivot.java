@@ -29,6 +29,13 @@ public class HatchProbePivot extends Subsystem
   private CanDigitalInput _pivotHallEffectSensors;
   private static HatchProbePivot _instance;
 
+  private boolean plungerArmPivotMotorFault = false;
+
+  private boolean plungerArmPivotMotorHighCurrent = false;
+
+  private boolean plungerArmPivotMotorHighThenZeroCurrent = false;
+
+  private boolean isplungerArmPivotMotorBreakerTrip = false;
  
 
   private HatchProbePivot()
@@ -82,6 +89,10 @@ public class HatchProbePivot extends Subsystem
     ConsolePrinter.putBoolean("HatchProbe Pivot isReverse", () -> {
       return isPivotHallEffectReverse();
     }, true, false);
+
+    ConsolePrinter.putBoolean("PlungerArmPivot Motor_FAULT", () -> {return plungerArmPivotMotorFault;}, true, true);
+
+    ConsolePrinter.putBoolean("PlungerArmPivot Motor_Breaker_Trip", () -> {return isplungerArmPivotMotorBreakerTrip;}, true, true);
 
   }
 
@@ -154,6 +165,54 @@ public class HatchProbePivot extends Subsystem
     return getPotPos() < 90.0 || getPotPos() >= 135.0;
 
   }
+
+
+  
+
+  /**
+   * The purpose of this method is to compare the try and determine if we had a
+   * tripped breaker which for our purposes has a signature that while driving the
+   * motor, we see current, then zero current, then sometime later current.
+   * 
+   * If we never see current again, we don't assume it is a tripped breaker but
+   * rather a blown motor captured by the other motor fault
+   * 
+   * This is a special case of the motor fault.
+   * 
+   * TODO: Write to a file for between bot shutdown persistance;
+   * 
+   * @return
+   */
+  private void isPlungerArmPivotMotorBreakerTrip()
+  {
+    // we are trying to drive motor
+    if (this._plungerArmPivotVoltage >= RobotMap.PIVOT_MIN_SPEED_PBOT && Robot.isPracticeRobot())
+    {
+      // did motor ever get to a high current?
+      if (Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 15)
+        plungerArmPivotMotorHighCurrent = true;
+
+      if (plungerArmPivotMotorHighCurrent && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) < 1)
+        plungerArmPivotMotorHighThenZeroCurrent = true;
+
+      if (!this.isplungerArmPivotMotorBreakerTrip && plungerArmPivotMotorHighThenZeroCurrent)
+        this.isplungerArmPivotMotorBreakerTrip = Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 3;
+
+    }
+    else if(this._plungerArmPivotVoltage >= RobotMap.PIVOT_MIN_SPEED && !Robot.isPracticeRobot())
+    {
+      // did motor ever get to a high current?
+      if (Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 15)
+        plungerArmPivotMotorHighCurrent = true;
+
+      if (plungerArmPivotMotorHighCurrent && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) < 1)
+        plungerArmPivotMotorHighThenZeroCurrent = true;
+
+      if (!this.isplungerArmPivotMotorBreakerTrip && plungerArmPivotMotorHighThenZeroCurrent)
+        this.isplungerArmPivotMotorBreakerTrip = Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 3;
+    }
+  }
+
 
   @Override
   public void initDefaultCommand()

@@ -49,6 +49,20 @@ public class MonkeyBarPivot extends Subsystem {
 
   private static MonkeyBarPivot _instance;
 
+  private boolean rotateBarLeftFault = false;
+  private boolean rotateBarRightFault = false;
+
+
+  private boolean rotateBarLeftHighCurrent = false;
+  private boolean rotateBarRightHighCurrent = false;
+
+  private boolean rotateBarLeftHighThenZeroCurrent = false;
+  private boolean rotateBarRightHighThenZeroCurrent = false;
+
+
+  private boolean isrotateBarLeftBreakerTrip = false;
+  private boolean isrotateBarRightBreakerTrip = false;
+
   //constructors for monkey bar
   private MonkeyBarPivot()
   {
@@ -117,6 +131,13 @@ public class MonkeyBarPivot extends Subsystem {
     
     ConsolePrinter.putBoolean("Monkey Bar Lowered", () -> {return isLowered();}, true, false);
     ConsolePrinter.putBoolean("Monkey Bar Stowed", () -> {return isStowed();}, true, false);
+
+    ConsolePrinter.putBoolean("MB RotateLeft_FAULT", () -> {return rotateBarLeftFault;}, true, true);
+    ConsolePrinter.putBoolean("MB RotateRight_FAULT", () -> {return rotateBarRightFault;}, true, true);
+
+
+    ConsolePrinter.putBoolean("MB RotateLeft_Breaker_Trip", () -> {return isrotateBarLeftBreakerTrip;}, true, true);
+    ConsolePrinter.putBoolean("MB RotateRight_Breaker_Trip", () -> {return isrotateBarRightBreakerTrip;}, true, true);
   }
 
     /**
@@ -170,6 +191,13 @@ public class MonkeyBarPivot extends Subsystem {
   {
     driveRotateMotorLeft(speed);
     driveRotateMotorRight(speed);
+
+    isRotateBarLeftBreakerTrip();
+    isRotateBarRightBreakerTrip();
+
+    isRotateBarLeftFailure();
+    isRotateBarRightFailure();
+
   }
 
   public boolean isLowered()
@@ -229,4 +257,167 @@ public class MonkeyBarPivot extends Subsystem {
   {
     return Math.abs(getRightPotPos() - _cargoIntakePosition) < _errorMargin;
   }
+
+  /**
+   * The purpose of this method is to compare the current of this motor to that of
+   * the other motors in the same gearbox, if it is less than some percentage of
+   * the others, it is not driving the same and we throw a fault to be checked
+   * later;
+   * 
+   * Once the fault is thrown, it is not reset until the bot is reset.
+   * 
+   * TODO: Write to a file for between bot shutdown persistance;
+   * 
+   * @return
+   */
+  private void isRotateBarLeftFailure()
+  {
+    // create a comparison
+    double conditionLimitPercent = 0.5;
+    if(Robot.isPracticeRobot())
+    {
+      if (!this.rotateBarLeftFault && this._rotateBarLeftVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED_PBOT)
+      {
+        this.rotateBarLeftFault = ((Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) <= conditionLimitPercent
+            * Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP)
+            && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) > 2));
+      }
+    }
+    else
+    {
+      if (!this.rotateBarLeftFault && this._rotateBarLeftVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED)
+      {
+        this.rotateBarLeftFault = ((Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) <= conditionLimitPercent
+            * Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP)
+            && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) > 2));
+      }
+    }
+    
+  }
+
+  /**
+   * The purpose of this method is to compare the current of this motor to that of
+   * the other motors in the same gearbox, if it is less than some percentage of
+   * the others, it is not driving the same and we throw a fault to be checked
+   * later;
+   * 
+   * Once the fault is thrown, it is not reset until the bot is reset.
+   * 
+   * TODO: Write to a file for between bot shutdown persistance;
+   * 
+   * @return
+   */
+  private void isRotateBarRightFailure()
+  {
+    // create a comparison
+    double conditionLimtPercent = 0.5;
+    if(Robot.isPracticeRobot())
+    {
+      if (!this.rotateBarRightFault && this._rotateBarRightVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED_PBOT)
+      {
+        this.rotateBarRightFault = ((Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) <= conditionLimtPercent
+            * Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP)
+            && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 2));
+      }
+    }
+    else
+    {
+      if (!this.rotateBarRightFault && this._rotateBarRightVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED)
+      {
+        this.rotateBarRightFault = ((Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) <= conditionLimtPercent
+            * Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP)
+            && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 2));
+      }
+    }
+    
+  }
+
+  /**
+   * The purpose of this method is to compare the try and determine if we had a
+   * tripped breaker which for our purposes has a signature that while driving the
+   * motor, we see current, then zero current, then sometime later current.
+   * 
+   * If we never see current again, we don't assume it is a tripped breaker but
+   * rather a blown motor captured by the other motor fault
+   * 
+   * This is a special case of the motor fault.
+   * 
+   * TODO: Write to a file for between bot shutdown persistance;
+   * 
+   * @return
+   */
+  private void isRotateBarLeftBreakerTrip()
+  {
+    // we are trying to drive motor
+    if (this._rotateBarLeftVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED_PBOT && Robot.isPracticeRobot())
+    {
+      // did motor ever get to a high current?
+      if (Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 15)
+        rotateBarLeftHighCurrent = true;
+
+      if (rotateBarLeftHighCurrent && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) < 1)
+        rotateBarLeftHighThenZeroCurrent = true;
+
+      if (!this.isrotateBarLeftBreakerTrip && rotateBarLeftHighThenZeroCurrent)
+        this.isrotateBarLeftBreakerTrip = Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 3;
+
+    }
+    else if(this._rotateBarLeftVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED && !Robot.isPracticeRobot())
+    {
+      // did motor ever get to a high current?
+      if (Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 15)
+        rotateBarLeftHighCurrent = true;
+
+      if (rotateBarLeftHighCurrent && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) < 1)
+        rotateBarLeftHighThenZeroCurrent = true;
+
+      if (!this.isrotateBarLeftBreakerTrip && rotateBarLeftHighThenZeroCurrent)
+        this.isrotateBarLeftBreakerTrip = Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_LEFT_PDP) > 3;
+    }
+  }
+
+  /**
+   * The purpose of this method is to compare the try and determine if we had a
+   * tripped breaker which for our purposes has a signature that while driving the
+   * motor, we see current, then zero current, then sometime later current.
+   * 
+   * If we never see current again, we don't assume it is a tripped breaker but
+   * rather a blown motor captured by the other motor fault
+   * 
+   * This is a special case of the motor fault.
+   * 
+   * TODO: Write to a file for between bot shutdown persistance;
+   * 
+   * @return
+   */
+  private void isRotateBarRightBreakerTrip()
+  {
+    // we are trying to drive motor
+    if (this._rotateBarRightVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED_PBOT && Robot.isPracticeRobot())
+    {
+      // did motor ever get to a high current?
+      if (Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) > 35)
+        rotateBarRightHighCurrent = true;
+
+      if (rotateBarRightHighCurrent && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) < 1)
+        rotateBarRightHighThenZeroCurrent = true;
+
+      if (!this.isrotateBarRightBreakerTrip && rotateBarRightHighThenZeroCurrent)
+        this.isrotateBarRightBreakerTrip = Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) > 3;
+
+    }
+    else if(this._rotateBarRightVoltage >= RobotMap.MONKEY_BAR_PIVOT_MIN_SPEED && !Robot.isPracticeRobot())
+    {
+        // did motor ever get to a high current?
+        if (Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) > 35)
+          rotateBarRightHighCurrent = true;
+
+        if (rotateBarRightHighCurrent && Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) < 1)
+          rotateBarRightHighThenZeroCurrent = true;
+
+        if (!this.isrotateBarRightBreakerTrip && rotateBarRightHighThenZeroCurrent)
+          this.isrotateBarRightBreakerTrip = Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_ROTATE_RIGHT_PDP) > 3;
+    }
+  }
+
 }
