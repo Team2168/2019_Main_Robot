@@ -215,6 +215,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
 
+	public static final double CARGO_INTAKE_MIN_SPEED = 0; //TODO set
+
 	/*************************************************************************
 	 *                         HATCH INTAKE PARAMETERS                        *
 	 *************************************************************************/

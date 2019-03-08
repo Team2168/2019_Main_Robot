@@ -101,6 +101,9 @@ public class Robot extends TimedRobot
   //boolean to keep track of climb mode
   public static boolean isClimbEnabled = false;
 
+  //Variable to track blue alliance vs red alliance
+  private static boolean blueAlliance = false;
+
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
 
@@ -313,6 +316,8 @@ public class Robot extends TimedRobot
     // Select the control style
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
+
+    Robot.leds.writePattern(RobotMap.PATTERN_RAINBOW);
   }
 
   /**
@@ -333,10 +338,9 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    // updateLights();
-    // callArduino();
-    // Robot.i2c.write(8, 97);
-
+    //comment out and add to intake until GAMEPIECE when that command gets implemented
+    if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent())
+      leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 200);
   }
 
   /************************************************************
@@ -475,6 +479,12 @@ public class Robot extends TimedRobot
     return isClimbEnabled;
 
   }
+
+  public static boolean onBlueAlliance() {
+		return driverstation.getAlliance() == DriverStation.Alliance.Blue;
+
+	}
+	
 
   /**
    * Method which checks to see if gyro drifts and resets the gyro. Call this in a
