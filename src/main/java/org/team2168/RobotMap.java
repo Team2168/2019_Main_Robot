@@ -143,6 +143,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int PLUNGER_PIVOT_MOTOR_PDP = 9;
 	public static final int MONKEY_BAR_ROTATE_LEFT_PDP = 10;
 	public static final int MONKEY_BAR_ROTATE_RIGHT_PDP = 11;
+	public static final int HATCH_INTAKE_MOTOR_PDP = 12; //TODO: set value
 
 
 	public static final int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
