@@ -1079,13 +1079,13 @@ public class PIDPosition implements TCPMessageInterface {
 
 			deriv = 0;
 
-			// deriv term
-			if (enDerivFilter) {
-				// Derivative filtering using forward euler integration
-				int_d_term = int_d_term + (lastDeriv * executionTime);
-				deriv = ((d * err) - int_d_term) * n;
-				lastDeriv = deriv;
-			} else {
+			// // deriv term
+			// if (enDerivFilter) {
+			// 	// Derivative filtering using forward euler integration
+			// 	int_d_term = int_d_term + (lastDeriv * executionTime);
+			// 	deriv = ((d * err) - int_d_term) * n;
+			// 	lastDeriv = deriv;
+			// } else {
 				// prevent divide by zero error, by disabiling deriv term
 				// if execution time is zero.
 				diff = 0;
@@ -1095,7 +1095,7 @@ public class PIDPosition implements TCPMessageInterface {
 					diff = 0;
 
 				deriv = d * diff;
-			}
+			// }
 
 			// proportional term
 			prop = p * err;
