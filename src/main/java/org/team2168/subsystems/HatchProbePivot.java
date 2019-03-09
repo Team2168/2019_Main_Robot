@@ -194,12 +194,6 @@ public class HatchProbePivot extends Subsystem {
       speed = 0;
       _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
       _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
-    }
-    else
-    {
-      speed = 0;
-      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
-      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
       System.out.println("nope");
     }
   }
