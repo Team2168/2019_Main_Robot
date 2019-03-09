@@ -30,12 +30,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 
-  private static SpeedController _leftMotor1;
-  private static SpeedController _leftMotor2;
-  private static SpeedController _leftMotor3;
-  private static SpeedController _rightMotor1;
-  private static SpeedController _rightMotor2;
-  private static SpeedController _rightMotor3;
+  private static CANSparkMax _leftMotor1;
+  private static CANSparkMax _leftMotor2;
+  private static CANSparkMax _leftMotor3;
+  private static CANSparkMax _rightMotor1;
+  private static CANSparkMax _rightMotor2;
+  private static CANSparkMax _rightMotor3;
 
   private ADXRS453Gyro _gyroSPI;
   private AverageEncoder _drivetrainLeftEncoder;
@@ -106,102 +106,22 @@ public class Drivetrain extends Subsystem {
      * Also allows us to detect comp chasis vs practice chassis and code for any
      * differences.
      */
-    if (Robot.isPracticeRobot())
-    {
-      if (Robot.isPWMDrivetrain())
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-          _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-          _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-          _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-          _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-          _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
-        }
-        else
-        {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
-          _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
-          _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
-          _rightMotor2 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);
-        }
-      }
-      else // CAN Practice Bot
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
-        }
-        else
-        {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-        }
-      }
-    }
-    else // Comp Robot
-    {
-      if (Robot.isPWMDrivetrain())
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("PWM Comp Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-          _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-          _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-          _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-          _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-          _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
-        }
-        else
-        {
-          System.out.println("PWM Comp Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
-          _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
-          _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
-          _rightMotor2 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);
-        }
-      }
-      else // CAN Practice Bot
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("CAN Comp Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
-        }
-        else
-        {
+
           System.out.println("CAN Comp Bot Drivetrain enabled - 4 motors");
           _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
           _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
           _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
           _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-        }
-      }
+        
+          _leftMotor1.setSmartCurrentLimit(55);
+      
 
       // leftMotor1.setCANTimeout(100);
       // leftMotor3.setCANTimeout(100);
       // rightMotor2.setCANTimeout(100);
       // rightMotor3.setCANTimeout(100);
 
-    }
+  
     
     _drivetrainRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_DRIVE_ENCODER_A,

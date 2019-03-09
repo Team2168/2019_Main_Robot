@@ -268,6 +268,8 @@ public class Robot extends TimedRobot
     // schedule the autonomous command
     if (autonomousCommand != null)
       autonomousCommand.start();
+
+    Scheduler.getInstance().add(new EngageDrivetrain());
   }
 
   /**
