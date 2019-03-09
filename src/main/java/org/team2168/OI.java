@@ -10,6 +10,7 @@ import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.utils.F310;
@@ -149,7 +150,7 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new Drive14FeetForward_9FeetLeft());
+		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
 		// pidTestJoystick.ButtonB().whenPressed(new Drive10FeetBackward());
 		// pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
 		// pidTestJoystick.ButtonY().whenPressed(new TogglePipeline());
@@ -176,7 +177,7 @@ public class OI
 
 	public double getLiftJoystickValue()
 	{
-		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y();
+		return operatorJoystick.getLeftStickRaw_Y() + pidTestJoystick.getLeftStickRaw_Y() + buttonBox1.getAnalogRaw_Channel2();
 	}
 
 	/*************************************************************************
@@ -184,12 +185,12 @@ public class OI
 	 *************************************************************************/
 	public double getHatchProbePivotJoystickValue()
 	{
-		return operatorJoystick.getRightStickRaw_Y();
+		return operatorJoystick.getRightStickRaw_Y() + buttonBox1.getAnalogRaw_Channel1();
 	}
 
 	public double getCargoIntakeJoystickValue()
 	{
-		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw();//operatorJoystick.getRightStickRaw_X();
+		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw() + buttonBox1.getAnalogRaw_Channel3();//operatorJoystick.getRightStickRaw_X();
 	}
 
 	/*************************************************************************
@@ -197,13 +198,13 @@ public class OI
 	 *************************************************************************/
 	public double getMonkeyBarPivotJoystickValue()
 	{
-		return 0;
+		return buttonBox2.getAnalogRaw_Channel2();
 	}
 
 	public double getMonkeyBarIntakeJoystickValue()
 	{
 	
-		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw();//operatorJoystick.getRightStickRaw_Y();
+		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw() + buttonBox2.getAnalogRaw_Channel1();//operatorJoystick.getRightStickRaw_Y();
 	}
 
 	/*************************************************************************
