@@ -375,6 +375,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PLUNGER_ARM_SAFE_POS_FRONT = 45;
 	public static final double PLUNGER_ARM_SAFE_POS_BACK = 135;
 	public static final double PLUNGER_ARM_CARGO_SHIP_POS = 45;
+	public static final double PLUNGER_ARM_ERROR = 5;
 
 	public static final double PIVOT_0_POS = 0;
 	public static final double PIVOT_180_POS = 180;
@@ -389,6 +390,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PLUNGER_ARM_SAFE_POS_FRONT_PBOT = 45;
 	public static final double PLUNGER_ARM_SAFE_POS_BACK_PBOT = 135;
 	public static final double PLUNGER_ARM_CARGO_SHIP_POS_PBOT = 45;
+	public static final double PLUNGER_ARM_ERROR_PBOT = 5;
 
 	public static final double PIVOT_0_POS_PBOT = 0;
 	public static final double PIVOT_180_POS_PBOT = 180;
