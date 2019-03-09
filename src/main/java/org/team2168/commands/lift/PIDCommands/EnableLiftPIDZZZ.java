@@ -19,14 +19,15 @@ public class EnableLiftPIDZZZ extends Command {
 	private double maxSpeed;
 	private double minSpeed;
 	private double error = 0.5;  // Rotational degree error, default 0 never ends.
-	private boolean absolute = false;
+	private boolean absolute = true;
 	
     public EnableLiftPIDZZZ() {
         // Use requires() here to declare subsystem dependencies
     	requires(Lift.getInstance());
     	this.setPoint = Robot.lift.liftPOTController.getSetPoint();
-    	this.maxSpeed = 1;
-    	this.minSpeed = 0;
+    	this.maxSpeed = 0.5;
+		this.minSpeed = 0;
+		this.absolute = true;
     }
 
     public EnableLiftPIDZZZ(double setPoint){

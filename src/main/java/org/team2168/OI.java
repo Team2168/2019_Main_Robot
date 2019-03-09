@@ -4,14 +4,18 @@ import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
-import org.team2168.commands.drivetrain.PIDCommands.RotatePIDLimelight;
-import org.team2168.commands.drivetrain.PIDCommands.TogglePipeline;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
+import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
+import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
+import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 import org.team2168.utils.TILaunchPad;
@@ -149,10 +153,12 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new Drive14FeetForward_9FeetLeft());
-		// pidTestJoystick.ButtonB().whenPressed(new Drive10FeetBackward());
-		// pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
-		// pidTestJoystick.ButtonY().whenPressed(new TogglePipeline());
+		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
 
 	}
