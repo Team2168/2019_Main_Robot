@@ -40,7 +40,7 @@ public class DriveLiftWithJoysticks extends Command
       {
         if(Lift.getInstance().getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
         {
-          Robot.lift.driveAllMotors(-holdingSpeed-0.01);
+          Robot.lift.driveAllMotors(-holdingSpeed+0.01);
         }
         else
         {
