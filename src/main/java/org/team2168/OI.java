@@ -1,16 +1,31 @@
 package org.team2168;
 
+import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+
+import org.team2168.commands.hatchFloorIntake.HatchFloorIntakePivotExtend;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
+import org.team2168.commands.hatchProbePistons.IntakeHatchPanel;
+import org.team2168.commands.hatchProbePistons.ReleaseHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo0Position;
+import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
+import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
+import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
+import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
+import org.team2168.commands.lift.MoveLiftToLvl1Position;
+import org.team2168.commands.lift.MoveLiftToLvl2Position;
+import org.team2168.commands.lift.MoveLiftToLvl3Position;
+
 import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
 import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
 import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
+
 import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
 import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
@@ -58,6 +73,8 @@ public class OI
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 
+
+
 	public TILaunchPad buttonBox1;
 	public TILaunchPad buttonBox2;
 
@@ -81,8 +98,8 @@ public class OI
 	private OI()
 	{
 
-		//buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
-		//buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
+		buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
+		buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
 		/*************************************************************************
 		 * Driver Joystick *
 		 *************************************************************************/
@@ -98,6 +115,39 @@ public class OI
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
+		/***********************************************************************
+		 * Button Box 1
+		 ***********************************************************************/
+		buttonBox1.Button1().whenPressed(new ExtendHatchPlunger());
+		buttonBox1.Button2().whenPressed(new EngageHatchPanel());
+		buttonBox1.Button3().whileHeld(new IntakeHatchPanel()); // IR sensor must be tuned
+		buttonBox1.Button3().whenReleased(new RetractHatchPlunger()); 
+		buttonBox1.Button4().whenPressed(new HatchFloorIntakePivotExtend()); //not legit
+		buttonBox1.Button5().whenPressed(new MoveLiftToLvl3Position()); //should move pivot too
+		buttonBox1.Button6().whenPressed(new MoveLiftToLvl2Position()); //should move pivot too
+		buttonBox1.Button7().whenPressed(new MoveLiftToCargoShipPosition()); //not legit
+		buttonBox1.Button8().whenPressed(new MoveLiftToCargoShipPosition()); //not legit
+		buttonBox1.Button9().whenPressed(new MoveLiftToLvl1Position()); //should move pivot too
+		buttonBox1.Button10().whenPressed(new MoveHatchProbePivotTo180Position()); //not legit
+		buttonBox1.Button11().whenPressed(new MoveHatchProbePivotTo0Position()); //not legit
+		buttonBox1.Button12().whenPressed(new MoveHatchProbePivotTo0Position()); //may be legit
+
+
+		 /***********************************************************************
+		 * Button Box 2
+		 ***********************************************************************/
+		//buttonBox2.Button1().whenPressed(new ExtendCargoPunch()); apparently no punch
+		// buttonBox2.Button2().whenPressed();
+		// buttonBox2.Button3().whenPressed();
+		buttonBox2.Button4().whenPressed(new DisengageHatchPanel());
+		//buttonBox2.Button5().whenPressed(new defense); //not exist yet
+		//buttonBox2.Button6().whenPressed(new score)); //not exist
+		buttonBox2.Button7().whenPressed(new DriveCargoIntakeWithConstant(-0.5)); //should also spin mb if lift down
+		buttonBox2.Button8().whenPressed(new DriveCargoIntakeWithConstant(-1.0)); //should also spin mb if lift down
+		buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(1.0)); //should also spin and pivot mb
+		buttonBox2.Button10().whenPressed(new ReleaseHatchPanel()); //not legit
+		//buttonBox2.Button11().whenPressed();
+		buttonBox2.Button12().whenPressed(new RetractHatchPlunger()); 
 
 		/*************************************************************************
 		 * Operator Joystick *
@@ -136,6 +186,7 @@ public class OI
 		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
 		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
+
 		
 
 		/////////////// Intake and pivot up
@@ -157,6 +208,7 @@ public class OI
 		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
 		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
 		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
 		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
 		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
 		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());

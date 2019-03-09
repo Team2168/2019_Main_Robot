@@ -24,9 +24,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	// Joysticks///////////////////////////////////////////////////////////////
 	public static final int DRIVER_JOYSTICK = 0;
 	public static final int OPERATOR_JOYSTICK = 1;
-	public static final int DRIVER_OPERATOR_E_BACKUP = 2;
-	public static final int BUTTON_BOX_1 = 3;
-	public static final int BUTTON_BOX_2 = 4;
+	public static final int DRIVER_OPERATOR_E_BACKUP = 4;
+	public static final int BUTTON_BOX_1 = 2;
+	public static final int BUTTON_BOX_2 = 3;
 	public static final int PID_TEST_JOYSTICK = 5;
 	public static final boolean ENABLE_BUTTON_BOX_PRINTS = true;
 
@@ -245,7 +245,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_HOLDING_VOLTAGE = 1.0; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
-	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2;
+	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2; //should this be negative???
 	public static final double LIFT_MIN_SPEED = 0.075;
 
 

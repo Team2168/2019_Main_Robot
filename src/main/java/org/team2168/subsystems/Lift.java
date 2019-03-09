@@ -337,9 +337,17 @@ public class Lift extends Subsystem {
 					// elseif(MonkeyNotRunning)
 					// 	movedMOnkeyBAr = false;
 
-
-					driveLiftMotor1(0.0);
-					driveLiftMotor2(0.0);
+					if(getPotPos()<=13)
+					{
+						driveLiftMotor1(RobotMap.LIFT_UP_MIN_VOLTAGE);
+						driveLiftMotor2(RobotMap.LIFT_UP_MIN_VOLTAGE);
+					}
+					else
+					{
+						driveLiftMotor1(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
+						driveLiftMotor2(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
+					}
+					
 
 				}
 			}
