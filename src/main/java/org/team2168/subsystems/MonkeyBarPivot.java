@@ -75,7 +75,7 @@ public class MonkeyBarPivot extends Subsystem {
     else
     {
 
-      _monkeyBarRotationRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT,
+      _monkeyBarRotationRight = new AveragePotentiometer(_rotateBarRight,
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_0,
         RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0,
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX,

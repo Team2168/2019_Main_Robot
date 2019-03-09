@@ -166,36 +166,37 @@ public class HatchProbePivot extends Subsystem {
     if(moveLiftFullyDown == null)
       moveLiftFullyDown = new MoveLiftToBasePosition();
 
-    // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
-    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && (Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
-    {
-      moveLiftFullyDown.start();
-      System.out.println("cannot Pivot, lift is not down");
-    }
-   // move monkey bar out of way of pivot if not already
-    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
-    {
-      moveMonkeyBarToSafePositionForPivot.start();
-      System.out.println("cannot Pivot, Monkey bar is not in safe position");
-    }
+  //   // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
+  //   if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && (Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
+  //   {
+  //     moveLiftFullyDown.start();
+  //     System.out.println("cannot Pivot, lift is not down");
+  //   }
+  //  // move monkey bar out of way of pivot if not already
+  //   if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
+  //   {
+  //     moveMonkeyBarToSafePositionForPivot.start();
+  //     System.out.println("cannot Pivot, Monkey bar is not in safe position");
+  //   }
 
-    // if monkey bar in safe pos, lift all the way down, or within angle needed to score on CS, drive the pivot
+  //   // if monkey bar in safe pos, lift all the way down, or within angle needed to score on CS, drive the pivot
 
-    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && Robot.monkeyBarPivot.isSafePivotPosition() && ((Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) || isWithinCargoAngle()))
-    {
-      if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+  //   if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && Robot.monkeyBarPivot.isSafePivotPosition() && ((Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) || isWithinCargoAngle()))
+  //   {
+  //     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
+  //       speed = -speed;
+  //     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+  //     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+  //     System.out.println("pivot running");
+  //   }
+  //   else
+  //   {
+  //     if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
         speed = -speed;
       _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
       _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
-      System.out.println("pivot running");
-    }
-    else
-    {
-      speed = 0;
-      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
-      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
-      System.out.println("nope");
-    }
+      //System.out.println("nope");
+    // }
   }
 
   /**

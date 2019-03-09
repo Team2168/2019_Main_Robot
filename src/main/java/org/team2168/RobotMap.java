@@ -29,7 +29,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int BUTTON_BOX_2 = 3;
 	public static final int PID_TEST_JOYSTICK = 5;
 	public static final boolean ENABLE_BUTTON_BOX_PRINTS = true;
-
+	public static final boolean ENABLE_BUTTON_BOX = false;
 
 	// Joystick Control Styles/////////////////////////////////////////////////
 	public static final int TANK_DRIVE_STYLE_ENUM = 0;
@@ -109,12 +109,12 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
 	public static final int HATCH_PANEL_VELCRO_PUSHER_PCM = 1;
-	public static final int HATCH_INTAKE_LOWER_PCM = 2;
-	public static final int HATCH_INTAKE_RAISE_PCM = 3;
+	public static final int HATCH_INTAKE_LOWER_PCM = 6;
+	public static final int HATCH_INTAKE_RAISE_PCM = 7;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
-	public static final int STINGER_ENGAGE_PCM = 7;
-	public static final int STINGER_DISENGAGE_PCM = 6;
+	public static final int STINGER_ENGAGE_PCM = 3;
+	public static final int STINGER_DISENGAGE_PCM = 2;
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
@@ -249,10 +249,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_MIN_SPEED = 0.075;
 
 
-	public static final double LIFT_POT_VOLTAGE_MAX = 3.5; //85 degrees
-	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 69.0;
-	public static final double LIFT_POT_VOLTAGE_0 = 4.91; //0 degrees
-	public static final double LIFT_POT_0_HEIGHT_INCHES = 10.5;
+	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
+	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
+	public static final double LIFT_POT_VOLTAGE_0 = 1.0; //0 degrees
+	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
 	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
 	public static final double LIFT_LVL_2_POS = 0;
@@ -363,12 +363,12 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
-	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = true;
+	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = false;
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
-	public static final double PIVOT_POT_VOLTAGE_0 = 4.93;
-	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
+	public static final double PIVOT_POT_VOLTAGE_0 = 4.92;
+	public static final double PIVOT_POT_VOLTAGE_MAX = 1.0;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
 	public static final double PLUNGER_ARM_MIDDLE_POS = 90;
