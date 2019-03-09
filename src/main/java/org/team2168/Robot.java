@@ -249,6 +249,7 @@ public class Robot extends TimedRobot
     autonomousCommand = (Command) autoChooser.getSelected();
 
     Scheduler.getInstance().run();
+    Drivetrain.getInstance().limelight.setPipeline(7);
 
     // Check to see if the gyro is drifting, if it is re-initialize it.
     gyroReinit();

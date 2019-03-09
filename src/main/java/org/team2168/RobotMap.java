@@ -289,13 +289,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean MONKEY_BAR_INTAKE_LEFT_REVERSE = false;
 
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 3.95; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 180; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 130; //130 degrees
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.251; //0 degrees
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 3.95; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 180; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 0.251; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.5; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 1.61; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
@@ -313,9 +313,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT = 3.33; //0 degrees
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT = 0.0;
 	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 3.95; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.5; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 3.34; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 1.61; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
@@ -367,10 +367,11 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
-	public static final double PIVOT_POT_VOLTAGE_0 = 4.92;
-	public static final double PIVOT_POT_VOLTAGE_MAX = 1.0;
-	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
-	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
+	public static final double PIVOT_POT_VOLTAGE_0 = 0.004;
+	public static final double PIVOT_POT_0_ROTATION_DEGREES = 180;
+
+	public static final double PIVOT_POT_VOLTAGE_MAX = 4.92;
+	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 0.0;
 	public static final double PLUNGER_ARM_MIDDLE_POS = 90;
 	public static final double PLUNGER_ARM_SAFE_POS_FRONT = 45;
 	public static final double PLUNGER_ARM_SAFE_POS_BACK = 135;
