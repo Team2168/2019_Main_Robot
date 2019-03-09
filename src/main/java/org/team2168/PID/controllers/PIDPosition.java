@@ -1164,10 +1164,13 @@ public class PIDPosition implements TCPMessageInterface {
 			// + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: "
 			// + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co +
 			// "\texctime" + executionTime );
+			if(log != null)
+			{
 			log.println(currentTime + "\t" + System.currentTimeMillis() + "\t" + cp + "\t" + sp + "\t " + err + "\t"
 					+ prop + "\t" + windup + "\t" + errsum + "\t" + integ + "\t" + deriv + "\t" + co + "\t"
 					+ coNotSaturated + "\t" + executionTime);
 			log.flush();
+
 			}	
 		} else {
 			cp = encoder.getPos();
