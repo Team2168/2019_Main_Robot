@@ -2,6 +2,8 @@
 package org.team2168.commands.monkeyBarPivot;
 
 import org.team2168.Robot;
+import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.MonkeyBarPivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,7 +12,7 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
 
   public DriveMonkeyBarPivotWithConstant(double inputspeed) {
 
-    requires(Robot.monkeyBarPivot);
+    requires(MonkeyBarPivot.getInstance());
     _speed = inputspeed;
 
   }
@@ -22,6 +24,7 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
   @Override
   protected void execute() {
     Robot.monkeyBarPivot.driveRotateBarMotors(_speed);
+    System.out.println("Driving MonkeyBar with Joystick");
   }
 
   @Override

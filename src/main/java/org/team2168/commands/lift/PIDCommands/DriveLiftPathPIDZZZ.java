@@ -4,6 +4,7 @@ package org.team2168.commands.lift.PIDCommands;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.trajectory.OneDimensionalMotionProfiling;
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,7 +32,7 @@ public class DriveLiftPathPIDZZZ extends Command {
 	
     public DriveLiftPathPIDZZZ() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.lift);
+    	requires(Lift.getInstance());
     	this.maxSpeed = 1;
     	this.minSpeed = 0;
     }

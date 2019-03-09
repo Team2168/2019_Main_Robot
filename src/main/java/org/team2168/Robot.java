@@ -7,6 +7,7 @@
 
 package org.team2168;
 
+import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
 import org.team2168.subsystems.CargoPunch;
@@ -16,8 +17,8 @@ import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.HatchProbePivotBrake;
 import org.team2168.subsystems.Lift;
-import org.team2168.subsystems.MonkeyBarPivot;
 import org.team2168.subsystems.MonkeyBarIntakeWheels;
+import org.team2168.subsystems.MonkeyBarPivot;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.ShifterDrivetrain;
 import org.team2168.subsystems.ShifterStinger;
@@ -158,7 +159,7 @@ public class Robot extends TimedRobot
       controlStyleSelectInit();
       throttleVibeSelectInit();
       
-
+      ConsolePrinter.startThread();
       ConsolePrinter.putSendable("Control Style Chooser", () -> {return Robot.controlStyleChooser;}, true, false);
       ConsolePrinter.putSendable("Autonomous Mode Chooser", () -> {return Robot.autoChooser;}, true, false);
       ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
@@ -168,9 +169,8 @@ public class Robot extends TimedRobot
       ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
       ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
       ConsolePrinter.putBoolean("Is Climb Mode", () -> {return isClimbMode();}, true, false);
-      ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
-     
-      ConsolePrinter.startThread();
+      
+      
       System.out.println("Robot Initialization Complete!!");
     }
     catch (Throwable throwable)
@@ -425,7 +425,7 @@ public class Robot extends TimedRobot
   {
     autoChooser = new SendableChooser<Command>();
     // autoChooser.addDefault("Drive Straight", new DriveStraight(8.0));
-    // autoChooser.addObject("Do Nothing", new DoNothing());
+    autoChooser.addObject("Do Nothing", new DoNothing());
     // autoChooser.addObject("Center Auto 3 Cube", new AutoStartCenter3Cube());
   }
 

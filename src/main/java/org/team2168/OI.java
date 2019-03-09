@@ -1,6 +1,5 @@
 package org.team2168;
 
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -9,11 +8,17 @@ import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
+import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
+import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
+import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
-import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithJoystick;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
+import org.team2168.utils.TILaunchPad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,6 +57,10 @@ public class OI
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 
+	public TILaunchPad buttonBox1;
+	public TILaunchPad buttonBox2;
+
+
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
@@ -71,6 +80,8 @@ public class OI
 	private OI()
 	{
 
+		//buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
+		//buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
 		/*************************************************************************
 		 * Driver Joystick *
 		 *************************************************************************/
@@ -124,6 +135,7 @@ public class OI
 		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
 		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
+		
 
 		/////////////// Intake and pivot up
 		/////////////// afterwards/////////////////////////////////////////////////////////////////////////
@@ -141,8 +153,12 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new Drive14FeetForward_9FeetLeft());
-		// pidTestJoystick.ButtonB().whenPressed(new Drive10FeetBackward());
+		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
 
 	}

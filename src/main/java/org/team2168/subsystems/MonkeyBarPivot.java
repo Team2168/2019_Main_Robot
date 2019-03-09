@@ -12,8 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithJoystick;
+import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -40,6 +42,9 @@ public class MonkeyBarPivot extends Subsystem {
   private double _stowPosition;
 
   private double _errorMargin = 3; //currently 3 degrees to either side of set positions returns true
+
+  public PIDPosition monkeyBarPivotController;
+  TCPSocketSender TCPMonkeyBarPivotController;
 
   private static MonkeyBarPivot _instance;
 
@@ -85,6 +90,20 @@ public class MonkeyBarPivot extends Subsystem {
       _cargoIntakePosition = RobotMap.MONKEY_BAR_CARGO_INTAKE_POS;
 
     }
+
+    monkeyBarPivotController = new PIDPosition("MonkeyController", 
+      RobotMap.MB_PIVOT_P, 
+      RobotMap.MB_PIVOT_I, 
+      RobotMap.MB_PIVOT_D,
+      _monkeyBarRotationRight, 
+      RobotMap.LIFT_PID_PERIOD);
+
+    monkeyBarPivotController.setSIZE(RobotMap.LIFT_PID_ARRAY_SIZE);
+
+    monkeyBarPivotController.startThread();
+
+    TCPMonkeyBarPivotController = new TCPSocketSender(RobotMap.TCP_SERVER_MB_POT_CONTROLLER, monkeyBarPivotController);
+    TCPMonkeyBarPivotController.start();
 
     ConsolePrinter.putNumber("Monkey Bar Pivot Joystick value", () -> {return Robot.oi.getMonkeyBarPivotJoystickValue();}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Pivot right motor voltage", () -> {return _rotateBarRightVoltage;}, true, false);

@@ -2,16 +2,21 @@
 package org.team2168.commands.monkeyBarPivot;
 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.subsystems.MonkeyBarPivot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveMonkeyBarPivotWithJoystick extends Command
 {
+
+  public static final double TRIGGER_OFFSET = 1.65;
+
   public DriveMonkeyBarPivotWithJoystick()
   {
 
-    requires(Robot.monkeyBarPivot);
+    requires(MonkeyBarPivot.getInstance());
   }
 
   @Override
@@ -21,7 +26,17 @@ public class DriveMonkeyBarPivotWithJoystick extends Command
 
   @Override
   protected void execute() {
-    if(Robot.isClimbEnabled)
+    if(Robot.isClimbEnabled && RobotMap.ONE_TRIGGER_CLIMB_ENABLED)
+    { 
+      double triggerValue;
+      if(Robot.oi.getGunStyleYValue()>0.05)
+        triggerValue = Robot.oi.getGunStyleYValue();
+      else
+        triggerValue = 0;
+      //Allow trigger to drive monkey bar, and mix with steering wheel for fine adjustment
+      Robot.monkeyBarPivot.driveRotateBarMotors(-triggerValue*TRIGGER_OFFSET - Robot.oi.driverJoystick.getX(Hand.kLeft)*0.75);
+    }
+    else if(Robot.isClimbEnabled)
       Robot.monkeyBarPivot.driveRotateBarMotors(-Robot.oi.driverJoystick.getX(Hand.kLeft)*0.75);
     else
       Robot.monkeyBarPivot.driveRotateBarMotors(Robot.oi.getMonkeyBarPivotJoystickValue());

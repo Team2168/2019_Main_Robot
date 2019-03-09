@@ -16,23 +16,27 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.PID.sensors.CanDigitalInput;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
-import org.team2168.commands.lift.interlocks.MoveLiftFullyDown;
+import org.team2168.commands.lift.MoveLiftToBasePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
+import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class HatchProbePivot extends Subsystem
-{
-  public TalonSRX _plungerArmPivotMotor; //made public so can be accessed as sensor reference in another subsystem
+public class HatchProbePivot extends Subsystem {
+  public TalonSRX _plungerArmPivotMotor; // made public so can be accessed as sensor reference in another subsystem
   private static AveragePotentiometer _pivotPot;
   public volatile double _plungerArmPivotVoltage;
   private CanDigitalInput _pivotHallEffectSensors;
   private static HatchProbePivot _instance;
+
+
+  public PIDPosition hatchProbePivotController;
+  TCPSocketSender TCPHatchProbePivotController;
 
   private double _middlePosition;
   private double _safePositionMonkeyBarSide;
@@ -43,7 +47,8 @@ public class HatchProbePivot extends Subsystem
   private double _error;
 
   MoveMonkeyBarToSafePositionForPivot moveMonkeyBarToSafePositionForPivot;
-  MoveLiftFullyDown moveLiftFullyDown;
+  MoveLiftToBasePosition moveLiftFullyDown;
+
 
   private HatchProbePivot()
   {
@@ -51,8 +56,7 @@ public class HatchProbePivot extends Subsystem
     _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
-    moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
-    moveLiftFullyDown = new MoveLiftFullyDown();
+
     if (Robot.isPracticeRobot())
     {
       _pivotPot = new AveragePotentiometer(RobotMap.PIVOT_POSITION_POT, 
@@ -82,6 +86,19 @@ public class HatchProbePivot extends Subsystem
           _error = RobotMap.PLUNGER_ARM_ERROR;
     }
 
+    hatchProbePivotController = new PIDPosition("HatchProbePivotController", 
+      RobotMap.HP_PIVOT_P, 
+      RobotMap.HP_PIVOT_I, 
+      RobotMap.HP_PIVOT_D,
+      _pivotPot, 
+      RobotMap.LIFT_PID_PERIOD);
+
+    hatchProbePivotController.setSIZE(RobotMap.LIFT_PID_ARRAY_SIZE);
+
+    hatchProbePivotController.startThread();
+
+    TCPHatchProbePivotController = new TCPSocketSender(RobotMap.TCP_SERVER_HP_POT_CONTROLLER, hatchProbePivotController);
+    TCPHatchProbePivotController.start();
     ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {
       return Robot.oi.getHatchProbePivotJoystickValue();
     }, true, true);
@@ -143,23 +160,38 @@ public class HatchProbePivot extends Subsystem
 
   public void drivePlungerArmPivotMotor(double speed)
   {
+    if(moveMonkeyBarToSafePositionForPivot == null)
+      moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
+
+    if(moveLiftFullyDown == null)
+      moveLiftFullyDown = new MoveLiftToBasePosition();
+
     // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
-    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.lift.isLiftFullyDown() && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && (Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
     {
       moveLiftFullyDown.start();
-      //print out
+      System.out.println("cannot Pivot, lift is not down");
     }
    // move monkey bar out of way of pivot if not already
     if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && !Robot.monkeyBarPivot.isSafePivotPosition() && !moveMonkeyBarToSafePositionForPivot.isRunning())
     {
       moveMonkeyBarToSafePositionForPivot.start();
+      System.out.println("cannot Pivot, Monkey bar is not in safe position");
     }
 
     // if monkey bar in safe pos, lift all the way down, or within angle needed to score on CS, drive the pivot
-    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && Robot.monkeyBarPivot.isSafePivotPosition() && (Robot.lift.isLiftFullyDown() ||  isWithinCargoAngle()))
+
+    if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && Robot.monkeyBarPivot.isSafePivotPosition() && ((Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) || isWithinCargoAngle()))
     {
       if (RobotMap.PLUNGER_ARM_PIVOT_REVERSE)
         speed = -speed;
+      _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
+      _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+      System.out.println("pivot running");
+    }
+    else
+    {
+      speed = 0;
       _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
       _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
     }
@@ -168,6 +200,7 @@ public class HatchProbePivot extends Subsystem
       speed = 0;
       _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
       _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+      System.out.println("nope");
     }
   }
 
@@ -201,7 +234,7 @@ public class HatchProbePivot extends Subsystem
 
   public boolean isOnMonkeyBarSide()
   {
-    return (getPotPos() <= _middlePosition);
+    return getPotPos() >= 90.0;
   }
 
   public boolean isWithinCargoAngle()
@@ -213,7 +246,7 @@ public class HatchProbePivot extends Subsystem
   {
     return (getPotPos() <= _safePositionMonkeyBarSide || getPotPos()>=_safePositionOtherSide);
   }
-  
+
 
   @Override
   public void initDefaultCommand()

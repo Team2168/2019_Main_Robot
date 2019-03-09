@@ -25,8 +25,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int DRIVER_JOYSTICK = 0;
 	public static final int OPERATOR_JOYSTICK = 1;
 	public static final int DRIVER_OPERATOR_E_BACKUP = 2;
-	public static final int COMMANDS_TEST_JOYSTICK = 4;
+	public static final int BUTTON_BOX_1 = 3;
+	public static final int BUTTON_BOX_2 = 4;
 	public static final int PID_TEST_JOYSTICK = 5;
+	public static final boolean ENABLE_BUTTON_BOX_PRINTS = true;
 
 
 	// Joystick Control Styles/////////////////////////////////////////////////
@@ -71,13 +73,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Channels 0-3 on Roborio
 	//public static final int HATCH_INTAKE_IR_SENSOR = 0;
 	//public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
-	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 0;
+	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 6;
 	public static final int DRIVETRAIN_BACK_IR_SENSOR = 1;
 	public static final int PIVOT_POSITION_POT = 2;
 	public static final int LIFT_POSITION_POT = 3;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 4;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 5;
-	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 0;
 	public static final int PRESSURE_SENSOR = 7;
 
 
@@ -116,13 +118,15 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
-	public static final int PROBE_ROTATE_BRAKE_RETRACTED_PCM = 1;
+	public static final int PROBE_ROTATE_BRAKE_RETRACTED_PCM = 5;
 	public static final int CARGO_PUNCH_EXTEND_PCM = 2;
-	public static final int CARGO_PUNCH_RETRACT_PCM = 3;
-	public static final int PROBE_EXTEND_PCM = 4;
-	public static final int PROBE_RETRACT_PCM = 5;
-	public static final int PROBE_ENGAGE_PCM = 6;
-	public static final int PROBE_DISENGAGE_PCM = 7;
+	public static final int CARGO_PUNCH_RETRACT_PCM = 7;
+
+	public static final int PROBE_EXTEND_PCM = 6;
+	public static final int PROBE_RETRACT_PCM = 1;
+
+	public static final int PROBE_ENGAGE_PCM = 3;
+	public static final int PROBE_DISENGAGE_PCM = 4;
 
 
 
@@ -231,34 +235,53 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean LIFT_MOTOR1_REVERSE = true;
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
 	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
+	public static final boolean LIFT_ENABLE_INTERLOCKS = false;
+
+	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
+	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
+	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 13.0;
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.85; 
 
-	public static final double LIFT_HOLDING_VOLTAGE = 3.0; //volts divide by batt voltage. 
+	public static final double LIFT_HOLDING_VOLTAGE = 1.0; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2;
-	public static final double LIFT_MIN_SPEED = 0.15;
+	public static final double LIFT_MIN_SPEED = 0.075;
 
 
-	public static final double LIFT_POT_VOLTAGE_MAX = 4.8; //85 degrees
-	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 1.85; //0 degrees
-	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
+	public static final double LIFT_POT_VOLTAGE_MAX = 3.5; //85 degrees
+	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 69.0;
+	public static final double LIFT_POT_VOLTAGE_0 = 4.91; //0 degrees
+	public static final double LIFT_POT_0_HEIGHT_INCHES = 10.5;
+
+	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
+	public static final double LIFT_LVL_2_POS = 0;
+	public static final double LIFT_LVL_3_POS = 0;
+	public static final double LIFT_CARGO_SHIP_POS = 0;
+	public static final double LIFT_BASE_POS = 0;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.8; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 3.5; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.85; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 0.8; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
+	public static final double LIFT_LVL_1_POS_PBOT= 0; //TODO SET ALL in inches
+	public static final double LIFT_LVL_2_POS_PBOT = 0;
+	public static final double LIFT_LVL_3_POS_PBOT = 0;
+	public static final double LIFT_CARGO_SHIP_POS_PBOT = 0;
+	public static final double LIFT_BASE_POS_PBOT = 0;
 
-	public static final boolean ENABLE_LIFT_POT_SAFETY = false;
+
+	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
 
 	/*************************************************************************
 	 *                      Monkey Bar PARAMETERS                            *
 	 *************************************************************************/
+
+	public static final boolean ONE_TRIGGER_CLIMB_ENABLED = true;
 	public static final boolean MONKEY_BAR_ROTATE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_ROTATE_LEFT_REVERSE = false;
 	
@@ -267,17 +290,17 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 3.95; //130 degrees
 	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 180; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 3.33; //0 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.251; //0 degrees
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 3.95; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 180; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 3.34; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 0.251; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
-	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 0;
+	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
 	public static final double MONKEY_BAR_SAFE_SCORING_POS = 160; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
@@ -285,18 +308,18 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	//PBOT
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 5.108; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT = 130; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT = 0.66; //0 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 3.95; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
+	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT = 3.33; //0 degrees
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT = 0.0;
 	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 5.108; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 130; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.66; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 3.95; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 3.34; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
-	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 0; //TODO SET ALL
+	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 100.0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS_PBOT = 0;
 	public static final double MONKEY_BAR_SAFE_SCORING_POS_PBOT = 160; 
 	public static final double MONKEY_BAR_FLOOR_POS_PBOT = 0;
@@ -338,13 +361,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/*************************************************************************
 	 *                         Plunger Arm Pivot PARAMETERS                   *
 	 *************************************************************************/
-	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = true;
+	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
-	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = false;
+	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = true;
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
-	public static final double PIVOT_POT_VOLTAGE_0 = 0;
+	public static final double PIVOT_POT_VOLTAGE_0 = 4.93;
 	public static final double PIVOT_POT_VOLTAGE_MAX = 5;
 	public static final double PIVOT_POT_0_ROTATION_DEGREES = 0;
 	public static final double PIVOT_POT_MAX_ROTATION_DEGREES = 180;
@@ -353,6 +376,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PLUNGER_ARM_SAFE_POS_BACK = 135;
 	public static final double PLUNGER_ARM_CARGO_SHIP_POS = 45;
 	public static final double PLUNGER_ARM_ERROR = 5;
+
+	public static final double PIVOT_0_POS = 0;
+	public static final double PIVOT_180_POS = 180;
+	public static final double PIVOT_CARGO_SHIP_POS = 0; //TODO SET ALL
 
 	/////TODO set these values
 	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
@@ -364,6 +391,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PLUNGER_ARM_SAFE_POS_BACK_PBOT = 135;
 	public static final double PLUNGER_ARM_CARGO_SHIP_POS_PBOT = 45;
 	public static final double PLUNGER_ARM_ERROR_PBOT = 5;
+
+	public static final double PIVOT_0_POS_PBOT = 0;
+	public static final double PIVOT_180_POS_PBOT = 180;
+	public static final double PIVOT_CARGO_SHIP_POS_PBOT = 0; //TODO SET ALL
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
@@ -380,7 +411,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final long PDPThreadPeriod = 100;
 	public static final double WARNING_CURRENT_LIMIT = 20;
-	public static final double STALL_CURRENT_LIMIT = 35;
+	public static final double STALL_CURRENT_LIMIT = 350;
 	public static final double CURRENT_LIMIT_TIME_THRESHOLD_SECONDS = 1;
 
 	/*************************************************************************
@@ -428,9 +459,23 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_I = 0.027;
 	public static final double LIFT_D = 0.000000067;
 
+	public static final double MB_PIVOT_P = 0.024;
+	public static final double MB_PIVOT_I = 0.027;
+	public static final double MB_PIVOT_D = 0.000000067;
 
+	public static final double HP_PIVOT_P = 0.024;
+	public static final double HP_PIVOT_I = 0.027;
+	public static final double HP_PIVOT_D = 000000067;
+
+	public static final double LIMELIGHT_POSITION_P = 0.013;
+	public static final double LIMELIGHT_POSITION_I = 0.0;
+	public static final double LIMELIGHT_POSITION_D = 0.0;
+		
 	public static final long LIFT_PID_PERIOD = 20;
 	public static final int  LIFT_PID_ARRAY_SIZE = 30;
+
+
+
 
 	/****************************************************************
 	 *                         TCP Servers (ONLY FOR DEBUGGING)     *
@@ -443,6 +488,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT = 1185;
 	public static final int TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION = 1186;
 	public static final int TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION = 1187;
+	public static final int TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA = 1188;
+	public static final int TCP_SERVER_MB_POT_CONTROLLER = 1189;
+	public static final int TCP_SERVER_HP_POT_CONTROLLER = 1190;
 
 	/******************************************************************
 	 *                         ConsolePrinter PARAMETERS              *

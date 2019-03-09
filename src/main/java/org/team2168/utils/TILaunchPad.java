@@ -1,5 +1,8 @@
 package org.team2168.utils;
 
+import org.team2168.RobotMap;
+import org.team2168.utils.consoleprinter.ConsolePrinter;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -56,6 +59,49 @@ public class TILaunchPad extends Joystick {
 	 */
 	public TILaunchPad(int port) {
 		super(port);
+
+		if(RobotMap.ENABLE_BUTTON_BOX_PRINTS)
+		{
+
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_1", () -> {return getAnalogRaw_Channel1();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_2", () -> {return getAnalogRaw_Channel2();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_3", () -> {return getAnalogRaw_Channel3();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_4", () -> {return getAnalogRaw_Channel4();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_5", () -> {return getAnalogRaw_Channel5();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_6", () -> {return getAnalogRaw_Channel6();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_7", () -> {return getAnalogRaw_Channel7();}, true, false);
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_8", () -> {return getAnalogRaw_Channel8();}, true, false);
+
+			ConsolePrinter.putBoolean("Button_Box_Button_1", () -> {return isPressedButton1();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_2", () -> {return isPressedButton2();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_3", () -> {return isPressedButton3();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_4", () -> {return isPressedButton4();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_5", () -> {return isPressedButton5();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_6", () -> {return isPressedButton6();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_7", () -> {return isPressedButton7();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_8", () -> {return isPressedButton8();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_9", () -> {return isPressedButton9();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_10", () -> {return isPressedButton10();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_11", () -> {return isPressedButton11();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_12", () -> {return isPressedButton12();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_13", () -> {return isPressedButton13();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_14", () -> {return isPressedButton14();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_15", () -> {return isPressedButton15();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Button_16", () -> {return isPressedButton16();}, true, false);
+
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button1", () -> {return isPressedButton1();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button2", () -> {return isPressedButton2();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button3", () -> {return isPressedButton3();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button4", () -> {return isPressedButton4();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button5", () -> {return isPressedButton5();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button6", () -> {return isPressedButton6();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button7", () -> {return isPressedButton7();}, true, false);
+			ConsolePrinter.putBoolean("Button_Box_Analog_Button8", () -> {return isPressedButton8();}, true, false);
+			
+
+		}
+
+
 	}
 
 	/**
