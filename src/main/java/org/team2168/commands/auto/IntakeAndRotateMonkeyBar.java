@@ -35,6 +35,6 @@ public class IntakeAndRotateMonkeyBar extends CommandGroup {
     // arm.
 
     addSequential(new MoveMonkeyBarToCargoIntakePosition());
-    addParallel(new DriveCargoIntakeWithConstant(0.8));
+    addParallel(new DriveCargoIntakeWithConstant(0.5));
   }
 }
