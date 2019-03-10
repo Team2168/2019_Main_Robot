@@ -113,7 +113,11 @@ public class Drivetrain extends Subsystem {
           _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
           _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
         
-          _leftMotor1.setSmartCurrentLimit(55);
+          //speed limit 60
+          _leftMotor1.setSmartCurrentLimit(60);
+          _leftMotor2.setSmartCurrentLimit(60);
+          _rightMotor1.setSmartCurrentLimit(60);
+          _rightMotor2.setSmartCurrentLimit(60);
       
 
       // leftMotor1.setCANTimeout(100);
