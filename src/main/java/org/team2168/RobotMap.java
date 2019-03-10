@@ -254,7 +254,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_POT_VOLTAGE_0 = 1.0; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
-	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
+	public static final double LIFT_LVL_1_POS = 10.5; //TODO SET ALL in inches
 	public static final double LIFT_LVL_2_POS = 0;
 	public static final double LIFT_LVL_3_POS = 0;
 	public static final double LIFT_CARGO_SHIP_POS = 0;
@@ -294,17 +294,17 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.5; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 135; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 1.61; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
-	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
-	public static final double MONKEY_BAR_SAFE_SCORING_POS = 160; 
+	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 120;
+	public static final double MONKEY_BAR_SAFE_SCORING_POS = 120; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
-	public static final double MONKEY_BAR_STOW_POS = 180;
-	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 10;
+	public static final double MONKEY_BAR_STOW_POS = 135;
+	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 45;
 
 
 	//PBOT

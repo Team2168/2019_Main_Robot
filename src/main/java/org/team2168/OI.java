@@ -1,40 +1,23 @@
 package org.team2168;
 
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
+import org.team2168.commands.auto.MoveToCSPosition;
+import org.team2168.commands.auto.MoveToIntakePosition;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
-
-import org.team2168.commands.hatchFloorIntake.HatchFloorIntakePivotExtend;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
-import org.team2168.commands.hatchProbePistons.IntakeHatchPanel;
-import org.team2168.commands.hatchProbePistons.ReleaseHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo0Position;
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
-import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
-import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
-import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
-import org.team2168.commands.lift.MoveLiftToLvl1Position;
-import org.team2168.commands.lift.MoveLiftToLvl2Position;
-import org.team2168.commands.lift.MoveLiftToLvl3Position;
-
-import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
-import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
-import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
-
-import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
-import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToFloorPosition;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToStowPosition;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
-import org.team2168.utils.TILaunchPad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -73,7 +56,7 @@ public class OI
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 
-
+	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
 
 	// public F310 driverOperatorEJoystick = new
@@ -211,6 +194,30 @@ public class OI
 		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
 		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
 		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		
+		//automated hatch intake
+		// if(HatchProbePistons.getInstance().isHatchEngaged())
+		// {
+		// 	pidTestJoystick.ButtonX().whileHeld(new ExtendHatchPlunger());
+		// 	pidTestJoystick.ButtonX().whenReleased(new ReleaseHatchPanel());
+		// }
+		// else
+		// {
+		// 	pidTestJoystick.ButtonX().whileHeld(new ReadyToIntake());
+		// 	pidTestJoystick.ButtonX().whenReleased(new IntakeHatchPanel());
+		// }
+
+		// pidTestJoystick.ButtonY().whenPressed(new RotateAndMoveLiftLevel3());
+		// pidTestJoystick.ButtonB().whenPressed(new RotateAndMoveLiftLevel2());
+		// pidTestJoystick.ButtonA().whenPressed(new RotateAndMoveLiftLevel1());
+		
+		pidTestJoystick.ButtonX().whenPressed(new MoveMonkeyBarToStowPosition());
+		pidTestJoystick.ButtonY().whenPressed(new MoveMonkeyBarToSafePositionForPivot());
+		pidTestJoystick.ButtonB().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
+		pidTestJoystick.ButtonA().whenPressed(new MoveMonkeyBarToFloorPosition());
+
+		pidTestJoystick.ButtonDownDPad().whenPressed(new MoveToIntakePosition());
+		pidTestJoystick.ButtonRightDPad().whenPressed(new MoveToCSPosition());
 
 
 	}
@@ -316,6 +323,86 @@ public class OI
 	public double getDriveTrainRightJoystick()
 	{
 		return driverJoystick.getRightStickRaw_Y();
+	}
+
+	/**
+	 * @return the driverJoystick
+	 */
+	public F310 getDriverJoystick()
+	{
+		return driverJoystick;
+	}
+
+	/**
+	 * @param driverJoystick the driverJoystick to set
+	 */
+	public void setDriverJoystick(F310 driverJoystick)
+	{
+		this.driverJoystick = driverJoystick;
+	}
+
+	/**
+	 * @return the operatorJoystick
+	 */
+	public F310 getOperatorJoystick()
+	{
+		return operatorJoystick;
+	}
+
+	/**
+	 * @param operatorJoystick the operatorJoystick to set
+	 */
+	public void setOperatorJoystick(F310 operatorJoystick)
+	{
+		this.operatorJoystick = operatorJoystick;
+	}
+
+	/**
+	 * @return the pidTestJoystick
+	 */
+	public F310 getPidTestJoystick()
+	{
+		return pidTestJoystick;
+	}
+
+	/**
+	 * @param pidTestJoystick the pidTestJoystick to set
+	 */
+	public void setPidTestJoystick(F310 pidTestJoystick)
+	{
+		this.pidTestJoystick = pidTestJoystick;
+	}
+
+	/**
+	 * @return the gunStyleInterpolator
+	 */
+	public LinearInterpolator getGunStyleInterpolator()
+	{
+		return gunStyleInterpolator;
+	}
+
+	/**
+	 * @param gunStyleInterpolator the gunStyleInterpolator to set
+	 */
+	public void setGunStyleInterpolator(LinearInterpolator gunStyleInterpolator)
+	{
+		this.gunStyleInterpolator = gunStyleInterpolator;
+	}
+
+	/**
+	 * @return the gunStyleArray
+	 */
+	public double[][] getGunStyleArray()
+	{
+		return gunStyleArray;
+	}
+
+	/**
+	 * @param gunStyleArray the gunStyleArray to set
+	 */
+	public void setGunStyleArray(double[][] gunStyleArray)
+	{
+		this.gunStyleArray = gunStyleArray;
 	}
 
 }

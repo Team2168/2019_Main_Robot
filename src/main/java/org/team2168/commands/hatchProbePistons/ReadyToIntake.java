@@ -9,11 +9,11 @@ package org.team2168.commands.hatchProbePistons;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class IntakeHatchPanel extends CommandGroup {
+public class ReadyToIntake extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public IntakeHatchPanel() {
+  public ReadyToIntake() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,8 +30,8 @@ public class IntakeHatchPanel extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new EngageHatchPanel());
-    addSequential(new RetractHatchPlunger());
+    addSequential(new DisengageHatchPanel());
+    addSequential(new ExtendHatchPlunger());
     
   
   }

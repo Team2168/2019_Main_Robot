@@ -5,15 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.hatchProbePistons;
+package org.team2168.commands.auto;
+
+import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
+import org.team2168.commands.lift.MoveLiftToLvl2Position;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class IntakeHatchPanel extends CommandGroup {
+public class RotateAndMoveLiftLevel2 extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public IntakeHatchPanel() {
+  public RotateAndMoveLiftLevel2() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,9 +33,7 @@ public class IntakeHatchPanel extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new EngageHatchPanel());
-    addSequential(new RetractHatchPlunger());
-    
-  
+    addSequential(new MoveHatchProbePivotTo180Position());
+    addSequential(new MoveLiftToLvl2Position());
   }
 }
