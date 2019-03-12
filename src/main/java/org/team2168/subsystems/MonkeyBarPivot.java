@@ -169,13 +169,13 @@ public class MonkeyBarPivot extends Subsystem {
   {
     if(getRightPotPos()>= RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0)
     {
-    driveRotateMotorLeft(speed);
-    driveRotateMotorRight(speed);
+      driveRotateMotorLeft(speed);
+     driveRotateMotorRight(speed);
     }
     else
     {
-    driveRotateMotorLeft(0.0);
-    driveRotateMotorRight(0.0);
+      driveRotateMotorLeft(0.0);
+      driveRotateMotorRight(0.0);
     }
   }
 
