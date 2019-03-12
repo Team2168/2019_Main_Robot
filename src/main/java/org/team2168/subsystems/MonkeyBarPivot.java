@@ -167,8 +167,16 @@ public class MonkeyBarPivot extends Subsystem {
    */
   public void driveRotateBarMotors(double speed)
   {
-    driveRotateMotorLeft(speed);
-    driveRotateMotorRight(speed);
+    if(getRightPotPos()>= RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0)
+    {
+      driveRotateMotorLeft(speed);
+     driveRotateMotorRight(speed);
+    }
+    else
+    {
+      driveRotateMotorLeft(0.0);
+      driveRotateMotorRight(0.0);
+    }
   }
 
   public boolean isLowered()
