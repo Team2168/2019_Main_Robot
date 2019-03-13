@@ -7,6 +7,7 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight implements PIDSensorInterface
@@ -26,6 +27,11 @@ public class Limelight implements PIDSensorInterface
 
     private boolean variablesInstantiated;
 
+    private double runTime;
+    private int averagorSize;
+    private double[] averagorArray;
+    private int arrayPos = 0;
+
     /**
      * Default constructor
      */
@@ -39,6 +45,10 @@ public class Limelight implements PIDSensorInterface
         
         networkTable = NetworkTableInstance.getDefault().getTable("limelight");
         variablesInstantiated = false;
+
+        runTime = Timer.getFPGATimestamp();
+        averagorSize = RobotMap.LIMELIGHT_AVG_ENCODER_VAL;
+        averagorArray = new double[averagorSize];
 
         // Testing only
         ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
@@ -64,13 +74,21 @@ public class Limelight implements PIDSensorInterface
         }
     }
 
-    /**
+     /**
      * Returns the rate at which the target bearing changes
      */
     @Override
     public double getRate()
     {
-        return Math.abs((previousPosition - currentPosition) / previousPosition);
+        double executionTime = Timer.getFPGATimestamp() - runTime;
+        double pos = getPos();
+        if(executionTime > 0) {
+            putData((pos - previousPosition) / executionTime);
+        }
+
+        runTime = Timer.getFPGATimestamp();
+        previousPosition = pos;
+        return getAverage();
     }
 
     @Override
@@ -222,5 +240,36 @@ public class Limelight implements PIDSensorInterface
 
         this.variablesInstantiated = true;
     }
+
+      /**
+	 * Puts data in to array to be averaged, hence the class name and method name.
+	 * Its like magic but cooler.
+	 *
+	 * @param value the value being inserted into the array to be averaged.
+	 */
+
+    public synchronized void putData(double value) {
+        averagorArray[arrayPos] = value;
+        arrayPos++;
+
+        if(arrayPos >= averagorSize) {
+            // Is equal or greater to averagorSize because array is zero indexed. Rolls over index position
+            arrayPos = 0;
+        }
+    }
+
+    /**
+	 * Returns average of last n values sent, as name says.
+	 *
+	 * @return the average
+	 */
+    public synchronized double getAverage() {
+        double sum = 0;
+        for(int i = 0; i < averagorSize; i++) {
+            sum += averagorArray[i];
+        }
+        return sum / averagorSize;
+    }
+
 
 }
