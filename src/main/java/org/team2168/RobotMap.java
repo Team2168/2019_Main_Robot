@@ -261,16 +261,22 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_BASE_POS = 0;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 3.5; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.4; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 0.8; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.35; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
-	public static final double LIFT_LVL_1_POS_PBOT= 0; //TODO SET ALL in inches
-	public static final double LIFT_LVL_2_POS_PBOT = 0;
-	public static final double LIFT_LVL_3_POS_PBOT = 0;
-	public static final double LIFT_CARGO_SHIP_POS_PBOT = 0;
+	public static final double LIFT_LVL_1_POS_PBOT= 10.5; //TODO SET ALL in inches
+	public static final double LIFT_LVL_2_POS_PBOT = 38.5;
+	public static final double LIFT_LVL_3_POS_PBOT = 69.0;
+	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
 	public static final double LIFT_BASE_POS_PBOT = 0;
+
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.6;
+	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
+	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.3;
+	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
+	public static final double LIFT_PID_ERROR = 1.0;
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;

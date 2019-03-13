@@ -80,7 +80,7 @@ public class OI
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
 	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
-	//public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
+	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 	private LinearInterpolator gunStyleInterpolator;
 	private double[][] gunStyleArray = { { -1.0, -1.0
 			}, { -.15, 0.0
@@ -204,13 +204,18 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
-		// pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
-		// pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+
+		pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
 
 	}
