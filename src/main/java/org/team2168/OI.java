@@ -1,7 +1,7 @@
 package org.team2168;
 
-import org.team2168.commands.auto.MoveToCSPosition;
 import org.team2168.commands.auto.MoveToIntakePosition;
+import org.team2168.commands.auto.RotateAndMoveLiftCargoShip;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -102,16 +102,16 @@ public class OI
 		 ***********************************************************************/
 		// buttonBox1.Button1().whenPressed(new ExtendHatchPlunger());
 		// buttonBox1.Button2().whenPressed(new EngageHatchPanel());
-		// buttonBox1.Button3().whileHeld(new IntakeHatchPanel()); // IR sensor must be tuned
-		// buttonBox1.Button3().whenReleased(new RetractHatchPlunger()); 
+		// buttonBox1.Button3().whileHeld(new ReadyToIntake());
+		// buttonBox1.Button3().whenReleased(new IntakeHatchPanel());
 		// buttonBox1.Button4().whenPressed(new HatchFloorIntakePivotExtend()); //not legit
-		// buttonBox1.Button5().whenPressed(new MoveLiftToLvl3Position()); //should move pivot too
-		// buttonBox1.Button6().whenPressed(new MoveLiftToLvl2Position()); //should move pivot too
-		// buttonBox1.Button7().whenPressed(new MoveLiftToCargoShipPosition()); //not legit
-		// buttonBox1.Button8().whenPressed(new MoveLiftToCargoShipPosition()); //not legit
-		// buttonBox1.Button9().whenPressed(new MoveLiftToLvl1Position()); //should move pivot too
-		// buttonBox1.Button10().whenPressed(new MoveHatchProbePivotTo180Position()); //not legit
-		// buttonBox1.Button11().whenPressed(new MoveHatchProbePivotTo0Position()); //not legit
+		// buttonBox1.Button5().whenPressed(new RotateAndMoveLiftLevel3());
+		// buttonBox1.Button6().whenPressed(new RotateAndMoveLiftLevel2());
+		// buttonBox1.Button6().whenPressed(new RotateAndMoveLiftCargoShipFrontPosition());
+		// buttonBox1.Button8().whenPressed(new RotateAndMoveLiftCargoShip());
+		// buttonBox1.Button9().whenPressed(new RotateAndMoveLiftLevel1());
+		// buttonBox1.Button10().whenPressed(new MoveHatchProbePivotToOppositeSide()); //not legit
+		// buttonBox1.Button11().whenPressed(new MoveHatchProbePivotTo180Position()); //not legit
 		// buttonBox1.Button12().whenPressed(new MoveHatchProbePivotTo0Position()); //may be legit
 
 
@@ -127,7 +127,10 @@ public class OI
 		// buttonBox2.Button7().whenPressed(new DriveCargoIntakeWithConstant(-0.5)); //should also spin mb if lift down
 		// buttonBox2.Button8().whenPressed(new DriveCargoIntakeWithConstant(-1.0)); //should also spin mb if lift down
 		// buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(1.0)); //should also spin and pivot mb
-		// buttonBox2.Button10().whenPressed(new ReleaseHatchPanel()); //not legit
+		// buttonBox2.Button9().whenPressed(new DriveMonkeyBarIntakeWithConstant(1.0));
+		// buttonBox2.Button9().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
+		// buttonBox2.Button10().whileHeld(new ExtendHatchPlunger());
+		// buttonBox2.Button10().whenReleased(new ReleaseHatchPanel())
 		// //buttonBox2.Button11().whenPressed();
 		// buttonBox2.Button12().whenPressed(new RetractHatchPlunger()); 
 		// }
@@ -217,7 +220,7 @@ public class OI
 		pidTestJoystick.ButtonA().whenPressed(new MoveMonkeyBarToFloorPosition());
 
 		pidTestJoystick.ButtonDownDPad().whenPressed(new MoveToIntakePosition());
-		pidTestJoystick.ButtonRightDPad().whenPressed(new MoveToCSPosition());
+		pidTestJoystick.ButtonRightDPad().whenPressed(new RotateAndMoveLiftCargoShip());
 
 
 	}

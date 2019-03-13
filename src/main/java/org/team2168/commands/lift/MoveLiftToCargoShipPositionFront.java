@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.auto;
+package org.team2168.commands.lift;
 
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
-import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
+import org.team2168.RobotMap;
+import org.team2168.Robot;
+import org.team2168.commands.lift.PIDCommands.DriveLiftPIDZZZ;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class MoveToCSPosition extends CommandGroup {
+public class MoveLiftToCargoShipPositionFront extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public MoveToCSPosition() {
+  public MoveLiftToCargoShipPositionFront() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -33,8 +34,10 @@ public class MoveToCSPosition extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    
-    addSequential(new MoveHatchProbePivotTo180Position());
-    addSequential(new MoveLiftToCargoShipPosition());
+
+    if(Robot.isPracticeRobot())
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_CARGO_SHIP_FRONT_POS_PBOT, 1.0, 0.1, 1.0, true));
+    else
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_CARGO_SHIP_FRONT_POS, 1.0, 0.1, 1.0, true));
   }
 }

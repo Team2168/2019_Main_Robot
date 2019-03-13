@@ -258,6 +258,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_LVL_2_POS = 0;
 	public static final double LIFT_LVL_3_POS = 0;
 	public static final double LIFT_CARGO_SHIP_POS = 0;
+	public static final double LIFT_CARGO_SHIP_FRONT_POS = 0;
 	public static final double LIFT_BASE_POS = 0;
 
 	//PBOT LIFT
@@ -270,6 +271,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_LVL_2_POS_PBOT = 0;
 	public static final double LIFT_LVL_3_POS_PBOT = 0;
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 0;
+	public static final double LIFT_CARGO_SHIP_FRONT_POS_PBOT = 0;
 	public static final double LIFT_BASE_POS_PBOT = 0;
 
 
