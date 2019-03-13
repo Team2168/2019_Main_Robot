@@ -239,6 +239,13 @@ public class DriveWithJoystick extends Command {
 				{ 
 					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
 				}
+				else if(Robot.drivetrain.limelightPosController.isEnabled())
+				{
+					Robot.drivetrain.tankDrive(
+						Robot.oi.getGunStyleYValue() + Robot.oi.driverJoystick.getX(Hand.kLeft) - Robot.drivetrain.limelightPosController.getControlOutput(),
+						Robot.oi.getGunStyleYValue() - Robot.oi.driverJoystick.getX(Hand.kLeft) + Robot.drivetrain.limelightPosController.getControlOutput());
+					Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+				}
 				else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) {
 					//Drive straight
 					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft),
