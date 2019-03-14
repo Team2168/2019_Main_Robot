@@ -16,15 +16,21 @@ public class Limelight implements PIDSensorInterface
     private NetworkTable networkTable;
     private NetworkTableEntry tx;
     private NetworkTableEntry ta;
+    private NetworkTableEntry tv;
     private NetworkTableEntry camtran;
     private NetworkTableEntry ledMode;
     private NetworkTableEntry camMode;
     private NetworkTableEntry pipeline;
+    private NetworkTableEntry snapshot;
+
 
     private double currentPosition;
     private double previousPosition;
+    public int currentVisionPipeline;
 
     private boolean variablesInstantiated;
+
+    private int snapshotCounter;
 
     /**
      * Default constructor
@@ -33,6 +39,9 @@ public class Limelight implements PIDSensorInterface
     {
         currentPosition = 0.0;
         previousPosition = 0.0;
+        currentVisionPipeline = 0;
+
+
         /**
          * Check networkTable to verify network connectivity of Limelight
          */
@@ -70,8 +79,8 @@ public class Limelight implements PIDSensorInterface
     @Override
     public double getRate()
     {
-        return Math.abs((previousPosition - currentPosition) / previousPosition);
-    }
+        return 0;
+        }
 
     @Override
     public void reset()
@@ -160,11 +169,19 @@ public class Limelight implements PIDSensorInterface
             if (this.connectionEstablished() && this.variablesInstantiated)
             {
                 pipeline.setNumber(pipelineNumber);
+                if(!(pipelineNumber == 7))
+                {
+                    currentVisionPipeline = pipelineNumber;
+                }
             }
             else if (this.connectionEstablished() && !this.variablesInstantiated)
             {
                 this.instantiateLocalVariables();
                 pipeline.setNumber(pipelineNumber);
+                if(!(pipelineNumber == 7))
+                {
+                    currentVisionPipeline = pipelineNumber;
+                }
             }
             else
             {
@@ -214,13 +231,41 @@ public class Limelight implements PIDSensorInterface
         ledMode = networkTable.getEntry("ledMode");
         camMode = networkTable.getEntry("camMode");
         pipeline = networkTable.getEntry("pipeline");
+        snapshot = networkTable.getEntry("snapshot");
+
 
         // Sets the camera controls
         ledMode.setNumber(0);
         camMode.setNumber(0);
         pipeline.setNumber(0);
+        snapshot.setNumber(0);
+
 
         this.variablesInstantiated = true;
+        this.snapshotCounter = 0;
+    }
+
+    public void takeSnapshot()
+    {
+        //number of allowed pics to save (can have up to 100 on the camera before it deletes)--this will allow 10 matches of pics
+        if(snapshotCounter <= 10) 
+        {
+            if (this.connectionEstablished() && this.variablesInstantiated)
+            {
+                snapshot.setNumber(1);
+                snapshotCounter++;
+            }
+            else if (this.connectionEstablished() && !this.variablesInstantiated)
+            {
+                this.instantiateLocalVariables();
+                snapshot.setNumber(1);
+                snapshotCounter++;
+            }
+            else
+            {
+                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            }
+        }
     }
 
 }

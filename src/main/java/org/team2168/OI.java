@@ -1,40 +1,19 @@
 package org.team2168;
 
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
-
-import org.team2168.commands.hatchFloorIntake.HatchFloorIntakePivotExtend;
+import org.team2168.commands.drivetrain.PIDCommands.RotatePIDLimelight;
+import org.team2168.commands.drivetrain.PIDCommands.TakeSnapshot;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
-import org.team2168.commands.hatchProbePistons.IntakeHatchPanel;
-import org.team2168.commands.hatchProbePistons.ReleaseHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo0Position;
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
-import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
-import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
-import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
-import org.team2168.commands.lift.MoveLiftToLvl1Position;
-import org.team2168.commands.lift.MoveLiftToLvl2Position;
-import org.team2168.commands.lift.MoveLiftToLvl3Position;
-
-import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
-import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
-import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
-
-import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
-import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
-import org.team2168.utils.TILaunchPad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -204,18 +183,24 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
-		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
-		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		// pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
-		pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
-		pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
-		pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		// pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+
+		//PID Test Joystick
+		pidTestJoystick.ButtonX().whenPressed(new RotatePIDLimelight());
+		pidTestJoystick.ButtonA().whenPressed(new TakeSnapshot());
+
+
 
 
 	}
