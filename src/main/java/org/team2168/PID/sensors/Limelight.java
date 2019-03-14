@@ -23,6 +23,8 @@ public class Limelight implements PIDSensorInterface
 
     private double currentPosition;
     private double previousPosition;
+    public int currentVisionPipeline;
+
 
     private boolean variablesInstantiated;
 
@@ -33,6 +35,8 @@ public class Limelight implements PIDSensorInterface
     {
         currentPosition = 0.0;
         previousPosition = 0.0;
+        currentVisionPipeline = 0;
+
         /**
          * Check networkTable to verify network connectivity of Limelight
          */
@@ -70,8 +74,8 @@ public class Limelight implements PIDSensorInterface
     @Override
     public double getRate()
     {
-        return Math.abs((previousPosition - currentPosition) / previousPosition);
-    }
+        return 0;
+        }
 
     @Override
     public void reset()
@@ -160,11 +164,21 @@ public class Limelight implements PIDSensorInterface
             if (this.connectionEstablished() && this.variablesInstantiated)
             {
                 pipeline.setNumber(pipelineNumber);
+                
+                if(!(pipelineNumber == 7))
+                {
+                    currentVisionPipeline = pipelineNumber;
+                }
             }
             else if (this.connectionEstablished() && !this.variablesInstantiated)
             {
                 this.instantiateLocalVariables();
                 pipeline.setNumber(pipelineNumber);
+                
+                if(!(pipelineNumber == 7))
+                {
+                    currentVisionPipeline = pipelineNumber;
+                }
             }
             else
             {

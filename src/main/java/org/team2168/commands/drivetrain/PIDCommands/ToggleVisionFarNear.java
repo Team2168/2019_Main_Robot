@@ -11,14 +11,11 @@ import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TogglePipeline extends Command {
+public class ToggleVisionFarNear extends Command {
 
   private boolean finished;
 
-  /**
-   * Default constructor
-   */
-  public TogglePipeline() {
+  public ToggleVisionFarNear() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.drivetrain);
   }
@@ -28,16 +25,14 @@ public class TogglePipeline extends Command {
   protected void initialize() {
     finished = false;
 
-    // If vision is active, switches to a raw pipeline
-    if(Robot.drivetrain.limelight.getPipeline() == Robot.drivetrain.limelight.currentVisionPipeline) {      Robot.drivetrain.limelight.setPipeline(7);
-      finished = true;
+    if(Robot.drivetrain.limelight.getPipeline() == 0) {
+      Robot.drivetrain.limelight.setPipeline(5);
     }
-    // If vision is inactive, switches to the vision pipeline
-    else if(Robot.drivetrain.limelight.getPipeline() == 7) {
-      Robot.drivetrain.limelight.setPipeline(Robot.drivetrain.limelight.currentVisionPipeline);
-      finished = true;
+    else if(Robot.drivetrain.limelight.getPipeline() == 5) {
+      Robot.drivetrain.limelight.setPipeline(0);
     }
-    
+
+    finished = true;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -61,5 +56,4 @@ public class TogglePipeline extends Command {
   @Override
   protected void interrupted() {
   }
-
 }
