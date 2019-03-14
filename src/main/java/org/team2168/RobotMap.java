@@ -109,12 +109,18 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
 	public static final int HATCH_PANEL_VELCRO_PUSHER_PCM = 1;
-	public static final int HATCH_INTAKE_LOWER_PCM = 6;
-	public static final int HATCH_INTAKE_RAISE_PCM = 7;
+	public static final int HATCH_INTAKE_LOWER_PCM = 2;
+	public static final int HATCH_INTAKE_RAISE_PCM = 3
+	;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
-	public static final int STINGER_ENGAGE_PCM = 3;
-	public static final int STINGER_DISENGAGE_PCM = 2;
+	public static final int STINGER_ENGAGE_PCM = 7;
+	public static final int STINGER_DISENGAGE_PCM = 6;
+	//public static final int STINGER_ENGAGE_PCM = 3;
+	//public static final int STINGER_DISENGAGE_PCM = 2;
+
+	public static final int STINGER_ENGAGE_PCM_PBOT = 7;
+	public static final int STINGER_DISENGAGE_PCM_PBOT = 6;
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
@@ -249,34 +255,39 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_MIN_SPEED = 0.075;
 
 
-	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
+	// public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
+	// public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
+	// public static final double LIFT_POT_VOLTAGE_0 = 1.0; //0 degrees
+	// public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
+
+	public static final double LIFT_POT_VOLTAGE_MAX = 4.0; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 1.0; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0 = 1.2; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
-	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
-	public static final double LIFT_LVL_2_POS = 0;
-	public static final double LIFT_LVL_3_POS = 0;
-	public static final double LIFT_CARGO_SHIP_POS = 0;
-	public static final double LIFT_BASE_POS = 0;
+	public static final double LIFT_LVL_1_POS= 10.5; //TODO SET ALL in inches
+	public static final double LIFT_LVL_2_POS = 38.5;
+	public static final double LIFT_LVL_3_POS = 69.0;
+	public static final double LIFT_CARGO_SHIP_POS = 28.0;
+	public static final double LIFT_BASE_POS = 10.5;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.4; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.0; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.35; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.2; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
 	public static final double LIFT_LVL_1_POS_PBOT= 10.5; //TODO SET ALL in inches
 	public static final double LIFT_LVL_2_POS_PBOT = 38.5;
 	public static final double LIFT_LVL_3_POS_PBOT = 69.0;
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
-	public static final double LIFT_BASE_POS_PBOT = 0;
+	public static final double LIFT_BASE_POS_PBOT = 10.5;
 
-	public static final double LIFT_PID_SPEED_UP_MAX = 0.6;
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.4;
 	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
-	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.3;
+	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.2;
 	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
-	public static final double LIFT_PID_ERROR = 1.0;
+	public static final double LIFT_PID_ERROR = 0.5;
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;

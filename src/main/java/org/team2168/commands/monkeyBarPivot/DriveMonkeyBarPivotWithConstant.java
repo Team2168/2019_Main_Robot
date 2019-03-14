@@ -24,7 +24,7 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
   @Override
   protected void execute() {
     Robot.monkeyBarPivot.driveRotateBarMotors(_speed);
-    System.out.println("Driving MonkeyBar with Joystick");
+    System.out.println("Driving MonkeyBar with Constant");
   }
 
   @Override

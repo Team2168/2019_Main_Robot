@@ -187,6 +187,12 @@ public class OI
 		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
 
 		
+		operatorJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		operatorJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+
+		
 
 		/////////////// Intake and pivot up
 		/////////////// afterwards/////////////////////////////////////////////////////////////////////////
