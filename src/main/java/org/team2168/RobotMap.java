@@ -258,11 +258,11 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_LVL_2_POS = 0;
 	public static final double LIFT_LVL_3_POS = 0;
 	public static final double LIFT_CARGO_SHIP_POS = 0;
-	public static final double LIFT_CARGO_SHIP_FRONT_POS = 0;
+	public static final double LIFT_CARGO_SHIP_FRONT_POS = 0; 
 	public static final double LIFT_BASE_POS = 0;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 3.5; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 3.95; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
 	public static final double LIFT_POT_VOLTAGE_0_PBOT = 0.8; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
