@@ -5,15 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.hatchProbePistons;
+package org.team2168.commands.lift;
+
+import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.commands.lift.PIDCommands.DriveLiftPIDZZZ;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class IntakeHatchPanel extends CommandGroup {
+public class MoveLiftToLvl2Position extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public IntakeHatchPanel() {
+  public MoveLiftToLvl2Position() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,9 +34,17 @@ public class IntakeHatchPanel extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new ExtendHatchPlunger());
-    addSequential(new WaitUntilHatch());
-    
-  
+    if(Robot.isPracticeRobot())
+    {
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_LVL_2_POS_PBOT,  RobotMap.LIFT_PID_SPEED_UP_MAX,
+        RobotMap.LIFT_PID_SPEED_DOWN_MAX, RobotMap.LIFT_PID_SPEED_UP_MIN, RobotMap.LIFT_PID_SPEED_DOWN_MIN, 
+        RobotMap.LIFT_PID_ERROR, true));
+    }
+    else
+    {
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_LVL_2_POS,  RobotMap.LIFT_PID_SPEED_UP_MAX,
+      RobotMap.LIFT_PID_SPEED_DOWN_MAX, RobotMap.LIFT_PID_SPEED_UP_MIN, RobotMap.LIFT_PID_SPEED_DOWN_MIN, 
+      RobotMap.LIFT_PID_ERROR, true));
+    }
   }
 }

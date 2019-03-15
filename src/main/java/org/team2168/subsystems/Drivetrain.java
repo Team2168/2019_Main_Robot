@@ -11,13 +11,12 @@ import org.team2168.PID.controllers.PIDSpeed;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
+import org.team2168.PID.sensors.Limelight;
 import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -31,12 +30,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 
-  private static SpeedController _leftMotor1;
-  private static SpeedController _leftMotor2;
-  private static SpeedController _leftMotor3;
-  private static SpeedController _rightMotor1;
-  private static SpeedController _rightMotor2;
-  private static SpeedController _rightMotor3;
+  private static CANSparkMax _leftMotor1;
+  private static CANSparkMax _leftMotor2;
+  private static CANSparkMax _leftMotor3;
+  private static CANSparkMax _rightMotor1;
+  private static CANSparkMax _rightMotor2;
+  private static CANSparkMax _rightMotor3;
 
   private ADXRS453Gyro _gyroSPI;
   private AverageEncoder _drivetrainLeftEncoder;
@@ -65,6 +64,9 @@ public class Drivetrain extends Subsystem {
   public PIDSpeed rightSpeedController;
   public PIDSpeed leftSpeedController;
 
+  public Limelight limelight;
+  public PIDPosition limelightPosController;
+
   private static Drivetrain instance = null;
 
   // declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR
@@ -75,6 +77,7 @@ public class Drivetrain extends Subsystem {
   TCPSocketSender TCProtateController;
   TCPSocketSender TCPleftPosController;
   TCPSocketSender TCPrightPosController;
+  TCPSocketSender TCPlimelightPosController;
 
   public volatile double leftMotor1Voltage;
   public volatile double leftMotor2Voltage;
@@ -103,102 +106,26 @@ public class Drivetrain extends Subsystem {
      * Also allows us to detect comp chasis vs practice chassis and code for any
      * differences.
      */
-    if (Robot.isPracticeRobot())
-    {
-      if (Robot.isPWMDrivetrain())
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-          _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-          _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-          _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-          _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-          _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
-        }
-        else
-        {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
-          _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
-          _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
-          _rightMotor2 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);
-        }
-      }
-      else // CAN Practice Bot
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
-        }
-        else
-        {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-        }
-      }
-    }
-    else // Comp Robot
-    {
-      if (Robot.isPWMDrivetrain())
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("PWM Comp Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-          _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-          _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-          _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-          _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-          _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
-        }
-        else
-        {
-          System.out.println("PWM Comp Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
-          _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
-          _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
-          _rightMotor2 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);
-        }
-      }
-      else // CAN Practice Bot
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("CAN Comp Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
-        }
-        else
-        {
+
           System.out.println("CAN Comp Bot Drivetrain enabled - 4 motors");
           _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
           _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
           _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
           _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-        }
-      }
+        
+          //speed limit 60
+          _leftMotor1.setSmartCurrentLimit(60);
+          _leftMotor2.setSmartCurrentLimit(60);
+          _rightMotor1.setSmartCurrentLimit(60);
+          _rightMotor2.setSmartCurrentLimit(60);
+      
 
       // leftMotor1.setCANTimeout(100);
       // leftMotor3.setCANTimeout(100);
       // rightMotor2.setCANTimeout(100);
       // rightMotor3.setCANTimeout(100);
 
-    }
+  
     
     _drivetrainRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_DRIVE_ENCODER_A,
@@ -225,10 +152,13 @@ public class Drivetrain extends Subsystem {
     _gyroSPI = new ADXRS453Gyro();
     _gyroSPI.startThread();
     
+    imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+
     _drivetrainFrontIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_FRONT_IR_SENSOR);
     _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
-    imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+    limelight = new Limelight();
+    limelight.setPipeline(7);
 
     // DriveStraight Controller
     rotateController = new PIDPosition(
@@ -294,6 +224,17 @@ public class Drivetrain extends Subsystem {
         _drivetrainLeftEncoder,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
+        
+    
+        // Limelight Controller
+    limelightPosController = new PIDPosition(
+        "limelightPosController",
+        RobotMap.LIMELIGHT_POSITION_P,
+        RobotMap.LIMELIGHT_POSITION_I,
+        RobotMap.LIMELIGHT_POSITION_D,
+        _drivetrainLeftEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
     // add min and max output defaults and set array size
     rightSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     leftSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
@@ -302,6 +243,7 @@ public class Drivetrain extends Subsystem {
     driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    limelightPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
 
     // start controller threads
     rightSpeedController.startThread();
@@ -311,6 +253,7 @@ public class Drivetrain extends Subsystem {
     driveTrainPosController.startThread();
     rotateController.startThread();
     rotateDriveStraightController.startThread();
+    limelightPosController.startThread();
 
     // start TCP Servers for DEBUGING ONLY
     TCPdrivePosController = new TCPSocketSender(RobotMap.TCP_SERVER_DRIVE_TRAIN_POS, driveTrainPosController);
@@ -334,6 +277,8 @@ public class Drivetrain extends Subsystem {
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT,rotateDriveStraightController);
     TCProtateController.start();
 
+    TCPlimelightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA,limelightPosController);
+    TCPlimelightPosController.start();
 
     leftMotor1Voltage = 0;
     leftMotor2Voltage = 0;

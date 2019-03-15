@@ -19,7 +19,7 @@ public class DriveLiftWithJoysticks extends Command
   {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift);
+    requires(Lift.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -40,7 +40,7 @@ public class DriveLiftWithJoysticks extends Command
       {
         if(Lift.getInstance().getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
         {
-          Robot.lift.driveAllMotors(-holdingSpeed-0.01);
+          Robot.lift.driveAllMotors(-holdingSpeed);//+0.01
         }
         else
         {

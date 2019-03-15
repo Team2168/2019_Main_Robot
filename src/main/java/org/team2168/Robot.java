@@ -7,6 +7,8 @@
 
 package org.team2168;
 
+import org.team2168.commands.auto.DoNothing;
+import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
 import org.team2168.subsystems.CargoPunch;
@@ -16,8 +18,8 @@ import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.HatchProbePivotBrake;
 import org.team2168.subsystems.Lift;
-import org.team2168.subsystems.MonkeyBarPivot;
 import org.team2168.subsystems.MonkeyBarIntakeWheels;
+import org.team2168.subsystems.MonkeyBarPivot;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.ShifterDrivetrain;
 import org.team2168.subsystems.ShifterStinger;
@@ -168,8 +170,7 @@ public class Robot extends TimedRobot
       ConsolePrinter.putNumber("Robot Pressure", () -> {return Robot.pneumatics.getPSI();}, true, false);
       ConsolePrinter.putBoolean("Is Practice Bot", () -> {return isPracticeRobot();}, true, false);
       ConsolePrinter.putBoolean("Is Climb Mode", () -> {return isClimbMode();}, true, false);
-      ConsolePrinter.putSendable("Throttle Vibe Chooser", () -> {return Robot.throttleVibeChooser;}, true, false);
-     
+      
       
       System.out.println("Robot Initialization Complete!!");
     }
@@ -248,6 +249,7 @@ public class Robot extends TimedRobot
     autonomousCommand = (Command) autoChooser.getSelected();
 
     Scheduler.getInstance().run();
+    Drivetrain.getInstance().limelight.setPipeline(7);
 
     // Check to see if the gyro is drifting, if it is re-initialize it.
     gyroReinit();
@@ -266,6 +268,8 @@ public class Robot extends TimedRobot
     // schedule the autonomous command
     if (autonomousCommand != null)
       autonomousCommand.start();
+
+    Scheduler.getInstance().add(new EngageDrivetrain());
   }
 
   /**
@@ -292,6 +296,9 @@ public class Robot extends TimedRobot
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+
+    Scheduler.getInstance().add(new EngageDrivetrain());
+
     if (autonomousCommand != null) autonomousCommand.cancel();
 
     // Select the control style
@@ -425,7 +432,7 @@ public class Robot extends TimedRobot
   {
     autoChooser = new SendableChooser<Command>();
     // autoChooser.addDefault("Drive Straight", new DriveStraight(8.0));
-    // autoChooser.addObject("Do Nothing", new DoNothing());
+    autoChooser.addObject("Do Nothing", new DoNothing());
     // autoChooser.addObject("Center Auto 3 Cube", new AutoStartCenter3Cube());
   }
 

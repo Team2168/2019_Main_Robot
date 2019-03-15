@@ -43,8 +43,7 @@ public class MonkeyBarPivot extends Subsystem {
 
   private double _errorMargin = 3; //currently 3 degrees to either side of set positions returns true
 
-
-  public static PIDPosition monkeyBarPivotController;
+  public PIDPosition monkeyBarPivotController;
   TCPSocketSender TCPMonkeyBarPivotController;
 
   private static MonkeyBarPivot _instance;
@@ -90,7 +89,7 @@ public class MonkeyBarPivot extends Subsystem {
     else
     {
 
-      _monkeyBarRotationRight = new AveragePotentiometer(RobotMap.MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT,
+      _monkeyBarRotationRight = new AveragePotentiometer(_rotateBarRight,
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_0,
         RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0,
         RobotMap.MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX,
@@ -189,15 +188,22 @@ public class MonkeyBarPivot extends Subsystem {
    */
   public void driveRotateBarMotors(double speed)
   {
-    driveRotateMotorLeft(speed);
-    driveRotateMotorRight(speed);
+    if(getRightPotPos()>= RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0)
+    {
+      driveRotateMotorLeft(speed);
+     driveRotateMotorRight(speed);
+    }
+    else
+    {
+      driveRotateMotorLeft(0.0);
+      driveRotateMotorRight(0.0);
+    }
 
     isRotateBarLeftBreakerTrip();
     isRotateBarRightBreakerTrip();
 
     isRotateBarLeftFailure();
     isRotateBarRightFailure();
-
   }
 
   public boolean isLowered()

@@ -83,8 +83,7 @@ public class Lift extends Subsystem {
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
 		liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
 
-		moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
-		movePivotToMBPosition = new MovePivotToMBPosition();				
+			
 
     if (Robot.isPracticeRobot()) 
     {
@@ -140,12 +139,12 @@ public class Lift extends Subsystem {
 		ConsolePrinter.putNumber("Lift Pot Rate", () -> {return getPotRate();}, true, false);
 		ConsolePrinter.putBoolean("Lift Is Sensor Valid", () -> {return isSensorValid();}, true, false);
 
-		ConsolePrinter.putBoolean("Lift Motor1_FAULT", () -> {return liftMotor1Fault;}, true, true);
-		ConsolePrinter.putBoolean("Lift Motor2_FAULT", () -> {return liftMotor2Fault;}, true, true);
+		ConsolePrinter.putBoolean("Lift Motor1_FAULT", () -> {return liftMotor1Fault;}, true, false);
+		ConsolePrinter.putBoolean("Lift Motor2_FAULT", () -> {return liftMotor2Fault;}, true, false);
 
 
-		ConsolePrinter.putBoolean("Lift Motor1_Breaker_Trip", () -> {return isLiftMotor1BreakerTrip;}, true, true);
-		ConsolePrinter.putBoolean("Lift Motor2_Breaker_Trip", () -> {return isLiftMotor2BreakerTrip;}, true, true);
+		ConsolePrinter.putBoolean("Lift Motor1_Breaker_Trip", () -> {return isLiftMotor1BreakerTrip;}, true, false);
+		ConsolePrinter.putBoolean("Lift Motor2_Breaker_Trip", () -> {return isLiftMotor2BreakerTrip;}, true, false);
 
 	}
 
@@ -244,7 +243,10 @@ public class Lift extends Subsystem {
 	 */
 	public void driveAllMotors(double speed)
 	{
-
+		if( moveMonkeyBarToSafePositionForLift == null)
+			moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
+		if( movePivotToMBPosition == null)
+			movePivotToMBPosition = new MovePivotToMBPosition();	
 		
 		// lift is stalling
 		if ((Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP) > RobotMap.STALL_CURRENT_LIMIT)
@@ -340,7 +342,16 @@ public class Lift extends Subsystem {
 					// elseif(MonkeyNotRunning)
 					// 	movedMOnkeyBAr = false;
 
-
+					// if(getPotPos()<=13)
+					// {
+					// 	driveLiftMotor1(RobotMap.LIFT_UP_MIN_VOLTAGE);
+					// 	driveLiftMotor2(RobotMap.LIFT_UP_MIN_VOLTAGE);
+					// }
+					// else
+					// {
+					// 	driveLiftMotor1(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
+					// 	driveLiftMotor2(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
+					// }
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
 

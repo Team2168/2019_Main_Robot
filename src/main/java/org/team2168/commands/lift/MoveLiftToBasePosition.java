@@ -5,15 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.hatchProbePistons;
+package org.team2168.commands.lift;
+
+import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.commands.lift.PIDCommands.DriveLiftPIDZZZ;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class IntakeHatchPanel extends CommandGroup {
+public class MoveLiftToBasePosition extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public IntakeHatchPanel() {
+  public MoveLiftToBasePosition() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,9 +34,10 @@ public class IntakeHatchPanel extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new ExtendHatchPlunger());
-    addSequential(new WaitUntilHatch());
-    
-  
+    if(Robot.isPracticeRobot())
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_BASE_POS_PBOT, 1.0, 0.1, 1.0, true));
+    else
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_BASE_POS, 1.0, 0.1, 1.0, true));
+
   }
 }

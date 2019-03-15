@@ -5,15 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.hatchProbePistons;
+package org.team2168.commands.hatchProbePivot;
+
+import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.commands.hatchProbePivot.PIDCommands.DriveHatchProbePivotPID;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class IntakeHatchPanel extends CommandGroup {
+public class MoveHatchProbePivotTo0Position extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public IntakeHatchPanel() {
+  public MoveHatchProbePivotTo0Position() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -30,9 +34,10 @@ public class IntakeHatchPanel extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new ExtendHatchPlunger());
-    addSequential(new WaitUntilHatch());
-    
-  
+    if(Robot.isPracticeRobot())
+      addSequential(new DriveHatchProbePivotPID(RobotMap.PIVOT_0_POS_PBOT, 1, 0, true));
+    else
+      addSequential(new DriveHatchProbePivotPID(RobotMap.PIVOT_0_POS, 1, 0, true));
+
   }
 }

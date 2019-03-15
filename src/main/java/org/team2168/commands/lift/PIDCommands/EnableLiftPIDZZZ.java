@@ -3,6 +3,7 @@ package org.team2168.commands.lift.PIDCommands;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,14 +19,15 @@ public class EnableLiftPIDZZZ extends Command {
 	private double maxSpeed;
 	private double minSpeed;
 	private double error = 0.5;  // Rotational degree error, default 0 never ends.
-	private boolean absolute = false;
+	private boolean absolute = true;
 	
     public EnableLiftPIDZZZ() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.lift);
+    	requires(Lift.getInstance());
     	this.setPoint = Robot.lift.liftPOTController.getSetPoint();
-    	this.maxSpeed = 1;
-    	this.minSpeed = 0;
+    	this.maxSpeed = 0.5;
+		this.minSpeed = 0;
+		this.absolute = true;
     }
 
     public EnableLiftPIDZZZ(double setPoint){
