@@ -5,7 +5,8 @@ import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
-
+import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
+import org.team2168.commands.drivetrain.PIDCommands.RotatePIDLimelight;
 import org.team2168.commands.hatchFloorIntake.HatchFloorIntakePivotExtend;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
@@ -72,7 +73,7 @@ public class OI
 
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
-
+	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
 
 
@@ -108,6 +109,8 @@ public class OI
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
+
+		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
 
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
@@ -211,7 +214,7 @@ public class OI
 		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
 		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
 		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
-
+		pidTestJoystick.ButtonY().whenPressed(new RotatePIDLimelight());
 
 	}
 
