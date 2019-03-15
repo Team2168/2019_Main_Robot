@@ -2,14 +2,26 @@ package org.team2168;
 
 import org.team2168.commands.auto.MoveToIntakePosition;
 import org.team2168.commands.auto.RotateAndMoveLiftCargoShip;
+import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.hatchFloorIntake.IntakeFloorHatch;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
+import org.team2168.commands.hatchProbePistons.IntakeHatchPanel;
+import org.team2168.commands.hatchProbePistons.ReadyToIntake;
+import org.team2168.commands.hatchProbePistons.ReleaseHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo0Position;
+import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
+import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotToOppositeSide;
+import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
+import org.team2168.commands.lift.MoveLiftToLvl1Position;
+import org.team2168.commands.lift.MoveLiftToLvl2Position;
+import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
@@ -18,6 +30,7 @@ import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositi
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToStowPosition;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
+import org.team2168.utils.TILaunchPad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -58,6 +71,8 @@ public class OI
 
 	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
+	public TILaunchPad buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
+	public TILaunchPad buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
 
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
@@ -95,45 +110,50 @@ public class OI
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
-		// if(RobotMap.ENABLE_BUTTON_BOX)
-		// {
+		if(RobotMap.ENABLE_BUTTON_BOX)
+		{
 		/***********************************************************************
 		 * Button Box 1
 		 ***********************************************************************/
-		// buttonBox1.Button1().whenPressed(new ExtendHatchPlunger());
-		// buttonBox1.Button2().whenPressed(new EngageHatchPanel());
-		// buttonBox1.Button3().whileHeld(new ReadyToIntake());
-		// buttonBox1.Button3().whenReleased(new IntakeHatchPanel());
-		// buttonBox1.Button4().whenPressed(new HatchFloorIntakePivotExtend()); //not legit
-		// buttonBox1.Button5().whenPressed(new RotateAndMoveLiftLevel3());
+		buttonBox1.Button1().whenPressed(new ExtendHatchPlunger());
+		buttonBox1.Button2().whenPressed(new EngageHatchPanel());
+		buttonBox1.Button3().whileHeld(new ReadyToIntake());
+		buttonBox1.Button3().whenReleased(new IntakeHatchPanel());
+		buttonBox1.Button4().whenPressed(new IntakeFloorHatch()); //not legit
+		// buttonBox1.Button5().whenPressed(new RotateAndMoveLiftLevel3()); no pivot PID yet
 		// buttonBox1.Button6().whenPressed(new RotateAndMoveLiftLevel2());
-		// buttonBox1.Button6().whenPressed(new RotateAndMoveLiftCargoShipFrontPosition());
+		// buttonBox1.Button7().whenPressed(new RotateAndMoveLiftCargoShipFrontPosition());
 		// buttonBox1.Button8().whenPressed(new RotateAndMoveLiftCargoShip());
 		// buttonBox1.Button9().whenPressed(new RotateAndMoveLiftLevel1());
+		buttonBox1.Button5().whenPressed(new MoveLiftToLvl3Position());
+		buttonBox1.Button6().whenPressed(new MoveLiftToLvl2Position());
+		// buttonBox1.Button6().whenPressed(new RotateAndMoveLiftCargoShipFrontPosition());
+		buttonBox1.Button8().whenPressed(new MoveLiftToCargoShipPosition());
+		buttonBox1.Button9().whenPressed(new MoveLiftToLvl1Position());
 		// buttonBox1.Button10().whenPressed(new MoveHatchProbePivotToOppositeSide()); //not legit
 		// buttonBox1.Button11().whenPressed(new MoveHatchProbePivotTo180Position()); //not legit
 		// buttonBox1.Button12().whenPressed(new MoveHatchProbePivotTo0Position()); //may be legit
 
 
-		//  /***********************************************************************
-		//  * Button Box 2
-		//  ***********************************************************************/
-		// //buttonBox2.Button1().whenPressed(new ExtendCargoPunch()); apparently no punch
-		// // buttonBox2.Button2().whenPressed();
-		// // buttonBox2.Button3().whenPressed();
-		// buttonBox2.Button4().whenPressed(new DisengageHatchPanel());
-		// //buttonBox2.Button5().whenPressed(new defense); //not exist yet
-		// //buttonBox2.Button6().whenPressed(new score)); //not exist
-		// buttonBox2.Button7().whenPressed(new DriveCargoIntakeWithConstant(-0.5)); //should also spin mb if lift down
-		// buttonBox2.Button8().whenPressed(new DriveCargoIntakeWithConstant(-1.0)); //should also spin mb if lift down
-		// buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(1.0)); //should also spin and pivot mb
-		// buttonBox2.Button9().whenPressed(new DriveMonkeyBarIntakeWithConstant(1.0));
-		// buttonBox2.Button9().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
-		// buttonBox2.Button10().whileHeld(new ExtendHatchPlunger());
-		// buttonBox2.Button10().whenReleased(new ReleaseHatchPanel())
-		// //buttonBox2.Button11().whenPressed();
-		// buttonBox2.Button12().whenPressed(new RetractHatchPlunger()); 
-		// }
+		 /***********************************************************************
+		 * Button Box 2
+		 ***********************************************************************/
+		//buttonBox2.Button1().whenPressed(new ExtendCargoPunch()); apparently no punch
+		// buttonBox2.Button2().whenPressed();
+		// buttonBox2.Button3().whenPressed();
+		buttonBox2.Button4().whenPressed(new DisengageHatchPanel());
+		//buttonBox2.Button5().whenPressed(new defense); //not exist yet
+		//buttonBox2.Button6().whenPressed(new score)); //not exist
+		buttonBox2.Button7().whenPressed(new DriveCargoIntakeWithConstant(-0.5)); //should also spin mb if lift down
+		buttonBox2.Button8().whenPressed(new DriveCargoIntakeWithConstant(-1.0)); //should also spin mb if lift down
+		buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(0.5)); //should also spin and pivot mb
+		buttonBox2.Button9().whenPressed(new DriveMonkeyBarIntakeWithConstant(0.5)); //todo: make sure these are the speeds we want
+		//buttonBox2.Button9().whenPressed(new MoveMonkeyBarToCargoIntakePosition()); 
+		buttonBox2.Button10().whileHeld(new ExtendHatchPlunger());
+		buttonBox2.Button10().whenReleased(new ReleaseHatchPanel());
+		//buttonBox2.Button11().whenPressed();
+		buttonBox2.Button12().whenPressed(new RetractHatchPlunger()); 
+		}
 		/*************************************************************************
 		 * Operator Joystick *
 		 *************************************************************************/
@@ -241,11 +261,11 @@ public class OI
 	/*************************************************************************
 	 * Lift *
 	 *************************************************************************/
-
+	//correst
 	public double getLiftJoystickValue()
 	{
 
-			return operatorJoystick.getLeftStickRaw_Y();
+			return operatorJoystick.getLeftStickRaw_Y()- buttonBox1.getAnalogRaw_Channel1();
 		}
 
 	/*************************************************************************
@@ -254,13 +274,13 @@ public class OI
 	public double getHatchProbePivotJoystickValue()
 	{
 
-			return operatorJoystick.getRightStickRaw_Y();
+			return operatorJoystick.getRightStickRaw_Y() + buttonBox1.getAnalogRaw_Channel0();
 	}
 
 	public double getCargoIntakeJoystickValue()
 	{
 
-		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw();
+		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw() - buttonBox2.getAnalogRaw_Channel1();
 	}
 
 	/*************************************************************************
@@ -269,13 +289,13 @@ public class OI
 	public double getMonkeyBarPivotJoystickValue()
 	{
 
-			return 0;
+			return 0 + buttonBox2.getAnalogRaw_Channel0();
 	}
 
 	public double getMonkeyBarIntakeJoystickValue()
 	{
 	
-		return -operatorJoystick.getLeftTriggerAxisRaw() + operatorJoystick.getRightTriggerAxisRaw();
+		return -operatorJoystick.getLeftTriggerAxisRaw() + operatorJoystick.getRightTriggerAxisRaw() + buttonBox2.getAnalogRaw_Channel1();
 	}
 
 	/*************************************************************************

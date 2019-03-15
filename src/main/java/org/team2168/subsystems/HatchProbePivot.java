@@ -229,7 +229,7 @@ public class HatchProbePivot extends Subsystem {
 
   public boolean isOnMonkeyBarSide()
   {
-    return getPotPos() >= 90.0;
+    return getPotPos() >= _middlePosition;
   }
 
   public boolean isWithinCargoAngle()

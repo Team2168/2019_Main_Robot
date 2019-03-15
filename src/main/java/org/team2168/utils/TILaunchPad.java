@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class TILaunchPad extends Joystick {
 	// Gamepad axis ports
+	public static final int ANALOG_0 = 0;
 	public static final int ANALOG_1 = 1;
 	public static final int ANALOG_2 = 2;
 	public static final int ANALOG_3 = 3;
@@ -62,7 +63,7 @@ public class TILaunchPad extends Joystick {
 
 		if(RobotMap.ENABLE_BUTTON_BOX_PRINTS)
 		{
-
+			ConsolePrinter.putNumber("Button_Box_Analog_Value_0", () -> {return getAnalogRaw_Channel0();}, true, false);
 			ConsolePrinter.putNumber("Button_Box_Analog_Value_1", () -> {return getAnalogRaw_Channel1();}, true, false);
 			ConsolePrinter.putNumber("Button_Box_Analog_Value_2", () -> {return getAnalogRaw_Channel2();}, true, false);
 			ConsolePrinter.putNumber("Button_Box_Analog_Value_3", () -> {return getAnalogRaw_Channel3();}, true, false);
@@ -102,6 +103,14 @@ public class TILaunchPad extends Joystick {
 		}
 
 
+	}
+
+	/**
+	 * 
+	 * @return double representing the raw axis value from -1 to 1
+	 */
+	public double getAnalogRaw_Channel0() {
+		return getRawAxis(ANALOG_0);
 	}
 
 	/**
@@ -422,6 +431,14 @@ public class TILaunchPad extends Joystick {
 	 */
 	public JoystickButton Button16() {
 		return new JoystickButton(this, BUTTON_16);
+	}
+
+	/**
+	 * Returns an Button Object of Analog Channel 1. Enables use Analog Channel as
+	 * button
+	 */
+	public JoystickAnalogButton ButtonAnalog0() {
+		return new JoystickAnalogButton(this, ANALOG_0, 0.5);
 	}
 
 	/**

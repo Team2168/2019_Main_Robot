@@ -29,7 +29,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int BUTTON_BOX_2 = 3;
 	public static final int PID_TEST_JOYSTICK = 5;
 	public static final boolean ENABLE_BUTTON_BOX_PRINTS = true;
-	public static final boolean ENABLE_BUTTON_BOX = false;
+	public static final boolean ENABLE_BUTTON_BOX = true;
 
 	// Joystick Control Styles/////////////////////////////////////////////////
 	public static final int TANK_DRIVE_STYLE_ENUM = 0;

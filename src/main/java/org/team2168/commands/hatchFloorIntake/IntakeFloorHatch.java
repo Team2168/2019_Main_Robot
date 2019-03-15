@@ -5,16 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.hatchProbePivot;
+package org.team2168.commands.hatchFloorIntake;
 
-import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class MoveHatchProbePivotToOppositeSide extends CommandGroup {
+public class IntakeFloorHatch extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public MoveHatchProbePivotToOppositeSide() {
+  public IntakeFloorHatch() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -31,11 +30,7 @@ public class MoveHatchProbePivotToOppositeSide extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-
-    if(Robot.hatchProbePivot.isOnMonkeyBarSide())
-      addSequential(new MoveHatchProbePivotTo0Position());
-    else
-      addSequential(new MoveHatchProbePivotTo180Position());
-
+    addSequential(new HatchFloorIntakePivotExtend());
+    addParallel(new DriveHatchFloorIntakeWithConstant(0.0));
   }
 }

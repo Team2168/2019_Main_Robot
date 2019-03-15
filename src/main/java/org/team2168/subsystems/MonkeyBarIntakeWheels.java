@@ -72,6 +72,8 @@ public class MonkeyBarIntakeWheels extends Subsystem {
     _intakeLeft.set(ControlMode.PercentOutput,speed);
     _intakeLeftVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
+    System.out.println("monkey bar wheels driving");
+
   }
 
   /**
