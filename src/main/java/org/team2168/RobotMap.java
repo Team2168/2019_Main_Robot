@@ -271,9 +271,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
 	public static final double LIFT_BASE_POS_PBOT = 10.5;
 
-	public static final double LIFT_PID_SPEED_UP_MAX = 0.4;
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.35;
 	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
-	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.2;
+	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.18;
 	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
 	public static final double LIFT_PID_ERROR = 0.5;
 
@@ -312,7 +312,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_SAFE_SCORING_POS = 160; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
-	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 10;
+	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
 
 
 	//PBOT
@@ -462,13 +462,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double ROTATE_POSITION_D_Drive_Straight = 0.0064778888124088;
 
 
-	public static final double LIFT_P = 0.024;
-	public static final double LIFT_I = 0.027;
-	public static final double LIFT_D = 0.000000067;
+	public static final double LIFT_P = 0.044;
+	public static final double LIFT_I = 0.0020;
+	public static final double LIFT_D = 0.0001;
 
-	public static final double MB_PIVOT_P = 0.024;
-	public static final double MB_PIVOT_I = 0.027;
-	public static final double MB_PIVOT_D = 0.000000067;
+	public static final double MB_PIVOT_P = 0.035;
+	public static final double MB_PIVOT_I = 0.002;
+	public static final double MB_PIVOT_D = 0.0007;
 
 	public static final double HP_PIVOT_P = 0.024;
 	public static final double HP_PIVOT_I = 0.027;
@@ -502,7 +502,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/******************************************************************
 	 *                         ConsolePrinter PARAMETERS              *
 	 ******************************************************************/
-	public static final boolean PRINT_SD_DEBUG_DATA = true;
+	public static final boolean PRINT_SD_DEBUG_DATA = false;
 	public static final long SmartDashThreadPeriod = 100; // ms
 	public static final long CONSOLE_PRINTER_LOG_RATE_MS = 100; // ms
 

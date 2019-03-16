@@ -13,12 +13,12 @@ import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
 import org.team2168.PID.sensors.Limelight;
+import org.team2168.PID.sensors.NavX;
 import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,7 +51,7 @@ public class Drivetrain extends Subsystem {
   private double lefttMotor1FPS;
   public IMU imu;
 
-  public AHRS ahrs;
+  public NavX ahrs;
 
 
   // declare position/speed controllers
@@ -127,7 +127,7 @@ public class Drivetrain extends Subsystem {
       // rightMotor2.setCANTimeout(100);
       // rightMotor3.setCANTimeout(100);
 
-    ahrs = new AHRS(SPI.Port.kMXP); 
+    ahrs = new NavX(); 
     
     _drivetrainRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_DRIVE_ENCODER_A,
@@ -331,10 +331,6 @@ public class Drivetrain extends Subsystem {
     ConsolePrinter.putBoolean("HAB Front is Present", () -> {return isHABPresentFront();}, true, false);
     ConsolePrinter.putNumber("HAB Back Raw IR", () -> {return getBackRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("HAB Back is Present", () -> {return isHABPresentBack();}, true, false);
-
-    ConsolePrinter.putNumber("NAVX Pitch", () -> { return (double)ahrs.getPitch();}, true, false);
-    ConsolePrinter.putNumber("NAVX Yaw", () -> { return (double)ahrs.getYaw();}, true, false);
-    ConsolePrinter.putNumber("NAVX Roll", () -> { return (double)ahrs.getRoll();}, true, false);
     
   }
 
