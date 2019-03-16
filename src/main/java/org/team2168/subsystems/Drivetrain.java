@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -17,9 +18,8 @@ import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -50,6 +50,8 @@ public class Drivetrain extends Subsystem {
   private double leftMotor1FPS;
   private double lefttMotor1FPS;
   public IMU imu;
+
+  public AHRS ahrs;
 
 
   // declare position/speed controllers
@@ -125,7 +127,7 @@ public class Drivetrain extends Subsystem {
       // rightMotor2.setCANTimeout(100);
       // rightMotor3.setCANTimeout(100);
 
-  
+    ahrs = new AHRS(SPI.Port.kMXP); 
     
     _drivetrainRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_DRIVE_ENCODER_A,
@@ -329,6 +331,10 @@ public class Drivetrain extends Subsystem {
     ConsolePrinter.putBoolean("HAB Front is Present", () -> {return isHABPresentFront();}, true, false);
     ConsolePrinter.putNumber("HAB Back Raw IR", () -> {return getBackRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("HAB Back is Present", () -> {return isHABPresentBack();}, true, false);
+
+    ConsolePrinter.putNumber("NAVX Pitch", () -> { return (double)ahrs.getPitch();}, true, false);
+    ConsolePrinter.putNumber("NAVX Yaw", () -> { return (double)ahrs.getYaw();}, true, false);
+    ConsolePrinter.putNumber("NAVX Roll", () -> { return (double)ahrs.getRoll();}, true, false);
     
   }
 

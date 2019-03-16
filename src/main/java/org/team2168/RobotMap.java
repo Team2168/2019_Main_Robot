@@ -251,7 +251,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 1.0; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0 = 1.82; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
 	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
@@ -294,12 +294,15 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean MONKEY_BAR_INTAKE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_INTAKE_LEFT_REVERSE = false;
 
+	public static final double MONKEY_BAR_HOLDING_VOLTAGE = 0.0; //volts to keep arm steady
+	public static final double MONKEY_BAR_HOLDING_VOLTAGE_PBOT = 0.0; //volts to keep arm steady
+
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 3.95; //130 degrees
 	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 130; //130 degrees
 	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.251; //0 degrees
 	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.5; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.3; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 1.2; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
