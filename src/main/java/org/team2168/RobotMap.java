@@ -468,7 +468,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MB_PIVOT_P = 0.035;
 	public static final double MB_PIVOT_I = 0.002;
-	public static final double MB_PIVOT_D = 0.0007;
+	public static final double MB_PIVOT_D = 0.0005;
 
 	public static final double HP_PIVOT_P = 0.024;
 	public static final double HP_PIVOT_I = 0.027;
