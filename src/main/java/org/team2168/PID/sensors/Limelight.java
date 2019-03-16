@@ -50,6 +50,8 @@ public class Limelight implements PIDSensorInterface
         averagorSize = RobotMap.LIMELIGHT_AVG_ENCODER_VAL;
         averagorArray = new double[averagorSize];
 
+        this.instantiateLocalVariables();
+
         // Testing only
         ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
         ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
@@ -118,6 +120,7 @@ public class Limelight implements PIDSensorInterface
         {
             this.currentPosition = 0.0;
         }
+        
         return this.currentPosition;
     }
 
@@ -165,6 +168,44 @@ public class Limelight implements PIDSensorInterface
         }
         
         
+    }
+
+    public void setCamMode(int camModeNumber)
+    {
+        if(camModeNumber >= 0 && camModeNumber <= 3)
+        {
+            if (this.connectionEstablished() && this.variablesInstantiated)
+            {
+                camMode.setNumber(camModeNumber);
+            }
+            else if (this.connectionEstablished() && !this.variablesInstantiated)
+            {
+                this.instantiateLocalVariables();
+                camMode.setNumber(camModeNumber);
+            }
+            else
+            {
+                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            }
+        }
+    }
+
+    public int getCamMode()
+    {
+        if(this.connectionEstablished() && this.variablesInstantiated)
+        {
+            return camMode.getNumber(0).intValue();
+        }
+        else if (this.connectionEstablished() && !this.variablesInstantiated)
+        {
+            this.instantiateLocalVariables();
+            return camMode.getNumber(0).intValue();
+        }
+        else
+        {
+            System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            return -1; 
+        }
     }
 
     /**
@@ -216,7 +257,8 @@ public class Limelight implements PIDSensorInterface
 
     private boolean connectionEstablished()
     {
-        return this.networkTable.containsKey("tx");
+        //return this.networkTable.containsKey("tx");
+        return !(this.networkTable.getEntry("tx") == null);
     }
 
     private void instantiateLocalVariables()

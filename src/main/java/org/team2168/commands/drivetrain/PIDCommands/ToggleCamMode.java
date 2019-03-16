@@ -11,31 +11,32 @@ import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TogglePipeline extends Command {
+public class ToggleCamMode extends Command {
 
   private boolean finished;
 
   /**
    * Default constructor
    */
-  public TogglePipeline() {
+  public ToggleCamMode() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.drivetrain);
   }
 
   // Called just before this Command runs the first time
+  // TODO: check if camMode values are correct
   @Override
   protected void initialize() {
     finished = false;
 
-    // If vision is active, switches to a raw pipeline
-    if(Robot.drivetrain.limelight.getPipeline() == 0) {
-      Robot.drivetrain.limelight.setPipeline(7);
+    // If vision is active, switches to a raw camera view
+    if(Robot.drivetrain.limelight.getCamMode() == 0) {
+      Robot.drivetrain.limelight.setCamMode(1);
       finished = true;
     }
     // If vision is inactive, switches to the vision pipeline
-    else if(Robot.drivetrain.limelight.getPipeline() == 7) {
-      Robot.drivetrain.limelight.setPipeline(0);
+    else if(Robot.drivetrain.limelight.getCamMode() == 1) {
+      Robot.drivetrain.limelight.setCamMode(0);
       finished = true;
     }
     
