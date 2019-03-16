@@ -166,9 +166,9 @@ public class OI
 		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.45));
-		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
+		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.45));
-		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
+		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 
 
 		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
