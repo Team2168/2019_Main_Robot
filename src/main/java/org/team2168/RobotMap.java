@@ -502,7 +502,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	/******************************************************************
 	 *                         ConsolePrinter PARAMETERS              *
 	 ******************************************************************/
-	public static final boolean PRINT_SD_DEBUG_DATA = true;
+	public static final boolean PRINT_SD_DEBUG_DATA = false;
 	public static final long SmartDashThreadPeriod = 100; // ms
 	public static final long CONSOLE_PRINTER_LOG_RATE_MS = 100; // ms
 
