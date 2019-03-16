@@ -168,7 +168,7 @@ public class OI
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.45));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.45));
-		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
+		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
 
 
 		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
