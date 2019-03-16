@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveMonkeyBarPivotWithJoystick extends Command
 {
 
-  public static final double TRIGGER_OFFSET = 1.65;
+  public static final double TRIGGER_OFFSET = 2.65;
 
   public DriveMonkeyBarPivotWithJoystick()
   {

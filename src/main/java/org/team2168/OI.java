@@ -1,40 +1,28 @@
 package org.team2168;
 
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
-
-import org.team2168.commands.hatchFloorIntake.HatchFloorIntakePivotExtend;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
-import org.team2168.commands.hatchProbePistons.IntakeHatchPanel;
-import org.team2168.commands.hatchProbePistons.ReleaseHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo0Position;
-import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
 import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
 import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
 import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
-
-import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
-import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
-import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
-
 import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
 import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
+import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithJoystick;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
-import org.team2168.utils.TILaunchPad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -172,14 +160,10 @@ public class OI
 		// operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.45));
-		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
+		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.45));
-		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
+		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
 
-		operatorJoystick.ButtonStart().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.2));
-		operatorJoystick.ButtonStart().whenReleased(new DriveMonkeyBarIntakeWithConstant(0.0));
-		operatorJoystick.ButtonBack().whileHeld(new DriveMonkeyBarIntakeWithConstant(-0.2));
-		operatorJoystick.ButtonBack().whenReleased(new DriveMonkeyBarIntakeWithConstant(0.0));
 
 		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
