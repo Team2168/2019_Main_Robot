@@ -259,28 +259,28 @@ public class Drivetrain extends Subsystem {
 
     // start TCP Servers for DEBUGING ONLY
     TCPdrivePosController = new TCPSocketSender(RobotMap.TCP_SERVER_DRIVE_TRAIN_POS, driveTrainPosController);
-    TCPdrivePosController.start();
+    //TCPdrivePosController.start();
 
     TCPrightSpeedController = new TCPSocketSender(RobotMap.TCO_SERVER_RIGHT_DRIVE_TRAIN_SPEED, rightSpeedController);
-    TCPrightSpeedController.start();
+    //TCPrightSpeedController.start();
 
     TCPleftSpeedController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_SPEED, leftSpeedController);
-    TCPleftSpeedController.start();
+    //TCPleftSpeedController.start();
 
     TCPrightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION, rightPosController);
-    TCPrightPosController.start();
+    //TCPrightPosController.start();
 
     TCPleftPosController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION, leftPosController);
-    TCPleftPosController.start();
+    //TCPleftPosController.start();
 
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER, rotateController);
-    TCProtateController.start();
+    //TCProtateController.start();
 
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT,rotateDriveStraightController);
-    TCProtateController.start();
+    //TCProtateController.start();
 
     TCPlimelightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA,limelightPosController);
-    TCPlimelightPosController.start();
+    //TCPlimelightPosController.start();
 
     leftMotor1Voltage = 0;
     leftMotor2Voltage = 0;

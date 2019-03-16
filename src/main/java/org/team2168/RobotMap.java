@@ -309,7 +309,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
-	public static final double MONKEY_BAR_SAFE_SCORING_POS = 160; 
+	public static final double MONKEY_BAR_SAFE_SCORING_POS = 110; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;

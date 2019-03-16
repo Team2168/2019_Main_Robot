@@ -8,19 +8,13 @@ import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
-import org.team2168.commands.hatchProbePivot.PIDCommands.EnableHatchProbePivotPID;
-import org.team2168.commands.hatchProbePivot.PIDCommands.PauseHatchProbePivotPID;
 import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
-import org.team2168.commands.lift.PIDCommands.EnableLiftPIDZZZ;
-import org.team2168.commands.lift.PIDCommands.PauseLiftPID;
-import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
-import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithJoystick;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.EnableMonkeyBarPivotPID;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.PauseMonkeyBarPivotPID;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
@@ -68,7 +62,7 @@ public class OI
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
 	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
-	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
+	//public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 	private LinearInterpolator gunStyleInterpolator;
 	private double[][] gunStyleArray = { { -1.0, -1.0
 			}, { -.15, 0.0
@@ -176,6 +170,9 @@ public class OI
 		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
 
+		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
+		operatorJoystick.ButtonBack().whenPressed(new MoveMonkeyBarToSafePositionForScoring());
+
 		
 
 		/////////////// Intake and pivot up
@@ -194,18 +191,18 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
-		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
-		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		// pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
-		pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
-		pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
-		pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		// pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
 
 	}

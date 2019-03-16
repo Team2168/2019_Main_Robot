@@ -287,7 +287,7 @@ public class ConsolePrinter {
 	 */
 	public static void dataToDashboard() {
 		Iterator<String> i = dashboardKeys.iterator();
-		String key;
+		String key = "";
 		try 
 		{
 			while (i.hasNext()) 
@@ -299,6 +299,7 @@ public class ConsolePrinter {
 		catch (Throwable throwable)
 		{
 			throwable.printStackTrace();
+			System.out.println("key = " + key);
 		}
 	}
 

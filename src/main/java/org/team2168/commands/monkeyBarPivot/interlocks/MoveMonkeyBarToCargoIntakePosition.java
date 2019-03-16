@@ -18,9 +18,9 @@ public class MoveMonkeyBarToCargoIntakePosition extends CommandGroup {
   public MoveMonkeyBarToCargoIntakePosition()
   {
     if(Robot.isPracticeRobot())
-      addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_CARGO_INTAKE_POS_PBOT, 1, 0, true));
+      addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_CARGO_INTAKE_POS_PBOT, 0.5, 0, true));
     else
-      addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_CARGO_INTAKE_POS, 1, 0, true));
+      addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_CARGO_INTAKE_POS, 0.5, 0, true));
 
   }
 
