@@ -93,6 +93,9 @@ public class DriveLiftPIDZZZ extends Command {
 		Robot.lift.liftPOTController.setMinPosOutput(minPosSpeed);
 		Robot.lift.liftPOTController.setMinNegOutput(minNegSpeed);
 		Robot.lift.liftPOTController.setAcceptErrorDiff(error);
+
+		Robot.lift.liftPOTController.enableHoldingVoltage(RobotMap.LIFT_HOLDING_VOLTAGE);
+
 		
 		Robot.lift.liftPOTController.Enable();
 		
