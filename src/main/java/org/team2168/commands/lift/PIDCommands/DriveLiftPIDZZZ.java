@@ -111,7 +111,7 @@ public class DriveLiftPIDZZZ extends Command {
     
 	protected boolean isFinished() {
 		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
-    	return Robot.lift.liftPOTController.isFinished();
+    	return Robot.lift.liftPOTController.isFinished() || Math.abs(Robot.oi.getLiftJoystickValue()) > 0.05;
 		//return false;
     }
 

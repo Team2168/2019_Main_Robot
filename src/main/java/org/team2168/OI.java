@@ -159,6 +159,12 @@ public class OI
 		// operatorJoystick.ButtonRightTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 		// operatorJoystick.ButtonLeftTrigger().whenPressed(new DriveRotateMonkeyBarWithJoystick());
 
+		
+		operatorJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		operatorJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.45));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithJoystick());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.45));

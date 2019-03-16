@@ -239,7 +239,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
-	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 13.0;
+	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 14.0;
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.55; 
 
@@ -248,17 +248,16 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2; //should this be negative???
 	public static final double LIFT_MIN_SPEED = 0.075;
 
-
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
 	public static final double LIFT_POT_VOLTAGE_0 = 1.82; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
-	public static final double LIFT_LVL_1_POS = 0; //TODO SET ALL in inches
-	public static final double LIFT_LVL_2_POS = 0;
-	public static final double LIFT_LVL_3_POS = 0;
-	public static final double LIFT_CARGO_SHIP_POS = 0;
-	public static final double LIFT_BASE_POS = 0;
+	public static final double LIFT_LVL_1_POS= 10.5; 
+	public static final double LIFT_LVL_2_POS = 38.5;
+	public static final double LIFT_LVL_3_POS = 66.5;
+	public static final double LIFT_CARGO_SHIP_POS = 25.0;
+	public static final double LIFT_BASE_POS = 10.5;
 
 	//PBOT LIFT
 	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.4; //90 degrees
@@ -268,15 +267,15 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_LVL_1_POS_PBOT= 10.5; //TODO SET ALL in inches
 	public static final double LIFT_LVL_2_POS_PBOT = 38.5;
-	public static final double LIFT_LVL_3_POS_PBOT = 69.0;
+	public static final double LIFT_LVL_3_POS_PBOT = 66.5;
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
-	public static final double LIFT_BASE_POS_PBOT = 0;
+	public static final double LIFT_BASE_POS_PBOT = 10.5;
 
-	public static final double LIFT_PID_SPEED_UP_MAX = 0.6;
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.4;
 	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
-	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.3;
+	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.2;
 	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
-	public static final double LIFT_PID_ERROR = 1.0;
+	public static final double LIFT_PID_ERROR = 0.5;
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
