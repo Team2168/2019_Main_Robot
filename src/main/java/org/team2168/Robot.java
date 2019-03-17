@@ -105,6 +105,18 @@ public class Robot extends TimedRobot
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
 
+  /****************************************************
+    *                   Autos
+    ***************************************************/
+  
+    
+
+
+  /****************************************************
+    * 
+    ***************************************************/
+
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -160,15 +172,6 @@ public class Robot extends TimedRobot
       controlStyleSelectInit();
       throttleVibeSelectInit();
 
-      /****************************************************
-       *                   Autos
-       ***************************************************/
-      
-
-
-      /****************************************************
-       * 
-       ***************************************************/
       
       ConsolePrinter.startThread();
       ConsolePrinter.putSendable("Control Style Chooser", () -> {return Robot.controlStyleChooser;}, true, false);
