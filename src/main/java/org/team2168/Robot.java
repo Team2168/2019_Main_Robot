@@ -159,6 +159,16 @@ public class Robot extends TimedRobot
       autoSelectInit();
       controlStyleSelectInit();
       throttleVibeSelectInit();
+
+      /****************************************************
+       *                   Autos
+       ***************************************************/
+      
+
+
+      /****************************************************
+       * 
+       ***************************************************/
       
       ConsolePrinter.startThread();
       ConsolePrinter.putSendable("Control Style Chooser", () -> {return Robot.controlStyleChooser;}, true, false);
