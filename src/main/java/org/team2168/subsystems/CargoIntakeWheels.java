@@ -71,7 +71,7 @@ public class CargoIntakeWheels extends Subsystem {
         if (Robot.isPracticeRobot())
             return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT);
         else
-            return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX);
+            return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MIN && getRawIRVoltage() <= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX);
     }
     // make method for sharp ir sensor which senses distance to cargo,
     // use volts from the lift getrawpos etc.

@@ -19,7 +19,7 @@ public class DriveMonkeyBarPivotPID extends Command {
 
   private double maxSpeed;
   private double minSpeed;
-  private double error = 0.5; //Rotational degree error, 0 never ends
+  private double error = 2; //Rotational degree error, 0 never ends
 
   private boolean absolute = true;
 
