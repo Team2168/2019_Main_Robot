@@ -109,6 +109,14 @@ public class Robot extends TimedRobot
     *                   Autos
     ***************************************************/
   
+    public static double[] leftVelQuinticPath;
+    public static double[] rightVelQuinticPath;
+    public static double[] leftPosQuinticPath;
+    public static double[] rightPosQuinticPath;
+    public static double[] leftAccQuinticPath;
+    public static double[] rightAccQuinticPath;
+    public static double[] headingQuinticPath;
+    public static boolean QuinticPath_Reverse = false;
     
 
 
