@@ -235,6 +235,8 @@ public class Robot extends TimedRobot
       drivetrain.startGyroCalibrating();
 
     drivetrain.calibrateGyro();
+
+    drivetrain.limelightPosController.Pause();
   }
 
   public void disabledPeriodic()
@@ -249,7 +251,6 @@ public class Robot extends TimedRobot
     autonomousCommand = (Command) autoChooser.getSelected();
 
     Scheduler.getInstance().run();
-    Drivetrain.getInstance().limelight.setCamMode(1);
 
     // Check to see if the gyro is drifting, if it is re-initialize it.
     gyroReinit();
