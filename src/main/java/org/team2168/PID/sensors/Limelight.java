@@ -53,18 +53,18 @@ public class Limelight implements PIDSensorInterface
         this.instantiateLocalVariables();
 
         // Testing only
-        ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
-        ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 1", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[0];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 2", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[1];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 3", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[2];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 4", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[3];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 5", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[4];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 6", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[5];}, true, false);
-        ConsolePrinter.putNumber("Limelight Controller Output", () -> {return Robot.drivetrain.limelightPosController.getControlOutput();}, true, false);
-        ConsolePrinter.putNumber("Limelight P", () -> {return RobotMap.LIMELIGHT_POSITION_P;}, true, true);
-        ConsolePrinter.putNumber("Limelight I", () -> {return RobotMap.LIMELIGHT_POSITION_I;}, true, true);
-        ConsolePrinter.putNumber("Limelight D", () -> {return RobotMap.LIMELIGHT_POSITION_D;}, true, true);
+        // ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 1", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[0];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 2", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[1];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 3", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[2];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 4", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[3];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 5", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[4];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 6", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[5];}, true, false);
+        // ConsolePrinter.putNumber("Limelight Controller Output", () -> {return Robot.drivetrain.limelightPosController.getControlOutput();}, true, false);
+        // ConsolePrinter.putNumber("Limelight P", () -> {return RobotMap.LIMELIGHT_POSITION_P;}, true, true);
+        // ConsolePrinter.putNumber("Limelight I", () -> {return RobotMap.LIMELIGHT_POSITION_I;}, true, true);
+        // ConsolePrinter.putNumber("Limelight D", () -> {return RobotMap.LIMELIGHT_POSITION_D;}, true, true);
     
         if(this.connectionEstablished())
         {
@@ -172,7 +172,7 @@ public class Limelight implements PIDSensorInterface
 
     public void setCamMode(int camModeNumber)
     {
-        if(camModeNumber >= 0 && camModeNumber <= 3)
+        if(camModeNumber >= 0 && camModeNumber <= 2)
         {
             if (this.connectionEstablished() && this.variablesInstantiated)
             {
@@ -194,12 +194,12 @@ public class Limelight implements PIDSensorInterface
     {
         if(this.connectionEstablished() && this.variablesInstantiated)
         {
-            return camMode.getNumber(0).intValue();
+            return camMode.getNumber(1).intValue();
         }
         else if (this.connectionEstablished() && !this.variablesInstantiated)
         {
             this.instantiateLocalVariables();
-            return camMode.getNumber(0).intValue();
+            return camMode.getNumber(1).intValue();
         }
         else
         {
@@ -277,7 +277,7 @@ public class Limelight implements PIDSensorInterface
 
         // Sets the camera controls
         ledMode.setNumber(0);
-        camMode.setNumber(0);
+        camMode.setNumber(1);
         pipeline.setNumber(0);
 
         this.variablesInstantiated = true;

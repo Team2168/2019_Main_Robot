@@ -41,6 +41,7 @@ public class EnableLimelight extends Command {
     Robot.drivetrain.limelightPosController.setMinNegOutput(-minSpeed);
     Robot.drivetrain.limelightPosController.setAcceptErrorDiff(error);
 
+    Robot.drivetrain.limelight.setCamMode(0);
     Robot.drivetrain.limelightPosController.Enable();
   }
 
