@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PauseLimelight extends Command {
   public PauseLimelight() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.drivetrain);
   }
 
   // Called just before this Command runs the first time
@@ -22,6 +21,7 @@ public class PauseLimelight extends Command {
   protected void initialize() {
     Robot.drivetrain.limelightPosController.Pause();
     Robot.drivetrain.limelight.setCamMode(1);
+    Robot.drivetrain.limelight.setLedMode(1);
   }
 
   // Called repeatedly when this Command is scheduled to run

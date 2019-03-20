@@ -255,6 +255,30 @@ public class Limelight implements PIDSensorInterface
         
     }
 
+    /**
+     * Sets the LED mode
+     * @param ledNumber is an int from 0 to 3
+     */
+    public void setLedMode(int ledNumber)
+    {
+        if(ledNumber >= 0 && ledNumber <= 3)
+        {
+            if (this.connectionEstablished() && this.variablesInstantiated)
+            {
+                ledMode.setNumber(ledNumber);
+            }
+            else if (this.connectionEstablished() && !this.variablesInstantiated)
+            {
+                this.instantiateLocalVariables();
+                ledMode.setNumber(ledNumber);
+            }
+            else
+            {
+                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            }
+        }
+    }
+
     private boolean connectionEstablished()
     {
         //return this.networkTable.containsKey("tx");
