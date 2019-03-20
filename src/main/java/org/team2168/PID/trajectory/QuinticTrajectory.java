@@ -759,32 +759,40 @@ public class QuinticTrajectory
 	  
 	  public double[] getLeftPos()
 	  {
-		 
-			  return this.leftPos;
+		return this.leftPos;
 	  }
 	  
 	  public double[] getRightPos()
-	  {
-		 
-		  return this.rightPos;
+	  { 
+		return this.rightPos;
 	  }
 	  
 	  public double[] getLeftVel()
 	  {
-		 
-			  return this.leftVel;
+		return this.leftVel;
 	  }
 	  
 	  public double[] getRightVel()
-	  {
-		 
-		  return this.rightVel;
+	  { 
+		return this.rightVel;
 	  }
-	  
+
+	  public double[] getLeftAcc()
+	  {
+		return this.leftAcc;
+	  }
+
+	  public double[] getRightAcc()
+	  {
+		return this.rightAcc;
+	  }
+
 	  public double[] getHeadingDeg()
 	  {
 		  return this.heading;
 	  }
+
+	
 
 	  public void invert()
 	  {

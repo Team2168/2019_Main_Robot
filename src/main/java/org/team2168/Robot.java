@@ -7,6 +7,7 @@
 
 package org.team2168;
 
+import org.team2168.PID.trajectory.QuinticTrajectory;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.pneumatics.StartCompressor;
@@ -168,6 +169,30 @@ public class Robot extends TimedRobot
       // Starting PDP
       pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
       pdp.startThread();
+
+      /*******************************************************
+       *                    Paths
+       ******************************************************/
+
+      double[][] waypointPath = new double[][]{
+        {0.0, 212.0, 0},
+			  {96.0, 212.0, 0},
+			  {212, 275,0},
+			  {261.0, 227.0, -Math.PI/2+0.001}
+    };
+  
+      QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, false);
+      this.leftPosQuinticPath = quinticPath.getLeftPos();
+			this.rightPosQuinticPath = quinticPath.getRightPos();
+      this.leftVelQuinticPath = quinticPath.getLeftVel();
+      this.rightVelQuinticPath = quinticPath.getRightVel();
+      this.leftAccQuinticPath = quinticPath.getLeftAcc();
+      this.rightAccQuinticPath = quinticPath.getRightAcc();
+      this.headingQuinticPath = quinticPath.getHeadingDeg();
+
+       /*******************************************************
+       *                    
+       ******************************************************/
 
       // Start Operator Interface
       oi = OI.getInstance();
