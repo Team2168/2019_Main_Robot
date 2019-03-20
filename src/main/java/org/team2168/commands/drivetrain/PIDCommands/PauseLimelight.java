@@ -21,6 +21,7 @@ public class PauseLimelight extends Command {
   @Override
   protected void initialize() {
     Robot.drivetrain.limelightPosController.Pause();
+    Robot.drivetrain.limelight.setCamMode(1);
   }
 
   // Called repeatedly when this Command is scheduled to run

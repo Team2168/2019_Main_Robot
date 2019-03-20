@@ -22,7 +22,6 @@ public class EnableLimelight extends Command {
    * Default constructor
    */
   public EnableLimelight() {
-    requires(Robot.drivetrain);
 
     this.setPoint = 0;
     this.minSpeed = -0.5;
@@ -32,6 +31,8 @@ public class EnableLimelight extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Limelight is enabled");
+
     Robot.drivetrain.limelightPosController.reset();
 
     Robot.drivetrain.limelightPosController.setSetPoint(setPoint);
@@ -48,19 +49,17 @@ public class EnableLimelight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Limelight is enabled");
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.drivetrain.limelightPosController.isFinished();
+    return Robot.drivetrain.limelightPosController.isEnabled();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.drivetrain.limelightPosController.Pause();
   }
 
   // Called when another command which requires one or more of the same
