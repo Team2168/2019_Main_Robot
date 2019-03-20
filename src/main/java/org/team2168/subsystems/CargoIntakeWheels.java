@@ -73,10 +73,10 @@ public class CargoIntakeWheels extends Subsystem {
             {
                 if(RobotMap.LEDS_REVERSE)
                 {
-                Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
                 }
                 else
-                Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
             }
         }
         

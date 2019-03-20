@@ -453,6 +453,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
 	public static final int I2C_ADDRESS = 8;
 	public static final boolean LEDS_REVERSE = true; //true if 0 is at the top
+	public static final boolean LEDS_VERTICAL = true;
 	public static final int PATTERN_OFF= 0;
 	public static final int PATTERN_FILL = 1;
 	public static final int PATTERN_RUNNING_COLUMNS = 2;

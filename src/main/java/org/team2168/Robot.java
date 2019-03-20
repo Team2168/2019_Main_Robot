@@ -239,14 +239,21 @@ public class Robot extends TimedRobot
 
     drivetrain.calibrateGyro();
     
-    if (Robot.onBlueAlliance())
+    if(driverstation.isFMSAttached())
     {
-      leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+      if(Robot.onBlueAlliance())
+      {
+        leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+      }
+      else
+      {
+        leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+      }
     }
     else
-    {
       leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-    }
+
+
     
     
   }
