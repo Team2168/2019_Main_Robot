@@ -6,6 +6,7 @@ import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
+import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.RotatePIDLimelight;
 import org.team2168.commands.hatchFloorIntake.HatchFloorIntakePivotExtend;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
@@ -111,6 +112,7 @@ public class OI
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
 
 		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
+		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
 
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
