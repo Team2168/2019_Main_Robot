@@ -158,7 +158,7 @@ public class Drivetrain extends Subsystem {
     _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
     limelight = new Limelight();
-    limelight.setCamMode(0);
+    limelight.setCamMode(1);
 
     // DriveStraight Controller
     rotateController = new PIDPosition(
