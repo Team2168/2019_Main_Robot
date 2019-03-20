@@ -44,6 +44,7 @@ public class EnableLimelight extends Command {
 
     Robot.drivetrain.limelight.setCamMode(0);
     Robot.drivetrain.limelight.setLedMode(0);
+    Robot.drivetrain.limelight.setPipeline(0);
     Robot.drivetrain.limelightPosController.Enable();
   }
 

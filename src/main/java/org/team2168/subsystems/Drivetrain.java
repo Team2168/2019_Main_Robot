@@ -159,6 +159,7 @@ public class Drivetrain extends Subsystem {
 
     limelight = new Limelight();
     limelight.setCamMode(1);
+    limelight.setPipeline(7);
 
     // DriveStraight Controller
     rotateController = new PIDPosition(

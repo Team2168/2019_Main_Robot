@@ -22,6 +22,7 @@ public class PauseLimelight extends Command {
     Robot.drivetrain.limelightPosController.Pause();
     Robot.drivetrain.limelight.setCamMode(1);
     Robot.drivetrain.limelight.setLedMode(1);
+    Robot.drivetrain.limelight.setPipeline(7);
   }
 
   // Called repeatedly when this Command is scheduled to run
