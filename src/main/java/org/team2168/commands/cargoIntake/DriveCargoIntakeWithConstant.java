@@ -39,8 +39,10 @@ public class DriveCargoIntakeWithConstant extends Command
 	@Override
 	protected boolean isFinished()
 	{
-
-		return false;
+		if (_speed == 0.0)
+			return true;
+		else
+			return false;
 	}
 
 	// Called once after isFinished returns true
