@@ -7,6 +7,8 @@
 
 package org.team2168.commands.auto;
 
+import org.team2168.Robot;
+import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
 import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
@@ -34,6 +36,10 @@ public class RotateAndMoveLiftCargoShip extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    if(Robot.hatchProbePistons.isArmExtended())
+    {
+      addSequential(new RetractHatchPlunger());
+    }
     addSequential(new MoveHatchProbePivotTo180Position());
     addSequential(new MoveLiftToCargoShipPosition());
   }

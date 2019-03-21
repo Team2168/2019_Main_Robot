@@ -7,8 +7,10 @@
 
 package org.team2168.commands.auto;
 
+import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.hatchProbePivot.MoveHatchProbePivotTo180Position;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
+import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -33,6 +35,10 @@ public class RotateAndMoveLiftLevel1 extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    if(Robot.hatchProbePistons.isArmExtended())
+    {
+      addSequential(new RetractHatchPlunger());
+    }
     addSequential(new MoveHatchProbePivotTo180Position());
     addSequential(new MoveLiftToLvl1Position());
   }
