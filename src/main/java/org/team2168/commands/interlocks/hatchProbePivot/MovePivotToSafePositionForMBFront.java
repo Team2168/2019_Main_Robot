@@ -7,9 +7,9 @@
 
 package org.team2168.commands.interlocks.hatchProbePivot;
 
-import org.team2168.RobotMap;
 import org.team2168.Robot;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPID;
+import org.team2168.RobotMap;
+import org.team2168.commands.hatchProbePivot.PIDCommands.DriveHatchProbePivotPID;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MovePivotToSafePositionForMBFront extends CommandGroup {
   public MovePivotToSafePositionForMBFront() {
   if(Robot.isPracticeRobot())
-    addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS_PBOT, 0.5, 0, true));
+    addSequential(new DriveHatchProbePivotPID(RobotMap.PLUNGER_ARM_SAFE_POS_MB_FRONT_PBOT, 0.5, 0, true));
   else
-    addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS, 0.5, 0, true));
+    addSequential(new DriveHatchProbePivotPID(RobotMap.PLUNGER_ARM_SAFE_POS_MB_FRONT, 0.5, 0, true));
 
   }
 }
