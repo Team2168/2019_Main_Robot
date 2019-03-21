@@ -9,6 +9,7 @@ package org.team2168.commands.hatchProbePivot;
 
 import org.team2168.RobotMap;
 import org.team2168.Robot;
+import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.hatchProbePivot.PIDCommands.DriveHatchProbePivotPID;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -34,9 +35,13 @@ public class MoveHatchProbePivotTo180Position extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+    if(Robot.hatchProbePistons.isArmExtended())
+    {
+      addSequential(new RetractHatchPlunger());
+    }
     if(Robot.isPracticeRobot())
-      addSequential(new DriveHatchProbePivotPID(RobotMap.PIVOT_180_POS_PBOT, 1, 0, true));
+      addSequential(new DriveHatchProbePivotPID(RobotMap.PIVOT_180_POS_PBOT, 0.5, 0, true));
     else
-      addSequential(new DriveHatchProbePivotPID(RobotMap.PIVOT_180_POS, 1, 0, true));
+      addSequential(new DriveHatchProbePivotPID(RobotMap.PIVOT_180_POS, 0.5, 0, true));
   }
 }
