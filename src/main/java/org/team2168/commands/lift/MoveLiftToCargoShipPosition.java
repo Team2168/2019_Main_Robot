@@ -7,8 +7,8 @@
 
 package org.team2168.commands.lift;
 
-import org.team2168.RobotMap;
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 import org.team2168.commands.lift.PIDCommands.DriveLiftPIDZZZ;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -35,8 +35,17 @@ public class MoveLiftToCargoShipPosition extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     if(Robot.isPracticeRobot())
-      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS_PBOT, 1.0, 0.1, 1.0, true));
+    {
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS_PBOT, RobotMap.LIFT_PID_SPEED_UP_MAX,
+        RobotMap.LIFT_PID_SPEED_DOWN_MAX, RobotMap.LIFT_PID_SPEED_UP_MIN, RobotMap.LIFT_PID_SPEED_DOWN_MIN, 
+        RobotMap.LIFT_PID_ERROR, true));
+    }
     else
-      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS, 1.0, 0.1, 1.0, true));
+    {
+      addSequential(new DriveLiftPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS,  RobotMap.LIFT_PID_SPEED_UP_MAX,
+      RobotMap.LIFT_PID_SPEED_DOWN_MAX, RobotMap.LIFT_PID_SPEED_UP_MIN, RobotMap.LIFT_PID_SPEED_DOWN_MIN, 
+      RobotMap.LIFT_PID_ERROR, true));
   }
+}
+
 }

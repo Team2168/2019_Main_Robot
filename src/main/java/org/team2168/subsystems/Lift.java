@@ -96,7 +96,7 @@ public class Lift extends Subsystem {
     } 
     else 
     {
-      liftPot = new AveragePotentiometer(RobotMap.LIFT_POSITION_POT, 
+      liftPot = new AveragePotentiometer(liftMotor1, 
         RobotMap.LIFT_POT_VOLTAGE_0,
         RobotMap.LIFT_POT_0_HEIGHT_INCHES, 
         RobotMap.LIFT_POT_VOLTAGE_MAX,

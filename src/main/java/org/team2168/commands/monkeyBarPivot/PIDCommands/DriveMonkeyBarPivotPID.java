@@ -28,7 +28,7 @@ public class DriveMonkeyBarPivotPID extends Command {
     // eg. requires(chassis);
     requires(MonkeyBarPivot.getInstance());
     this.setPoint = Robot.monkeyBarPivot.monkeyBarPivotController.getSetPoint();
-    this.maxSpeed = 1;
+    this.maxSpeed = 0.5;
     this.minSpeed = 0;
     
   }

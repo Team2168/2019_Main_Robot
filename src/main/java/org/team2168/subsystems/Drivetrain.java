@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -12,14 +13,13 @@ import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
 import org.team2168.PID.sensors.Limelight;
+import org.team2168.PID.sensors.NavX;
 import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -50,6 +50,8 @@ public class Drivetrain extends Subsystem {
   private double leftMotor1FPS;
   private double lefttMotor1FPS;
   public IMU imu;
+
+  public NavX ahrs;
 
 
   // declare position/speed controllers
@@ -125,7 +127,7 @@ public class Drivetrain extends Subsystem {
       // rightMotor2.setCANTimeout(100);
       // rightMotor3.setCANTimeout(100);
 
-  
+    ahrs = new NavX(); 
     
     _drivetrainRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_DRIVE_ENCODER_A,
@@ -257,28 +259,28 @@ public class Drivetrain extends Subsystem {
 
     // start TCP Servers for DEBUGING ONLY
     TCPdrivePosController = new TCPSocketSender(RobotMap.TCP_SERVER_DRIVE_TRAIN_POS, driveTrainPosController);
-    TCPdrivePosController.start();
+    //TCPdrivePosController.start();
 
     TCPrightSpeedController = new TCPSocketSender(RobotMap.TCO_SERVER_RIGHT_DRIVE_TRAIN_SPEED, rightSpeedController);
-    TCPrightSpeedController.start();
+    //TCPrightSpeedController.start();
 
     TCPleftSpeedController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_SPEED, leftSpeedController);
-    TCPleftSpeedController.start();
+    //TCPleftSpeedController.start();
 
     TCPrightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_RIGHT_DRIVE_TRAIN_POSITION, rightPosController);
-    TCPrightPosController.start();
+    //TCPrightPosController.start();
 
     TCPleftPosController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION, leftPosController);
-    TCPleftPosController.start();
+    //TCPleftPosController.start();
 
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER, rotateController);
-    TCProtateController.start();
+    //TCProtateController.start();
 
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT,rotateDriveStraightController);
-    TCProtateController.start();
+    //TCProtateController.start();
 
     TCPlimelightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA,limelightPosController);
-    TCPlimelightPosController.start();
+    //TCPlimelightPosController.start();
 
     leftMotor1Voltage = 0;
     leftMotor2Voltage = 0;

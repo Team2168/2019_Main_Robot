@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import org.team2168.Robot;
 import org.team2168.PID.sensors.PIDSensorInterface;
+import org.team2168.utils.PowerDistribution;
 import org.team2168.utils.TCPMessageInterface;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -156,6 +157,9 @@ public class PIDPosition implements TCPMessageInterface {
 	private double int_d_term;
 	private double lastDeriv;
 	private volatile double n;
+
+	private volatile boolean enableHoldingVoltage = false;
+	private volatile double holdingVoltage = 0.0;
 
 	PrintWriter log;
 
@@ -897,6 +901,24 @@ public class PIDPosition implements TCPMessageInterface {
 
 		return this.setPointByArray;
 	}
+	/**
+	 *  Turns on voltage hold mode which allows a non-zero output when the controllder reaches its setpoint
+	 * @param voltage is holding value in unit volts. The output of the controller will be scaled based on battery voltage
+	 */
+	public void enableHoldingVoltage(double voltage)
+	{
+		this.holdingVoltage = voltage;
+		this.enableHoldingVoltage = true;
+	}
+
+	/**
+	 * disables the holding voltage
+	 */
+	public void disableHoldingVoltage()
+	{
+		this.holdingVoltage = 0.0;
+		this.enableHoldingVoltage = false;
+	}
 
 	/**
 	 * Function to see if the wheel is at steady state speed
@@ -1149,8 +1171,11 @@ public class PIDPosition implements TCPMessageInterface {
 				co = maxNegOutput;
 
 			// FIXME : Make apart of method
-			if (Math.abs(err) < acceptErrorDiff) {
-				co = 0;
+			if (Math.abs(err) <= acceptErrorDiff) {
+				if(this.enableHoldingVoltage)
+					co = this.holdingVoltage/Robot.pdp.getBatteryVoltage();
+				else
+					co = 0;
 				this.isFinished = true;
 			} else
 				this.isFinished = false;
