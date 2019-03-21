@@ -20,6 +20,7 @@ import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
+import org.team2168.commands.monkeyBarIntakeWheels.SpinMBWhenLiftDown;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToFloorPosition;
@@ -140,13 +141,24 @@ public class OI
 		// buttonBox2.Button2().whenPressed();
 		// buttonBox2.Button3().whenPressed();
 		buttonBox2.Button4().whenPressed(new DisengageHatchPanel());
-		//buttonBox2.Button5().whenPressed(new defense); //not exist yet
+		//buttonBox2.Button5().whenPressed(new DefenseInsideFramePerimeter()); //untested
 		//buttonBox2.Button6().whenPressed(new score)); //not exist
-		buttonBox2.Button7().whenPressed(new DriveCargoIntakeWithConstant(-0.5)); //should also spin mb if lift down
-		buttonBox2.Button8().whenPressed(new DriveCargoIntakeWithConstant(-1.0)); //should also spin mb if lift down
-		buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(0.5)); //should also spin and pivot mb
+		buttonBox2.Button7().whenPressed(new DriveCargoIntakeWithConstant(-0.5));
+		buttonBox2.Button7().whenReleased(new DriveCargoIntakeWithConstant(0.0)); //implemented same system for stopping as mb pivot below
+		buttonBox2.Button7().whenPressed(new SpinMBWhenLiftDown(-0.5));
+		buttonBox2.Button7().whenReleased(new SpinMBWhenLiftDown(0.0));
+
+		buttonBox2.Button8().whenPressed(new DriveCargoIntakeWithConstant(-1.0)); 
+		buttonBox2.Button8().whenReleased(new DriveCargoIntakeWithConstant(0.0));
+		buttonBox2.Button8().whenPressed(new SpinMBWhenLiftDown(-0.5));
+		buttonBox2.Button8().whenReleased(new SpinMBWhenLiftDown(0.0));
+
+		buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(0.5)); 
+		buttonBox2.Button9().whenPressed(new DriveCargoIntakeWithConstant(0.0)); 
 		buttonBox2.Button9().whenPressed(new DriveMonkeyBarIntakeWithConstant(0.5)); //todo: make sure these are the speeds we want
+		buttonBox2.Button9().whenReleased(new DriveMonkeyBarIntakeWithConstant(0.0)); //todo: make sure these are the speeds we want
 		//buttonBox2.Button9().whenPressed(new MoveMonkeyBarToCargoIntakePosition()); 
+		
 		buttonBox2.Button10().whileHeld(new ExtendHatchPlunger());
 		buttonBox2.Button10().whenReleased(new ReleaseHatchPanel());
 		//buttonBox2.Button11().whenPressed();
