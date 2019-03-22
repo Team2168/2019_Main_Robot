@@ -55,8 +55,8 @@ public class Stinger extends Subsystem
 
         }
 
-        ConsolePrinter.putBoolean("Stinger Ratchet Enagaged", () -> {return Robot.stinger.isRatchetEngaged();}, true, false);
-        ConsolePrinter.putBoolean("Stinger Ratchet Disengaged", () -> {return Robot.stinger.isRatchetDisengaged();}, true, false);
+        // ConsolePrinter.putBoolean("Stinger Ratchet Enagaged", () -> {return Robot.stinger.isRatchetEngaged();}, true, false);
+        // ConsolePrinter.putBoolean("Stinger Ratchet Disengaged", () -> {return Robot.stinger.isRatchetDisengaged();}, true, false);
 
         ConsolePrinter.putNumber("Left Stinger Pot Raw", () -> {return Robot.stinger.getLeftPotRaw();}, true, false);
         ConsolePrinter.putNumber("Right Stinger Pot Raw", () -> {return Robot.stinger.getRightPotRaw();}, true, false);

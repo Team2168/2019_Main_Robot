@@ -41,10 +41,10 @@ public class HatchFloorIntake extends Subsystem
     _hallEffectRaise = new DigitalInput(RobotMap.HATCH_INTAKE_RAISED_LIMIT);
     _hallEffectLower = new DigitalInput(RobotMap.HATCH_INTAKE_LOWERED_LIMIT);
 
-    ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
-    ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
-    ConsolePrinter.putBoolean("Is HatchIntake Up",() -> {return isHatchIntakeUp();},true, false);
-    ConsolePrinter.putBoolean("Is HatchIntake Lowered",() -> {return isHatchIntakeLowered();},true, false);
+    // ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
+    // ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
+    // ConsolePrinter.putBoolean("Is HatchIntake Up",() -> {return isHatchIntakeUp();},true, false);
+    // ConsolePrinter.putBoolean("Is HatchIntake Lowered",() -> {return isHatchIntakeLowered();},true, false);
     ConsolePrinter.putNumber("Intake motor voltage",() -> {return _intakeMotorVoltage;},true, false);
     ConsolePrinter.putBoolean("Intake Motor", () -> {return !Robot.pdp.isIntakeMotorTrip();}, true, false);
   }

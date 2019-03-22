@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
   {
     _plungerArmBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT,RobotMap.PROBE_ROTATE_BRAKE_EXTENDED_PCM, RobotMap.PROBE_ROTATE_BRAKE_RETRACTED_PCM);
 
-    ConsolePrinter.putBoolean("HatchProbePivotBrakeEngaged", () -> {return Robot.hatchProbePivotBrake.isEngaged();}, true, false);
+    //ConsolePrinter.putBoolean("HatchProbePivotBrakeEngaged", () -> {return Robot.hatchProbePivotBrake.isEngaged();}, true, false);
   }
 
   /**

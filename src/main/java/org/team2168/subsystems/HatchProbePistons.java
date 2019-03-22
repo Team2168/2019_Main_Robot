@@ -36,8 +36,8 @@ public class HatchProbePistons extends Subsystem {
 
     ConsolePrinter.putNumber("HatchPlunger Raw IR", () -> {return getRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("Hatch is Present", () -> {return isHatchPresent();}, true, false);
-    ConsolePrinter.putBoolean("Arm is extended", () -> {return isArmExtended();}, true, false);
-    ConsolePrinter.putBoolean("Hatch is Engaged", () -> {return isHatchEngaged();}, true, false);
+    // ConsolePrinter.putBoolean("Arm is extended", () -> {return isArmExtended();}, true, false);
+    // ConsolePrinter.putBoolean("Hatch is Engaged", () -> {return isHatchEngaged();}, true, false);
     ConsolePrinter.putBoolean("Hatch Left limit", () -> {return _limitSwitch.getForwardLimit();}, true, false);
     ConsolePrinter.putBoolean("Hatch Right Limit", () -> {return _limitSwitch.getReverseLimit();}, true, false);
 
