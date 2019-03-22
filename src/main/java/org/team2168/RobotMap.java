@@ -236,7 +236,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean LIFT_MOTOR1_REVERSE = true;
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
 	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
-	public static final boolean LIFT_ENABLE_INTERLOCKS = true;
+	public static final boolean LIFT_ENABLE_INTERLOCKS = false;
 
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
@@ -362,7 +362,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
-	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = true;
+	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = false;
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set

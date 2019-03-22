@@ -183,10 +183,10 @@ public class Limelight implements PIDSensorInterface
                 this.instantiateLocalVariables();
                 camMode.setNumber(camModeNumber);
             }
-            else
-            {
-                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
-            }
+            // else
+            // {
+            //     System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            // }
         }
     }
 
@@ -203,7 +203,7 @@ public class Limelight implements PIDSensorInterface
         }
         else
         {
-            System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            //System.out.println("Connection to Limelight not established. Check ethernet connectors.");
             return -1; 
         }
     }
@@ -272,10 +272,10 @@ public class Limelight implements PIDSensorInterface
                 this.instantiateLocalVariables();
                 ledMode.setNumber(ledNumber);
             }
-            else
-            {
-                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
-            }
+            // else
+            // {
+            //     System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            // }
         }
     }
 
