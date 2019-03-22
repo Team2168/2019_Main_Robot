@@ -175,7 +175,7 @@ public class MonkeyBarPivot extends Subsystem {
     (speed>0 && getRightPotPos()<= RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION))
     {
       driveRotateMotorLeft(speed); 
-     driveRotateMotorRight(speed);
+      driveRotateMotorRight(speed);
     }
     else
     {

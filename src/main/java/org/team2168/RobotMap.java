@@ -73,13 +73,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Channels 0-3 on Roborio
 	//public static final int HATCH_INTAKE_IR_SENSOR = 0;
 	//public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
-	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 6;
+	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 0;
 	public static final int DRIVETRAIN_BACK_IR_SENSOR = 1;
 	public static final int PIVOT_POSITION_POT = 2;
 	public static final int LIFT_POSITION_POT = 3;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 4;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 5;
-	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 0;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
 	public static final int PRESSURE_SENSOR = 7;
 
 
@@ -236,7 +236,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean LIFT_MOTOR1_REVERSE = true;
 	public static final boolean LIFT_MOTOR2_REVERSE = true;
 	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
-	public static final boolean LIFT_ENABLE_INTERLOCKS = false;
+	public static final boolean LIFT_ENABLE_INTERLOCKS = true;
 
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
@@ -296,11 +296,6 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MONKEY_BAR_HOLDING_VOLTAGE = 0.0; //volts to keep arm steady
 	public static final double MONKEY_BAR_HOLDING_VOLTAGE_PBOT = 0.0; //volts to keep arm steady
-
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 3.95; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.251; //0 degrees
-	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.3; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
@@ -308,24 +303,19 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
-	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
+
+	public static final double MONKEY_BAR_SAFE_LIFT_POS = 80.0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
 	public static final double MONKEY_BAR_SAFE_SCORING_POS = 120; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
 
-
-	//PBOT
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 3.95; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT = 3.33; //0 degrees
-	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT = 0.0;
-	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.5; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 1.61; //0 degrees
-	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
+	//PBOT	
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 3.2; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 0; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.0; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 130.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 100.0; //TODO SET ALL
@@ -372,7 +362,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *************************************************************************/
 	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
-	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = false;
+	public static final boolean PLUNGER_PIVOT_ENABLE_INTERLOCKS = true;
 	
 	 ////TODO set these values
 	public static final boolean PLUNGER_ARM_PIVOT_REVERSE = true; //TODO set
