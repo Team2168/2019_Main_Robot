@@ -18,6 +18,7 @@ import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
 import org.team2168.utils.F310;
@@ -212,8 +213,9 @@ public class OI
 		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
 		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
 		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		// pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+		pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveMonkeyBarPivotPIDPath(20));
 
+		pidTestJoystick.ButtonRightDPad().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
 	}
 
