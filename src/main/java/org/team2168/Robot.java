@@ -175,13 +175,15 @@ public class Robot extends TimedRobot
        ******************************************************/
 
       double[][] waypointPath = new double[][]{
-        {0.0, 212.0, 0},
-			  {96.0, 212.0, 0},
-			  {212, 275,0},
-			  {261.0, 227.0, -Math.PI/2+0.001}
+			{48.0, 212.0, 0},
+			{96.0, 212.0, 0},
+      {180.0, 296.0, Math.PI/6}
     };
   
       QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, false);
+      
+      quinticPath.calculate();
+
       this.leftPosQuinticPath = quinticPath.getLeftPos();
 			this.rightPosQuinticPath = quinticPath.getRightPos();
       this.leftVelQuinticPath = quinticPath.getLeftVel();

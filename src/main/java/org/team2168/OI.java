@@ -1,5 +1,6 @@
 package org.team2168;
 
+import org.team2168.commands.auto.LeftFrontRocketFromHab;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -194,18 +195,20 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
-		pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
-		pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
-		pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
+		// pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
-		pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
-		pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
-		pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+			pidTestJoystick.ButtonA().whenPressed(new LeftFrontRocketFromHab());
+
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		// pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
 
 	}

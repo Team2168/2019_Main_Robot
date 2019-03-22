@@ -79,8 +79,8 @@ public class QuinticTrajectory
 
 	private static PrintWriter log;
 
-	//private static String directory = "/home/lvuser/Path/";
-	private static String directory = "Path/";
+	private static String directory = "/home/lvuser/Path/";
+	//private static String directory = "Path/";
 
 	
 	public boolean reverse = false;
@@ -118,14 +118,14 @@ public class QuinticTrajectory
 			// {263.0, 32.0, Math.PI/3-0.001},
 			// {252.0, 90.0, 5*Math.PI/6-0.002}
 
-			// {48.0, 212.0, 0},
-			// {96.0, 212.0, 0},
-			// {180.0, 296.0, Math.PI/6}
-
-			{0.0, 212.0, 0},
+			{48.0, 212.0, 0},
 			{96.0, 212.0, 0},
-			{212, 275,0},
-			{261.0, 227.0, -Math.PI/2+0.001}
+			{180.0, 296.0, Math.PI/6}
+
+			// {0.0, 212.0, 0},
+			// {96.0, 212.0, 0},
+			// {212, 275,0},
+			// {261.0, 227.0, -Math.PI/2+0.001}
 			
 		};
 		
