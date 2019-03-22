@@ -11,34 +11,18 @@ import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TogglePipeline extends Command {
-
-  private boolean finished;
-
-  /**
-   * Default constructor
-   */
-  public TogglePipeline() {
+public class PauseLimelight extends Command {
+  public PauseLimelight() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.drivetrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    finished = false;
-
-    // If vision is active, switches to a raw pipeline
-    if(Robot.drivetrain.limelight.getPipeline() == 0) {
-      Robot.drivetrain.limelight.setPipeline(7);
-      finished = true;
-    }
-    // If vision is inactive, switches to the vision pipeline
-    else if(Robot.drivetrain.limelight.getPipeline() == 7) {
-      Robot.drivetrain.limelight.setPipeline(0);
-      finished = true;
-    }
-    
+    Robot.drivetrain.limelightPosController.Pause();
+    Robot.drivetrain.limelight.setCamMode(1);
+    Robot.drivetrain.limelight.setLedMode(1);
+    Robot.drivetrain.limelight.setPipeline(7);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -49,7 +33,7 @@ public class TogglePipeline extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return !Robot.drivetrain.limelightPosController.isEnabled();
   }
 
   // Called once after isFinished returns true
@@ -62,5 +46,4 @@ public class TogglePipeline extends Command {
   @Override
   protected void interrupted() {
   }
-
 }

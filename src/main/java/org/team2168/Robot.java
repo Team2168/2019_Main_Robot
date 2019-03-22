@@ -235,6 +235,8 @@ public class Robot extends TimedRobot
       drivetrain.startGyroCalibrating();
 
     drivetrain.calibrateGyro();
+
+    drivetrain.limelightPosController.Pause();
   }
 
   public void disabledPeriodic()

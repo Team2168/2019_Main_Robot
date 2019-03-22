@@ -183,6 +183,7 @@ public class Drivetrain extends Subsystem {
     _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
     limelight = new Limelight();
+    limelight.setCamMode(1);
     limelight.setPipeline(7);
 
     // DriveStraight Controller
@@ -257,7 +258,7 @@ public class Drivetrain extends Subsystem {
         RobotMap.LIMELIGHT_POSITION_P,
         RobotMap.LIMELIGHT_POSITION_I,
         RobotMap.LIMELIGHT_POSITION_D,
-        _drivetrainLeftEncoder,
+        limelight,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
     // add min and max output defaults and set array size

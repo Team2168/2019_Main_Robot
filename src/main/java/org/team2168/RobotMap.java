@@ -514,6 +514,11 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int I2C_ADDRESS = 10;
 
 	/******************************************************************
+	 *                         Lights I2C                             *
+	 ******************************************************************/
+	public static final int LIMELIGHT_AVG_ENCODER_VAL = 0;
+
+	/******************************************************************
 	 *                        Kevin PARAMETERS                        *
 	 ******************************************************************/
 	public static final boolean KEVIN_IS_DA_BOMB = true;
