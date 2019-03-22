@@ -312,9 +312,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
 
 	//PBOT	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 3.2; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.3; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 0; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.0; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 1.2; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 130.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
