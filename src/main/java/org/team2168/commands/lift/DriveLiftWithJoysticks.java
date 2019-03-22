@@ -46,7 +46,7 @@ public class DriveLiftWithJoysticks extends Command
         {
           Robot.lift.driveAllMotors(holdingSpeed);
         }
-        System.out.println("Da lift is holding");
+        //System.out.println("Da lift is holding");
       }
       else
         Robot.lift.driveAllMotors(Robot.oi.getLiftJoystickValue() * RobotMap.LIFT_MAX_JOYSTICK_SPEED);

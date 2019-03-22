@@ -24,8 +24,8 @@ public class OneDimensionalMotionProfiling {
 //	double jMax =30000.0;
 	
 	double vMax = 50.0;
-	double aMax = 50.0;
-	double jMax = 300.0;
+	double aMax = 53.0;
+	double jMax = 1000.0;
 	
 	double vMin = -vMax;
 	double aMin = -aMax;
@@ -48,6 +48,57 @@ public class OneDimensionalMotionProfiling {
 	public double[] vel;		
 	public double[] acc;
 	public double[] jerk;
+
+	public static void main(String[] args){
+		
+		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(0,50,50,53,1000);
+		
+		
+//		for(int i=0; i<oneDirection.getVelArray().length; i++)
+//			System.out.println(oneDirection.getPosArray()[i]);
+		
+		FalconLinePlot fig3 = new FalconLinePlot(oneDirection.time, oneDirection.pos ,Color.black);
+		fig3.yGridOn();
+		fig3.xGridOn();
+		fig3.setYLabel("Position (inches)");
+		fig3.setXLabel("time (seconds)");
+		fig3.setTitle("Top Down View of FRC Field (30ft x 27ft) \n shows global position of robot path, along with left and right wheel trajectories");
+		fig3.setSize(600,400);
+		
+//force graph to show 1/2 field dimensions of 24.8ft x 27 feet
+double fieldWidth = 27.0;
+//fig3.setXTic(0, 54, 1);
+//fig3.setYTic(0, fieldWidth, 1);
+
+
+//Velocity
+		FalconLinePlot fig4 = new FalconLinePlot(new double[][]{{0.0,0.0}});
+		fig4.yGridOn();
+		fig4.xGridOn();
+		fig4.setYLabel("Velocity (ft/sec)");
+		fig4.setXLabel("time (seconds)");
+		fig4.setTitle("Velocity Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
+		fig4.addData(oneDirection.time,oneDirection.vel, Color.magenta);
+		
+		
+		FalconLinePlot fig5 = new FalconLinePlot(new double[][]{{0.0,0.0}});
+		fig5.yGridOn();
+		fig5.xGridOn();
+		fig5.setYLabel("Accel (ft/sec/sec)");
+		fig5.setXLabel("time (seconds)");
+		fig5.setTitle("Accel Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
+		fig5.addData(oneDirection.time,oneDirection.acc, Color.black);
+		
+		FalconLinePlot fig6 = new FalconLinePlot(new double[][]{{0.0,0.0}});
+		fig6.yGridOn();
+		fig6.xGridOn();
+		fig6.setYLabel("Accel (ft/sec/sec)");
+		fig6.setXLabel("time (seconds)");
+		fig6.setTitle("Jerk Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
+		fig6.addData(oneDirection.time,oneDirection.jerk, Color.black);
+	
+		
+	}
 	
 	
 	public OneDimensionalMotionProfiling(double distance)
@@ -249,56 +300,7 @@ public class OneDimensionalMotionProfiling {
 		
 	
 	
-	public static void main(String[] args){
-		
-		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(50);
-		
-		
-//		for(int i=0; i<oneDirection.getVelArray().length; i++)
-//			System.out.println(oneDirection.getPosArray()[i]);
-		
-		FalconLinePlot fig3 = new FalconLinePlot(oneDirection.time, oneDirection.pos ,Color.black);
-		fig3.yGridOn();
-		fig3.xGridOn();
-		fig3.setYLabel("Position (inches)");
-		fig3.setXLabel("time (seconds)");
-		fig3.setTitle("Top Down View of FRC Field (30ft x 27ft) \n shows global position of robot path, along with left and right wheel trajectories");
-		fig3.setSize(600,400);
-		
-//force graph to show 1/2 field dimensions of 24.8ft x 27 feet
-double fieldWidth = 27.0;
-//fig3.setXTic(0, 54, 1);
-//fig3.setYTic(0, fieldWidth, 1);
-
-
-//Velocity
-		FalconLinePlot fig4 = new FalconLinePlot(new double[][]{{0.0,0.0}});
-		fig4.yGridOn();
-		fig4.xGridOn();
-		fig4.setYLabel("Velocity (ft/sec)");
-		fig4.setXLabel("time (seconds)");
-		fig4.setTitle("Velocity Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
-		fig4.addData(oneDirection.time,oneDirection.vel, Color.magenta);
-		
-		
-		FalconLinePlot fig5 = new FalconLinePlot(new double[][]{{0.0,0.0}});
-		fig5.yGridOn();
-		fig5.xGridOn();
-		fig5.setYLabel("Accel (ft/sec/sec)");
-		fig5.setXLabel("time (seconds)");
-		fig5.setTitle("Accel Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
-		fig5.addData(oneDirection.time,oneDirection.acc, Color.black);
-		
-		FalconLinePlot fig6 = new FalconLinePlot(new double[][]{{0.0,0.0}});
-		fig6.yGridOn();
-		fig6.xGridOn();
-		fig6.setYLabel("Accel (ft/sec/sec)");
-		fig6.setXLabel("time (seconds)");
-		fig6.setTitle("Jerk Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
-		fig6.addData(oneDirection.time,oneDirection.jerk, Color.black);
 	
-		
-	}
 
 
 public double[] getTimeArray()

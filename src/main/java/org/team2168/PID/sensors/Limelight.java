@@ -7,6 +7,7 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight implements PIDSensorInterface
@@ -31,6 +32,10 @@ public class Limelight implements PIDSensorInterface
     private boolean variablesInstantiated;
 
     private int snapshotCounter;
+    private double runTime;
+    private int averagorSize;
+    private double[] averagorArray;
+    private int arrayPos = 0;
 
     /**
      * Default constructor
@@ -49,19 +54,25 @@ public class Limelight implements PIDSensorInterface
         networkTable = NetworkTableInstance.getDefault().getTable("limelight");
         variablesInstantiated = false;
 
+        runTime = Timer.getFPGATimestamp();
+        averagorSize = RobotMap.LIMELIGHT_AVG_ENCODER_VAL;
+        averagorArray = new double[averagorSize];
+
+        this.instantiateLocalVariables();
+
         // Testing only
-        ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
-        ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 1", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[0];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 2", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[1];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 3", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[2];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 4", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[3];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 5", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[4];}, true, false);
-        ConsolePrinter.putNumber("Vision Target Position 6", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[5];}, true, false);
-        ConsolePrinter.putNumber("Limelight Controller Output", () -> {return Robot.drivetrain.limelightPosController.getControlOutput();}, true, false);
-        ConsolePrinter.putNumber("Limelight P", () -> {return RobotMap.LIMELIGHT_POSITION_P;}, true, true);
-        ConsolePrinter.putNumber("Limelight I", () -> {return RobotMap.LIMELIGHT_POSITION_I;}, true, true);
-        ConsolePrinter.putNumber("Limelight D", () -> {return RobotMap.LIMELIGHT_POSITION_D;}, true, true);
+         ConsolePrinter.putNumber("Vision Target Bearing", () -> {return Robot.drivetrain.limelight.getPos();}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Area", () -> {return Robot.drivetrain.limelight.getTargetArea();}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 1", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[0];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 2", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[1];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 3", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[2];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 4", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[3];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 5", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[4];}, true, false);
+        // ConsolePrinter.putNumber("Vision Target Position 6", () -> {return Robot.drivetrain.limelight.getCameraTranslation()[5];}, true, false);
+        // ConsolePrinter.putNumber("Limelight Controller Output", () -> {return Robot.drivetrain.limelightPosController.getControlOutput();}, true, false);
+        // ConsolePrinter.putNumber("Limelight P", () -> {return RobotMap.LIMELIGHT_POSITION_P;}, true, true);
+        // ConsolePrinter.putNumber("Limelight I", () -> {return RobotMap.LIMELIGHT_POSITION_I;}, true, true);
+        // ConsolePrinter.putNumber("Limelight D", () -> {return RobotMap.LIMELIGHT_POSITION_D;}, true, true);
     
         if(this.connectionEstablished())
         {
@@ -73,14 +84,22 @@ public class Limelight implements PIDSensorInterface
         }
     }
 
-    /**
+     /**
      * Returns the rate at which the target bearing changes
      */
     @Override
     public double getRate()
     {
-        return 0;
+        double executionTime = Timer.getFPGATimestamp() - runTime;
+        double pos = getPos();
+        if(executionTime > 0) {
+            putData((pos - previousPosition) / executionTime);
         }
+
+        runTime = Timer.getFPGATimestamp();
+        previousPosition = pos;
+        return getAverage();
+    }
 
     @Override
     public void reset()
@@ -109,6 +128,7 @@ public class Limelight implements PIDSensorInterface
         {
             this.currentPosition = 0.0;
         }
+        
         return this.currentPosition;
     }
 
@@ -158,6 +178,44 @@ public class Limelight implements PIDSensorInterface
         
     }
 
+    public void setCamMode(int camModeNumber)
+    {
+        if(camModeNumber >= 0 && camModeNumber <= 2)
+        {
+            if (this.connectionEstablished() && this.variablesInstantiated)
+            {
+                camMode.setNumber(camModeNumber);
+            }
+            else if (this.connectionEstablished() && !this.variablesInstantiated)
+            {
+                this.instantiateLocalVariables();
+                camMode.setNumber(camModeNumber);
+            }
+            else
+            {
+                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            }
+        }
+    }
+
+    public int getCamMode()
+    {
+        if(this.connectionEstablished() && this.variablesInstantiated)
+        {
+            return camMode.getNumber(1).intValue();
+        }
+        else if (this.connectionEstablished() && !this.variablesInstantiated)
+        {
+            this.instantiateLocalVariables();
+            return camMode.getNumber(1).intValue();
+        }
+        else
+        {
+            System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            return -1; 
+        }
+    }
+
     /**
      * Sets the pipeline being used
      * @param pipelineNumber is an int from 0 to 9
@@ -183,10 +241,10 @@ public class Limelight implements PIDSensorInterface
                     currentVisionPipeline = pipelineNumber;
                 }
             }
-            else
-            {
-                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
-            }
+            // else
+            // {
+            //     System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            // }
         }
     }
     
@@ -207,15 +265,40 @@ public class Limelight implements PIDSensorInterface
         }
         else
         {
-            System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            //System.out.println("Connection to Limelight not established. Check ethernet connectors.");
             return -1;
         }
         
     }
 
+    /**
+     * Sets the LED mode
+     * @param ledNumber is an int from 0 to 3
+     */
+    public void setLedMode(int ledNumber)
+    {
+        if(ledNumber >= 0 && ledNumber <= 3)
+        {
+            if (this.connectionEstablished() && this.variablesInstantiated)
+            {
+                ledMode.setNumber(ledNumber);
+            }
+            else if (this.connectionEstablished() && !this.variablesInstantiated)
+            {
+                this.instantiateLocalVariables();
+                ledMode.setNumber(ledNumber);
+            }
+            else
+            {
+                System.out.println("Connection to Limelight not established. Check ethernet connectors.");
+            }
+        }
+    }
+
     private boolean connectionEstablished()
     {
-        return this.networkTable.containsKey("tx");
+        //return this.networkTable.containsKey("tx");
+        return !(this.networkTable.getEntry("tx") == null);
     }
 
     private void instantiateLocalVariables()
@@ -236,7 +319,7 @@ public class Limelight implements PIDSensorInterface
 
         // Sets the camera controls
         ledMode.setNumber(0);
-        camMode.setNumber(0);
+        camMode.setNumber(1);
         pipeline.setNumber(0);
         snapshot.setNumber(0);
 
@@ -267,5 +350,36 @@ public class Limelight implements PIDSensorInterface
             }
         }
     }
+
+      /**
+	 * Puts data in to array to be averaged, hence the class name and method name.
+	 * Its like magic but cooler.
+	 *
+	 * @param value the value being inserted into the array to be averaged.
+	 */
+
+    public synchronized void putData(double value) {
+        averagorArray[arrayPos] = value;
+        arrayPos++;
+
+        if(arrayPos >= averagorSize) {
+            // Is equal or greater to averagorSize because array is zero indexed. Rolls over index position
+            arrayPos = 0;
+        }
+    }
+
+    /**
+	 * Returns average of last n values sent, as name says.
+	 *
+	 * @return the average
+	 */
+    public synchronized double getAverage() {
+        double sum = 0;
+        for(int i = 0; i < averagorSize; i++) {
+            sum += averagorArray[i];
+        }
+        return sum / averagorSize;
+    }
+
 
 }

@@ -93,6 +93,9 @@ public class DriveLiftPIDZZZ extends Command {
 		Robot.lift.liftPOTController.setMinPosOutput(minPosSpeed);
 		Robot.lift.liftPOTController.setMinNegOutput(minNegSpeed);
 		Robot.lift.liftPOTController.setAcceptErrorDiff(error);
+
+		Robot.lift.liftPOTController.enableHoldingVoltage(RobotMap.LIFT_HOLDING_VOLTAGE);
+
 		
 		Robot.lift.liftPOTController.Enable();
 		
@@ -111,7 +114,7 @@ public class DriveLiftPIDZZZ extends Command {
     
 	protected boolean isFinished() {
 		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
-    	return Robot.lift.liftPOTController.isFinished();
+    	return Robot.lift.liftPOTController.isFinished() || Math.abs(Robot.oi.getLiftJoystickValue()) > 0.05;
 		//return false;
     }
 

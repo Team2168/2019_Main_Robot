@@ -18,6 +18,7 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -25,7 +26,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class HatchFloorIntake extends Subsystem 
 {
-  private VictorSPX _intakeMotor;
+  private Victor _intakeMotor;
   private DoubleSolenoid _dSolenoidRotate;
   private static DigitalInput _hallEffectRaise;
   private static DigitalInput _hallEffectLower;
@@ -35,15 +36,15 @@ public class HatchFloorIntake extends Subsystem
 
   private HatchFloorIntake() 
   {
-    _intakeMotor = new VictorSPX(RobotMap.HATCH_FLOOR_INTAKE_PDP);
+    _intakeMotor = new Victor(RobotMap.HATCH_FLOOR_INTAKE_PDP);
     _dSolenoidRotate = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.HATCH_INTAKE_LOWER_PCM, RobotMap.HATCH_INTAKE_RAISE_PCM);
     _hallEffectRaise = new DigitalInput(RobotMap.HATCH_INTAKE_RAISED_LIMIT);
     _hallEffectLower = new DigitalInput(RobotMap.HATCH_INTAKE_LOWERED_LIMIT);
 
-    ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
-    ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
-    ConsolePrinter.putBoolean("Is HatchIntake Up",() -> {return isHatchIntakeUp();},true, false);
-    ConsolePrinter.putBoolean("Is HatchIntake Lowered",() -> {return isHatchIntakeLowered();},true, false);
+    // ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
+    // ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
+    // ConsolePrinter.putBoolean("Is HatchIntake Up",() -> {return isHatchIntakeUp();},true, false);
+    // ConsolePrinter.putBoolean("Is HatchIntake Lowered",() -> {return isHatchIntakeLowered();},true, false);
     ConsolePrinter.putNumber("Intake motor voltage",() -> {return _intakeMotorVoltage;},true, false);
     ConsolePrinter.putBoolean("Intake Motor", () -> {return !Robot.pdp.isIntakeMotorTrip();}, true, false);
   }
@@ -71,7 +72,7 @@ public class HatchFloorIntake extends Subsystem
     if (RobotMap.HATCH_INTAKE_MOTOR_REVERSE)
       speed = -speed;
 
-    _intakeMotor.set(ControlMode.PercentOutput,speed);
+    _intakeMotor.set(speed);
 
     _intakeMotorVoltage = Robot.pdp.getBatteryVoltage() * speed;
   }

@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -75,6 +76,9 @@ public class Lift extends Subsystem {
 	private Lift() {
 		liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PDP);
 		liftMotor2 = new VictorSPX(RobotMap.LIFT_MOTOR_2_PDP);
+
+		//liftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+		//liftMotor2.setStatusFramePeriod(1, 20);
 		
 		//liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.LIFT_BRAKE_ENGAGE_PCM, RobotMap.LIFT_BRAKE_DISENGAGE_PCM);
 		liftFullyUp = new DigitalInput(RobotMap.LIFT_FULLY_UP_LIMIT);
@@ -96,7 +100,7 @@ public class Lift extends Subsystem {
     } 
     else 
     {
-      liftPot = new AveragePotentiometer(RobotMap.LIFT_POSITION_POT, 
+      liftPot = new AveragePotentiometer(liftMotor1, 
         RobotMap.LIFT_POT_VOLTAGE_0,
         RobotMap.LIFT_POT_0_HEIGHT_INCHES, 
         RobotMap.LIFT_POT_VOLTAGE_MAX,
@@ -121,12 +125,12 @@ public class Lift extends Subsystem {
 		TCPLiftPOTController = new TCPSocketSender(RobotMap.TCP_SERVER_LIFT_POT_CONTROLLER, liftPOTController);
 		TCPLiftPOTController.start();
 
-		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getLiftJoystickValue();}, true, true);
-		ConsolePrinter.putNumber("Lift motor 1 voltage", () -> {return liftMotor1Voltage;}, true, true);
-		ConsolePrinter.putNumber("Lift motor 2 voltage", () -> {return liftMotor2Voltage;}, true, true);
+		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getLiftJoystickValue();}, true, false);
+		ConsolePrinter.putNumber("Lift motor 1 voltage", () -> {return liftMotor1Voltage;}, true, false);
+		ConsolePrinter.putNumber("Lift motor 2 voltage", () -> {return liftMotor2Voltage;}, true, false);
 
-		ConsolePrinter.putNumber("Lift Motor 1 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP);}, true, true);
-		ConsolePrinter.putNumber("Lift Motor 2 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP);}, true, true);
+		ConsolePrinter.putNumber("Lift Motor 1 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP);}, true, false);
+		ConsolePrinter.putNumber("Lift Motor 2 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP);}, true, false);
 
 
 		ConsolePrinter.putBoolean("Is Lift Fully Up", () -> {return Robot.lift.isLiftFullyUp();}, true, false);
@@ -136,12 +140,10 @@ public class Lift extends Subsystem {
 		ConsolePrinter.putNumber("Lift Pot Rate", () -> {return getPotRate();}, true, false);
 		ConsolePrinter.putBoolean("Lift Is Sensor Valid", () -> {return isSensorValid();}, true, false);
 
-		ConsolePrinter.putBoolean("Lift Motor1_FAULT", () -> {return liftMotor1Fault;}, true, false);
-		ConsolePrinter.putBoolean("Lift Motor2_FAULT", () -> {return liftMotor2Fault;}, true, false);
-
-
-		ConsolePrinter.putBoolean("Lift Motor1_Breaker_Trip", () -> {return isLiftMotor1BreakerTrip;}, true, false);
-		ConsolePrinter.putBoolean("Lift Motor2_Breaker_Trip", () -> {return isLiftMotor2BreakerTrip;}, true, false);
+		// ConsolePrinter.putBoolean("Lift Motor1_FAULT", () -> {return liftMotor1Fault;}, true, false);
+		// ConsolePrinter.putBoolean("Lift Motor2_FAULT", () -> {return liftMotor2Fault;}, true, false);
+		// ConsolePrinter.putBoolean("Lift Motor1_Breaker_Trip", () -> {return isLiftMotor1BreakerTrip;}, true, false);
+		// ConsolePrinter.putBoolean("Lift Motor2_Breaker_Trip", () -> {return isLiftMotor2BreakerTrip;}, true, false);
 
 	}
 

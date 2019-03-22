@@ -241,14 +241,31 @@ public class DriveWithJoystick extends Command {
 				}
 				else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) {
 					//Drive straight
-					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft),
+					if(Robot.drivetrain.limelightPosController.isEnabled())
+					{
+						Robot.drivetrain.tankDrive(
+						-Robot.oi.driverJoystick.getY(Hand.kLeft) - Robot.drivetrain.limelightPosController.getControlOutput(),
+						-Robot.oi.driverJoystick.getY(Hand.kLeft) + Robot.drivetrain.limelightPosController.getControlOutput());
+					}
+					else {
+						Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft),
 							-Robot.oi.driverJoystick.getY(Hand.kLeft));
+					}	
 				} else {
 					//Arcade drive
-					Robot.drivetrain.tankDrive(
-							Robot.oi.getGunStyleYValue() + Robot.oi.driverJoystick.getX(Hand.kLeft),
-							Robot.oi.getGunStyleYValue() - Robot.oi.driverJoystick.getX(Hand.kLeft));
-					Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+					if(Robot.drivetrain.limelightPosController.isEnabled())
+					{
+						Robot.drivetrain.tankDrive(
+							Robot.oi.getGunStyleYValue() + Robot.oi.driverJoystick.getX(Hand.kLeft) - Robot.drivetrain.limelightPosController.getControlOutput(),
+							Robot.oi.getGunStyleYValue() - Robot.oi.driverJoystick.getX(Hand.kLeft) + Robot.drivetrain.limelightPosController.getControlOutput());
+						Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+					}
+					else {
+						Robot.drivetrain.tankDrive(
+								Robot.oi.getGunStyleYValue() + Robot.oi.driverJoystick.getX(Hand.kLeft),
+								Robot.oi.getGunStyleYValue() - Robot.oi.driverJoystick.getX(Hand.kLeft));
+						Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+					}
 				}
 				break;
 		/**

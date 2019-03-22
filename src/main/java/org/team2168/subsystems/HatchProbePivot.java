@@ -7,11 +7,10 @@
 
 package org.team2168.subsystems;
 
-import javax.lang.model.util.ElementScanner6;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
@@ -53,6 +52,7 @@ public class HatchProbePivot extends Subsystem {
   private HatchProbePivot()
   {
     _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
+    //_plungerArmPivotMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
     _plungerArmPivotMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _plungerArmPivotMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _pivotHallEffectSensors = new CanDigitalInput(_plungerArmPivotMotor);
@@ -99,32 +99,18 @@ public class HatchProbePivot extends Subsystem {
 
     TCPHatchProbePivotController = new TCPSocketSender(RobotMap.TCP_SERVER_HP_POT_CONTROLLER, hatchProbePivotController);
     TCPHatchProbePivotController.start();
-    ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {
-      return Robot.oi.getHatchProbePivotJoystickValue();
-    }, true, true);
-    ConsolePrinter.putNumber("HatchProbe Pivot Motor Voltage", () -> {
-      return _plungerArmPivotVoltage;
-    }, true, true);
-    ConsolePrinter.putNumber("HatchProbe Pivot Motor Current ", () -> {
-      return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
-    }, true, true);
-    ConsolePrinter.putBoolean("HatchProbe Pivot Motor", () -> {
-      return !Robot.pdp.isPlungerArmPivotMotorTrip();
-    }, true, false);
+    
+    ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {return Robot.oi.getHatchProbePivotJoystickValue();}, true, false);
+    ConsolePrinter.putNumber("HatchProbe Pivot Motor Voltage", () -> {return _plungerArmPivotVoltage;}, true, false);
+    ConsolePrinter.putNumber("HatchProbe Pivot Motor Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);}, true, false);
+    
+    //ConsolePrinter.putBoolean("HatchProbe Pivot Motor", () -> {return !Robot.pdp.isPlungerArmPivotMotorTrip();}, true, false);
 
-    ConsolePrinter.putNumber("HatchProbe Pivot Raw Pot", () -> {
-      return getRawPot();
-    }, true, false);
-    ConsolePrinter.putNumber("HatchProbe Pivot Degrees", () -> {
-      return getPotPos();
-    }, true, false);
+    ConsolePrinter.putNumber("HatchProbe Pivot Raw Pot", () -> {return getRawPot();}, true, false);
+    ConsolePrinter.putNumber("HatchProbe Pivot Degrees", () -> {return getPotPos();}, true, false);
 
-    ConsolePrinter.putBoolean("HatchProbe Pivot isForward", () -> {
-      return isPivotHallEffectMonkeyBar();
-    }, true, false);
-    ConsolePrinter.putBoolean("HatchProbe Pivot isReverse", () -> {
-      return isPivotHallEffectOpposite();
-    }, true, false);
+    ConsolePrinter.putBoolean("HatchProbe Pivot isForward", () -> {return isPivotHallEffectMonkeyBar();}, true, false);
+    ConsolePrinter.putBoolean("HatchProbe Pivot isReverse", () -> {return isPivotHallEffectOpposite();}, true, false);
 
   }
 
@@ -160,11 +146,11 @@ public class HatchProbePivot extends Subsystem {
 
   public void drivePlungerArmPivotMotor(double speed)
   {
-    if(moveMonkeyBarToSafePositionForPivot == null)
-      moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
+    // if(moveMonkeyBarToSafePositionForPivot == null)
+    //   moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
 
-    if(moveLiftFullyDown == null)
-      moveLiftFullyDown = new MoveLiftToBasePosition();
+    // if(moveLiftFullyDown == null)
+    //   moveLiftFullyDown = new MoveLiftToBasePosition();
 
   //   // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
   //   if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && (Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
