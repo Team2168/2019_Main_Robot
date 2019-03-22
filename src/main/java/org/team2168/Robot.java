@@ -156,7 +156,7 @@ public class Robot extends TimedRobot
       new StartCompressor();
 
       // Initialize Autonomous Selector Choices
-      autoSelectInit();s
+      autoSelectInit();
       controlStyleSelectInit();
       throttleVibeSelectInit();
       
