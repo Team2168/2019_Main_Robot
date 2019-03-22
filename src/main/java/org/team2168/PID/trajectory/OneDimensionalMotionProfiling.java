@@ -51,7 +51,7 @@ public class OneDimensionalMotionProfiling {
 
 	public static void main(String[] args){
 		
-		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(0,50,50,53,1000);
+		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(50,0,50,53,1000);
 		
 		
 //		for(int i=0; i<oneDirection.getVelArray().length; i++)
@@ -133,9 +133,16 @@ double fieldWidth = 27.0;
 	
 	public OneDimensionalMotionProfiling(double start, double distance, double v_max, double accel_max, double j_max)
 	{
+		if(start > distance)
+		{
+		this.q0 = distance;
+		this.q1 = start;
+		}
+		else
+		{
 		this.q0 = start;
 		this.q1 = distance;
-		
+		}
 		
 		double error = q1-q0;
 		
@@ -153,6 +160,10 @@ double fieldWidth = 27.0;
 		}
 		S_curves();
 		
+		if(start > distance)
+		{
+			this.invert();
+		}
 	}
 	 
 	
@@ -299,7 +310,31 @@ double fieldWidth = 27.0;
 	}
 		
 	
-	
+
+public void invert()
+{
+		int i = pos.length-1;
+
+		  //Invert arrays
+		  double[] temp_p = new double[pos.length];
+		  double[] temp_v = new double[pos.length];
+		  double[] temp_a = new double[pos.length];
+		  double[] temp_j = new double[pos.length];
+
+		//inverting all arrays
+		for(int j=i; j>=0; j--)
+		{
+			temp_p[j]= pos[i-j];
+			temp_v[j]= -vel[i-j];
+			temp_a[j]= acc[i-j];
+			temp_j[j]= -jerk[i-j];
+		}
+
+		this.pos = temp_p;
+		this.vel =temp_v;
+		this.acc =temp_a;
+		this.jerk =temp_j;
+}
 	
 
 
