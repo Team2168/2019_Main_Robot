@@ -213,8 +213,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         CARGO INTAKE PARAMETERS                        *
 	 *************************************************************************/
 	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = false;
-	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 0.0; 
-	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 0.0; 
+	public static final double CARGO_INTAKE_MAX_SPEED = 1.0;
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 2.5; 
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 3.3; 
 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
@@ -466,9 +467,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_I = 0.0020;
 	public static final double LIFT_D = 0.0001;
 
-	public static final double MB_PIVOT_P = 0.035;
+	public static final double MB_PIVOT_P = 0.025;
 	public static final double MB_PIVOT_I = 0.002;
-	public static final double MB_PIVOT_D = 0.0005;
+	public static final double MB_PIVOT_D = 0.00;
 
 	public static final double HP_PIVOT_P = 0.024;
 	public static final double HP_PIVOT_I = 0.027;

@@ -160,11 +160,11 @@ public class HatchProbePivot extends Subsystem {
 
   public void drivePlungerArmPivotMotor(double speed)
   {
-    if(moveMonkeyBarToSafePositionForPivot == null)
-      moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
+    // if(moveMonkeyBarToSafePositionForPivot == null)
+    //   moveMonkeyBarToSafePositionForPivot = new MoveMonkeyBarToSafePositionForPivot();
 
-    if(moveLiftFullyDown == null)
-      moveLiftFullyDown = new MoveLiftToBasePosition();
+    // if(moveLiftFullyDown == null)
+    //   moveLiftFullyDown = new MoveLiftToBasePosition();
 
   //   // move lift fully down if not already and not already and if not on monkey bar side preparing to score on cargo ship
   //   if(RobotMap.PLUNGER_PIVOT_ENABLE_INTERLOCKS && (Robot.lift.isLiftFullyDown() || Robot.lift.getPotPos() <=13) && !moveLiftFullyDown.isRunning() && !isWithinCargoAngle())
