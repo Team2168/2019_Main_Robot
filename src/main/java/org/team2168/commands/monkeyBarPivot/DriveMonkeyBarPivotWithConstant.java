@@ -29,7 +29,10 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
 
   @Override
   protected boolean isFinished() {
-    return false;
+    if (_speed == 0.0)
+      return true;
+    else
+      return false;
   }
 
   @Override

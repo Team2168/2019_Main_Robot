@@ -19,7 +19,7 @@ public class DriveMonkeyBarPivotPID extends Command {
 
   private double maxSpeed;
   private double minSpeed;
-  private double error = 0.5; //Rotational degree error, 0 never ends
+  private double error = 2; //Rotational degree error, 0 never ends
 
   private boolean absolute = true;
 
@@ -28,7 +28,7 @@ public class DriveMonkeyBarPivotPID extends Command {
     // eg. requires(chassis);
     requires(MonkeyBarPivot.getInstance());
     this.setPoint = Robot.monkeyBarPivot.monkeyBarPivotController.getSetPoint();
-    this.maxSpeed = 1;
+    this.maxSpeed = 0.5;
     this.minSpeed = 0;
     
   }

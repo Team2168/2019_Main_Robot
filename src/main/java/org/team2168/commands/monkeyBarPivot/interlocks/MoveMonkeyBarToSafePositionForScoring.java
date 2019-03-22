@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MoveMonkeyBarToSafePositionForScoring extends CommandGroup {
   public MoveMonkeyBarToSafePositionForScoring() {
   if(Robot.isPracticeRobot())
-    addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS_PBOT, 1, 0, true));
+    addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS_PBOT, 0.5, 0, true));
   else
-    addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS, 1, 0, true));
+    addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS, 0.5, 0, true));
 
   }
 }
