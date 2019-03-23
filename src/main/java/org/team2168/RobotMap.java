@@ -244,10 +244,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.55; 
 
-	public static final double LIFT_HOLDING_VOLTAGE = 1.0; //volts divide by batt voltage. 
+	public static final double LIFT_HOLDING_VOLTAGE = 1.2; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2; //should this be negative???
-	public static final double LIFT_MIN_SPEED = 0.075;
+	public static final double LIFT_MIN_SPEED = 0.065;
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;

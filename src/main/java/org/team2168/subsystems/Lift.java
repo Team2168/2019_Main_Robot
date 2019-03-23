@@ -267,8 +267,8 @@ public class Lift extends Subsystem {
 				//If we are commanding the lift, only allow it to go up if not at hard stop or the pot is not at max value
 				//Similarly only allow it to go down if we are not at the lower limit or the pot is not at its lowest limit
 				
-				boolean drivingUp = speed > RobotMap.LIFT_MIN_SPEED && speed > RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
-				boolean drivingDown = speed < -RobotMap.LIFT_MIN_SPEED && speed < RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
+				boolean drivingUp = speed > RobotMap.LIFT_MIN_SPEED;
+				boolean drivingDown = speed < -RobotMap.LIFT_MIN_SPEED;
 
 				if (( drivingUp && !isLiftFullyUp() && !liftPot.isAtLowerLimit() )
 						|| (drivingDown && !isLiftFullyDown() && !liftPot.isAtUpperLimit()))

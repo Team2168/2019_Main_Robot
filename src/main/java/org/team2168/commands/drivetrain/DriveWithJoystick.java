@@ -243,16 +243,16 @@ public class DriveWithJoystick extends Command {
 			//
 			double minStingerVoltage = 1.0/Robot.pdp.getBatteryVoltage();
 
-			if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
-			{
-				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
-				System.out.println("Left Speed:" + minStingerVoltage);
-			}
-			if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
-			{
-				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
-				System.out.println("Right Speed:" + minStingerVoltage);
-			}
+			// if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
+			// {
+			// 	Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
+			// 	System.out.println("Left Speed:" + minStingerVoltage);
+			// }
+			// if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
+			// {
+			// 	Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
+			// 	System.out.println("Right Speed:" + minStingerVoltage);
+			// }
 			if(Robot.isClimbEnabled)
 			{ 
 				if (climbCounter < 25) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
