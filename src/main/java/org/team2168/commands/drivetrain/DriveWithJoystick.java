@@ -1,6 +1,7 @@
 package org.team2168.commands.drivetrain;
 
 
+import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 
@@ -151,36 +152,31 @@ public class DriveWithJoystick extends Command {
 		// nothing: 0.354 & 0.342
 		// full out: 0.622
 		case 1:
-
+			{
 			lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
 			headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
 
-			// if ((Robot.oi.driverJoystick.getLeftStickRaw_X() > 0.25 ||
-			// Robot.oi.driverJoystick.getLeftStickRaw_X() < -0.25)
-			// &&!(Robot.oi.driverJoystick.getLeftStickRaw_Y() > 0.1 ||
-			// Robot.oi.driverJoystick.getLeftStickRaw_Y() < -0.1)) {
-			// Robot.drivetrain.tankDrive((-Robot.oi.driverJoystick.getLeftStickRaw_X()+0.35)+headingCorrection,
-			// (-Robot.oi.driverJoystick.getLeftStickRaw_X()+0.35)-headingCorrection);
-			// }
-			// else {
-			// Robot.drivetrain.tankDrive((-Robot.oi.driverJoystick.getLeftStickRaw_X()+0.35)+Robot.oi.driverJoystick.getLeftStickRaw_Y(),
-			// (-Robot.oi.driverJoystick.getLeftStickRaw_X()+0.35)-Robot.oi.driverJoystick.getLeftStickRaw_Y());
-			// Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
-			// }
 			//
-			
-			//((Robot.oi.getGunStyleYValue() > 0.25 || Robot.oi.getGunStyleYValue() < -0.25)&&
-			//Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
-			
+			double minStingerVoltage = 1.0/Robot.pdp.getBatteryVoltage();
 
+			if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
+			{
+				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
+				System.out.println("Left Speed:" + speed);
+			}
+			if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
+			{
+				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
+				System.out.println("Right Speed:" + speed);
+			}
 			if(Robot.isClimbEnabled)
 			{ 
-
-				if (climbCounter < 7) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
+				if (climbCounter < 25) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
 				{
 					double voltage = 1.0;
 					double speed = voltage/Robot.pdp.getBatteryVoltage();
 					Robot.drivetrain.tankDrive(speed,speed);
+					climbCounter++;
 				}
 				else
 					Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
@@ -200,7 +196,7 @@ public class DriveWithJoystick extends Command {
 			}
 			
 			
-			
+		}
 			break;
 
 		/**
@@ -244,10 +240,29 @@ public class DriveWithJoystick extends Command {
 			case 4:
 				lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
 				headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
-				
+			//
+			double minStingerVoltage = 1.0/Robot.pdp.getBatteryVoltage();
 
-				if(Robot.isClimbEnabled)
-				{ 
+			if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
+			{
+				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
+				System.out.println("Left Speed:" + minStingerVoltage);
+			}
+			if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
+			{
+				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
+				System.out.println("Right Speed:" + minStingerVoltage);
+			}
+			if(Robot.isClimbEnabled)
+			{ 
+				if (climbCounter < 25) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
+				{
+					double voltage = 1.0;
+					double minspeed = voltage/Robot.pdp.getBatteryVoltage();
+					Robot.drivetrain.tankDrive(minspeed,minspeed);
+					System.out.println("Driving stinger slow");
+					climbCounter++;
+				}
 					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
 				}
 				else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) {

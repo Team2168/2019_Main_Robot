@@ -18,6 +18,7 @@ import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
+import org.team2168.commands.lift.PIDCommands.DriveLiftPathPIDZZZ;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
@@ -100,12 +101,6 @@ public class OI
 
 		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
 		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
-
-		driverJoystick.ButtonLeftBumper().whileHeld(new DriveLeftDTWithConstant(0.2));
-		driverJoystick.ButtonLeftBumper().whenReleased(new DriveWithJoystick(0));
-		driverJoystick.ButtonRightBumper().whileHeld(new DriveRightDTWithConstant(0.2));
-		driverJoystick.ButtonRightBumper().whenReleased(new DriveWithJoystick(0));
-
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
@@ -208,20 +203,19 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
-		// pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
-		// pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		pidTestJoystick.ButtonDownDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_1_POS));
+		pidTestJoystick.ButtonRightDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_2_POS));
+		pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_3_POS));
+		pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS));
+		
 		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
 		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
 		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
 		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
 		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveMonkeyBarPivotPIDPath(20));
-
-		pidTestJoystick.ButtonRightDPad().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
+		pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(20));
+		pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
 	}
 

@@ -80,11 +80,9 @@ public class QuinticTrajectory
 
 	//private static String directory = "/home/lvuser/Path/";
 	private static String directory = "Path/";
-
-	
+		
 	public boolean reverse = false;
 
-	
 	double totalSplineLength = 0;
 	double wheelSpacing = 26.0; //inches
 

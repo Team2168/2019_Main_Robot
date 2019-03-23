@@ -18,85 +18,52 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveLiftPathPIDZZZ extends Command {
 
 	
-    private double[] setPointLift;
+	private double[] pos;
+	private double[] vel;
+	private double[] accel;
     
-    OneDimensionalMotionProfiling motion;
+	private double setPoint;
+	OneDimensionalMotionProfiling motion;
 	int counter;
-    double ff_term = 1.11;
+	double ff_term = 0.15;
+
 	private double maxSpeed;
 	private double minSpeed;
 	private double error = 0.5;  // Rotational degree error, default 0 never ends. 
-	private boolean absolute = false;
-	private boolean direction = false; //false is forward
-	int directionValue = 1;
+	
+	public final double MAX_VEL = 90;
+	public final double MAX_ACCEL = 93;
+	public final double MAX_JERK = 1000;
 	
     public DriveLiftPathPIDZZZ() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Lift.getInstance());
+		requires(Lift.getInstance());
+		this.setPoint = Robot.lift.liftPOTController.getSetPoint();
     	this.maxSpeed = 1;
-    	this.minSpeed = 0;
+		this.minSpeed = 0;
+		
+		//SmartDashboard.putNumber("FF_term_Lift", ff_term);
     }
 
     public DriveLiftPathPIDZZZ(double setPoint){
- 	   this();
- 	  motion = new OneDimensionalMotionProfiling(setPoint);
- 	 this.setPointLift =  motion.getVelArray();
- 	SmartDashboard.putNumber("FF_term_Lift", 1.11);
-	   
+ 	   	this();
+		this.setPoint = setPoint; 
     }
-    public DriveLiftPathPIDZZZ(double setPoint, double v_max, double a_max, double j_max){
-  	   this();
-  	  motion = new OneDimensionalMotionProfiling(setPoint, v_max, a_max, j_max);
-  	 this.setPointLift =  motion.getVelArray();
-  	SmartDashboard.putNumber("FF_term_Lift", 1.11);
- 	   
-     }
+    
+	protected void initialize() 
+	{
+		motion = new OneDimensionalMotionProfiling(Robot.lift.getPotPos(),setPoint,this.MAX_VEL,this.MAX_ACCEL,this.MAX_JERK);
 
-    public DriveLiftPathPIDZZZ(double setPoint, double v_max, double a_max, double j_max, boolean direction){
-   	   this();
-   	  motion = new OneDimensionalMotionProfiling(setPoint, v_max, a_max, j_max);
-   	 this.setPointLift =  motion.getVelArray();
-   	SmartDashboard.putNumber("FF_term_Lift", 1.11);
-   	this.direction = direction;
-  	   
-      }
-    public DriveLiftPathPIDZZZ(double setPoint, double maxSpeed){
-  	   this(setPoint);
-  	   this.maxSpeed = maxSpeed;
-     }
-    
-    public DriveLiftPathPIDZZZ(double setPoint, double maxSpeed, double minSpeed){
-   	   this(setPoint, maxSpeed);
-   	   this.minSpeed = minSpeed;
-      }    
-    public DriveLiftPathPIDZZZ(double setPoint, double maxSpeed, double minSpeed, boolean direction ){
-    	   this(setPoint, maxSpeed);
-    	   this.minSpeed = minSpeed;
-    	   this.direction = direction;
-       }
-    
-//    public DriveLiftPathPIDZZZ(double setPoint, double maxSpeed, double minSpeed, double error) {
-//    	this(setPoint, maxSpeed, minSpeed);
-//    	this.error = error;
-//    	this.absolute = false;
-//    	this.direction = true;
-//    }
-//    
-//    public DriveLiftPathPIDZZZ(double setPoint, double maxSpeed, double minSpeed, double error, boolean absolute) {
-//    	this(setPoint, maxSpeed, minSpeed, error);
-//    	this.absolute = absolute;
-//    	this.direction = true;
-//    }
-    // Called just before this Command runs the first time
-    
-	protected void initialize() {
-		double sp = 0;
+		this.pos = motion.pos;
+		this.vel = motion.vel;
+
+		
 		Robot.lift.liftPOTController.reset();
-		counter = 0;
+		
 		Robot.lift.liftPOTController.setpGain(RobotMap.LIFT_P);
 		Robot.lift.liftPOTController.setiGain(RobotMap.LIFT_I);
 		Robot.lift.liftPOTController.setdGain(RobotMap.LIFT_D);
-		Robot.lift.liftPOTController.setSetPoint(sp);
+		Robot.lift.liftPOTController.setSetPoint(this.pos);
 		Robot.lift.liftPOTController.setMaxPosOutput(maxSpeed);
 		Robot.lift.liftPOTController.setMaxNegOutput(-maxSpeed);
 		Robot.lift.liftPOTController.setMinPosOutput(minSpeed);
@@ -104,33 +71,34 @@ public class DriveLiftPathPIDZZZ extends Command {
 		Robot.lift.liftPOTController.setAcceptErrorDiff(error);
 		
 		Robot.lift.liftPOTController.Enable();
-		ff_term = SmartDashboard.getNumber("FF_term_Lift", 1.11);
-		//if true we want to reverse else we want to go forward
-				if (direction)
-					directionValue = -1;
-				else
-					directionValue = 1;
-		
+
+		counter = 0;
+
+		System.out.print("Lenght: "+ pos.length);
     }
 
     // Called repeatedly when this Command is scheduled to run
     
 	protected void execute() {
+		//ff_term = SmartDashboard.getNumber("FF_term_Lift", 0);
 		
-		if(counter<setPointLift.length) 
+		if (counter < pos.length)
 		{
-			double liftSpeed = (ff_term*directionValue*setPointLift[counter])/(Robot.pdp.getBatteryVoltage());
-			Robot.lift.driveAllMotors(liftSpeed); 
-			counter++; 
+		  double pidSpeed = Robot.lift.liftPOTController.getControlOutput();
+		  double ff_Speed = (ff_term  * vel[counter]) / (Robot.pdp.getBatteryVoltage());
+		  Robot.lift.driveAllMotors(ff_Speed+pidSpeed);
+		  //System.out.println(ff_Speed+pidSpeed);
 		}
+		else
+		  Robot.lift.driveAllMotors(0.0);
+		  counter++;
 		
     }
 
     // Make this return true when this Command no longer needs to run execute()
     
 	protected boolean isFinished() {
-		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
-    	return (Robot.lift.liftPOTController.isFinished() && Robot.lift.liftPOTController.isSetPointByArray());
+    	return (counter >= pos.length) || (Robot.lift.getPotPos() < pos[pos.length-1]+1 && Robot.lift.getPotPos() > pos[pos.length-1]) ;
 		//return false;
     }
 
@@ -138,6 +106,7 @@ public class DriveLiftPathPIDZZZ extends Command {
     
 	protected void end() {
 		Robot.lift.liftPOTController.Pause();
+		Robot.lift.driveAllMotors(0.0);
     }
 
     // Called when another command which requires one or more of the same

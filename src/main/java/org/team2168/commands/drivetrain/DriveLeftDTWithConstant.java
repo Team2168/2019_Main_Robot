@@ -16,10 +16,14 @@ public class DriveLeftDTWithConstant extends Command
 
   private double _speed;
 
-  public DriveLeftDTWithConstant(double inputSpeed)
+
+  public DriveLeftDTWithConstant(double inputSpeed, boolean isVoltage)
   {
     requires(Robot.drivetrain);
-    _speed = inputSpeed;
+    if(isVoltage)
+      _speed = inputSpeed/Robot.pdp.getBatteryVoltage();
+    else
+      _speed = inputSpeed;
   }
 
   @Override
