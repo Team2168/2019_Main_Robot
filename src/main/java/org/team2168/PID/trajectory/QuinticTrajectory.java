@@ -120,7 +120,7 @@ public class QuinticTrajectory
 
 			{48.0, 212.0, 0},
 			{96.0, 212.0, 0},
-			{180.0, 296.0, Math.PI/6}
+			{180.0, 308.0, Math.PI/6}
 
 			// {0.0, 212.0, 0},
 			// {96.0, 212.0, 0},
@@ -336,8 +336,8 @@ public class QuinticTrajectory
 //	    config.max_jerk = 30.0*12;
 //	    config.max_vel = 10.0*12;
 	    
-	    config.max_vel = 3.0*12;
-	    config.max_acc = 3.0*12;
+	    config.max_vel = 7.0*12;
+		config.max_acc = 7.0*12;
 	    config.max_jerk = 30.0*12;
 	    
 	    
