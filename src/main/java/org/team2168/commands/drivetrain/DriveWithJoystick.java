@@ -39,6 +39,8 @@ public class DriveWithJoystick extends Command {
 	static final double DIST_ERROR_TOLERANCE_INCH = 1;
 	static final double TURN_ERROR_TOLERANCE_DEG = 1;
 
+	private int climbCounter = 0;
+
 	double lastRotateOutput;
 
 	public DriveWithJoystick(int inputStyle) {
@@ -173,18 +175,27 @@ public class DriveWithJoystick extends Command {
 
 			if(Robot.isClimbEnabled)
 			{ 
-				Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
+
+				if (climbCounter < 7) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
+				{
+					double voltage = 1.0;
+					double speed = voltage/Robot.pdp.getBatteryVoltage();
+					Robot.drivetrain.tankDrive(speed,speed);
+				}
+				else
+					Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());
 			}
 			else if ((Robot.oi.driverJoystick.getLeftStickRaw_X() < 0.1) && (Robot.oi.driverJoystick.getLeftStickRaw_X() > -0.1))
 			{
 				Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());	
-				
+				climbCounter = 0;
 			} 
 			else {
 				Robot.drivetrain.tankDrive(
 						(Robot.oi.getGunStyleYValue()) + Robot.oi.driverJoystick.getLeftStickRaw_X(),
 						(Robot.oi.getGunStyleYValue()) - Robot.oi.driverJoystick.getLeftStickRaw_X());
 				Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
+				climbCounter = 0;
 						
 			}
 			

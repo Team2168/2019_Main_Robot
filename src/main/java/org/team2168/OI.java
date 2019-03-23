@@ -3,6 +3,7 @@ package org.team2168;
 
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
+import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
@@ -99,6 +100,11 @@ public class OI
 
 		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
 		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
+
+		driverJoystick.ButtonLeftBumper().whileHeld(new DriveLeftDTWithConstant(0.2));
+		driverJoystick.ButtonLeftBumper().whenReleased(new DriveWithJoystick(0));
+		driverJoystick.ButtonRightBumper().whileHeld(new DriveRightDTWithConstant(0.2));
+		driverJoystick.ButtonRightBumper().whenReleased(new DriveWithJoystick(0));
 
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
