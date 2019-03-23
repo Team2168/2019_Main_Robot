@@ -169,16 +169,16 @@ public class OI
 		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
-		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.45));
+		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.7));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
-		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.45));
+		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.7));
 		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 
 
-		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
-		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
-		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
+		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
+		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
+		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
+		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());
 
 		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
 		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
@@ -203,21 +203,22 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		pidTestJoystick.ButtonDownDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_1_POS));
-		pidTestJoystick.ButtonRightDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_2_POS));
-		pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_3_POS));
-		pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS));
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_1_POS));
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_2_POS));
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_3_POS));
+		// pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS));
 		
-		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		// // pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		// // pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
-		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
-		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
-		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(20));
-		pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
+		// // pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		// // pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		// // pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		 pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
+		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
 	}
+	
 
 	/**
 	 * Returns an instance of the Operator Interface.

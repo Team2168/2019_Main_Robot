@@ -157,7 +157,7 @@ public class DriveWithJoystick extends Command {
 			headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
 
 			//
-			double minStingerVoltage = 1.0/Robot.pdp.getBatteryVoltage();
+			double minStingerVoltage = 4.0/Robot.pdp.getBatteryVoltage();
 
 			if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
 			{
@@ -241,23 +241,23 @@ public class DriveWithJoystick extends Command {
 				lastRotateOutput = Robot.drivetrain.rotateDriveStraightController.getControlOutput();
 				headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
 			//
-			double minStingerVoltage = 1.0/Robot.pdp.getBatteryVoltage();
+			double minStingerVoltage = 4.0/Robot.pdp.getBatteryVoltage();
 
-			// if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
-			// {
-			// 	Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
-			// 	System.out.println("Left Speed:" + minStingerVoltage);
-			// }
-			// if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
-			// {
-			// 	Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
-			// 	System.out.println("Right Speed:" + minStingerVoltage);
-			// }
+			if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
+			{
+				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
+				System.out.println("Left Speed:" + minStingerVoltage);
+			}
+			if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
+			{
+				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
+				System.out.println("Right Speed:" + minStingerVoltage);
+			}
 			if(Robot.isClimbEnabled)
 			{ 
 				if (climbCounter < 25) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
 				{
-					double voltage = 1.0;
+					double voltage = 2.0;
 					double minspeed = voltage/Robot.pdp.getBatteryVoltage();
 					Robot.drivetrain.tankDrive(minspeed,minspeed);
 					System.out.println("Driving stinger slow");

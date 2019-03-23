@@ -41,12 +41,12 @@ public class DriveLiftWithJoysticks extends Command
         if(Lift.getInstance().getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
         {
           Robot.lift.driveAllMotors(-holdingSpeed);//+0.01
-          System.out.println("Da lift is holding down");
+        //  System.out.println("Da lift is holding down");
         }
         else
         {
           Robot.lift.driveAllMotors(holdingSpeed);
-          System.out.println("Da lift is holding up");
+         // System.out.println("Da lift is holding up");
         }
        
       }

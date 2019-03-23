@@ -30,7 +30,7 @@ public class DriveMonkeyBarIntakeWithJoystick extends Command {
       else
         Robot.monkeyBarIntakeWheels.driveIntakeAll(0.15); //always drive wheels in climb mode
     else
-      Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getMonkeyBarIntakeJoystickValue());
+      Robot.monkeyBarIntakeWheels.driveIntakeAll(0.6*Robot.oi.getMonkeyBarIntakeJoystickValue());
   }
 
 
