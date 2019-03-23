@@ -27,7 +27,6 @@ public class Limelight implements PIDSensorInterface
 
     private double currentPosition;
     private double previousPosition;
-    public int currentVisionPipeline;
 
     private boolean variablesInstantiated;
 
@@ -227,19 +226,11 @@ public class Limelight implements PIDSensorInterface
             if (this.connectionEstablished() && this.variablesInstantiated)
             {
                 pipeline.setNumber(pipelineNumber);
-                if(!(pipelineNumber == 7))
-                {
-                    currentVisionPipeline = pipelineNumber;
-                }
             }
             else if (this.connectionEstablished() && !this.variablesInstantiated)
             {
                 this.instantiateLocalVariables();
                 pipeline.setNumber(pipelineNumber);
-                if(!(pipelineNumber == 7))
-                {
-                    currentVisionPipeline = pipelineNumber;
-                }
             }
             // else
             // {
