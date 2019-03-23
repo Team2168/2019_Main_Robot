@@ -177,7 +177,7 @@ public class Robot extends TimedRobot
       double[][] waypointPath = new double[][]{
 			{48.0, 212.0, 0},
 			{96.0, 212.0, 0},
-      {180.0, 308.0, Math.PI/6}
+      {180.0, 296.0, Math.PI/6}
     };
   
       QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, false);
