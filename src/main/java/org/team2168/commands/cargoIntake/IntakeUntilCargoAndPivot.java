@@ -18,7 +18,7 @@ public class IntakeUntilCargoAndPivot extends CommandGroup {
 		addSequential(new IntakeUntilCargo());
 
 		//we have a cargo
-		addSequential(new DriveHatchProbePivotWithConstant(-0.75),2.5);
+		addSequential(new DriveHatchProbePivotWithConstant(-0.75),2.0);
 		addSequential(new MoveMonkeyBarToSafePositionForScoring());
     	
     }
