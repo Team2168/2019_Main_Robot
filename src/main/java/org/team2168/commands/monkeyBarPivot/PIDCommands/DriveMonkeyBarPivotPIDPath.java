@@ -31,8 +31,8 @@ public class DriveMonkeyBarPivotPIDPath extends Command {
   private double error = 2; //Rotational degree error, 0 never ends
 
 
-  public final double MAX_VEL = 90;
-  public final double MAX_ACCEL = 93;
+  public final double MAX_VEL = 110;
+  public final double MAX_ACCEL = 110;
   public final double MAX_JERK = 1000;
 
 
@@ -42,7 +42,7 @@ public class DriveMonkeyBarPivotPIDPath extends Command {
     requires(Robot.monkeyBarPivot);
     this.setPoint = Robot.monkeyBarPivot.monkeyBarPivotController.getSetPoint();
     this.maxSpeed = 1.0;
-    this.minSpeed = 0;
+    this.minSpeed = 0.0;
 
     //SmartDashboard.putNumber("FF_term_MB", 0);
     
@@ -54,12 +54,10 @@ public class DriveMonkeyBarPivotPIDPath extends Command {
     this.setPoint = setPoint;
   }
 
-  
-
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-
+  protected void initialize() 
+  {
 
     motion = new OneDimensionalMotionProfiling(Robot.monkeyBarPivot.getRightPotPos(),setPoint,this.MAX_VEL,this.MAX_ACCEL,this.MAX_JERK);
 

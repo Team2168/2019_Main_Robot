@@ -247,12 +247,16 @@ public class DriveWithJoystick extends Command {
 			{
 				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
 				System.out.println("Left Speed:" + minStingerVoltage);
+				return;
 			}
+
 			if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
 			{
 				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
 				System.out.println("Right Speed:" + minStingerVoltage);
+				return;
 			}
+
 			if(Robot.isClimbEnabled)
 			{ 
 				if (climbCounter < 25) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
@@ -263,9 +267,12 @@ public class DriveWithJoystick extends Command {
 					System.out.println("Driving stinger slow");
 					climbCounter++;
 				}
+				else
 					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
 				}
-				else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) {
+			else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) 
+			{
+					climbCounter = 0;
 					//Drive straight
 					if(Robot.drivetrain.limelightPosController.isEnabled())
 					{

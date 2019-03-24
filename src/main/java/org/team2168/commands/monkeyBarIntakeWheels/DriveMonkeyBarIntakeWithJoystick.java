@@ -6,13 +6,14 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveMonkeyBarIntakeWithJoystick extends Command {
-  public DriveMonkeyBarIntakeWithJoystick() {
-
+  public DriveMonkeyBarIntakeWithJoystick() 
+  {
     requires(Robot.monkeyBarIntakeWheels);
   }
 
   @Override
-  protected void initialize() {
+  protected void initialize() 
+  {
     Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
   }
 

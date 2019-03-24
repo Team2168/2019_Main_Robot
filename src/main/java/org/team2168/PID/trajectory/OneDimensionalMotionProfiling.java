@@ -51,7 +51,7 @@ public class OneDimensionalMotionProfiling {
 
 	public static void main(String[] args){
 		
-		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(69,10.5,90,90,1000);
+		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(110,40,110,110,1000);
 		
 		
 //		for(int i=0; i<oneDirection.getVelArray().length; i++)
