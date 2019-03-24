@@ -1,5 +1,6 @@
 package org.team2168.commands.cargoIntake;
 
+import org.team2168.commands.auto.Sleep;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithConstant;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
@@ -18,7 +19,9 @@ public class IntakeUntilCargoAndPivot extends CommandGroup {
 		addSequential(new IntakeUntilCargo());
 
 		//we have a cargo
-		addSequential(new DriveHatchProbePivotWithConstant(-0.75),2.0);
+		addParallel(new DriveMonkeyBarIntakeWithConstant(0.0));
+		addParallel(new DriveHatchProbePivotWithConstant(-0.75),1.5);
+		addSequential(new Sleep(), 0.5);
 		addSequential(new MoveMonkeyBarToSafePositionForScoring());
     	
     }

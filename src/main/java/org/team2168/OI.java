@@ -1,11 +1,9 @@
 
 package org.team2168;
 
+import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
-import org.team2168.commands.drivetrain.DriveLeftDTWithConstant;
-import org.team2168.commands.drivetrain.DriveRightDTWithConstant;
-import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
@@ -18,7 +16,7 @@ import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
-import org.team2168.commands.lift.PIDCommands.DriveLiftPathPIDZZZ;
+import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
@@ -62,7 +60,7 @@ public class OI
 
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
-	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
+	//public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
 
 
@@ -215,7 +213,31 @@ public class OI
 		// // pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
 		// // pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		 pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
-		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
+	//	 pidTestJoystick.ButtonB().whenPressed(new IntakeUntilCargoAndPivot());
+		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(100));
+
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.80));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(0.8));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.6));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(0.6));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.4));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(0.4));
+
+		//  pidTestJoystick.ButtonDownDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.5));
+		//  pidTestJoystick.ButtonDownDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonUpDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonUpDPad().whileHeld(new DriveCargoIntakeWithConstant(0.5));
+		// //  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		// //  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		// //  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		// //  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		 
+		 
+
+
+
 
 	}
 	

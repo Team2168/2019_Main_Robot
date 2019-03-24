@@ -24,7 +24,7 @@ public class DriveMonkeyBarPivotPIDPath extends Command {
   private double setPoint;
   OneDimensionalMotionProfiling motion;
 	int counter;
-  double ff_term = 0.15;
+  double ff_term = 0.070;
 
   private double maxSpeed;
   private double minSpeed;

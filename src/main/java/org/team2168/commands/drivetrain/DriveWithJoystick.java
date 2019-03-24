@@ -245,15 +245,15 @@ public class DriveWithJoystick extends Command {
 
 			if(OI.getInstance().driverJoystick.isPressedButtonLeftBumper())
 			{
-				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
-				System.out.println("Left Speed:" + minStingerVoltage);
+				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
+				System.out.println("Right speed:" + minStingerVoltage);
 				return;
 			}
 
 			if(OI.getInstance().driverJoystick.isPressedButtonRightBumper())
 			{
-				Robot.drivetrain.tankDrive(0.0, minStingerVoltage);
-				System.out.println("Right Speed:" + minStingerVoltage);
+				Robot.drivetrain.tankDrive(minStingerVoltage, 0.0);
+				System.out.println("Left Speed:" + minStingerVoltage);
 				return;
 			}
 
