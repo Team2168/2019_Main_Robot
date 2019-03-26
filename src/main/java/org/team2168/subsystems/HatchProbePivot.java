@@ -114,9 +114,12 @@ public class HatchProbePivot extends Subsystem
     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
 
-    if (speed > RobotMap.PIVOT_MIN_SPEED || speed < -RobotMap.PIVOT_MIN_SPEED)
+    if(!Robot.hatchProbePistons.isHatchPresent() && !Robot.cargoIntakeWheels.isCargoPresent())
     {
-      Robot.leds.writePattern(RobotMap.PATTERN_CONFETTI_RAINBOW);
+      if (speed > RobotMap.PIVOT_MIN_SPEED || speed < -RobotMap.PIVOT_MIN_SPEED)
+      {
+        Robot.leds.writePattern(RobotMap.PATTERN_CONFETTI_RAINBOW);
+      }
     }
   }
 
