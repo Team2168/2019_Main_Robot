@@ -401,7 +401,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
-	public static final double PIVOT_MIN_SPEED = 0.15; //taken from lift min speed
+	public static final double PIVOT_MIN_SPEED = 0.0; //made this up for LEDs
 
 	public static final int PIVOT_ANGLE_MONKEY_BAR_SIDE = 90;
 

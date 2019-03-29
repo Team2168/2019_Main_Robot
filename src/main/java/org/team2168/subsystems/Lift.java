@@ -484,7 +484,7 @@ public class Lift extends Subsystem {
 				}
 			}
 		}
-		if(!Robot.hatchProbePistons.isHatchPresent() && !Robot.cargoIntakeWheels.isCargoPresent())
+		if(!Robot.returnIsGamePiecePatternRunning())
 		{
 			if(speed > RobotMap.LIFT_MIN_SPEED)
 			{

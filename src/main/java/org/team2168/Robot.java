@@ -7,6 +7,7 @@
 
 package org.team2168;
 
+import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.pneumatics.StartCompressor;
@@ -108,6 +109,11 @@ public class Robot extends TimedRobot
 
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
+
+  //LEDs stuff
+  private static WithGamePiecePattern withGamePiecePattern;
+  private static boolean isGamePiecePatternRunning = false;
+  private static boolean canRunGamePiecePattern = true;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -333,7 +339,7 @@ public class Robot extends TimedRobot
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
 
-    Robot.leds.writePattern(RobotMap.PATTERN_RAINBOW);
+    leds.writePattern(RobotMap.PATTERN_RAINBOW);
   }
 
   /**
@@ -354,9 +360,20 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    //comment out and add to intake until GAMEPIECE when that command gets implemented
-    if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent())
-      leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 200);
+    if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    {
+      if (withGamePiecePattern == null)
+      {
+        withGamePiecePattern = new WithGamePiecePattern();
+      }
+      withGamePiecePattern.start();
+      canRunGamePiecePattern = false;
+    }
+    if(!hatchProbePistons.isHatchPresent() && !cargoIntakeWheels.isCargoPresent() && returnIsGamePiecePatternRunning())
+    {
+      canRunGamePiecePattern = true;
+    }
+    
   }
 
   /************************************************************
@@ -499,7 +516,27 @@ public class Robot extends TimedRobot
   public static boolean onBlueAlliance() {
 		return driverstation.getAlliance() == DriverStation.Alliance.Blue;
 
-	}
+  }
+  
+  public static void setIsGamePiecePatternRunning(boolean input)
+  {
+    isGamePiecePatternRunning = input;
+  }
+
+  public static boolean returnIsGamePiecePatternRunning()
+  {
+    return isGamePiecePatternRunning;
+  }
+
+  // public static void setCanRunGamePiecePattern(boolean input)
+  // {
+  //   canRunGamePiecePattern = input;
+  // }
+
+  // public static boolean returnCanRunGamePiecePattern()
+  // {
+  //   return canRunGamePiecePattern;
+  // }
 	
 
   /**

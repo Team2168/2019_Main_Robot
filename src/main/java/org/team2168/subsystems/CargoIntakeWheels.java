@@ -60,7 +60,7 @@ public class CargoIntakeWheels extends Subsystem {
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
         //working model to prevent patterns from running into each other
-        if(!Robot.hatchProbePistons.isHatchPresent() && !Robot.cargoIntakeWheels.isCargoPresent())
+        if(!Robot.returnIsGamePiecePatternRunning())
         {
             if (speed > RobotMap.CARGO_INTAKE_MIN_SPEED)
             {

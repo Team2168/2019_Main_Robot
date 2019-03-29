@@ -80,7 +80,7 @@ public class OI
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
-	public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
+	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
 	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 	private LinearInterpolator gunStyleInterpolator;
 	private double[][] gunStyleArray = { { -1.0, -1.0
@@ -157,19 +157,19 @@ public class OI
 
 
 
-		//leds testing
-		testJoystick.ButtonA().whenPressed(new DisabledPattern());
-		testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
-		testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
-		testJoystick.ButtonY().whenPressed(new HABClimbPattern());
-		//left trigger
-		testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
-		testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
-		testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
-		testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
-		testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
-		testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
-		testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
+		// //leds testing
+		// testJoystick.ButtonA().whenPressed(new DisabledPattern());
+		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
+		// testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
+		// testJoystick.ButtonY().whenPressed(new HABClimbPattern());
+		// //left trigger
+		// testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
+		// testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
+		// testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
+		// testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
+		// testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
+		// testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
+		// testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
 
 		
 		//////////////// Lower Platform///////////////////////////////////////
