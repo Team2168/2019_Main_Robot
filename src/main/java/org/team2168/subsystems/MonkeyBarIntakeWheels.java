@@ -37,7 +37,7 @@ public class MonkeyBarIntakeWheels extends Subsystem {
     _intakeLeft = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
     _intakeRight = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
 
-    ConsolePrinter.putNumber("Monkey Bar Intake Joystick value", () -> {return Robot.oi.getMonkeyBarIntakeJoystickValue();}, true, false);
+    //ConsolePrinter.putNumber("Monkey Bar Intake Joystick value", () -> {return Robot.oi.getMonkeyBarIntakeJoystickValue();}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake right motor voltage", () -> {return _intakeRightVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake left motor voltage", () -> {return _intakeLeftVoltage;}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake right motor current", () -> {return Robot.pdp.getChannelCurrent(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);}, true, false);

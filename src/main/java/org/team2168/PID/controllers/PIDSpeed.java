@@ -1069,13 +1069,13 @@ public class PIDSpeed implements TCPMessageInterface {
 
 			deriv = 0;
 
-			// deriv term
-			if (enDerivFilter) {
-				// Derivative filtering using forward euler integration
-				int_d_term = int_d_term + (lastDeriv * executionTime);
-				deriv = ((d * err) - int_d_term) * n;
-				lastDeriv = deriv;
-			} else {
+			// // deriv term
+			// if (enDerivFilter) {
+			// 	// Derivative filtering using forward euler integration
+			// 	int_d_term = int_d_term + (lastDeriv * executionTime);
+			// 	deriv = ((d * err) - int_d_term) * n;
+			// 	lastDeriv = deriv;
+			// } else {
 				// prevent divide by zero error, by disabiling deriv term
 				// if execution time is zero.
 				diff = 0;
@@ -1085,7 +1085,7 @@ public class PIDSpeed implements TCPMessageInterface {
 					diff = 0;
 
 				deriv = d * diff;
-			}
+			// }
 
 			// proportional term
 			prop = p * err;
@@ -1141,10 +1141,13 @@ public class PIDSpeed implements TCPMessageInterface {
 			// + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: "
 			// + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co +
 			// "\texctime" + executionTime );
+			if(log != null)
+			{
 			log.println(currentTime + "\t" + System.currentTimeMillis() + "\t" + cp + "\t" + sp + "\t " + err + "\t"
 					+ prop + "\t" + windup + "\t" + errsum + "\t" + integ + "\t" + deriv + "\t" + co + "\t"
 					+ coNotSaturated + "\t" + executionTime);
 			log.flush();
+			}
 
 			atSpeed();
 		} else {

@@ -10,6 +10,7 @@ package org.team2168.subsystems;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.CanAnalogInput;
+import org.team2168.PID.sensors.CanDigitalInput;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -22,6 +23,8 @@ public class HatchProbePistons extends Subsystem {
   private DoubleSolenoid _probeHatchEngagePiston;
   private CanAnalogInput _HatchSensor;
 
+  private CanDigitalInput _limitSwitch;
+
   private static HatchProbePistons instance = null;
 
   private HatchProbePistons()
@@ -29,11 +32,16 @@ public class HatchProbePistons extends Subsystem {
     _probePlungerPiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.PROBE_EXTEND_PCM,RobotMap.PROBE_RETRACT_PCM);
     _probeHatchEngagePiston = new DoubleSolenoid(RobotMap.PCM_CAN_ID_LIFT, RobotMap.PROBE_ENGAGE_PCM,RobotMap.PROBE_DISENGAGE_PCM);
     _HatchSensor = new CanAnalogInput(Robot.hatchProbePivot._plungerArmPivotMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
+    _limitSwitch = new CanDigitalInput(Robot.hatchProbePivot._plungerArmPivotMotor);
 
     ConsolePrinter.putNumber("HatchPlunger Raw IR", () -> {return getRawIRVoltage();}, true, false);
     ConsolePrinter.putBoolean("Hatch is Present", () -> {return isHatchPresent();}, true, false);
-    ConsolePrinter.putBoolean("Arm is extended", () -> {return isArmExtended();}, true, false);
-    ConsolePrinter.putBoolean("Hatch is Engaged", () -> {return isHatchEngaged();}, true, false);
+    // ConsolePrinter.putBoolean("Arm is extended", () -> {return isArmExtended();}, true, false);
+    // ConsolePrinter.putBoolean("Hatch is Engaged", () -> {return isHatchEngaged();}, true, false);
+    // ConsolePrinter.putBoolean("Hatch Left limit", () -> {return _limitSwitch.getForwardLimit();}, true, false);
+    // ConsolePrinter.putBoolean("Hatch Right Limit", () -> {return _limitSwitch.getReverseLimit();}, true, false);
+
+
   }
 
   	/**

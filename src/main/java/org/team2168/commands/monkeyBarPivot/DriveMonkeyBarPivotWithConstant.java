@@ -13,7 +13,6 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
   public DriveMonkeyBarPivotWithConstant(double inputspeed) {
 
     requires(MonkeyBarPivot.getInstance());
-    this.setInterruptible(false);
     _speed = inputspeed;
 
   }
@@ -25,12 +24,15 @@ public class DriveMonkeyBarPivotWithConstant extends Command {
   @Override
   protected void execute() {
     Robot.monkeyBarPivot.driveRotateBarMotors(_speed);
-    System.out.println("Driving MonkeyBar with Joystick");
+    //System.out.println("Driving MonkeyBar with Constant");
   }
 
   @Override
   protected boolean isFinished() {
-    return false;
+    if (_speed == 0.0)
+      return true;
+    else
+      return false;
   }
 
   @Override

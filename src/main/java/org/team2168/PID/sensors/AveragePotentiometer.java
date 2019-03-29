@@ -2,7 +2,7 @@ package org.team2168.PID.sensors;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.*;
-
+import edu.wpi.first.wpilibj.Timer;
 import org.team2168.utils.LinearInterpolator;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -35,6 +35,9 @@ public class AveragePotentiometer implements PIDSensorInterface
 	LinearInterpolator interpolator;
 	double[][] range;
 
+	double runTime;
+	double lastPos;
+
 	public AveragePotentiometer(int channel, double zeroVoltage, double zeroAngle, double maxVoltage, double maxAngle,
 			int averageN)
 	{
@@ -56,36 +59,10 @@ public class AveragePotentiometer implements PIDSensorInterface
 		this.minVoltage = zeroVoltage;
 		this.maxVoltage = maxVoltage;
 
-	}
-
-	private AveragePotentiometer(double zeroVoltage, double zeroAngle, double maxVoltage, double maxAngle, int averageN)
-	{
-		double[][] tempRange = { { zeroVoltage, zeroAngle
-				}, { maxVoltage, maxAngle
-				}
-		};
-
-		this.range = tempRange;
-
-		interpolator = new LinearInterpolator(this.range);
-
-		this.averagorSize = averageN;
-		this.averagorArray = new double[averagorSize];
-
-		this.minVoltage = zeroVoltage;
-		this.maxVoltage = maxVoltage;
+		runTime = Timer.getFPGATimestamp();
 
 	}
 
-	// public AveragePotentiometer(int channel, double minVoltage, double minAngle,
-	// double zeroVoltage, double zeroAngle,
-	// double maxVoltage, double maxAngle, int averageN) {
-
-	// this(minVoltage, minAngle, zeroVoltage, zeroAngle, maxVoltage, maxAngle,
-	// averageN);
-
-	// potentiometer = new AnalogInput(channel);
-	// }
 
 	public AveragePotentiometer(TalonSRX motor, double zeroVoltage, double zeroAngle, double maxVoltage,
 			double maxAngle, int averageN)
@@ -102,8 +79,16 @@ public class AveragePotentiometer implements PIDSensorInterface
 	@Override
 	public double getRate()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		
+		// derivative of position to return rate
+		double executionTime  = Timer.getFPGATimestamp() - runTime;
+		double pos = getPos();
+		if (executionTime > 0)
+			putData((pos - lastPos) / executionTime); 
+
+		runTime = Timer.getFPGATimestamp();
+		lastPos = pos;
+		return getAverage();
 	}
 
 	@Override
@@ -116,17 +101,7 @@ public class AveragePotentiometer implements PIDSensorInterface
 	@Override
 	public double getPos()
 	{
-		// if(isCan)
-		// {
-		// return this.motor.getSensorCollection().getAnalogIn();
-		// }
-		// else
-		// {
-		// return interpolator.interpolate(potentiometer.getVoltage());
-		// }
-
 		return interpolator.interpolate(this.getRawPos());
-
 	}
 
 	// 19 Feb: Analog input returns number between 0 and 1023 so we scaled to be
@@ -187,6 +162,25 @@ public class AveragePotentiometer implements PIDSensorInterface
 			// because array is zero indexed. Rolls
 			// over index position.
 			arrayPos = 0;
+	}
+
+	private AveragePotentiometer(double zeroVoltage, double zeroAngle, double maxVoltage, double maxAngle, int averageN)
+	{
+		double[][] tempRange = { { zeroVoltage, zeroAngle
+				}, { maxVoltage, maxAngle
+				}
+		};
+
+		this.range = tempRange;
+
+		interpolator = new LinearInterpolator(this.range);
+
+		this.averagorSize = averageN;
+		this.averagorArray = new double[averagorSize];
+
+		this.minVoltage = zeroVoltage;
+		this.maxVoltage = maxVoltage;
+
 	}
 
 }

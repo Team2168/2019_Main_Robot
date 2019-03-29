@@ -3,6 +3,7 @@ package org.team2168.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
@@ -11,16 +12,14 @@ import org.team2168.PID.controllers.PIDSpeed;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
+import org.team2168.PID.sensors.Limelight;
+import org.team2168.PID.sensors.NavX;
 import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,12 +30,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 
-  private static SpeedController _leftMotor1;
-  private static SpeedController _leftMotor2;
-  private static SpeedController _leftMotor3;
-  private static SpeedController _rightMotor1;
-  private static SpeedController _rightMotor2;
-  private static SpeedController _rightMotor3;
+  private static CANSparkMax _leftMotor1;
+  private static CANSparkMax _leftMotor2;
+  private static CANSparkMax _leftMotor3;
+  private static CANSparkMax _rightMotor1;
+  private static CANSparkMax _rightMotor2;
+  private static CANSparkMax _rightMotor3;
 
   private ADXRS453Gyro _gyroSPI;
   private AverageEncoder _drivetrainLeftEncoder;
@@ -52,6 +51,8 @@ public class Drivetrain extends Subsystem {
   private double lefttMotor1FPS;
   public IMU imu;
 
+  public NavX ahrs;
+
 
   // declare position/speed controllers
   public PIDPosition driveTrainPosController;
@@ -65,6 +66,9 @@ public class Drivetrain extends Subsystem {
   public PIDSpeed rightSpeedController;
   public PIDSpeed leftSpeedController;
 
+  public Limelight limelight;
+  public PIDPosition limelightPosController;
+
   private static Drivetrain instance = null;
 
   // declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR
@@ -75,6 +79,7 @@ public class Drivetrain extends Subsystem {
   TCPSocketSender TCProtateController;
   TCPSocketSender TCPleftPosController;
   TCPSocketSender TCPrightPosController;
+  TCPSocketSender TCPlimelightPosController;
 
   public volatile double leftMotor1Voltage;
   public volatile double leftMotor2Voltage;
@@ -103,102 +108,49 @@ public class Drivetrain extends Subsystem {
      * Also allows us to detect comp chasis vs practice chassis and code for any
      * differences.
      */
-    if (Robot.isPracticeRobot())
-    {
-      if (Robot.isPWMDrivetrain())
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-          _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-          _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-          _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-          _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-          _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
-        }
-        else
-        {
-          System.out.println("PWM Practice Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
-          _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
-          _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
-          _rightMotor2 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);
-        }
-      }
-      else // CAN Practice Bot
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
-        }
-        else
-        {
-          System.out.println("CAN Practice Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-        }
-      }
-    }
-    else // Comp Robot
-    {
-      if (Robot.isPWMDrivetrain())
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("PWM Comp Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_1);
-          _leftMotor2 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_2);
-          _leftMotor3 = new VictorSP(RobotMap.LEFT_DRIVE_MOTOR_3);
-          _rightMotor1 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_1);
-          _rightMotor2 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_2);
-          _rightMotor3 = new VictorSP(RobotMap.RIGHT_DRIVE_MOTOR_3);
-        }
-        else
-        {
-          System.out.println("PWM Comp Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);
-          _leftMotor2 = new VictorSP(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);
-          _rightMotor1 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);
-          _rightMotor2 = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);
-        }
-      }
-      else // CAN Practice Bot
-      {
-        if (RobotMap.DT_3_MOTORS_PER_SIDE)
-        {
-          System.out.println("CAN Comp Bot Drivetrain enabled - 6 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
-        }
-        else
-        {
-          System.out.println("CAN Comp Bot Drivetrain enabled - 4 motors");
-          _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
-          _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
-          _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
-          _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
-        }
-      }
+
+      System.out.println("CAN Comp Bot Drivetrain enabled - 4 motors");
+      _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
+      _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
+      _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
+      _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
+    
+      //speed limit 60
+      _leftMotor1.setSmartCurrentLimit(60);
+      _leftMotor2.setSmartCurrentLimit(60);
+      _rightMotor1.setSmartCurrentLimit(60);
+      _rightMotor2.setSmartCurrentLimit(60);
+      
+      //control frame every 20ms
+      _leftMotor1.setControlFramePeriodMs(20);
+      _leftMotor2.setControlFramePeriodMs(20);
+      _rightMotor1.setControlFramePeriodMs(20);
+      _rightMotor2.setControlFramePeriodMs(20);
+
+      //status frame every 500ms
+      _leftMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
+      _leftMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
+      _rightMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
+      _rightMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
+
+      //status frame every 500ms
+      _leftMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
+      _leftMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
+      _rightMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
+      _rightMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
+
+      //status frame every 500ms
+      _leftMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
+      _leftMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
+      _rightMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
+      _rightMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
 
       // leftMotor1.setCANTimeout(100);
       // leftMotor3.setCANTimeout(100);
       // rightMotor2.setCANTimeout(100);
       // rightMotor3.setCANTimeout(100);
 
-    }
+    ahrs = new NavX(); 
     
     _drivetrainRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_DRIVE_ENCODER_A,
@@ -225,10 +177,14 @@ public class Drivetrain extends Subsystem {
     _gyroSPI = new ADXRS453Gyro();
     _gyroSPI.startThread();
     
+    imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+
     _drivetrainFrontIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_FRONT_IR_SENSOR);
     _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
-    imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
+    limelight = new Limelight();
+    limelight.setCamMode(1);
+    limelight.setPipeline(7);
 
     // DriveStraight Controller
     rotateController = new PIDPosition(
@@ -294,6 +250,17 @@ public class Drivetrain extends Subsystem {
         _drivetrainLeftEncoder,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
+        
+    
+        // Limelight Controller
+    limelightPosController = new PIDPosition(
+        "limelightPosController",
+        RobotMap.LIMELIGHT_POSITION_P,
+        RobotMap.LIMELIGHT_POSITION_I,
+        RobotMap.LIMELIGHT_POSITION_D,
+        limelight,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
     // add min and max output defaults and set array size
     rightSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     leftSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
@@ -302,6 +269,7 @@ public class Drivetrain extends Subsystem {
     driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    limelightPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
 
     // start controller threads
     rightSpeedController.startThread();
@@ -311,6 +279,7 @@ public class Drivetrain extends Subsystem {
     driveTrainPosController.startThread();
     rotateController.startThread();
     rotateDriveStraightController.startThread();
+    limelightPosController.startThread();
 
     // start TCP Servers for DEBUGING ONLY
     TCPdrivePosController = new TCPSocketSender(RobotMap.TCP_SERVER_DRIVE_TRAIN_POS, driveTrainPosController);
@@ -334,6 +303,8 @@ public class Drivetrain extends Subsystem {
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_STRAIGHT,rotateDriveStraightController);
     TCProtateController.start();
 
+    TCPlimelightPosController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA,limelightPosController);
+    TCPlimelightPosController.start();
 
     leftMotor1Voltage = 0;
     leftMotor2Voltage = 0;
@@ -343,29 +314,29 @@ public class Drivetrain extends Subsystem {
     
 
     // Log sensor data
-    ConsolePrinter.putNumber("Left Encoder Distance", () -> {return Robot.drivetrain.getLeftPosition();}, true, true);
-    ConsolePrinter.putNumber("Right Encoder Distance:", () -> {return Robot.drivetrain.getRightPosition();}, true, true);
-    ConsolePrinter.putNumber("Average Drive Encoder Distance", () -> {return Robot.drivetrain.getAverageDistance();}, true, true);
-    ConsolePrinter.putNumber("Right Drive Encoder Rate", () -> {return Robot.drivetrain.getRightEncoderRate();}, true, true);
-    ConsolePrinter.putNumber("Left Drive Encoder Rate", () -> {return Robot.drivetrain.getLeftEncoderRate();}, true, true);
-    ConsolePrinter.putNumber("Average Drive Encoder Rate", () -> {return Robot.drivetrain.getAverageEncoderRate();}, true, true);
-    ConsolePrinter.putNumber("Gyro Angle:", () -> {return Robot.drivetrain.getHeading();}, true, true);	
-    ConsolePrinter.putNumber("Gunstyle X Value", () -> {return Robot.oi.getGunStyleXValue();}, true, true);
-    ConsolePrinter.putNumber("Gunstyle Y Value", () -> {return Robot.oi.getGunStyleYValue();}, true, true);
-    ConsolePrinter.putNumber("DTLeft1MotorVoltage", () -> {return Robot.drivetrain.getleftMotor1Voltage();}, true, true);
-    ConsolePrinter.putNumber("DTLeft2MotorVoltage", () -> {return Robot.drivetrain.getleftMotor2Voltage();}, true, true);
-    ConsolePrinter.putNumber("DTRight1MotorVoltage", () -> {return Robot.drivetrain.getrightMotor1Voltage();}, true, true);
-    ConsolePrinter.putNumber("DTRight2MotorVoltage", () -> {return Robot.drivetrain.getrightMotor2Voltage();}, true, true);
-    ConsolePrinter.putNumber("DTRight1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);}, true, true);
-    ConsolePrinter.putNumber("DTRight2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);}, true, true);
-    ConsolePrinter.putNumber("DTLeft1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);}, true, true);
-    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, true);
-    ConsolePrinter.putNumber("PID right motor 1 voltage", () -> {return this.PIDVoltagefeedRightMotor1();}, true, true);
-    ConsolePrinter.putNumber("PID right motor 2 voltage", () -> {return this.PIDVoltagefeedRightMotor2();}, true, true);
-    ConsolePrinter.putNumber("PID left motor 1 voltage", () -> {return this.PIDVoltagefeedLeftMotor1();}, true, true);
-    ConsolePrinter.putNumber("PID left motor 2 voltage", () -> {return this.PIDVoltagefeedLeftMotor2();}, true, true);
+    ConsolePrinter.putNumber("Left Encoder Distance", () -> {return Robot.drivetrain.getLeftPosition();}, true, false);
+    ConsolePrinter.putNumber("Right Encoder Distance:", () -> {return Robot.drivetrain.getRightPosition();}, true, false);
+    ConsolePrinter.putNumber("Average Drive Encoder Distance", () -> {return Robot.drivetrain.getAverageDistance();}, true, false);
+    ConsolePrinter.putNumber("Right Drive Encoder Rate", () -> {return Robot.drivetrain.getRightEncoderRate();}, true, false);
+    ConsolePrinter.putNumber("Left Drive Encoder Rate", () -> {return Robot.drivetrain.getLeftEncoderRate();}, true, false);
+    ConsolePrinter.putNumber("Average Drive Encoder Rate", () -> {return Robot.drivetrain.getAverageEncoderRate();}, true, false);
+    ConsolePrinter.putNumber("Gyro Angle:", () -> {return Robot.drivetrain.getHeading();}, true, false);	
+    ConsolePrinter.putNumber("Gunstyle X Value", () -> {return Robot.oi.getGunStyleXValue();}, true, false);
+    ConsolePrinter.putNumber("Gunstyle Y Value", () -> {return Robot.oi.getGunStyleYValue();}, true, false);
+    ConsolePrinter.putNumber("DTLeft1MotorVoltage", () -> {return Robot.drivetrain.getleftMotor1Voltage();}, true, false);
+    ConsolePrinter.putNumber("DTLeft2MotorVoltage", () -> {return Robot.drivetrain.getleftMotor2Voltage();}, true, false);
+    ConsolePrinter.putNumber("DTRight1MotorVoltage", () -> {return Robot.drivetrain.getrightMotor1Voltage();}, true, false);
+    ConsolePrinter.putNumber("DTRight2MotorVoltage", () -> {return Robot.drivetrain.getrightMotor2Voltage();}, true, false);
+    ConsolePrinter.putNumber("DTRight1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);}, true, false);
+    ConsolePrinter.putNumber("DTRight2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);}, true, false);
+    ConsolePrinter.putNumber("DTLeft1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);}, true, false);
+    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, false);
+    ConsolePrinter.putNumber("PID right motor 1 voltage", () -> {return this.PIDVoltagefeedRightMotor1();}, true, false);
+    ConsolePrinter.putNumber("PID right motor 2 voltage", () -> {return this.PIDVoltagefeedRightMotor2();}, true, false);
+    ConsolePrinter.putNumber("PID left motor 1 voltage", () -> {return this.PIDVoltagefeedLeftMotor1();}, true, false);
+    ConsolePrinter.putNumber("PID left motor 2 voltage", () -> {return this.PIDVoltagefeedLeftMotor2();}, true, false);
     
-    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, true);
+    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, false);
     ConsolePrinter.putNumber("GYRO Driftrate:", () -> {return Robot.drivetrain._gyroSPI.driftRate;}, true, false);
     ConsolePrinter.putNumber("GYRO Rate:", () -> {return Robot.drivetrain._gyroSPI.getRate();}, true, false);
     ConsolePrinter.putNumber("GYRO Angle SPI:", () -> {return Robot.drivetrain._gyroSPI.getAngle();}, true, false);

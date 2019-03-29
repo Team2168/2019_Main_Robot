@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
@@ -28,6 +29,7 @@ public class CargoIntakeWheels extends Subsystem {
 
 	private CargoIntakeWheels() {
         _intakeMotor = new TalonSRX(RobotMap.CARGO_INTAKE_MOTOR_PDP);
+        //_intakeMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
         _sharpIRSensor = new CanAnalogInput(_intakeMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
 
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
@@ -95,7 +97,7 @@ public class CargoIntakeWheels extends Subsystem {
         if (Robot.isPracticeRobot())
             return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT);
         else
-            return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX);
+            return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MIN && getRawIRVoltage() <= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX);
     }
     // make method for sharp ir sensor which senses distance to cargo,
     // use volts from the lift getrawpos etc.

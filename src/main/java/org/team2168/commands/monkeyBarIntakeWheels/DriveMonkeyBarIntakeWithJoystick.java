@@ -6,13 +6,14 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveMonkeyBarIntakeWithJoystick extends Command {
-  public DriveMonkeyBarIntakeWithJoystick() {
-
+  public DriveMonkeyBarIntakeWithJoystick() 
+  {
     requires(Robot.monkeyBarIntakeWheels);
   }
 
   @Override
-  protected void initialize() {
+  protected void initialize() 
+  {
     Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
   }
 
@@ -25,12 +26,12 @@ public class DriveMonkeyBarIntakeWithJoystick extends Command {
   protected void execute() 
   {
     if(Robot.isClimbEnabled)
-      if(Robot.oi.driverJoystick.getLeftStickRaw_Y()>0.1) //we only want to drive fwd, never reverse
-        Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.driverJoystick.getLeftStickRaw_Y()*0.75);
+      if(Math.abs(Robot.oi.driverJoystick.getLeftStickRaw_Y())>0.1) //we only want to drive fwd, never reverse
+        Robot.monkeyBarIntakeWheels.driveIntakeAll((Math.abs(Robot.oi.driverJoystick.getLeftStickRaw_Y()+.2)*0.75) + 0.15);
       else
-        Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
+        Robot.monkeyBarIntakeWheels.driveIntakeAll(0.15); //always drive wheels in climb mode
     else
-      Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getMonkeyBarIntakeJoystickValue());
+      Robot.monkeyBarIntakeWheels.driveIntakeAll(0.6*Robot.oi.getMonkeyBarIntakeJoystickValue());
   }
 
 

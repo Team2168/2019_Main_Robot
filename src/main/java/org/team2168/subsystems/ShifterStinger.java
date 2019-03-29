@@ -25,8 +25,8 @@ public class ShifterStinger extends Subsystem {
     _stingerShifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.STINGER_ENGAGE_PCM, RobotMap.STINGER_DISENGAGE_PCM);
 
 
-   	ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.shifterStinger.isStingerEngaged();}, true, false);
-    ConsolePrinter.putBoolean("Stingers Disengaged", () -> {return Robot.shifterStinger.isStingerDisengaged();}, true, false);
+   	// ConsolePrinter.putBoolean("Stingers Engaged", () -> {return Robot.shifterStinger.isStingerEngaged();}, true, false);
+    // ConsolePrinter.putBoolean("Stingers Disengaged", () -> {return Robot.shifterStinger.isStingerDisengaged();}, true, false);
 
   }
 
