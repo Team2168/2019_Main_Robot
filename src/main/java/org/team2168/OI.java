@@ -1,7 +1,7 @@
 package org.team2168;
 
 import org.team2168.PID.trajectory.OneDimensionalRotation;
-import org.team2168.commands.LEDs.AutoWithoutGamePiece;
+import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.DisabledPattern;
 import org.team2168.commands.LEDs.HABClimbPattern;
 import org.team2168.commands.LEDs.LiftLoweringPattern;
@@ -11,7 +11,7 @@ import org.team2168.commands.LEDs.PivotingPattern;
 import org.team2168.commands.LEDs.TeleopWithoutGamePiece;
 import org.team2168.commands.LEDs.WheelsInPattern;
 import org.team2168.commands.LEDs.WheelsOutPattern;
-import org.team2168.commands.LEDs.WithGamePiece;
+import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
@@ -110,7 +110,7 @@ public class OI
 		//leds testing
 		testJoystick.ButtonA().whenPressed(new DisabledPattern());
 		testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
-		testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiece());
+		testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
 		testJoystick.ButtonY().whenPressed(new HABClimbPattern());
 		//left trigger
 		testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
@@ -119,7 +119,7 @@ public class OI
 		testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
 		testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
 		testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
-		testJoystick.ButtonUpDPad().whenPressed(new WithGamePiece());
+		testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
 
 		
 		//////////////// Lower Platform///////////////////////////////////////

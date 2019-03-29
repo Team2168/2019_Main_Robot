@@ -12,8 +12,8 @@ import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoWithoutGamePiece extends Command {
-  public AutoWithoutGamePiece() {
+public class WithGamePiecePattern extends Command {
+  public WithGamePiecePattern() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.leds);
@@ -22,12 +22,9 @@ public class AutoWithoutGamePiece extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //add logic to choose color based on auto pattern
-    //if 0 at top (if 0 at bottom, rocket_ascend)
-    if(RobotMap.LEDS_REVERSE)
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 192, 255, 200);
-    else 
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 192, 255, 200);
+    //add logic to trigger when hatchpanel or cargo is present
+    //add to command-intake until--
+    Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 200);
   }
 
   // Called repeatedly when this Command is scheduled to run
