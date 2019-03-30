@@ -73,15 +73,12 @@ public class OI
 
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
-	//public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
-
-
+	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
+	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
-	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
-	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 	private LinearInterpolator gunStyleInterpolator;
 	private double[][] gunStyleArray = { { -1.0, -1.0
 			}, { -.15, 0.0
@@ -95,9 +92,6 @@ public class OI
 	 */
 	private OI()
 	{
-
-
-
 		/*************************************************************************
 		 * Driver Joystick *
 		 *************************************************************************/
@@ -154,23 +148,6 @@ public class OI
 		/*************************************************************************
 		 * Operator Joystick *
 		 *************************************************************************/
-
-
-
-		// //leds testing
-		// testJoystick.ButtonA().whenPressed(new DisabledPattern());
-		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
-		// testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
-		// testJoystick.ButtonY().whenPressed(new HABClimbPattern());
-		// //left trigger
-		// testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
-		// testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
-		// testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
-		// testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
-		// testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
-		// testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
-		// testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
-
 		
 		//////////////// Lower Platform///////////////////////////////////////
 		// operatorJoystick.ButtonBack().whenPressed(new LowerPlatform());
@@ -234,15 +211,15 @@ public class OI
 		// pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_3_POS));
 		// pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS));
 		
-		// // pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
-		// // pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
-		// // pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
-		// // pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
-		// // pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		 pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
-	//	 pidTestJoystick.ButtonB().whenPressed(new IntakeUntilCargoAndPivot());
-		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(100));
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
+		// pidTestJoystick.ButtonB().whenPressed(new IntakeUntilCargoAndPivot());
+		pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(100));
 
 		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
 		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(1.0));
@@ -257,12 +234,28 @@ public class OI
 		//  pidTestJoystick.ButtonDownDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
 		//  pidTestJoystick.ButtonUpDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
 		//  pidTestJoystick.ButtonUpDPad().whileHeld(new DriveCargoIntakeWithConstant(0.5));
-		// //  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
-		// //  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
-		// //  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
-		// //  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
 		 
 		 
+		/***********************************************************************
+		 * Commands Test Joystick
+		 ***********************************************************************/
+		// //leds testing
+		// testJoystick.ButtonA().whenPressed(new DisabledPattern());
+		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
+		// testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
+		// testJoystick.ButtonY().whenPressed(new HABClimbPattern());
+		// testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
+		// testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
+		// testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
+		// testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
+		// testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
+		// testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
+		// testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
+
 
 
 
