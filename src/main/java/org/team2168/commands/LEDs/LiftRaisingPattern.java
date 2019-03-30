@@ -5,40 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.drivetrain.PIDCommands;
+package org.team2168.commands.LEDs;
 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TogglePipeline extends Command {
-
-  private boolean finished;
-
-  /**
-   * Default constructor
-   */
-  public TogglePipeline() {
+public class LiftRaisingPattern extends Command {
+  public LiftRaisingPattern() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.drivetrain);
+    // eg. requires(chassis);
+    requires(Robot.leds);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    finished = false;
-
-    // If vision is active, switches to a raw pipeline
-    if(Robot.drivetrain.limelight.getPipeline() == 0) {
-      Robot.drivetrain.limelight.setPipeline(7);
-      finished = true;
+    //add logic to trigger when Lift is going up-ie speed is a certain threshhold greater than zero
+    if(RobotMap.LEDS_REVERSE)
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
     }
-    // If vision is inactive, switches to the vision pipeline
-    else if(Robot.drivetrain.limelight.getPipeline() == 7) {
-      Robot.drivetrain.limelight.setPipeline(0);
-      finished = true;
-    }
-    
+    else
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -49,7 +39,7 @@ public class TogglePipeline extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -62,5 +52,4 @@ public class TogglePipeline extends Command {
   @Override
   protected void interrupted() {
   }
-
 }

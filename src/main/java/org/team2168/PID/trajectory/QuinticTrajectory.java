@@ -17,8 +17,7 @@ import java.util.TimerTask;
 
 import org.team2168.RobotMap;
 import org.team2168.PID.pathplanner.FalconLinePlot;
-import org.team2168.utils.consoleprinter.ConsolePrinter;
-import org.team2168.utils.consoleprinter.Loggable;
+
 
 
 /**
@@ -81,11 +80,9 @@ public class QuinticTrajectory
 
 	//private static String directory = "/home/lvuser/Path/";
 	private static String directory = "Path/";
-
-	
+		
 	public boolean reverse = false;
 
-	
 	double totalSplineLength = 0;
 	double wheelSpacing = 26.0; //inches
 

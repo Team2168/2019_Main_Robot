@@ -5,67 +5,63 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.drivetrain;
+package org.team2168.commands.drivetrain.PIDCommands;
 
 import org.team2168.Robot;
-import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Engages stingers and puts drivetrain in neutral
- */
-public class EngageStingers extends Command
-{
-  public EngageStingers()
-  {
-    requires(Robot.shifterStinger);
+public class ToggleCamMode extends Command {
+
+  private boolean finished;
+
+  /**
+   * Default constructor
+   */
+  public ToggleCamMode() {
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.drivetrain);
   }
 
   // Called just before this Command runs the first time
+  // TODO: check if camMode values are correct
   @Override
-  protected void initialize()
-  {
-    Robot.shifterStinger.engageStingers();
-    if (Robot.onBlueAlliance())
-    {
-      if(RobotMap.LEDS_REVERSE)
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
+  protected void initialize() {
+    finished = false;
+
+    // If vision is active, switches to a raw camera view
+    if(Robot.drivetrain.limelight.getCamMode() == 0) {
+      Robot.drivetrain.limelight.setCamMode(1);
+      finished = true;
     }
-    else
-    {
-      if(RobotMap.LEDS_REVERSE)
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
+    // If vision is inactive, switches to the vision pipeline
+    else if(Robot.drivetrain.limelight.getCamMode() == 1) {
+      Robot.drivetrain.limelight.setCamMode(0);
+      finished = true;
     }
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute()
-  {
+  protected void execute() {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished()
-  {
-    return Robot.shifterStinger.isStingerEngaged();
+  protected boolean isFinished() {
+    return finished;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end()
-  {
+  protected void end() {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted()
-  {
+  protected void interrupted() {
   }
+
 }

@@ -73,13 +73,13 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	//Channels 0-3 on Roborio
 	//public static final int HATCH_INTAKE_IR_SENSOR = 0;
 	//public static final int CARGO_INTAKE_SHARP_IR_SENSOR = 1;
-	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 6;
+	public static final int DRIVETRAIN_FRONT_IR_SENSOR = 0;
 	public static final int DRIVETRAIN_BACK_IR_SENSOR = 1;
 	public static final int PIVOT_POSITION_POT = 2;
 	public static final int LIFT_POSITION_POT = 3;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_LEFT = 4;
 	public static final int STINGER_AVERAGE_POTENTIOMETER_RIGHT = 5;
-	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 0;
+	public static final int MONKEY_BAR_AVERAGE_POTENTIOMETER_RIGHT = 6;
 	public static final int PRESSURE_SENSOR = 7;
 
 
@@ -213,11 +213,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         CARGO INTAKE PARAMETERS                        *
 	 *************************************************************************/
 	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = false;
-	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 0.0; 
-	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 0.0; 
+	public static final double CARGO_INTAKE_MAX_SPEED = 1.0;
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 2.5; 
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 3.3; 
 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
+
+	public static final double CARGO_INTAKE_MIN_SPEED = 0; //TODO set
 
 	/*************************************************************************
 	 *                         HATCH INTAKE PARAMETERS                        *
@@ -243,10 +246,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.55; 
 
-	public static final double LIFT_HOLDING_VOLTAGE = 1.0; //volts divide by batt voltage. 
+	public static final double LIFT_HOLDING_VOLTAGE = 1.2; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
 	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2; //should this be negative???
-	public static final double LIFT_MIN_SPEED = 0.075;
+	public static final double LIFT_MIN_SPEED = 0.065;
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
@@ -296,11 +299,6 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MONKEY_BAR_HOLDING_VOLTAGE = 0.0; //volts to keep arm steady
 	public static final double MONKEY_BAR_HOLDING_VOLTAGE_PBOT = 0.0; //volts to keep arm steady
-
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX = 3.95; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0 = 0.251; //0 degrees
-	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0 = 0.0;
 	
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.3; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
@@ -308,24 +306,19 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
-	public static final double MONKEY_BAR_SAFE_LIFT_POS = 0; //TODO SET ALL
+
+	public static final double MONKEY_BAR_SAFE_LIFT_POS = 80.0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
 	public static final double MONKEY_BAR_SAFE_SCORING_POS = 120; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
 
-
-	//PBOT
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_MAX_PBOT = 3.95; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
-	public static final double MONKEY_BAR_LEFT_POT_VOLTAGE_0_PBOT = 3.33; //0 degrees
-	public static final double MONKEY_BAR_LEFT_ANGLE_DEGREES_0_PBOT = 0.0;
-	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.5; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 180; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 1.61; //0 degrees
-	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 0.0;
+	//PBOT	
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.3; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 0; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 1.2; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 130.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS_PBOT = 100.0; //TODO SET ALL
@@ -409,6 +402,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
+	public static final double PIVOT_MIN_SPEED = 0.0; //made this up for LEDs
 
 	public static final int PIVOT_ANGLE_MONKEY_BAR_SIDE = 90;
 
@@ -467,9 +461,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_I = 0.0020;
 	public static final double LIFT_D = 0.0001;
 
-	public static final double MB_PIVOT_P = 0.035;
+	public static final double MB_PIVOT_P = 0.025;
 	public static final double MB_PIVOT_I = 0.002;
-	public static final double MB_PIVOT_D = 0.0005;
+	public static final double MB_PIVOT_D = 0.00;
 
 	public static final double HP_PIVOT_P = 0.024;
 	public static final double HP_PIVOT_I = 0.027;
@@ -504,14 +498,36 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         ConsolePrinter PARAMETERS              *
 	 ******************************************************************/
 	public static final boolean PRINT_SD_DEBUG_DATA = false;
-	public static final long SmartDashThreadPeriod = 100; // ms
-	public static final long CONSOLE_PRINTER_LOG_RATE_MS = 100; // ms
+	public static final long SmartDashThreadPeriod = 200; // ms
+	public static final long CONSOLE_PRINTER_LOG_RATE_MS = 200; // ms
 
 	/******************************************************************
 	 *                         Lights I2C                             *
 	 ******************************************************************/
 	public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
-	public static final int I2C_ADDRESS = 10;
+	public static final int I2C_ADDRESS = 8;
+	public static final boolean LEDS_REVERSE = true; //true if 0 is at the top
+	public static final boolean LEDS_VERTICAL = true;
+	public static final int PATTERN_OFF= 0;
+	public static final int PATTERN_FILL = 1;
+	public static final int PATTERN_RUNNING_COLUMNS = 2;
+	public static final int PATTERN_COLLIDING_COLUMNS = 3;
+	public static final int PATTERN_COLUMNS_RIGHT = 4;
+	public static final int PATTERN_COLUMNS_LEFT = 5;
+	public static final int PATTERN_ROCKET_ASCEND = 6;
+	public static final int PATTERN_ROCKET_DESCEND = 7;
+	public static final int PATTERN_2168 = 8;
+	public static final int PATTERN_CONFETTI_RAINBOW = 9;
+	public static final int PATTERN_ANIMATED_WAVE = 10;
+	public static final int PATTERN_BLINK = 11;
+	public static final int PATTERN_RAINBOW = 12;
+	public static final int PATTERN_ANIMATED_WAVE_REVERSE = 13;
+	public static final int PATTERN_POLICE = 14;
+	
+	/******************************************************************
+	 *                         Lights I2C                             *
+	 ******************************************************************/
+	public static final int LIMELIGHT_AVG_ENCODER_VAL = 0;
 
 	/******************************************************************
 	 *                        Kevin PARAMETERS                        *

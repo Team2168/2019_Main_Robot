@@ -6,13 +6,14 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveMonkeyBarIntakeWithJoystick extends Command {
-  public DriveMonkeyBarIntakeWithJoystick() {
-
+  public DriveMonkeyBarIntakeWithJoystick() 
+  {
     requires(Robot.monkeyBarIntakeWheels);
   }
 
   @Override
-  protected void initialize() {
+  protected void initialize() 
+  {
     Robot.monkeyBarIntakeWheels.driveIntakeAll(0.0);
   }
 
@@ -30,7 +31,7 @@ public class DriveMonkeyBarIntakeWithJoystick extends Command {
       else
         Robot.monkeyBarIntakeWheels.driveIntakeAll(0.15); //always drive wheels in climb mode
     else
-      Robot.monkeyBarIntakeWheels.driveIntakeAll(Robot.oi.getMonkeyBarIntakeJoystickValue());
+      Robot.monkeyBarIntakeWheels.driveIntakeAll(0.6*Robot.oi.getMonkeyBarIntakeJoystickValue());
   }
 
 

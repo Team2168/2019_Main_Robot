@@ -9,89 +9,67 @@ package org.team2168.commands.monkeyBarPivot.PIDCommands;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-import org.team2168.subsystems.MonkeyBarPivot;
+import org.team2168.PID.trajectory.OneDimensionalMotionProfiling;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveMonkeyBarPivotPID extends Command {
+public class DriveMonkeyBarPivotPIDPath extends Command {
+
+  private double[] pos;
+  private double[] vel;
+  private double[] accel;
+  
 
   private double setPoint;
+  OneDimensionalMotionProfiling motion;
+	int counter;
+  double ff_term = 0.070;
 
   private double maxSpeed;
   private double minSpeed;
   private double error = 2; //Rotational degree error, 0 never ends
 
-  private boolean absolute = true;
 
-  public DriveMonkeyBarPivotPID() {
+  public final double MAX_VEL = 110;
+  public final double MAX_ACCEL = 110;
+  public final double MAX_JERK = 1000;
+
+
+  public DriveMonkeyBarPivotPIDPath() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(MonkeyBarPivot.getInstance());
+    requires(Robot.monkeyBarPivot);
     this.setPoint = Robot.monkeyBarPivot.monkeyBarPivotController.getSetPoint();
-    this.maxSpeed = 0.5;
-    this.minSpeed = 0;
+    this.maxSpeed = 1.0;
+    this.minSpeed = 0.0;
+
+    //SmartDashboard.putNumber("FF_term_MB", 0);
     
   }
 
-  public DriveMonkeyBarPivotPID(double setPoint)
+  public DriveMonkeyBarPivotPIDPath(double setPoint)
   {
+    this();
     this.setPoint = setPoint;
-  }
-
-  public DriveMonkeyBarPivotPID(double setPoint, double maxSpeed)
-  {
-    this.setPoint = setPoint;
-    this.maxSpeed = maxSpeed;
-  }
-
-  public DriveMonkeyBarPivotPID(double setPoint, double maxSpeed, double minSpeed)
-  {
-    this.setPoint = setPoint;
-    this.maxSpeed = maxSpeed;
-    this.minSpeed = minSpeed;
-  }
-
-  public DriveMonkeyBarPivotPID(double setPoint, double maxSpeed, double minSpeed, boolean absolute)
-  {
-    this.setPoint = setPoint;
-    this.maxSpeed = maxSpeed;
-    this.minSpeed = minSpeed;
-    this.absolute = absolute;
-  }
-
-  public DriveMonkeyBarPivotPID(double setPoint, double maxSpeed, double minSpeed, double error)
-  {
-    this.setPoint = setPoint;
-    this.maxSpeed = maxSpeed;
-    this.minSpeed = minSpeed;
-    this.error = error;
-  }
-
-  public DriveMonkeyBarPivotPID(double setPoint, double maxSpeed, double minSpeed, double error, boolean absolute)
-  {
-    this.setPoint = setPoint;
-    this.maxSpeed = maxSpeed;
-    this.minSpeed = minSpeed;
-    this.error = error;
-    this.absolute = absolute;
-
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    double sp = 0;
-    if (!absolute)
-      sp = this.setPoint + Robot.monkeyBarPivot.getRightPotPos();
-    else
-      sp = this.setPoint;
+  protected void initialize() 
+  {
+
+    motion = new OneDimensionalMotionProfiling(Robot.monkeyBarPivot.getRightPotPos(),setPoint,this.MAX_VEL,this.MAX_ACCEL,this.MAX_JERK);
+
+    this.pos = motion.pos;
+    this.vel = motion.vel;
     
     Robot.monkeyBarPivot.monkeyBarPivotController.reset();
 
     Robot.monkeyBarPivot.monkeyBarPivotController.setpGain(RobotMap.MB_PIVOT_P);
     Robot.monkeyBarPivot.monkeyBarPivotController.setiGain(RobotMap.MB_PIVOT_I);
     Robot.monkeyBarPivot.monkeyBarPivotController.setdGain(RobotMap.MB_PIVOT_D);
-    Robot.monkeyBarPivot.monkeyBarPivotController.setSetPoint(sp);
+    Robot.monkeyBarPivot.monkeyBarPivotController.setSetPoint(this.pos);
     Robot.monkeyBarPivot.monkeyBarPivotController.setMaxPosOutput(maxSpeed);
     Robot.monkeyBarPivot.monkeyBarPivotController.setMaxNegOutput(-maxSpeed);
     Robot.monkeyBarPivot.monkeyBarPivotController.setMinPosOutput(minSpeed);
@@ -99,18 +77,37 @@ public class DriveMonkeyBarPivotPID extends Command {
     Robot.monkeyBarPivot.monkeyBarPivotController.setAcceptErrorDiff(error);
 
     Robot.monkeyBarPivot.monkeyBarPivotController.Enable();
+
+    counter = 0;
+
+    System.out.print("Lenght: "+ pos.length);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.monkeyBarPivot.driveRotateBarMotors(Robot.monkeyBarPivot.monkeyBarPivotController.getControlOutput());
+
+    //ff_term = SmartDashboard.getNumber("FF_term_MB", 0);
+
+
+    if (counter < pos.length)
+    {
+      double pidSpeed = Robot.monkeyBarPivot.monkeyBarPivotController.getControlOutput();
+      double ff_Speed = (ff_term  * vel[counter]) / (Robot.pdp.getBatteryVoltage());
+      Robot.monkeyBarPivot.driveRotateBarMotors(ff_Speed+pidSpeed);
+      System.out.println(ff_Speed+pidSpeed);
+    }
+    else
+      Robot.monkeyBarPivot.driveRotateBarMotors(0.0);
+
+
+      counter++;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.monkeyBarPivot.monkeyBarPivotController.isFinished();
+    return (counter >= pos.length) || (Robot.monkeyBarPivot.getRightPotPos() < pos[pos.length-1]+1 && Robot.monkeyBarPivot.getRightPotPos() > pos[pos.length-1]) ;
   }
 
   // Called once after isFinished returns true

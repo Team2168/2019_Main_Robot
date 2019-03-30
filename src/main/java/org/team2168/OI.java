@@ -1,12 +1,28 @@
+
 package org.team2168;
 
+import org.team2168.PID.trajectory.OneDimensionalRotation;
+import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
+import org.team2168.commands.LEDs.DisabledPattern;
+import org.team2168.commands.LEDs.HABClimbPattern;
+import org.team2168.commands.LEDs.LiftLoweringPattern;
+import org.team2168.commands.LEDs.LiftRaisingPattern;
+import org.team2168.commands.LEDs.MonkeyBarPattern;
+import org.team2168.commands.LEDs.PivotingPattern;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiece;
+import org.team2168.commands.LEDs.WheelsInPattern;
+import org.team2168.commands.LEDs.WheelsOutPattern;
+import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.MoveToIntakePosition;
 import org.team2168.commands.auto.RotateAndMoveLiftCargoShip;
+import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
+import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.hatchFloorIntake.IntakeFloorHatch;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
@@ -22,6 +38,7 @@ import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarIntakeWheels.SpinMBWhenLiftDown;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToFloorPosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
@@ -67,7 +84,6 @@ public class OI
 
 	public F310 driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
-
 	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
 	public TILaunchPad buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
@@ -76,8 +92,6 @@ public class OI
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
-	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
-	//public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 	private LinearInterpolator gunStyleInterpolator;
 	private double[][] gunStyleArray = { { -1.0, -1.0
 			}, { -.15, 0.0
@@ -91,9 +105,6 @@ public class OI
 	 */
 	private OI()
 	{
-
-
-
 		/*************************************************************************
 		 * Driver Joystick *
 		 *************************************************************************/
@@ -106,6 +117,8 @@ public class OI
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
 
+		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
+		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
@@ -167,9 +180,7 @@ public class OI
 		/*************************************************************************
 		 * Operator Joystick *
 		 *************************************************************************/
-
-
-
+		
 		//////////////// Lower Platform///////////////////////////////////////
 		// operatorJoystick.ButtonBack().whenPressed(new LowerPlatform());
 
@@ -193,19 +204,21 @@ public class OI
 		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
-		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.45));
+		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.7));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
-		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.45));
+		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.7));
 		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 
 
-		operatorJoystick.ButtonY().whenPressed(new ExtendHatchPlunger());
-		operatorJoystick.ButtonB().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonA().whenPressed(new EngageHatchPanel());
-		operatorJoystick.ButtonX().whenPressed(new DisengageHatchPanel());
+		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
+		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
+		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
+		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());
 
 		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
+		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
 		operatorJoystick.ButtonBack().whenPressed(new MoveMonkeyBarToSafePositionForScoring());
+
 
 		
 
@@ -225,11 +238,11 @@ public class OI
 
 		//////////////// Lift Pid
 		//////////////// commands////////////////////////////////////////////////////
-		// pidTestJoystick.ButtonA().whenPressed(new EnableLiftPIDZZZ());
-		// pidTestJoystick.ButtonB().whenPressed(new EnableMonkeyBarPivotPID());
-		// pidTestJoystick.ButtonX().whenPressed(new EnableHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
-		// pidTestJoystick.ButtonY().whenPressed(new PauseHatchProbePivotPID());
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_1_POS));
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_2_POS));
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_3_POS));
+		// pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS));
+		
 		// pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
 		// pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 		
@@ -260,10 +273,51 @@ public class OI
 		// pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
 		// pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
 		// pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
-		// pidTestJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
+		pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
+		// pidTestJoystick.ButtonB().whenPressed(new IntakeUntilCargoAndPivot());
+		pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(100));
+
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.80));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(0.8));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.6));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(0.6));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.4));
+		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(0.4));
+
+		//  pidTestJoystick.ButtonDownDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(0.5));
+		//  pidTestJoystick.ButtonDownDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonUpDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonUpDPad().whileHeld(new DriveCargoIntakeWithConstant(0.5));
+		//  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonRightDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
+		//  pidTestJoystick.ButtonLeftDPad().whileHeld(new DriveCargoIntakeWithConstant(1.0));
+		 
+		 
+		/***********************************************************************
+		 * Commands Test Joystick
+		 ***********************************************************************/
+		// //leds testing
+		// testJoystick.ButtonA().whenPressed(new DisabledPattern());
+		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
+		// testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
+		// testJoystick.ButtonY().whenPressed(new HABClimbPattern());
+		// testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
+		// testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
+		// testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
+		// testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
+		// testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
+		// testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
+		// testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
+
+
+
 
 
 	}
+	
 
 	/**
 	 * Returns an instance of the Operator Interface.

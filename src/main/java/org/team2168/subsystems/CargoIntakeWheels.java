@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
@@ -28,6 +29,7 @@ public class CargoIntakeWheels extends Subsystem {
 
 	private CargoIntakeWheels() {
         _intakeMotor = new TalonSRX(RobotMap.CARGO_INTAKE_MOTOR_PDP);
+        //_intakeMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
         _sharpIRSensor = new CanAnalogInput(_intakeMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
 
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
@@ -56,6 +58,30 @@ public class CargoIntakeWheels extends Subsystem {
 
         _intakeMotor.set(ControlMode.PercentOutput,speed);
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
+
+        //working model to prevent patterns from running into each other
+        if(!Robot.returnIsGamePiecePatternRunning())
+        {
+            if (speed > RobotMap.CARGO_INTAKE_MIN_SPEED)
+            {
+                if(RobotMap.LEDS_REVERSE)
+                {
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+                }
+                else
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+            }
+            else if (speed < -RobotMap.CARGO_INTAKE_MIN_SPEED)
+            {
+                if(RobotMap.LEDS_REVERSE)
+                {
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+                }
+                else
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+            }
+        }
+        
     }
 
     // drivecargo is probably useless because why would you want to move
@@ -71,7 +97,7 @@ public class CargoIntakeWheels extends Subsystem {
         if (Robot.isPracticeRobot())
             return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT);
         else
-            return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX);
+            return (getRawIRVoltage() >= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MIN && getRawIRVoltage() <= RobotMap.CARGO_INTAKE_IR_THRESHOLD_MAX);
     }
     // make method for sharp ir sensor which senses distance to cargo,
     // use volts from the lift getrawpos etc.

@@ -171,16 +171,16 @@ public class MonkeyBarPivot extends Subsystem {
     //to drive down if we are above the zero height
     //else if we are positive we are trying to drive up, we only allow the pivot to drive up
     //if we are less than the max height
-    if((speed<0 && getRightPotPos()>= RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0) ||
-    (speed>0 && getRightPotPos()<= RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION))
+  if((speed<-0.1 && getRightPotPos() > RobotMap.MONKEY_BAR_RIGHT_ANGLE_DEGREES_0) ||
+    (speed>0.1 && getRightPotPos() < RobotMap.MONKEY_BAR_RIGHT_POT_MAX_ROTATION))
     {
       driveRotateMotorLeft(speed); 
-     driveRotateMotorRight(speed);
+      driveRotateMotorRight(speed);
     }
     else
     {
-      driveRotateMotorLeft(RobotMap.MONKEY_BAR_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage());
-      driveRotateMotorRight(RobotMap.MONKEY_BAR_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage());
+      driveRotateMotorLeft(0.0);
+      driveRotateMotorRight(0.0);
     }
   }
 

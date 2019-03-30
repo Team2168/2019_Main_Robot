@@ -484,8 +484,28 @@ public class Lift extends Subsystem {
 				}
 			}
 		}
+		if(!Robot.returnIsGamePiecePatternRunning())
+		{
+			if(speed > RobotMap.LIFT_MIN_SPEED)
+			{
+				if(RobotMap.LEDS_REVERSE)
+					{
+						Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
+					}
+					else
+						Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
+			}
+			else if(speed < -RobotMap.LIFT_MIN_SPEED)
+			{
+				if(RobotMap.LEDS_REVERSE)
+				{
+					Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
+				}
+				else
+					Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
+			}
+		}
 
-		
 		isLiftMotor1Failure();
 		isLiftMotor2Failure();
 
