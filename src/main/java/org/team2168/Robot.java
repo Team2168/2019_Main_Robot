@@ -149,7 +149,9 @@ public class Robot extends TimedRobot
       pneumatics = Pneumatics.getInstance();
       stinger = Stinger.getInstance();
 
+      //init for leds and associated command
       leds = LEDs.getInstance();
+      withGamePiecePattern = new WithGamePiecePattern();
 
       drivetrain.calibrateGyro();
       driverstation = DriverStation.getInstance();
@@ -361,10 +363,6 @@ public class Robot extends TimedRobot
     throttleStyle = (int) throttleVibeChooser.getSelected();
     if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
     {
-      if (withGamePiecePattern == null)
-      {
-        withGamePiecePattern = new WithGamePiecePattern();
-      }
       withGamePiecePattern.start();
       canRunGamePiecePattern = false;
     }
