@@ -113,6 +113,8 @@ public class Robot extends TimedRobot
   private static WithGamePiecePattern withGamePiecePattern;
   private static boolean isGamePiecePatternRunning = false;
   private static boolean canRunGamePiecePattern = true;
+  private static boolean lastHatch = false;
+  private static boolean lastCargo = false;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -361,14 +363,27 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    if(hatchProbePistons.isHatchPresent() && canRunGamePiecePattern)
     {
       withGamePiecePattern.start();
       canRunGamePiecePattern = false;
+      lastHatch = true;
     }
-    if(!hatchProbePistons.isHatchPresent() && !cargoIntakeWheels.isCargoPresent() && returnIsGamePiecePatternRunning())
+    else if(cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    {
+      withGamePiecePattern.start();
+      canRunGamePiecePattern = false;
+      lastCargo = true;
+    }
+    if(lastHatch && !hatchProbePistons.isHatchPresent() && !returnIsGamePiecePatternRunning())
     {
       canRunGamePiecePattern = true;
+      lastHatch = false;
+    }
+    else if(lastCargo && !cargoIntakeWheels.isCargoPresent() && !returnIsGamePiecePatternRunning())
+    {
+      canRunGamePiecePattern = true;
+      lastCargo = false;
     }
     
   }
