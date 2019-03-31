@@ -180,9 +180,9 @@ public class OI
 		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());
 
-		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
+		operatorJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
 		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
-		operatorJoystick.ButtonBack().whenPressed(new MoveMonkeyBarToSafePositionForScoring());
+		operatorJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
 
 		
