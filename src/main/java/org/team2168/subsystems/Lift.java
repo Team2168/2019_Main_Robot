@@ -282,7 +282,7 @@ public class Lift extends Subsystem {
 						return;
 					}
 
-					//we trying to drive up but pivit is not fully on one side on PivotSide. need to move pivot
+					//we trying to drive up but pivot is not fully on one side on PivotSide. need to move pivot
 					if(RobotMap.LIFT_ENABLE_INTERLOCKS && drivingUp && Robot.hatchProbePivot.isOnMonkeyBarSide() &&  !Robot.hatchProbePivot.isSafeToMoveLiftUp() && !movePivotToMBPosition.isRunning())
 					{
 						movePivotToMBPosition.start();
@@ -327,8 +327,8 @@ public class Lift extends Subsystem {
 
 					
 				}
-				else
-				{
+				//else
+				//{
 					// enableBrake();
 
 					//ABILITY TO PUT SUBSYSTEM BACK TO WHERE WE FOUND IT
@@ -347,10 +347,10 @@ public class Lift extends Subsystem {
 					// 	driveLiftMotor1(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
 					// 	driveLiftMotor2(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
 					// }
-					driveLiftMotor1(0.0);
-					driveLiftMotor2(0.0);
+					//driveLiftMotor1(0.0);
+					//driveLiftMotor2(0.0);
 
-				}
+				//}
 			}
 			else
 			{
@@ -360,11 +360,11 @@ public class Lift extends Subsystem {
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
 				}
-				else
-				{
-					driveLiftMotor1(0.0);
-					driveLiftMotor2(0.0);
-				}
+				// else
+				// {
+				// 	driveLiftMotor1(0.0);
+				// 	driveLiftMotor2(0.0);
+				// }
 
 				
 			}
