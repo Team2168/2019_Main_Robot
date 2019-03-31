@@ -7,6 +7,7 @@
 
 package org.team2168;
 
+import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.pneumatics.StartCompressor;
@@ -18,8 +19,9 @@ import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.HatchProbePivotBrake;
 import org.team2168.subsystems.Lift;
-import org.team2168.subsystems.MonkeyBarIntakeWheels;
+import org.team2168.subsystems.LEDs;
 import org.team2168.subsystems.MonkeyBarPivot;
+import org.team2168.subsystems.MonkeyBarIntakeWheels;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.ShifterDrivetrain;
 import org.team2168.subsystems.ShifterStinger;
@@ -31,7 +33,6 @@ import org.team2168.utils.consoleprinter.ConsolePrinter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -73,7 +74,7 @@ public class Robot extends TimedRobot
   public static MonkeyBarIntakeWheels monkeyBarIntakeWheels;
   public static Stinger stinger;
   public static Pneumatics pneumatics;
-  public static I2C i2c;
+  public static LEDs leds;
 
   // Variables for initializing and calibrating the Gyro
   static boolean autoMode;
@@ -102,8 +103,16 @@ public class Robot extends TimedRobot
   //boolean to keep track of climb mode
   public static boolean isClimbEnabled = false;
 
+  //Variable to track blue alliance vs red alliance
+  private static boolean blueAlliance = false;
+
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
+
+  //LEDs stuff
+  private static WithGamePiecePattern withGamePiecePattern;
+  private static boolean isGamePiecePatternRunning = false;
+  private static boolean canRunGamePiecePattern = true;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -140,7 +149,7 @@ public class Robot extends TimedRobot
       pneumatics = Pneumatics.getInstance();
       stinger = Stinger.getInstance();
 
-      i2c = new I2C(I2C.Port.kOnboard, 8);
+      leds = LEDs.getInstance();
 
       drivetrain.calibrateGyro();
       driverstation = DriverStation.getInstance();
@@ -235,6 +244,24 @@ public class Robot extends TimedRobot
       drivetrain.startGyroCalibrating();
 
     drivetrain.calibrateGyro();
+    
+    if(driverstation.isFMSAttached())
+    {
+      if(Robot.onBlueAlliance())
+      {
+        leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+      }
+      else
+      {
+        leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+      }
+    }
+    else
+      leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+
+
+    
+    
 
     drivetrain.limelightPosController.Pause();
   }
@@ -264,6 +291,10 @@ public class Robot extends TimedRobot
     matchStarted = true;
     drivetrain.stopGyroCalibrating();
     drivetrain.resetGyro();
+    if(RobotMap.LEDS_REVERSE)
+      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 192, 255, 200);
+    else 
+      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 192, 255, 200);
 
     autonomousCommand = (Command) autoChooser.getSelected();
 
@@ -306,6 +337,8 @@ public class Robot extends TimedRobot
     // Select the control style
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
+
+    leds.writePattern(RobotMap.PATTERN_RAINBOW);
   }
 
   /**
@@ -326,10 +359,20 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    // updateLights();
-    // callArduino();
-    // Robot.i2c.write(8, 97);
-
+    if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    {
+      if (withGamePiecePattern == null)
+      {
+        withGamePiecePattern = new WithGamePiecePattern();
+      }
+      withGamePiecePattern.start();
+      canRunGamePiecePattern = false;
+    }
+    if(!hatchProbePistons.isHatchPresent() && !cargoIntakeWheels.isCargoPresent() && returnIsGamePiecePatternRunning())
+    {
+      canRunGamePiecePattern = true;
+    }
+    
   }
 
   /************************************************************
@@ -468,6 +511,32 @@ public class Robot extends TimedRobot
     return isClimbEnabled;
 
   }
+
+  public static boolean onBlueAlliance() {
+		return driverstation.getAlliance() == DriverStation.Alliance.Blue;
+
+  }
+  
+  public static void setIsGamePiecePatternRunning(boolean input)
+  {
+    isGamePiecePatternRunning = input;
+  }
+
+  public static boolean returnIsGamePiecePatternRunning()
+  {
+    return isGamePiecePatternRunning;
+  }
+
+  // public static void setCanRunGamePiecePattern(boolean input)
+  // {
+  //   canRunGamePiecePattern = input;
+  // }
+
+  // public static boolean returnCanRunGamePiecePattern()
+  // {
+  //   return canRunGamePiecePattern;
+  // }
+	
 
   /**
    * Method which checks to see if gyro drifts and resets the gyro. Call this in a

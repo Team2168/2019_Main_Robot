@@ -5,67 +5,46 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.drivetrain;
+package org.team2168.commands.LEDs;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Engages stingers and puts drivetrain in neutral
- */
-public class EngageStingers extends Command
-{
-  public EngageStingers()
-  {
-    requires(Robot.shifterStinger);
+public class MonkeyBarPattern extends Command {
+  public MonkeyBarPattern() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.leds);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize()
-  {
-    Robot.shifterStinger.engageStingers();
-    if (Robot.onBlueAlliance())
-    {
-      if(RobotMap.LEDS_REVERSE)
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
-    }
-    else
-    {
-      if(RobotMap.LEDS_REVERSE)
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
-    }
+  protected void initialize() {
+    //trigger when monkey bar speed is a certain threshhold either side of zero
+    Robot.leds.writePatternTwoColors(RobotMap.PATTERN_COLLIDING_COLUMNS, 160, 255, 255, 0, 255, 255);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute()
-  {
+  protected void execute() {
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished()
-  {
-    return Robot.shifterStinger.isStingerEngaged();
+  protected boolean isFinished() {
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end()
-  {
+  protected void end() {
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted()
-  {
+  protected void interrupted() {
   }
 }

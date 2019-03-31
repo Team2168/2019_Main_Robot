@@ -58,6 +58,30 @@ public class CargoIntakeWheels extends Subsystem {
 
         _intakeMotor.set(ControlMode.PercentOutput,speed);
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
+
+        //working model to prevent patterns from running into each other
+        if(!Robot.returnIsGamePiecePatternRunning())
+        {
+            if (speed > RobotMap.CARGO_INTAKE_MIN_SPEED)
+            {
+                if(RobotMap.LEDS_REVERSE)
+                {
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+                }
+                else
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+            }
+            else if (speed < -RobotMap.CARGO_INTAKE_MIN_SPEED)
+            {
+                if(RobotMap.LEDS_REVERSE)
+                {
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+                }
+                else
+                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+            }
+        }
+        
     }
 
     // drivecargo is probably useless because why would you want to move

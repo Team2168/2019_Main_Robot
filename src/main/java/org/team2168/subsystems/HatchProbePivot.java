@@ -142,6 +142,14 @@ public class HatchProbePivot extends Subsystem {
       speed = -speed;
     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
+
+    if(!Robot.returnIsGamePiecePatternRunning())
+    {
+      if (speed > RobotMap.PIVOT_MIN_SPEED || speed < -RobotMap.PIVOT_MIN_SPEED)
+      {
+        Robot.leds.writePattern(RobotMap.PATTERN_CONFETTI_RAINBOW);
+      }
+    }
   }
 
   public void drivePlungerArmPivotMotor(double speed)

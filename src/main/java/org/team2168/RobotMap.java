@@ -220,6 +220,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
 
+	public static final double CARGO_INTAKE_MIN_SPEED = 0; //TODO set
+
 	/*************************************************************************
 	 *                         HATCH INTAKE PARAMETERS                        *
 	 *************************************************************************/
@@ -399,6 +401,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
+	public static final double PIVOT_MIN_SPEED = 0.0; //made this up for LEDs
 
 	public static final int PIVOT_ANGLE_MONKEY_BAR_SIDE = 90;
 
@@ -501,8 +504,25 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         Lights I2C                             *
 	 ******************************************************************/
 	public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
-	public static final int I2C_ADDRESS = 10;
-
+	public static final int I2C_ADDRESS = 8;
+	public static final boolean LEDS_REVERSE = true; //true if 0 is at the top
+	public static final boolean LEDS_VERTICAL = true;
+	public static final int PATTERN_OFF= 0;
+	public static final int PATTERN_FILL = 1;
+	public static final int PATTERN_RUNNING_COLUMNS = 2;
+	public static final int PATTERN_COLLIDING_COLUMNS = 3;
+	public static final int PATTERN_COLUMNS_RIGHT = 4;
+	public static final int PATTERN_COLUMNS_LEFT = 5;
+	public static final int PATTERN_ROCKET_ASCEND = 6;
+	public static final int PATTERN_ROCKET_DESCEND = 7;
+	public static final int PATTERN_2168 = 8;
+	public static final int PATTERN_CONFETTI_RAINBOW = 9;
+	public static final int PATTERN_ANIMATED_WAVE = 10;
+	public static final int PATTERN_BLINK = 11;
+	public static final int PATTERN_RAINBOW = 12;
+	public static final int PATTERN_ANIMATED_WAVE_REVERSE = 13;
+	public static final int PATTERN_POLICE = 14;
+	
 	/******************************************************************
 	 *                         Lights I2C                             *
 	 ******************************************************************/
