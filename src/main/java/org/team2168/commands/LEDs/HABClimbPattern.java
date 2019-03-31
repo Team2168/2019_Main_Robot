@@ -23,20 +23,31 @@ public class HABClimbPattern extends Command {
   @Override
   protected void initialize() {
     //add logic to trigger when stingers engage??--somepoint in the HAB climb--
-    if (Robot.onBlueAlliance())
+    if(Robot.driverstation.isFMSAttached())
     {
-      if(RobotMap.LEDS_REVERSE)
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
+      if (Robot.onBlueAlliance())
+      {
+        if(RobotMap.LEDS_REVERSE)
+          Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
+        else  
+          Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
+      }
+      else
+      {
+        if(RobotMap.LEDS_REVERSE)
+          Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
+        else  
+          Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
+      }
     }
     else
     {
       if(RobotMap.LEDS_REVERSE)
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
       else  
         Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
     }
+    
   }
 
   // Called repeatedly when this Command is scheduled to run

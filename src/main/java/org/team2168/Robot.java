@@ -7,6 +7,10 @@
 
 package org.team2168;
 
+import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
+import org.team2168.commands.LEDs.DisabledPattern;
+import org.team2168.commands.LEDs.HABClimbPattern;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -110,8 +114,11 @@ public class Robot extends TimedRobot
   double runTime = Timer.getFPGATimestamp();
 
   //LEDs stuff
-  private static WithGamePiecePattern withGamePiecePattern;
-  private static boolean isGamePiecePatternRunning = false;
+  public static WithGamePiecePattern withGamePiecePattern;
+  private static DisabledPattern disabledPattern;
+  private static AutoWithoutGamePiecePattern autoWithoutGamePiecePattern;
+  public static TeleopWithoutGamePiecePattern teleopWithoutGamePiecePattern;
+  public static HABClimbPattern habClimbPattern;
   private static boolean canRunGamePiecePattern = true;
   private static boolean lastHatch = false;
   private static boolean lastCargo = false;
@@ -154,6 +161,10 @@ public class Robot extends TimedRobot
       //init for leds and associated command
       leds = LEDs.getInstance();
       withGamePiecePattern = new WithGamePiecePattern();
+      disabledPattern = new DisabledPattern();
+      autoWithoutGamePiecePattern = new AutoWithoutGamePiecePattern();
+      habClimbPattern = new HABClimbPattern();
+      teleopWithoutGamePiecePattern = new TeleopWithoutGamePiecePattern();
 
       drivetrain.calibrateGyro();
       driverstation = DriverStation.getInstance();
@@ -249,23 +260,7 @@ public class Robot extends TimedRobot
 
     drivetrain.calibrateGyro();
     
-    if(driverstation.isFMSAttached())
-    {
-      if(Robot.onBlueAlliance())
-      {
-        leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
-      }
-      else
-      {
-        leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-      }
-    }
-    else
-      leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-
-
-    
-    
+    disabledPattern.start();
 
     drivetrain.limelightPosController.Pause();
   }
@@ -295,10 +290,8 @@ public class Robot extends TimedRobot
     matchStarted = true;
     drivetrain.stopGyroCalibrating();
     drivetrain.resetGyro();
-    if(RobotMap.LEDS_REVERSE)
-      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 192, 255, 200);
-    else 
-      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 192, 255, 200);
+
+    autoWithoutGamePiecePattern.start();
 
     autonomousCommand = (Command) autoChooser.getSelected();
 
@@ -342,7 +335,7 @@ public class Robot extends TimedRobot
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
 
-    leds.writePattern(RobotMap.PATTERN_RAINBOW);
+    teleopWithoutGamePiecePattern.start();
   }
 
   /**
@@ -375,12 +368,12 @@ public class Robot extends TimedRobot
       canRunGamePiecePattern = false;
       lastCargo = true;
     }
-    if(lastHatch && !hatchProbePistons.isHatchPresent() && !returnIsGamePiecePatternRunning())
+    if(lastHatch && !hatchProbePistons.isHatchPresent() && !withGamePiecePattern.isRunning())
     {
       canRunGamePiecePattern = true;
       lastHatch = false;
     }
-    else if(lastCargo && !cargoIntakeWheels.isCargoPresent() && !returnIsGamePiecePatternRunning())
+    else if(lastCargo && !cargoIntakeWheels.isCargoPresent() && !withGamePiecePattern.isRunning())
     {
       canRunGamePiecePattern = true;
       lastCargo = false;
@@ -528,16 +521,6 @@ public class Robot extends TimedRobot
   public static boolean onBlueAlliance() {
 		return driverstation.getAlliance() == DriverStation.Alliance.Blue;
 
-  }
-  
-  public static void setIsGamePiecePatternRunning(boolean input)
-  {
-    isGamePiecePatternRunning = input;
-  }
-
-  public static boolean returnIsGamePiecePatternRunning()
-  {
-    return isGamePiecePatternRunning;
   }
 
   // public static void setCanRunGamePiecePattern(boolean input)

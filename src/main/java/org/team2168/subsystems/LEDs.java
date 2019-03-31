@@ -10,6 +10,7 @@ package org.team2168.subsystems;
 import java.util.TimerTask;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -99,7 +100,7 @@ public class LEDs extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new TeleopWithoutGamePiecePattern());
   }
 
 

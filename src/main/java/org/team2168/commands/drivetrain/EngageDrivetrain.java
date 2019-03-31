@@ -26,6 +26,7 @@ public class EngageDrivetrain extends Command
   protected void initialize()
   {
     Robot.shifterDrivetrain.engageDrivetrain();
+    Robot.habClimbPattern.cancel();
   }
 
   // Called repeatedly when this Command is scheduled to run

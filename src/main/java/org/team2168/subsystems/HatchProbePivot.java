@@ -18,6 +18,7 @@ import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.PID.sensors.CanDigitalInput;
+import org.team2168.commands.LEDs.PivotingPattern;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithJoystick;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
@@ -47,6 +48,8 @@ public class HatchProbePivot extends Subsystem {
 
   MoveMonkeyBarToSafePositionForPivot moveMonkeyBarToSafePositionForPivot;
   MoveLiftToLvl1Position moveLiftFullyDown;
+
+  PivotingPattern pivotingPattern;
 
 
   private HatchProbePivot()
@@ -99,6 +102,8 @@ public class HatchProbePivot extends Subsystem {
 
     TCPHatchProbePivotController = new TCPSocketSender(RobotMap.TCP_SERVER_HP_POT_CONTROLLER, hatchProbePivotController);
     TCPHatchProbePivotController.start();
+
+    pivotingPattern = new PivotingPattern();
     
     ConsolePrinter.putNumber("HatchProbe Pivot Joystick", () -> {return Robot.oi.getHatchProbePivotJoystickValue();}, true, false);
     ConsolePrinter.putNumber("HatchProbe Pivot Motor Voltage", () -> {return _plungerArmPivotVoltage;}, true, false);
@@ -143,11 +148,18 @@ public class HatchProbePivot extends Subsystem {
     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
 
-    if(!Robot.returnIsGamePiecePatternRunning())
+    if(!Robot.withGamePiecePattern.isRunning())
     {
       if (speed > RobotMap.PIVOT_MIN_SPEED || speed < -RobotMap.PIVOT_MIN_SPEED)
       {
-        Robot.leds.writePattern(RobotMap.PATTERN_CONFETTI_RAINBOW);
+        pivotingPattern.start();
+      }
+      else
+      {
+        if(pivotingPattern.isRunning())
+        {
+          pivotingPattern.cancel();
+        }
       }
     }
   }

@@ -12,8 +12,8 @@ import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TeleopWithoutGamePiece extends Command {
-  public TeleopWithoutGamePiece() {
+public class TeleopWithoutGamePiecePattern extends Command {
+  public TeleopWithoutGamePiecePattern() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.leds);

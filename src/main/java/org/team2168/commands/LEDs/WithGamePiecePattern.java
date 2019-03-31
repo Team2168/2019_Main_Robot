@@ -26,7 +26,6 @@ public class WithGamePiecePattern extends Command {
     //add logic to trigger when hatchpanel or cargo is present
     //add to command-intake until--
     Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 0, 255, 200);
-    Robot.setIsGamePiecePatternRunning(true);
 
   }
 
@@ -44,8 +43,6 @@ public class WithGamePiecePattern extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.setIsGamePiecePatternRunning(false);
-    Robot.leds.writePattern(RobotMap.PATTERN_RAINBOW);
   }
 
   // Called when another command which requires one or more of the same

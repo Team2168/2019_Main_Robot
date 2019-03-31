@@ -9,7 +9,7 @@ import org.team2168.commands.LEDs.LiftLoweringPattern;
 import org.team2168.commands.LEDs.LiftRaisingPattern;
 import org.team2168.commands.LEDs.MonkeyBarPattern;
 import org.team2168.commands.LEDs.PivotingPattern;
-import org.team2168.commands.LEDs.TeleopWithoutGamePiece;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.WheelsInPattern;
 import org.team2168.commands.LEDs.WheelsOutPattern;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
@@ -245,7 +245,7 @@ public class OI
 		 ***********************************************************************/
 		// //leds testing
 		// testJoystick.ButtonA().whenPressed(new DisabledPattern());
-		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiece());
+		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiecePattern());
 		// testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
 		// testJoystick.ButtonY().whenPressed(new HABClimbPattern());
 		// testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
