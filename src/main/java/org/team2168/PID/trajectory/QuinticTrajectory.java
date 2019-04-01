@@ -78,8 +78,8 @@ public class QuinticTrajectory
 
 	private static PrintWriter log;
 
-	//private static String directory = "/home/lvuser/Path/";
-	private static String directory = "Path/";
+	private static String directory = "/home/lvuser/Path/";
+	//private static String directory = "Path/";
 		
 	public boolean reverse = false;
 
