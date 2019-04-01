@@ -455,22 +455,22 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double DRIVE_TRAIN_RIGHT_SPEED_I = 0.0010526;
 	public static final double DRIVE_TRAIN_RIGHT_SPEED_D = 0.0543;
 
-	public static final double DRIVE_TRAIN_LEFT_POSITION_P = 0.2;
-	public static final double DRIVE_TRAIN_LEFT_POSITION_I = 0.0001412646174233;
-	public static final double DRIVE_TRAIN_LEFT_POSITION_D = 0.0074778888124088;
+	public static final double DRIVE_TRAIN_LEFT_POSITION_P = 0.0003;
+	public static final double DRIVE_TRAIN_LEFT_POSITION_I = 0.0005;
+	public static final double DRIVE_TRAIN_LEFT_POSITION_D = 0.0;
 
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_P = 0.25;
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_I = 0.0001412646174233;
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_D = 0.0074778888124088;
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_P = 0.0003;
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_I = 0.0005;
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_D = 0.0;
 
 
 	public static final double ROTATE_POSITION_P = 0.055;
 	public static final double ROTATE_POSITION_I = 0.001;
 	public static final double ROTATE_POSITION_D = 0.0064778888124088;
 
-	public static final double ROTATE_POSITION_P_Drive_Straight = 0.055; //0.055 comp
-	public static final double ROTATE_POSITION_I_Drive_Straight = 0.001; //0.001
-	public static final double ROTATE_POSITION_D_Drive_Straight = 0.0064778888124088;
+	public static final double ROTATE_POSITION_P_Drive_Straight = 0.0055; //0.055 comp
+	public static final double ROTATE_POSITION_I_Drive_Straight = 0.0004; //0.001
+	public static final double ROTATE_POSITION_D_Drive_Straight = 0.0003;
 
 	public static final double STINGER_AUTO_RIGHT_POSITION_P = 0.1;
 	public static final double STINGER_AUTO_RIGHT_POSITION_I = 0.01;

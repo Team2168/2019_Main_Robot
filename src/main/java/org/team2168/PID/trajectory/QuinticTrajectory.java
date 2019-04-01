@@ -78,8 +78,8 @@ public class QuinticTrajectory
 
 	private static PrintWriter log;
 
-	//private static String directory = "/home/lvuser/Path/";
-	private static String directory = "Path/";
+	private static String directory = "/home/lvuser/Path/";
+	//private static String directory = "Path/";
 		
 	public boolean reverse = false;
 
@@ -311,8 +311,8 @@ public class QuinticTrajectory
 //	    config.max_jerk = 30.0*12;
 //	    config.max_vel = 10.0*12;
 	    
-	    config.max_vel = 3.0*12;
-	    config.max_acc = 3.0*12;
+	    config.max_vel = 8.0*12;
+	    config.max_acc = 8.0*12;
 	    config.max_jerk = 30.0*12;
 	    
 	    
@@ -754,6 +754,16 @@ public class QuinticTrajectory
 	  {
 		 
 		  return this.rightVel;
+	  }
+
+	  public double[] getLeftAcc()
+	  {
+		  return this.leftAcc;
+	  }
+
+	  public double[] getRightAcc()
+	  {
+		  return this.rightAcc;
 	  }
 	  
 	  public double[] getHeadingDeg()

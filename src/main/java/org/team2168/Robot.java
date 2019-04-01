@@ -10,6 +10,7 @@ package org.team2168;
 import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.HABClimbPattern;
 import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
+import org.team2168.PID.trajectory.QuinticTrajectory;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -21,10 +22,10 @@ import org.team2168.subsystems.HatchFloorIntake;
 import org.team2168.subsystems.HatchProbePistons;
 import org.team2168.subsystems.HatchProbePivot;
 import org.team2168.subsystems.HatchProbePivotBrake;
-import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.LEDs;
-import org.team2168.subsystems.MonkeyBarPivot;
+import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.MonkeyBarIntakeWheels;
+import org.team2168.subsystems.MonkeyBarPivot;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.ShifterDrivetrain;
 import org.team2168.subsystems.ShifterStinger;
@@ -51,8 +52,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot
-{
+public class Robot extends TimedRobot {
   // Digital Jumper to Identify if this is practice bot or comp bot
   private static DigitalInput practiceBot;
 
@@ -113,6 +113,31 @@ public class Robot extends TimedRobot
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
 
+  /****************************************************
+    *                   Autos
+    ***************************************************/
+    public static double[] leftVelQuinticPath;
+    public static double[] rightVelQuinticPath;
+    public static double[] leftPosQuinticPath;
+    public static double[] rightPosQuinticPath;
+    public static double[] leftAccQuinticPath;
+    public static double[] rightAccQuinticPath;
+    public static double[] headingQuinticPath;
+    //public static boolean QuinticPath_Reverse = false;
+
+    public static double[] leftVelQuinticPath2;
+    public static double[] rightVelQuinticPath2;
+    public static double[] leftPosQuinticPath2;
+    public static double[] rightPosQuinticPath2;
+    public static double[] leftAccQuinticPath2;
+    public static double[] rightAccQuinticPath2;
+    public static double[] headingQuinticPath2;
+    //public static boolean QuinticPath_Reverse = false;
+    
+  /****************************************************
+    * 
+    ***************************************************/
+
   //LEDs stuff
   public static WithGamePiecePattern withGamePiecePattern;
   public static AutoWithoutGamePiecePattern autoWithoutGamePiecePattern;
@@ -171,6 +196,47 @@ public class Robot extends TimedRobot
       // Starting PDP
       pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
       pdp.startThread();
+
+       /*******************************************************
+       *                    Paths
+       ******************************************************/
+
+      double[][] waypointPath = new double[][]{
+        {0.0, 0.0, 0},
+        {120.0, 0.0, 0}
+      };
+  
+        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, false);
+        quinticPath.calculate();
+  
+        this.leftPosQuinticPath = quinticPath.getLeftPos();
+        this.rightPosQuinticPath = quinticPath.getRightPos();
+        this.leftVelQuinticPath = quinticPath.getLeftVel();
+        this.rightVelQuinticPath = quinticPath.getRightVel();
+        this.leftAccQuinticPath = quinticPath.getLeftAcc();
+        this.rightAccQuinticPath = quinticPath.getRightAcc();
+        this.headingQuinticPath = quinticPath.getHeadingDeg();
+
+        double[][] waypointPath2 = new double[][]{
+          {48.0, 212.0, 0},
+          {96.0, 212.0, 0},
+          {180.0, 302.0, Math.PI/4}
+        };
+    
+          QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, false);
+          quinticPath2.calculate();
+    
+          this.leftPosQuinticPath2 = quinticPath2.getLeftPos();
+          this.rightPosQuinticPath2 = quinticPath2.getRightPos();
+          this.leftVelQuinticPath2 = quinticPath2.getLeftVel();
+          this.rightVelQuinticPath2 = quinticPath2.getRightVel();
+          this.leftAccQuinticPath2 = quinticPath2.getLeftAcc();
+          this.rightAccQuinticPath2 = quinticPath2.getRightAcc();
+          this.headingQuinticPath2 = quinticPath2.getHeadingDeg();
+  
+         /*******************************************************
+         *                    
+         ******************************************************/
 
       // Start Operator Interface
       oi = OI.getInstance();
