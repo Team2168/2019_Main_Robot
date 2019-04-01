@@ -23,8 +23,8 @@ public class OneDimensionalMotionProfiling {
 //	double aMax = 3000.0;
 //	double jMax =30000.0;
 	
-	double vMax = 50.0;
-	double aMax = 53.0;
+	double vMax = 220.0;
+	double aMax = 220.0;
 	double jMax = 1000.0;
 	
 	double vMin = -vMax;
@@ -51,7 +51,7 @@ public class OneDimensionalMotionProfiling {
 
 	public static void main(String[] args){
 		
-		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(110,40,110,110,1000);
+		OneDimensionalMotionProfiling oneDirection= new OneDimensionalMotionProfiling(110,40,3300,330,1000);
 		
 		
 //		for(int i=0; i<oneDirection.getVelArray().length; i++)
