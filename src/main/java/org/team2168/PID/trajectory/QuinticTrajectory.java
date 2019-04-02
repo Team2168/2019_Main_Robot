@@ -78,8 +78,8 @@ public class QuinticTrajectory
 
 	private static PrintWriter log;
 
-	private static String directory = "/home/lvuser/Path/";
-	//private static String directory = "Path/";
+	//private static String directory = "/home/lvuser/Path/";
+	private static String directory = "Path/";
 		
 	public boolean reverse = false;
 
@@ -107,9 +107,9 @@ public class QuinticTrajectory
 			
 			// {48.0, 0.0, 0},
 			// {96.0, 0.0, 0},
-			{0.0, 90.0, 0},
-			{120.0, 70.0, -Math.PI/6},
-			
+			{48.0, 212.0, 0},
+			{96.0, 212.0, 0},
+			{180.0, 302.0, Math.PI/4}
 			// {204.0, 21.0, -Math.PI/6},
 			// {263.0, 32.0, Math.PI/3-0.001},
 			// {252.0, 90.0, 5*Math.PI/6-0.002}
@@ -198,59 +198,68 @@ public class QuinticTrajectory
 		
 		
 		//outline field perimeter
-		double[][] edge = {{336,12},{12,12},{12,336},{336,336}};
+		double[][] edge = {{324,0},{0,0},{0,324},{324,324}};
 		fig3.addData(edge, Color.black);
-		
-		edge = new double[][] {{324,146},{221,146},{221,202},{324,202}};
+
+		edge = new double[][] {{324,134},{209,134},{209,190},{324,190}};
 		fig3.addData(edge, Color.black);
-		
-		edge = new double[][] {{12,110},{60,110},{60,238},{12,238}};
+
+		edge = new double[][] {{0,98},{48,98},{48,226},{0,226}};
 		fig3.addData(edge, Color.black);
-		
-		edge = new double[][] {{60,110},{60,100},{108,100},{108,248},{60,248},{60,238}};
+
+		edge = new double[][] {{48,98},{48,88},{96,88},{96,236},{48,236},{48,226}};
 		fig3.addData(edge, Color.black);
-		
-		edge = new double[][] {{12,150},{60,150}};
+
+		edge = new double[][] {{0,138},{48,138}};
 		fig3.addData(edge, Color.black);
-		
-		edge = new double[][] {{12,198},{60,198}};
+
+		edge = new double[][] {{0,186},{48,186}};
 		fig3.addData(edge, Color.black);
-		
-		
-//		double[][] edge = {{(1),(16+27/2.0-2-4.81/12)},{(1),(16-27/2.0+2+4.81/12)}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{1,16+27/2.0-2-4.81/12},{1+2+10.9/12,16+27/2.0}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{1,16-27/2.0+2+4.81/12},{1+2+10.9/12, 16-27/2.0}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{1+2+10.9/12,16+27/2.0},{29,16+27/2.0}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{1+2+10.9/12, 16-27/2.0},{29,16-27/2.0}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{28,16+27/2.0}, {28, 16-27/2.0}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{12+7.6/12, 16+27/2.0-7-1.5/12}, {16+3.2/12, 16+27/2.0-7-1.5/12}, {16+3.2/12, 16-27/2.0+7+1.5/12}, {12+7.6/12, 16-27/2.0+7+1.5/12}, {12+7.6/12, 16+27/2.0-7-1.5/12}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{12+7.6/12,16+27/2.0-11-7.75/12}, {12+7.6/12-3.5, 16+27/2.0-11-7.75/12}, {12+7.6/12-3.5, 16-27/2.0+11+7.75/12}, {12+7.6/12, 16-27/2.0+11+7.75/12}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{12+7.6/12-3.5, 16+1.875},{12+7.6/12-3.5, 16-1.875}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{28,16+28/2.0-5-11.6/12}, {28-1-11.7/12, 16+28/2.0-5-11.6/12}, {28-1-11.7/12,  16+28/2.0-5-11.6/12-2-1.4/12}, 
-//			{28-1-11.7/12-3-2.9/12, 16+28/2.0-5-11.6/12-2-1.4/12}, {28-1-11.7/12-3-2.9/12, 16-28/2.0+5+11.6/12+2+1.4/12}, {28-1-11.7/12, 16-28/2.0+5+11.6/12+2+1.4/12},
-//			{28-1-11.7/12, 16-28/2.0+5+11.6/12}, {28, 16-28/2.0+5+11.6/12}};
-//		fig3.addData(edge, Color.black);
-//		
-//		edge = new double[][] {{1,16+27/2.0-8-6.25/12}, {1+2+11.7/12, 16+27/2.0-8-6.25/12}, {1+2+11.7/12, 16+27/2.0-8-4-6.25/12}, {1, 16+27/2.0-8-4-6.25/12}};
-//		fig3.addData(edge, Color.black);
+
+		//right rocket
+		edge = new double[][] {{210,7},{220,27},{238,27},{248,7}};
+		fig3.addData(edge, Color.black);
+
+		//left rocket
+		edge = new double[][] {{210,317},{220,297},{238,297},{248,317}};
+		fig3.addData(edge, Color.black);
+		//cs right front
+		edge = new double[][] {{261,133},{261,121}};
+		fig3.addData(edge, Color.black);
+
+		//cs right middle
+		edge = new double[][] {{283,133},{283,121}};
+		fig3.addData(edge, Color.black);
+
+		//cs right back
+		edge = new double[][] {{305,133},{305,121}};
+		fig3.addData(edge, Color.black);
+
+		//cs left front 
+		edge = new double[][] {{261,191},{261,203}};
+		fig3.addData(edge, Color.black);
+		//cs left middle
+		edge = new double[][] {{283,191},{283,203}};
+		fig3.addData(edge, Color.black);
+
+		//cs left back
+		edge = new double[][] {{305,191},{305,203}};
+		fig3.addData(edge, Color.black);
+		//right exchange
+		edge = new double[][] {{0,26},{12,26}};
+		fig3.addData(edge, Color.black);
+
+		//left exchange
+		edge = new double[][] {{0,298},{12,298}};
+		fig3.addData(edge, Color.black);
+
+		//cs front right
+		edge = new double[][] {{197,151},{209,151}};
+		fig3.addData(edge, Color.black);
+
+		//cs front left
+		edge = new double[][] {{197,173},{209,173}};
+		fig3.addData(edge, Color.black);
 		
 		
 		
