@@ -20,6 +20,8 @@ import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
+import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
