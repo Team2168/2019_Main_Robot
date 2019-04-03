@@ -174,8 +174,8 @@ public class OI
 		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonX().whileHeld(new IntakeHatchPanel());
 		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
-		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());
+		operatorJoystick.ButtonY().whenPressed(new EngageHatchPanel());
+		operatorJoystick.ButtonB().whenPressed(new DisengageHatchPanel());
 
 		operatorJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
 		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
