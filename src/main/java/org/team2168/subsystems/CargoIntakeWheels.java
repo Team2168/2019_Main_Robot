@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CargoIntakeWheels extends Subsystem {
 
-    private TalonSRX _intakeMotor;
+    public TalonSRX _intakeMotor;
     private CanAnalogInput _sharpIRSensor;
     public static volatile double _driveVoltage;
     private static CargoIntakeWheels _instance;

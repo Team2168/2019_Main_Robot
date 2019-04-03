@@ -323,34 +323,29 @@ public class Lift extends Subsystem {
 					if(Math.abs(liftPot.getRate()) < 1.0)
 						isSensorValid = false;
 					else
-					isSensorValid = true;
+						isSensorValid = true;
 
 					
 				}
-				//else
-				//{
-					// enableBrake();
-
-					//ABILITY TO PUT SUBSYSTEM BACK TO WHERE WE FOUND IT
-					// if(movedMOnkeyBAr)
-					// 	MoveBAckTo
-					// elseif(MonkeyNotRunning)
-					// 	movedMOnkeyBAr = false;
-
-					// if(getPotPos()<=13)
-					// {
-					// 	driveLiftMotor1(RobotMap.LIFT_UP_MIN_VOLTAGE);
-					// 	driveLiftMotor2(RobotMap.LIFT_UP_MIN_VOLTAGE);
-					// }
-					// else
-					// {
-					// 	driveLiftMotor1(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
-					// 	driveLiftMotor2(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
-					// }
-					//driveLiftMotor1(0.0);
-					//driveLiftMotor2(0.0);
-
-				//}
+				else if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
+				{
+					double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
+					if(Lift.getInstance().getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
+					{
+					  Robot.lift.driveAllMotors(-holdingSpeed);//+0.01
+					//  System.out.println("Da lift is holding down");
+					}
+					else
+					{
+					  Robot.lift.driveAllMotors(holdingSpeed);
+					 // System.out.println("Da lift is holding up");
+					}
+				}
+				else
+				{
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
+				}
 			}
 			else
 			{
@@ -360,11 +355,11 @@ public class Lift extends Subsystem {
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
 				}
-				// else
-				// {
-				// 	driveLiftMotor1(0.0);
-				// 	driveLiftMotor2(0.0);
-				// }
+				else
+				{
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
+				}
 
 				
 			}

@@ -33,9 +33,12 @@ public class IntakeHatchPanel extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
+    addSequential(new Sleep(), 2.5);
     addSequential(new ExtendHatchPlunger());
     addSequential(new WaitUntilHatch());
     addSequential(new Sleep(), 0.1);
     addSequential(new RetractHatchPlunger());
+    addSequential(new Sleep(), 100);
   }
 }
+ 
