@@ -34,12 +34,11 @@ public class HatchProbePistons extends Subsystem {
     _HatchSensor = new CanAnalogInput(Robot.hatchProbePivot._plungerArmPivotMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
     _limitSwitch = new CanDigitalInput(Robot.hatchProbePivot._plungerArmPivotMotor);
 
-    ConsolePrinter.putNumber("HatchPlunger Raw IR", () -> {return getRawIRVoltage();}, true, false);
-    ConsolePrinter.putBoolean("Hatch is Present", () -> {return isHatchPresent();}, true, false);
+    // ConsolePrinter.putNumber("HatchPlunger Raw IR", () -> {return getRawIRVoltage();}, true, false);
+    // ConsolePrinter.putBoolean("Hatch is Present", () -> {return isHatchPresent();}, true, false);
     // ConsolePrinter.putBoolean("Arm is extended", () -> {return isArmExtended();}, true, false);
     // ConsolePrinter.putBoolean("Hatch is Engaged", () -> {return isHatchEngaged();}, true, false);
-    // ConsolePrinter.putBoolean("Hatch Left limit", () -> {return _limitSwitch.getForwardLimit();}, true, false);
-    // ConsolePrinter.putBoolean("Hatch Right Limit", () -> {return _limitSwitch.getReverseLimit();}, true, false);
+    ConsolePrinter.putBoolean("Is hatch present limit", () -> {return isHatchPresentLimitSwitch();}, true, false);
 
 
   }
