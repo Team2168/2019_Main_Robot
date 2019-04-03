@@ -222,17 +222,17 @@ public class OI
 		 * Commands Test Joystick
 		 ***********************************************************************/
 		// //leds testing
-		// testJoystick.ButtonA().whenPressed(new DisabledPattern());
-		// testJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiecePattern());
-		// testJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
-		// testJoystick.ButtonY().whenPressed(new HABClimbPattern());
-		// testJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
-		// testJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
-		// testJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
-		// testJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
-		// testJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
-		// testJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
-		// testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
+		// pidTestJoystick.ButtonA().whenPressed(new DisabledPattern());
+		// pidTestJoystick.ButtonB().whenPressed(new TeleopWithoutGamePiecePattern());
+		// pidTestJoystick.ButtonX().whenPressed(new AutoWithoutGamePiecePattern());
+		// pidTestJoystick.ButtonY().whenPressed(new HABClimbPattern());
+		// pidTestJoystick.ButtonLeftBumper().whenPressed(new PivotingPattern());
+		// pidTestJoystick.ButtonRightBumper().whenPressed(new LiftRaisingPattern());
+		// pidTestJoystick.ButtonRightTrigger().whenPressed(new LiftLoweringPattern());
+		// pidTestJoystick.ButtonDownDPad().whenPressed(new WheelsInPattern());
+		// pidTestJoystick.ButtonLeftDPad().whenPressed(new WheelsOutPattern());
+		// pidTestJoystick.ButtonRightDPad().whenPressed(new MonkeyBarPattern());
+		// pidTestJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
 	}
 	
 

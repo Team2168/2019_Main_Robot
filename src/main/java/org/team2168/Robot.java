@@ -8,7 +8,6 @@
 package org.team2168;
 
 import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
-import org.team2168.commands.LEDs.DisabledPattern;
 import org.team2168.commands.LEDs.HABClimbPattern;
 import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
@@ -115,7 +114,6 @@ public class Robot extends TimedRobot
 
   //LEDs stuff
   public static WithGamePiecePattern withGamePiecePattern;
-  private static DisabledPattern disabledPattern;
   private static AutoWithoutGamePiecePattern autoWithoutGamePiecePattern;
   public static TeleopWithoutGamePiecePattern teleopWithoutGamePiecePattern;
   public static HABClimbPattern habClimbPattern;
@@ -143,6 +141,7 @@ public class Robot extends TimedRobot
       pwmDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
 
       // Instantiate the subsystems
+      leds = LEDs.getInstance();
       cargoIntakeWheels = CargoIntakeWheels.getInstance();
       cargoPunch = CargoPunch.getInstance();
       drivetrain = Drivetrain.getInstance();
@@ -159,9 +158,8 @@ public class Robot extends TimedRobot
       stinger = Stinger.getInstance();
 
       //init for leds and associated command
-      leds = LEDs.getInstance();
+      
       withGamePiecePattern = new WithGamePiecePattern();
-      disabledPattern = new DisabledPattern();
       autoWithoutGamePiecePattern = new AutoWithoutGamePiecePattern();
       habClimbPattern = new HABClimbPattern();
       teleopWithoutGamePiecePattern = new TeleopWithoutGamePiecePattern();
@@ -260,7 +258,23 @@ public class Robot extends TimedRobot
 
     drivetrain.calibrateGyro();
     
-    disabledPattern.start();
+    teleopWithoutGamePiecePattern.cancel();
+    // disabled pattern has to be triggered directly 
+    if(Robot.driverstation.isFMSAttached())
+    {
+      if (Robot.onBlueAlliance())
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+      }
+      else
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+      }
+    }
+    else
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+    }
 
     drivetrain.limelightPosController.Pause();
   }
@@ -281,6 +295,7 @@ public class Robot extends TimedRobot
 
     // Check to see if the gyro is drifting, if it is re-initialize it.
     gyroReinit();
+    teleopWithoutGamePiecePattern.cancel();
   }
 
   public void autonomousInit()
@@ -335,7 +350,6 @@ public class Robot extends TimedRobot
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
 
-    teleopWithoutGamePiecePattern.start();
   }
 
   /**

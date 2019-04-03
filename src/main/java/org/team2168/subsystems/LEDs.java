@@ -40,9 +40,7 @@ public class LEDs extends Subsystem {
   private LEDs()
   {
     _i2c = new I2C(RobotMap.I2C_PORT, RobotMap.I2C_ADDRESS);
-
-    executor = new java.util.Timer();
-    executor.schedule(new LedsUpdateTask(), 0L, THREAD_PERIOD);
+    startThread();
   }
 
   /**
@@ -55,6 +53,12 @@ public class LEDs extends Subsystem {
       _instance = new LEDs();
     }
     return _instance;
+  }
+  
+  public void startThread()
+  {
+    executor = new java.util.Timer();
+    executor.schedule(new LedsUpdateTask(this), 0L, THREAD_PERIOD);
   }
 
   /**
@@ -97,6 +101,25 @@ public class LEDs extends Subsystem {
 
   }
 
+  private void run()
+  {
+    if(writePattern)
+    {
+      _i2c.write(RobotMap.I2C_ADDRESS, pattern);
+      writePattern = false;
+    }
+    else if(writePatternOneColor)
+    {
+      _i2c.writeBulk(lightByteOneColor);
+      writePatternOneColor = false;
+    }
+    else if(writePatternTwoColors)
+    {
+      _i2c.writeBulk(lightByteTwoColor);
+      writePatternTwoColors = false;
+    }
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -105,33 +128,21 @@ public class LEDs extends Subsystem {
 
 
   private class LedsUpdateTask extends TimerTask {
+    private LEDs leds;
 
-    private LedsUpdateTask() {
-      // if (leds == null) {
-      //   throw new NullPointerException("LEDs pointer null");
-      // }
-      // this.leds = leds;
+    private LedsUpdateTask(LEDs leds) {
+      if (leds == null) {
+        throw new NullPointerException("LEDs pointer null");
+      }
+      this.leds = leds;
     }
 
     /**
      * Called periodically in its own thread
      */
     public void run() {
-      if(writePattern)
-      {
-        _i2c.write(RobotMap.I2C_ADDRESS, pattern);
-        writePattern = false;
-      }
-      else if(writePatternOneColor)
-      {
-        _i2c.writeBulk(lightByteOneColor);
-        writePatternOneColor = false;
-      }
-      else if(writePatternTwoColors)
-      {
-        _i2c.writeBulk(lightByteTwoColor);
-        writePatternTwoColors = false;
-      }
+      leds.run();
+ 
     }
   }
-  }
+}
