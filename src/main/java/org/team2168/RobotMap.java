@@ -264,9 +264,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_BASE_POS = 10.5;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.4; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.48; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.35; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.49; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
 	public static final double LIFT_LVL_1_POS_PBOT= 10.5; //TODO SET ALL in inches
@@ -315,9 +315,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
 
 	//PBOT	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.3; //130 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 3.45; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 0; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 1.2; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.26; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 130.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
@@ -386,10 +386,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double PIVOT_CARGO_SHIP_POS = 0; //TODO SET ALL
 
 	/////TODO set these values
-	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0;
-	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 5;
-	public static final double PIVOT_POT_0_ROTATION_DEGREES_PBOT = 0;
-	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 180;
+	public static final double PIVOT_POT_VOLTAGE_0_PBOT = 0.7;
+	public static final double PIVOT_POT_VOLTAGE_MAX_PBOT = 4.92;
+	public static final double PIVOT_POT_0_ROTATION_DEGREES_PBOT = 180;
+	public static final double PIVOT_POT_MAX_ROTATION_DEGREES_PBOT = 0;
 	public static final double PLUNGER_ARM_MIDDLE_POS_PBOT = 90;
 	public static final double PLUNGER_ARM_SAFE_POS_FRONT_PBOT = 45;
 	public static final double PLUNGER_ARM_SAFE_POS_BACK_PBOT = 135;

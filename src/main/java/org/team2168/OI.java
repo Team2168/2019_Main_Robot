@@ -1,21 +1,8 @@
 
 package org.team2168;
 
-import org.team2168.PID.trajectory.OneDimensionalRotation;
-import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
-import org.team2168.commands.LEDs.DisabledPattern;
-import org.team2168.commands.LEDs.HABClimbPattern;
-import org.team2168.commands.LEDs.LiftLoweringPattern;
-import org.team2168.commands.LEDs.LiftRaisingPattern;
-import org.team2168.commands.LEDs.MonkeyBarPattern;
-import org.team2168.commands.LEDs.PivotingPattern;
-import org.team2168.commands.LEDs.TeleopWithoutGamePiece;
-import org.team2168.commands.LEDs.WheelsInPattern;
-import org.team2168.commands.LEDs.WheelsOutPattern;
-import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.MoveToIntakePosition;
 import org.team2168.commands.auto.RotateAndMoveLiftCargoShip;
-import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
@@ -37,12 +24,12 @@ import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarIntakeWheels.DriveMonkeyBarIntakeWithConstant;
 import org.team2168.commands.monkeyBarIntakeWheels.SpinMBWhenLiftDown;
+import org.team2168.commands.lift.PIDCommands.DriveLiftPathPIDZZZ;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToFloorPosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForPivot;
-import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToStowPosition;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
@@ -86,12 +73,14 @@ public class OI
 	public F310 operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 	public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 
-	public TILaunchPad buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
-	public TILaunchPad buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
+	public TILaunchPad buttonBox1;
+	public TILaunchPad buttonBox2;
 
 	// public F310 driverOperatorEJoystick = new
 	// F310(RobotMap.DRIVER_OPERATOR_E_BACKUP);
 
+	// public F310 testJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
+	//public F310 pidTestJoystick = new F310(RobotMap.PID_TEST_JOYSTICK);
 	private LinearInterpolator gunStyleInterpolator;
 	private double[][] gunStyleArray = { { -1.0, -1.0
 			}, { -.15, 0.0
@@ -105,6 +94,14 @@ public class OI
 	 */
 	private OI()
 	{
+
+		if (RobotMap.ENABLE_BUTTON_BOX)
+		{
+			buttonBox1 = new TILaunchPad(RobotMap.BUTTON_BOX_1);
+			buttonBox2 = new TILaunchPad(RobotMap.BUTTON_BOX_2);
+		}
+		
+
 		/*************************************************************************
 		 * Driver Joystick *
 		 *************************************************************************/
@@ -180,7 +177,9 @@ public class OI
 		/*************************************************************************
 		 * Operator Joystick *
 		 *************************************************************************/
-		
+
+
+
 		//////////////// Lower Platform///////////////////////////////////////
 		// operatorJoystick.ButtonBack().whenPressed(new LowerPlatform());
 
@@ -215,9 +214,9 @@ public class OI
 		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());
 
-		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
+		operatorJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
 		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
-		operatorJoystick.ButtonBack().whenPressed(new MoveMonkeyBarToSafePositionForScoring());
+		operatorJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
 
 		
@@ -313,8 +312,16 @@ public class OI
 		// testJoystick.ButtonUpDPad().whenPressed(new WithGamePiecePattern());
 
 
+		// // pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
+		// // pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
 
+		// // pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
+		// // pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
+		// // pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
+		 pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
+		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
+		 pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(35));
 
 	}
 	
@@ -338,23 +345,35 @@ public class OI
 	//correst
 	public double getLiftJoystickValue()
 	{
-
-			return operatorJoystick.getLeftStickRaw_Y()- buttonBox1.getAnalogRaw_Channel1();
+		double buttonBoxVal = 0.0;
+		if (RobotMap.ENABLE_BUTTON_BOX)
+		{
+			buttonBoxVal = buttonBox1.getAnalogRaw_Channel1();
 		}
+		return operatorJoystick.getLeftStickRaw_Y() - buttonBoxVal;
+	}
 
 	/*************************************************************************
 	 * Hatch Probe Pivot *
 	 *************************************************************************/
 	public double getHatchProbePivotJoystickValue()
 	{
-
-			return operatorJoystick.getRightStickRaw_Y() + buttonBox1.getAnalogRaw_Channel0();
+		double buttonBoxVal = 0.0;
+		if (RobotMap.ENABLE_BUTTON_BOX)
+		{
+			buttonBoxVal = buttonBox1.getAnalogRaw_Channel0();
+		}
+		return operatorJoystick.getRightStickRaw_Y() + buttonBoxVal;
 	}
 
 	public double getCargoIntakeJoystickValue()
 	{
-
-		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw() - buttonBox2.getAnalogRaw_Channel1();
+		double buttonBoxVal = 0.0;
+		if (RobotMap.ENABLE_BUTTON_BOX)
+		{
+			buttonBoxVal = buttonBox2.getAnalogRaw_Channel1();
+		}
+		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw() - buttonBoxVal;
 	}
 
 	/*************************************************************************
@@ -362,14 +381,22 @@ public class OI
 	 *************************************************************************/
 	public double getMonkeyBarPivotJoystickValue()
 	{
-
-			return 0 + buttonBox2.getAnalogRaw_Channel0();
+		double buttonBoxVal = 0.0;
+		if (RobotMap.ENABLE_BUTTON_BOX)
+		{
+			buttonBoxVal = buttonBox2.getAnalogRaw_Channel0();
+		}
+		return 0 + buttonBoxVal;
 	}
 
 	public double getMonkeyBarIntakeJoystickValue()
 	{
-	
-		return -operatorJoystick.getLeftTriggerAxisRaw() + operatorJoystick.getRightTriggerAxisRaw() + buttonBox2.getAnalogRaw_Channel1();
+		double buttonBoxVal = 0.0;
+		if (RobotMap.ENABLE_BUTTON_BOX)
+		{
+			buttonBoxVal = buttonBox2.getAnalogRaw_Channel1();
+		}
+		return -operatorJoystick.getLeftTriggerAxisRaw() + operatorJoystick.getRightTriggerAxisRaw() + buttonBoxVal;
 	}
 
 	/*************************************************************************
