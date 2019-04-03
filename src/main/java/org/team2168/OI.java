@@ -5,6 +5,7 @@ import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
@@ -215,6 +216,8 @@ public class OI
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 
 		 pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(35));
+
+		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath());
 
 	}
 	

@@ -330,14 +330,16 @@ public class Lift extends Subsystem {
 				else if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
 				{
 					double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
-					if(Lift.getInstance().getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
+					if(getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
 					{
-					  Robot.lift.driveAllMotors(-holdingSpeed);//+0.01
+						driveLiftMotor1(-holdingSpeed);//+0.01
+						driveLiftMotor2(-holdingSpeed);
 					//  System.out.println("Da lift is holding down");
 					}
 					else
 					{
-					  Robot.lift.driveAllMotors(holdingSpeed);
+						driveLiftMotor1(holdingSpeed);
+						driveLiftMotor2(holdingSpeed);
 					 // System.out.println("Da lift is holding up");
 					}
 				}
