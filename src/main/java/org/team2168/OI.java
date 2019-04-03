@@ -19,9 +19,6 @@ import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
-import org.team2168.commands.drivetrain.DriveLeftDTWithConstant;
-import org.team2168.commands.drivetrain.DriveRightDTWithConstant;
-import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
@@ -227,6 +224,7 @@ public class OI
 
 
 		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
+		operatorJoystick.ButtonX().whileHeld(new IntakeHatchPanel());
 		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
 		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());

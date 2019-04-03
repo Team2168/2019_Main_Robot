@@ -39,7 +39,7 @@ public class WaitUntilHatch extends Command
   @Override
   protected boolean isFinished()
   {
-    return Robot.hatchProbePistons.isHatchPresent();
+    return Robot.hatchProbePistons.isHatchPresentLimitSwitch();
   }
 
   // Called once after isFinished returns true
