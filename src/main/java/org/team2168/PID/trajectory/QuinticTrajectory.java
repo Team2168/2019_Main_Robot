@@ -63,6 +63,10 @@ public class QuinticTrajectory
 	public double[] leftPos;
 	public double[] rightPos;
 	public double[] time;
+	public double[] rightPathX;
+	public double[] rightPathY;
+	public double[] leftPathX;
+	public double[] leftPathY;
 	public double[][] leftPath;
 	public double[][] rightPath;
 	public double[][] rightVelocity;
@@ -80,8 +84,8 @@ public class QuinticTrajectory
 
 	private static PrintWriter log;
 
-	//private static String directory = "/home/lvuser/Path/";
-	private static String directory = "Path/";
+	private static String directory = "/home/lvuser/Path/";
+	//private static String directory = "Path/";
 		
 	public boolean reverse = false;
 
@@ -132,8 +136,8 @@ public class QuinticTrajectory
 		{19, 21.5, -Math.PI/4+0.0001},
 
 	};		
-		QuinticTrajectory quinticPath= new QuinticTrajectory("path1.txt", waypointPath, false);
-		quinticPath.calculate();
+		QuinticTrajectory quinticPath= new QuinticTrajectory("path1.txt", waypointPath, true);
+		//quinticPath.calculate();
 		//quinticPath.plotPath();
 		//System.out.println(quinticPath.traj.toStringEuclidean());
 
@@ -180,8 +184,8 @@ public class QuinticTrajectory
 //		fig3.setXTic(0, 30, 1);
 		fig3.setXTic(0, 150, 1);
 		fig3.setYTic(0, fieldWidth, 1);
-		fig3.addData(quinticPath.rightPath, Color.magenta);
-		fig3.addData(quinticPath.leftPath, Color.blue);
+		fig3.addData(quinticPath.rightPathX, quinticPath.rightPathY, Color.magenta);
+		fig3.addData(quinticPath.leftPathX, quinticPath.leftPathY, Color.blue);
 		
 
 	//	fig3.addData(quinticPath2.leftPath, Color.blue);
@@ -292,8 +296,8 @@ public class QuinticTrajectory
 				fig4.setYLabel("Velocity (ft/sec)");
 				fig4.setXLabel("time (seconds)");
 				fig4.setTitle("Velocity Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
-				fig4.addData(quinticPath.rightVelocity, Color.magenta);
-				fig4.addData(quinticPath.leftVelocity, Color.cyan);
+				fig4.addData(quinticPath.time, quinticPath.rightVel, Color.magenta);
+				fig4.addData(quinticPath.time, quinticPath.leftVel, Color.cyan);
 
 
 				FalconLinePlot fig5 = new FalconLinePlot(new double[][]{{0.0,0.0}});
@@ -302,8 +306,8 @@ public class QuinticTrajectory
 				fig5.setYLabel("accel (ft^2/sec)");
 				fig5.setXLabel("time (seconds)");
 				fig5.setTitle("Acceleration Profile for Left and Right Wheels \n Left = Cyan, Right = Magenta");
-				fig5.addData(quinticPath.rightAccel, Color.magenta);
-				fig5.addData(quinticPath.leftAccel, Color.cyan);
+				fig5.addData(quinticPath.time, quinticPath.rightAcc, Color.magenta);
+				fig5.addData(quinticPath.time, quinticPath.leftAcc, Color.cyan);
 				
 
 		
@@ -368,7 +372,7 @@ public class QuinticTrajectory
 	
 	private void makeFile(String Filename) {
 		try {
-			File roborio = //home/lv
+
 
 			File file = new File(directory); ///home/lvuser/Paths
 			if (!file.exists()) {
@@ -381,8 +385,8 @@ public class QuinticTrajectory
 			log = new PrintWriter(directory + Filename);
 			log.println(this.traj.getNumSegments());
 			for(int i = 0; i<this.traj.getNumSegments(); i++)
-				log.println(this.leftPos[i] +","+this.rightPos[i] +","+ this.leftVel[i] +"," + this.rightVel[i] +"," + this.leftAcc[i] 
-								+"," + this.rightAcc[i] +"," + this.leftJerk[i] +"," + this.rightJerk[i] +"," + this.heading[i]);
+				log.println(this.time[i] + "," + this.leftPath[i][0] + "," + this.leftPath[i][1] + "," + this.rightPath[i][0] + "," + this.rightPath[i][1] + ","+ this.leftPos[i] +","+this.rightPos[i] +","+ this.leftVel[i] +"," + this.rightVel[i] +"," + this.leftAcc[i] 
+								+"," + this.rightAcc[i] +"," + this.leftJ[i] +"," + this.rightJ[i] +"," + this.heading[i]);
 			log.flush();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -398,6 +402,16 @@ public class QuinticTrajectory
 		
 		try 
 		{
+			directory = "/home/lvuser/";
+			File roborio = new File(directory);
+			if(roborio.exists()) //We are on the roborio
+			{
+				directory = "/home/lvuser/Path";
+			}
+			else // we are on test computer
+			{
+				directory = "Path/";
+			}
 				File file = new File(directory + filename); ///home/lvuser/Paths
 				if (!file.exists()) 
 				{
@@ -422,24 +436,38 @@ public class QuinticTrajectory
 					
 					if(isFirstLine) 
 					{
+						this.time = new double[Integer.parseInt(values[0])];
+						this.rightPathX = new double[Integer.parseInt(values[0])];
+						this.rightPathY = new double[Integer.parseInt(values[0])];
+						this.leftPathX = new double[Integer.parseInt(values[0])];
+						this.leftPathY = new double[Integer.parseInt(values[0])];
 						this.leftPos = new double[Integer.parseInt(values[0])];
 						this.rightPos = new double[Integer.parseInt(values[0])];
 						this.leftVel = new double[Integer.parseInt(values[0])];
 						this.rightVel = new double[Integer.parseInt(values[0])];
 						this.leftAcc = new double[Integer.parseInt(values[0])];
 						this.rightAcc = new double[Integer.parseInt(values[0])];
-						this.leftJerk = new double[Integer.parseInt(values[0])];
-						this.rightJerk = new double[Integer.parseInt(values[0])];
+						this.leftJ = new double[Integer.parseInt(values[0])];
+						this.rightJ = new double[Integer.parseInt(values[0])];
 						this.heading = new double[Integer.parseInt(values[0])];
 						isFirstLine = false;
 					}
 					else 
 					{
-						this.leftPos[filecounter] = Double.parseDouble(values[0]) ;
-						this.rightPos[filecounter] =  Double.parseDouble(values[1]);
-						this.leftVel[filecounter] = Double.parseDouble(values[2]) ;
-						this.rightVel[filecounter] =  Double.parseDouble(values[3]);
-						this.heading[filecounter] = Double.parseDouble(values[4]);
+						this.time[filecounter] = Double.parseDouble(values[0]);
+						this.rightPathX[filecounter] = Double.parseDouble(values[1]);
+						this.rightPathY[filecounter] = Double.parseDouble(values[2]);
+						this.leftPathX[filecounter] = Double.parseDouble(values[3]);
+						this.leftPathY[filecounter] = Double.parseDouble(values[4]);
+						this.leftPos[filecounter] = Double.parseDouble(values[5]);
+						this.rightPos[filecounter] =  Double.parseDouble(values[6]);
+						this.leftVel[filecounter] = Double.parseDouble(values[7]) ;
+						this.rightVel[filecounter] =  Double.parseDouble(values[8]);
+						this.leftAcc[filecounter] = Double.parseDouble(values[9]);
+						this.rightAcc[filecounter] = Double.parseDouble(values[10]);
+						this.leftJ[filecounter] = Double.parseDouble(values[11]);
+						this.rightJ[filecounter] = Double.parseDouble(values[12]);
+						this.heading[filecounter] = Double.parseDouble(values[13]);
 						
 						filecounter++;
 					}	
@@ -700,6 +728,10 @@ public class QuinticTrajectory
 		  this.leftJerk = new double[this.leftRightTraj.left.getNumSegments()][2];
 		  this.rightJerk = new double[this.leftRightTraj.right.getNumSegments()][2];
 		  
+		  this.leftPathX = new double[this.leftRightTraj.right.getNumSegments()];
+		  this.leftPathY = new double[this.leftRightTraj.right.getNumSegments()];
+		  this.rightPathX = new double[this.leftRightTraj.right.getNumSegments()];
+		  this.rightPathY = new double[this.leftRightTraj.right.getNumSegments()];
 		  this.leftVel = new double[this.leftRightTraj.right.getNumSegments()];
 		  this.rightVel =  new double[this.leftRightTraj.right.getNumSegments()];
 		  this.leftPos = new double[this.leftRightTraj.right.getNumSegments()];
@@ -718,6 +750,11 @@ public class QuinticTrajectory
 			  this.leftPath[i][1] = this.leftRightTraj.left.getSegment(i).y;
 			  this.rightPath[i][0] = this.leftRightTraj.right.getSegment(i).x;
 			  this.rightPath[i][1] = this.leftRightTraj.right.getSegment(i).y;
+
+			  this.rightPathX[i] = this.rightPath[i][0];
+			  this.rightPathY[i] = this.rightPath[i][1];
+			  this.leftPathX[i] = this.leftPath[i][0];
+			  this.leftPathY[i] = this.leftPath[i][1];
 			  
 			  this.leftVelocity[i][0] = this.leftRightTraj.left.getSegment(i).dt*i;
 			  this.leftVelocity[i][1] = this.leftRightTraj.left.getSegment(i).vel;
@@ -746,6 +783,8 @@ public class QuinticTrajectory
 
 			  this.leftAcc[i] = this.leftAccel[i][1];
 			  this.rightAcc[i] = this.rightAccel[i][1];
+			  this.leftJ[i] = this.leftJerk[i][1];
+			  this.rightJ[i] = this.rightJerk[i][1];
 			  
 		  }
 	  }
