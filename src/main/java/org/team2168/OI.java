@@ -7,9 +7,6 @@ import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
-import org.team2168.commands.drivetrain.DriveLeftDTWithConstant;
-import org.team2168.commands.drivetrain.DriveRightDTWithConstant;
-import org.team2168.commands.drivetrain.DriveWithJoystick;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
@@ -17,6 +14,7 @@ import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
 import org.team2168.commands.hatchProbePistons.EngageHatchPanel;
 import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
+import org.team2168.commands.hatchProbePistons.IntakeHatchPanel;
 import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
 import org.team2168.commands.lift.MoveLiftToCargoShipPosition;
 import org.team2168.commands.lift.MoveLiftToLvl1Position;
@@ -25,8 +23,6 @@ import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.lift.PIDCommands.DriveLiftPathPIDZZZ;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
-import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
-import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
@@ -180,6 +176,7 @@ public class OI
 
 
 		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
+		operatorJoystick.ButtonX().whileHeld(new IntakeHatchPanel());
 		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
 		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
 		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());

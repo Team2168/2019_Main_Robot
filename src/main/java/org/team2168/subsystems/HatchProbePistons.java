@@ -89,6 +89,11 @@ public class HatchProbePistons extends Subsystem {
       return (getRawIRVoltage() >= RobotMap.HATCH_INTAKE_IR_THRESHOLD_MAX);
   }
 
+  public boolean isHatchPresentLimitSwitch()
+  {
+    return _limitSwitch.getForwardLimit();
+  }
+
   public boolean isArmExtended()
   {
     return _probePlungerPiston.get() == Value.kForward;
