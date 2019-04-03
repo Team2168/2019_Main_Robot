@@ -75,6 +75,8 @@ public class QuinticTrajectory
 
 	public double[] rightAcc;
 	public double[] leftAcc;
+	public double[] rightJ;
+	public double[] leftJ;
 
 	private static PrintWriter log;
 
@@ -330,21 +332,17 @@ public class QuinticTrajectory
 	
 	public QuinticTrajectory(String filename, double[][] path, boolean reverse)
 	{
-		this(filename, path);
+		this(path);
 
-		if(reverse)
-			this.invert();
+		this.reverse = reverse;
+		
+		//checkfile also calls calculate
+		checkFileExist(filename);
 	}
 
 	public QuinticTrajectory(String filename, double[][] path)
 	{
-		this(path);
-
-		//checkfile also calls calculate
-		checkFileExist(filename);
-
-
-		
+		this(filename, path, false);
 	}
 
 	public void plotPath()
@@ -371,6 +369,8 @@ public class QuinticTrajectory
 	
 	private void makeFile(String Filename) {
 		try {
+			File roborio = //home/lv
+
 			File file = new File(directory); ///home/lvuser/Paths
 			if (!file.exists()) {
 				if (file.mkdir()) {
@@ -382,7 +382,8 @@ public class QuinticTrajectory
 			log = new PrintWriter(directory + Filename);
 			log.println(this.traj.getNumSegments());
 			for(int i = 0; i<this.traj.getNumSegments(); i++)
-				log.println(this.leftPos[i] +","+this.rightPos[i] +","+ this.leftVel[i] +"," + this.rightVel[i] +"," + this.heading[i]);
+				log.println(this.leftPos[i] +","+this.rightPos[i] +","+ this.leftVel[i] +"," + this.rightVel[i] +"," + this.leftAcc[i] 
+								+"," + this.rightAcc[i] +"," + this.leftJerk[i] +"," + this.rightJerk[i] +"," + this.heading[i]);
 			log.flush();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -402,6 +403,8 @@ public class QuinticTrajectory
 				if (!file.exists()) 
 				{
 					calculate();
+					if(reverse)
+						this.invert();
 					makeFile(filename);
 					System.out.println("Printed File! " + directory+filename);
 				}
@@ -424,6 +427,10 @@ public class QuinticTrajectory
 						this.rightPos = new double[Integer.parseInt(values[0])];
 						this.leftVel = new double[Integer.parseInt(values[0])];
 						this.rightVel = new double[Integer.parseInt(values[0])];
+						this.leftAcc = new double[Integer.parseInt(values[0])];
+						this.rightAcc = new double[Integer.parseInt(values[0])];
+						this.leftJerk = new double[Integer.parseInt(values[0])];
+						this.rightJerk = new double[Integer.parseInt(values[0])];
 						this.heading = new double[Integer.parseInt(values[0])];
 						isFirstLine = false;
 					}
@@ -702,6 +709,8 @@ public class QuinticTrajectory
 		  this.time =  new double[this.leftRightTraj.right.getNumSegments()];
 		  this.leftAcc = new double[this.leftRightTraj.right.getNumSegments()];
 		  this.rightAcc = new double[this.leftRightTraj.right.getNumSegments()];
+		  this.leftJ = new double[this.leftRightTraj.right.getNumSegments()];
+		  this.rightJ = new double[this.leftRightTraj.right.getNumSegments()];
 		  
 		  //copy left
 		  for( int i =0; i < this.leftRightTraj.left.getNumSegments(); i++)
@@ -774,6 +783,14 @@ public class QuinticTrajectory
 	  public double[] getRightAcc()
 	  {
 		  return this.rightAcc;
+	  }
+
+	  public double[] getLeftJ(){
+		  return this.leftJ;
+	  }
+
+	  public double[] getRightJ(){
+		  return this.rightJ;
 	  }
 	  
 	  public double[] getHeadingDeg()
