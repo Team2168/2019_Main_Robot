@@ -356,7 +356,7 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    if(hatchProbePistons.isHatchPresent() && canRunGamePiecePattern)
+    if(hatchProbePistons.isHatchPresentLimitSwitch() && canRunGamePiecePattern)
     {
       withGamePiecePattern.start();
       canRunGamePiecePattern = false;
@@ -368,7 +368,7 @@ public class Robot extends TimedRobot
       canRunGamePiecePattern = false;
       lastCargo = true;
     }
-    if(lastHatch && !hatchProbePistons.isHatchPresent() && !withGamePiecePattern.isRunning())
+    if(lastHatch && !hatchProbePistons.isHatchPresentLimitSwitch() && !withGamePiecePattern.isRunning())
     {
       canRunGamePiecePattern = true;
       lastHatch = false;
