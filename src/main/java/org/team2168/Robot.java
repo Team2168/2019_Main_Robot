@@ -7,6 +7,9 @@
 
 package org.team2168;
 
+import org.team2168.commands.LEDs.AutoWithoutGamePiecePattern;
+import org.team2168.commands.LEDs.HABClimbPattern;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -110,9 +113,13 @@ public class Robot extends TimedRobot
   double runTime = Timer.getFPGATimestamp();
 
   //LEDs stuff
-  private static WithGamePiecePattern withGamePiecePattern;
-  private static boolean isGamePiecePatternRunning = false;
+  public static WithGamePiecePattern withGamePiecePattern;
+  private static AutoWithoutGamePiecePattern autoWithoutGamePiecePattern;
+  public static TeleopWithoutGamePiecePattern teleopWithoutGamePiecePattern;
+  public static HABClimbPattern habClimbPattern;
   private static boolean canRunGamePiecePattern = true;
+  private static boolean lastHatch = false;
+  private static boolean lastCargo = false;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -134,6 +141,7 @@ public class Robot extends TimedRobot
       pwmDrivetrain = new DigitalInput(RobotMap.CAN_DRIVETRAIN_JUMPER);
 
       // Instantiate the subsystems
+      leds = LEDs.getInstance();
       cargoIntakeWheels = CargoIntakeWheels.getInstance();
       cargoPunch = CargoPunch.getInstance();
       drivetrain = Drivetrain.getInstance();
@@ -149,7 +157,12 @@ public class Robot extends TimedRobot
       pneumatics = Pneumatics.getInstance();
       stinger = Stinger.getInstance();
 
-      leds = LEDs.getInstance();
+      //init for leds and associated command
+      
+      withGamePiecePattern = new WithGamePiecePattern();
+      autoWithoutGamePiecePattern = new AutoWithoutGamePiecePattern();
+      habClimbPattern = new HABClimbPattern();
+      teleopWithoutGamePiecePattern = new TeleopWithoutGamePiecePattern();
 
       drivetrain.calibrateGyro();
       driverstation = DriverStation.getInstance();
@@ -245,23 +258,23 @@ public class Robot extends TimedRobot
 
     drivetrain.calibrateGyro();
     
-    if(driverstation.isFMSAttached())
+    teleopWithoutGamePiecePattern.cancel();
+    // disabled pattern has to be triggered directly 
+    if(Robot.driverstation.isFMSAttached())
     {
-      if(Robot.onBlueAlliance())
+      if (Robot.onBlueAlliance())
       {
-        leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
       }
       else
       {
-        leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
       }
     }
     else
-      leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-
-
-    
-    
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+    }
 
     drivetrain.limelightPosController.Pause();
   }
@@ -282,6 +295,7 @@ public class Robot extends TimedRobot
 
     // Check to see if the gyro is drifting, if it is re-initialize it.
     gyroReinit();
+    teleopWithoutGamePiecePattern.cancel();
   }
 
   public void autonomousInit()
@@ -291,10 +305,8 @@ public class Robot extends TimedRobot
     matchStarted = true;
     drivetrain.stopGyroCalibrating();
     drivetrain.resetGyro();
-    if(RobotMap.LEDS_REVERSE)
-      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 192, 255, 200);
-    else 
-      leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 192, 255, 200);
+
+    autoWithoutGamePiecePattern.start();
 
     autonomousCommand = (Command) autoChooser.getSelected();
 
@@ -338,7 +350,6 @@ public class Robot extends TimedRobot
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
 
-    leds.writePattern(RobotMap.PATTERN_RAINBOW);
   }
 
   /**
@@ -359,18 +370,27 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    if(hatchProbePistons.isHatchPresent() || cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    if(hatchProbePistons.isHatchPresentLimitSwitch() && canRunGamePiecePattern)
     {
-      if (withGamePiecePattern == null)
-      {
-        withGamePiecePattern = new WithGamePiecePattern();
-      }
       withGamePiecePattern.start();
       canRunGamePiecePattern = false;
+      lastHatch = true;
     }
-    if(!hatchProbePistons.isHatchPresent() && !cargoIntakeWheels.isCargoPresent() && returnIsGamePiecePatternRunning())
+    else if(cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    {
+      withGamePiecePattern.start();
+      canRunGamePiecePattern = false;
+      lastCargo = true;
+    }
+    if(lastHatch && !hatchProbePistons.isHatchPresentLimitSwitch() && !withGamePiecePattern.isRunning())
     {
       canRunGamePiecePattern = true;
+      lastHatch = false;
+    }
+    else if(lastCargo && !cargoIntakeWheels.isCargoPresent() && !withGamePiecePattern.isRunning())
+    {
+      canRunGamePiecePattern = true;
+      lastCargo = false;
     }
     
   }
@@ -515,16 +535,6 @@ public class Robot extends TimedRobot
   public static boolean onBlueAlliance() {
 		return driverstation.getAlliance() == DriverStation.Alliance.Blue;
 
-  }
-  
-  public static void setIsGamePiecePatternRunning(boolean input)
-  {
-    isGamePiecePatternRunning = input;
-  }
-
-  public static boolean returnIsGamePiecePatternRunning()
-  {
-    return isGamePiecePatternRunning;
   }
 
   // public static void setCanRunGamePiecePattern(boolean input)

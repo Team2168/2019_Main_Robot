@@ -8,6 +8,8 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.commands.LEDs.LiftLoweringPattern;
+import org.team2168.commands.LEDs.LiftRaisingPattern;
 import org.team2168.commands.hatchProbePivot.interlock.MovePivotToMBPosition;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForLift;
@@ -69,6 +71,10 @@ public class Lift extends Subsystem {
 	MoveMonkeyBarToSafePositionForLift moveMonkeyBarToSafePositionForLift;
 	MovePivotToMBPosition movePivotToMBPosition;
 
+	//Leds commands
+	LiftLoweringPattern liftLoweringPattern;
+	LiftRaisingPattern liftRaisingPattern;
+
 	/**
 	 * Default constructor for the lift
 	 */
@@ -120,6 +126,10 @@ public class Lift extends Subsystem {
 
 		TCPLiftPOTController = new TCPSocketSender(RobotMap.TCP_SERVER_LIFT_POT_CONTROLLER, liftPOTController);
 		TCPLiftPOTController.start();
+
+		//leds commands init
+		liftLoweringPattern = new LiftLoweringPattern();
+		liftRaisingPattern = new LiftRaisingPattern();
 
 		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getLiftJoystickValue();}, true, true);
 		ConsolePrinter.putNumber("Lift motor 1 voltage", () -> {return liftMotor1Voltage;}, true, true);
@@ -481,25 +491,26 @@ public class Lift extends Subsystem {
 				}
 			}
 		}
-		if(!Robot.returnIsGamePiecePatternRunning())
+		if(!Robot.withGamePiecePattern.isRunning())
 		{
 			if(speed > RobotMap.LIFT_MIN_SPEED)
 			{
-				if(RobotMap.LEDS_REVERSE)
-					{
-						Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
-					}
-					else
-						Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
+				liftRaisingPattern.start();
 			}
 			else if(speed < -RobotMap.LIFT_MIN_SPEED)
 			{
-				if(RobotMap.LEDS_REVERSE)
+				liftLoweringPattern.start();
+			}
+			else
+			{
+				if(liftRaisingPattern.isRunning())
 				{
-					Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
+					liftRaisingPattern.cancel();
+				}				
+				if(liftLoweringPattern.isRunning())
+				{
+					liftLoweringPattern.cancel();
 				}
-				else
-					Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
 			}
 		}
 

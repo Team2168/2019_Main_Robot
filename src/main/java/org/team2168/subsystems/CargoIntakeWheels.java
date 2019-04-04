@@ -1,12 +1,13 @@
 package org.team2168.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.sensors.CanAnalogInput;
+import org.team2168.commands.LEDs.WheelsInPattern;
+import org.team2168.commands.LEDs.WheelsOutPattern;
 import org.team2168.commands.cargoIntake.DriveCargoIntakeWithJoystick;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
@@ -26,11 +27,16 @@ public class CargoIntakeWheels extends Subsystem {
     private CanAnalogInput _sharpIRSensor;
     public static volatile double _driveVoltage;
     private static CargoIntakeWheels _instance;
+    private static WheelsInPattern wheelsInPattern;
+    private static WheelsOutPattern wheelsOutPattern;
 
 	private CargoIntakeWheels() {
         _intakeMotor = new TalonSRX(RobotMap.CARGO_INTAKE_MOTOR_PDP);
         //_intakeMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
         _sharpIRSensor = new CanAnalogInput(_intakeMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
+
+        wheelsInPattern = new WheelsInPattern();
+        wheelsOutPattern = new WheelsOutPattern();
 
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
         ConsolePrinter.putBoolean("isCargoPresent", () -> {return isCargoPresent();}, true, false);
@@ -60,26 +66,29 @@ public class CargoIntakeWheels extends Subsystem {
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
         //working model to prevent patterns from running into each other
-        if(!Robot.returnIsGamePiecePatternRunning())
+        if(!Robot.withGamePiecePattern.isRunning())
         {
             if (speed > RobotMap.CARGO_INTAKE_MIN_SPEED)
             {
-                if(RobotMap.LEDS_REVERSE)
-                {
-                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
-                }
-                else
-                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+                wheelsOutPattern.start();
             }
             else if (speed < -RobotMap.CARGO_INTAKE_MIN_SPEED)
             {
-                if(RobotMap.LEDS_REVERSE)
-                {
-                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
-                }
-                else
-                    Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+                wheelsInPattern.start();
             }
+            else
+            {
+                if(wheelsInPattern.isRunning())
+                {
+                    wheelsInPattern.cancel();
+
+                }
+                if(wheelsOutPattern.isRunning())
+                {
+                    wheelsOutPattern.cancel();
+                }
+            }
+
         }
         
     }
