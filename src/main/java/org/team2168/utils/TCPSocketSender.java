@@ -110,7 +110,7 @@ public class TCPSocketSender {
 						if ((char) ch != '\n')
 							sb.append((char) ch);
 						else {
-							System.out.println(sb.toString());
+							System.out.println(client.getLocalPort()+": "+sb.toString());
 
 							arr = Util.split(sb.toString(), ","); // splits
 							// a
