@@ -1,4 +1,4 @@
-package org.team2168.commands.cargoIntake;
+package org.team2168.commands.intake;
 
 import org.team2168.commands.auto.Sleep;
 import org.team2168.commands.hatchProbePivot.DriveHatchProbePivotWithConstant;

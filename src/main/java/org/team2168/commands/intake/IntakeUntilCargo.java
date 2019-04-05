@@ -1,4 +1,4 @@
-package org.team2168.commands.cargoIntake;
+package org.team2168.commands.intake;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
