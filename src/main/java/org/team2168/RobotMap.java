@@ -217,10 +217,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 2.5; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 3.3; 
 
-	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 0.0; 
-	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 0.0; 
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN_PBOT = 2.5; 
+	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX_PBOT = 3.3; 
 
-	public static final double CARGO_INTAKE_MIN_SPEED = 0; //TODO set
+	public static final double CARGO_INTAKE_MIN_SPEED = 0.1; //MADE UP FOR LEDS
 
 	/*************************************************************************
 	 *                         HATCH INTAKE PARAMETERS                        *
@@ -401,7 +401,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int PIVOT_AVG_ENCODER_VAL = 5; //taken from 2018 lift encoder
 
-	public static final double PIVOT_MIN_SPEED = 0.0; //made this up for LEDs
+	public static final double PIVOT_MIN_SPEED = 0.15; //made this up for LEDs
 
 	public static final int PIVOT_ANGLE_MONKEY_BAR_SIDE = 90;
 

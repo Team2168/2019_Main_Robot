@@ -22,7 +22,17 @@ public class TeleopWithoutGamePiecePattern extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.leds.writePattern(RobotMap.PATTERN_RAINBOW);
+    if (Robot.onBlueAlliance())
+    {
+    //  Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 160, 255, 100);
+    }
+    else
+    {
+    //  Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 100);
+    }
+
 
   }
 

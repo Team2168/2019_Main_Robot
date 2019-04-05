@@ -25,7 +25,15 @@ public class WithGamePiecePattern extends Command {
   protected void initialize() {
     //add logic to trigger when hatchpanel or cargo is present
     //add to command-intake until--
-    Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 0, 255, 200);
+
+    if (Robot.onBlueAlliance())
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 160, 255, 200);
+    }
+    else
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 0, 255, 200);
+    }
     Robot.drivetrain.limelight.setLedMode(2);
 
   }

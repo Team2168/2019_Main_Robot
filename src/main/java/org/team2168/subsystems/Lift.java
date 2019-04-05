@@ -378,13 +378,13 @@ public class Lift extends Subsystem {
 		}
 
 		//leds pattern
-		if(!Robot.withGamePiecePattern.isRunning())
+		if(!Robot.withGamePiecePattern.isRunning() && !Robot.autoWithoutGamePiecePattern.isRunning())
 		{
-			if(speed > RobotMap.LIFT_MIN_SPEED)
+			if(speed > RobotMap.LIFT_HOLDING_VOLTAGE)
 			{
 				liftRaisingPattern.start();
 			}
-			else if(speed < -RobotMap.LIFT_MIN_SPEED)
+			else if(speed < -RobotMap.LIFT_HOLDING_VOLTAGE)
 			{
 				liftLoweringPattern.start();
 			}
