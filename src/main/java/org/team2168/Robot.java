@@ -375,6 +375,7 @@ public class Robot extends TimedRobot
       withGamePiecePattern.start();
       canRunGamePiecePattern = false;
       lastHatch = true;
+      System.out.println("started game piece pattern");
     }
     else if(cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
     {
@@ -392,6 +393,8 @@ public class Robot extends TimedRobot
       canRunGamePiecePattern = true;
       lastCargo = false;
     }
+    System.out.println("last Hatch = " + lastHatch);
+    System.out.println("canRunGamePiecePattern" + canRunGamePiecePattern);
     
   }
 
