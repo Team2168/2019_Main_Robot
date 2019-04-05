@@ -244,7 +244,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
 	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 14.0;
 
-	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.55; 
+	public static final double LIFT_MAX_JOYSTICK_SPEED = 1.0; 
 
 	public static final double LIFT_HOLDING_VOLTAGE = 1.2; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
@@ -314,9 +314,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
 
 	//PBOT	
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 3.45; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 0; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.26; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX_PBOT = 4.5; //
+	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION_PBOT = 0; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0_PBOT = 0.26; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0_PBOT = 130.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL_PBOT = 5;
 
