@@ -7,6 +7,9 @@
 
 package org.team2168.commands.intake;
 
+import org.team2168.Robot;
+import org.team2168.commands.cargoIntake.DriveCargoIntakeWithConstant;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class OperationKeepCargo extends Command {
@@ -23,6 +26,10 @@ public class OperationKeepCargo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(Robot.cargoIntakeWheels.isCargoPresent()){
+      new DriveCargoIntakeWithConstant(0.0);
+    }
+    else if()
   }
 
   // Make this return true when this Command no longer needs to run execute()
