@@ -350,6 +350,8 @@ public class Robot extends TimedRobot
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
 
+    autoWithoutGamePiecePattern.cancel();
+
   }
 
   /**
