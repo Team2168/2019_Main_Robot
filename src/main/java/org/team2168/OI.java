@@ -102,6 +102,8 @@ public class OI
 
 		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
 		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
+		driverJoystick.ButtonLeftStick().whenPressed(new EnableLimelight());
+		driverJoystick.ButtonLeftStick().whenReleased(new PauseLimelight());
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
