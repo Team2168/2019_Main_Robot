@@ -28,21 +28,16 @@ public class DisabledPattern extends Command {
   @Override
   protected void execute() {
     //trigger when Robot disabled
-    if(Robot.driverstation.isFMSAttached())
+    if (Robot.onBlueAlliance())
     {
-      if (Robot.onBlueAlliance())
-      {
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
-      }
-      else
-      {
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-      }
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
     }
     else
     {
       Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
     }
+    
+
 
   }
 

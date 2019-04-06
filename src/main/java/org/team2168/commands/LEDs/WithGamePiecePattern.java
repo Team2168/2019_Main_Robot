@@ -25,7 +25,15 @@ public class WithGamePiecePattern extends Command {
   protected void initialize() {
     //add logic to trigger when hatchpanel or cargo is present
     //add to command-intake until--
-    Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 0, 255, 200);
+
+    if (Robot.onBlueAlliance())
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 160, 255, 200);
+    }
+    else
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_BLINK, 0, 255, 200);
+    }
     Robot.drivetrain.limelight.setLedMode(2);
 
   }
@@ -33,6 +41,7 @@ public class WithGamePiecePattern extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("running game piece pattern");
   }
 
   // Make this return true when this Command no longer needs to run execute()

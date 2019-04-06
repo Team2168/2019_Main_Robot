@@ -377,6 +377,30 @@ public class Lift extends Subsystem {
 			}
 		}
 
+		//leds pattern
+		if(!Robot.withGamePiecePattern.isRunning() && !Robot.autoWithoutGamePiecePattern.isRunning())
+		{
+			if(speed > RobotMap.LIFT_HOLDING_VOLTAGE)
+			{
+				liftRaisingPattern.start();
+			}
+			else if(speed < -RobotMap.LIFT_HOLDING_VOLTAGE)
+			{
+				liftLoweringPattern.start();
+			}
+			else
+			{
+				if(liftRaisingPattern.isRunning())
+				{
+					liftRaisingPattern.cancel();
+				}				
+				if(liftLoweringPattern.isRunning())
+				{
+					liftLoweringPattern.cancel();
+				}
+			}
+		}
+
 		isLiftMotor1Failure();
 		isLiftMotor2Failure();
 
@@ -488,28 +512,6 @@ public class Lift extends Subsystem {
 					// enableBrake();
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
-				}
-			}
-		}
-		if(!Robot.withGamePiecePattern.isRunning())
-		{
-			if(speed > RobotMap.LIFT_MIN_SPEED)
-			{
-				liftRaisingPattern.start();
-			}
-			else if(speed < -RobotMap.LIFT_MIN_SPEED)
-			{
-				liftLoweringPattern.start();
-			}
-			else
-			{
-				if(liftRaisingPattern.isRunning())
-				{
-					liftRaisingPattern.cancel();
-				}				
-				if(liftLoweringPattern.isRunning())
-				{
-					liftLoweringPattern.cancel();
 				}
 			}
 		}

@@ -65,8 +65,8 @@ public class CargoIntakeWheels extends Subsystem {
         _intakeMotor.set(ControlMode.PercentOutput,speed);
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
-        //working model to prevent patterns from running into each other
-        if(!Robot.withGamePiecePattern.isRunning())
+        //leds trigger code
+        if(!Robot.withGamePiecePattern.isRunning() && !Robot.autoWithoutGamePiecePattern.isRunning());
         {
             if (speed > RobotMap.CARGO_INTAKE_MIN_SPEED)
             {

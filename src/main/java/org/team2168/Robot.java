@@ -114,7 +114,7 @@ public class Robot extends TimedRobot
 
   //LEDs stuff
   public static WithGamePiecePattern withGamePiecePattern;
-  private static AutoWithoutGamePiecePattern autoWithoutGamePiecePattern;
+  public static AutoWithoutGamePiecePattern autoWithoutGamePiecePattern;
   public static TeleopWithoutGamePiecePattern teleopWithoutGamePiecePattern;
   public static HABClimbPattern habClimbPattern;
   private static boolean canRunGamePiecePattern = true;
@@ -260,16 +260,9 @@ public class Robot extends TimedRobot
     
     teleopWithoutGamePiecePattern.cancel();
     // disabled pattern has to be triggered directly 
-    if(Robot.driverstation.isFMSAttached())
+    if (Robot.onBlueAlliance())
     {
-      if (Robot.onBlueAlliance())
-      {
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
-      }
-      else
-      {
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-      }
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
     }
     else
     {
@@ -325,6 +318,10 @@ public class Robot extends TimedRobot
     autoMode = true;
     Scheduler.getInstance().run();
 
+    if(!withGamePiecePattern.isRunning())
+    {
+      autoWithoutGamePiecePattern.start();
+    }
   }
 
   /**
@@ -349,6 +346,8 @@ public class Robot extends TimedRobot
     // Select the control style
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
+
+    autoWithoutGamePiecePattern.cancel();
 
   }
 
