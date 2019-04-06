@@ -24,15 +24,20 @@ public class DriveStingerPIDPath extends Command {
   private double setPoint;
   OneDimensionalMotionProfilingNoConstraint motion;
 	int counter;
-  double ff_term = 0.30;
+  double ff_term = 1.6;
+  double ff_term_accel = 0.075;
 
   private double maxSpeed;
   private double minSpeed;
   private double error = 2; //Rotational degree error, 0 never ends
 
+  private double time;
+  private double start;
+  private double end;
 
 
-  public DriveStingerPIDPath() {
+
+  private DriveStingerPIDPath() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
@@ -40,14 +45,37 @@ public class DriveStingerPIDPath extends Command {
     this.maxSpeed = 1.0;
     this.minSpeed = 0.0;
 
-    //SmartDashboard.putNumber("FF_term_MB", 0);
+    //SmartDashboard.putNumber("FF_term_sting", ff_term);
+    //SmartDashboard.putNumber("FF_term_accel_sting", 0);
     
   }
 
-  public DriveStingerPIDPath(double setPoint)
+  public DriveStingerPIDPath(double end, double time)
   {
     this();
-    this.setPoint = setPoint;
+    this.start = 0;
+    this.end = end;
+    this.time = time;
+  }
+
+  public DriveStingerPIDPath(double end, double time, boolean absolute)
+  {
+    this();
+    if(absolute)
+      this.start = Robot.monkeyBarPivot.getRightPotPos();
+    else
+   
+    this.start = 0;
+    this.end = end;
+    this.time = time;
+  }
+
+  public DriveStingerPIDPath(double start, double end, double time)
+  {
+    this();
+    this.start = start;
+    this.end = end;
+    this.time = time;
   }
 
   // Called just before this Command runs the first time
@@ -55,16 +83,17 @@ public class DriveStingerPIDPath extends Command {
   protected void initialize() 
   {
 
-    motion = new OneDimensionalMotionProfilingNoConstraint(6.0,5); 
+    motion = new OneDimensionalMotionProfilingNoConstraint(start,end,time); 
     
     this.pos = motion.pos;
     this.vel = motion.vel;
+    this.accel = motion.acc;
 
     Robot.drivetrain.resetPosition();
     Robot.drivetrain.leftPosController.reset();
-    Robot.drivetrain.leftPosController.setpGain(RobotMap.MB_PIVOT_P);
-    Robot.drivetrain.leftPosController.setiGain(RobotMap.MB_PIVOT_I);
-    Robot.drivetrain.leftPosController.setdGain(RobotMap.MB_PIVOT_D);
+    Robot.drivetrain.leftPosController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
+    Robot.drivetrain.leftPosController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
+    Robot.drivetrain.leftPosController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
     Robot.drivetrain.leftPosController.setSetPoint(this.pos);
     Robot.drivetrain.leftPosController.setMaxPosOutput(maxSpeed);
     Robot.drivetrain.leftPosController.setMaxNegOutput(-maxSpeed);
@@ -74,9 +103,9 @@ public class DriveStingerPIDPath extends Command {
     Robot.drivetrain.leftPosController.Enable();
 
     Robot.drivetrain.rightPosController.reset();
-    Robot.drivetrain.rightPosController.setpGain(RobotMap.MB_PIVOT_P);
-    Robot.drivetrain.rightPosController.setiGain(RobotMap.MB_PIVOT_I);
-    Robot.drivetrain.rightPosController.setdGain(RobotMap.MB_PIVOT_D);
+    Robot.drivetrain.rightPosController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
+    Robot.drivetrain.rightPosController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
+    Robot.drivetrain.rightPosController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
     Robot.drivetrain.rightPosController.setSetPoint(this.pos);
     Robot.drivetrain.rightPosController.setMaxPosOutput(maxSpeed);
     Robot.drivetrain.rightPosController.setMaxNegOutput(-maxSpeed);
@@ -94,15 +123,16 @@ public class DriveStingerPIDPath extends Command {
   @Override
   protected void execute() {
 
-    //ff_term = SmartDashboard.getNumber("FF_term_MB", 0);
-
+   // ff_term = SmartDashboard.getNumber("FF_term_sting", ff_term);
+   // double ff_term_accel = SmartDashboard.getNumber("FF_term_accel_sting", 0);
 
     if (counter < pos.length)
     {
       double pidLSpeed = Robot.drivetrain.leftPosController.getControlOutput();
       double pidRSpeed = Robot.drivetrain.rightPosController.getControlOutput();
       double ff_Speed = (ff_term  * vel[counter]) / (Robot.pdp.getBatteryVoltage());
-      Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed,ff_Speed+pidRSpeed);
+      double ff_accel = (ff_term_accel  * accel[counter]) / (Robot.pdp.getBatteryVoltage());
+      Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed+ff_accel,ff_Speed+pidRSpeed+ff_accel);
       //System.out.println(ff_Speed+pidLSpeed);
     }
     else

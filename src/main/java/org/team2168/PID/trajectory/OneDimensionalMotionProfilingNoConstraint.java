@@ -40,7 +40,7 @@ public class OneDimensionalMotionProfilingNoConstraint {
 
 	public static void main(String[] args){
 		
-		OneDimensionalMotionProfilingNoConstraint oneDirection= new OneDimensionalMotionProfilingNoConstraint(1,5);
+		OneDimensionalMotionProfilingNoConstraint oneDirection= new OneDimensionalMotionProfilingNoConstraint(0,7.4,5);
 		
 		FalconLinePlot fig3 = new FalconLinePlot(oneDirection.time, oneDirection.pos ,Color.black);
 		fig3.yGridOn();
@@ -82,6 +82,14 @@ public class OneDimensionalMotionProfilingNoConstraint {
 	public OneDimensionalMotionProfilingNoConstraint(double distance, double time)
 	{
 		this.q1 = distance;
+		this.t1 = time;
+		S_curves();
+	}
+
+	public OneDimensionalMotionProfilingNoConstraint(double start, double end, double time)
+	{
+		this.q0 = start;
+		this.q1 = end;
 		this.t1 = time;
 		S_curves();
 	}
