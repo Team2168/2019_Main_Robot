@@ -338,7 +338,7 @@ public class QuinticTrajectory
 		this(path);
 
 		this.reverse = reverse;
-		config.max_vel = maxVel;
+		config.max_vel = maxVel*12;
 		
 		//checkfile also calls calculate
 		checkFileExist(filename);
@@ -346,7 +346,7 @@ public class QuinticTrajectory
 
 	public QuinticTrajectory(String filename, double[][] path)
 	{
-		this(filename, path, 6.0, false);
+		this(filename, path, 72.0, false);
 	}
 
 	public void plotPath()
