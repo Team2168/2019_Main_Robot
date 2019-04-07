@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.auto;
+package org.team2168.commands.auto.paths;
 
 import org.team2168.Robot;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPathQuinticPID;
