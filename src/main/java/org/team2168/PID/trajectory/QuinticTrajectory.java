@@ -136,7 +136,7 @@ public class QuinticTrajectory
 		{19, 21.5, -Math.PI/4+0.0001},
 
 	};		
-		QuinticTrajectory quinticPath= new QuinticTrajectory("path1.txt", waypointPath, true);
+		QuinticTrajectory quinticPath= new QuinticTrajectory("path1.txt", waypointPath, 6.0, true);
 		//quinticPath.calculate();
 		//quinticPath.plotPath();
 		//System.out.println(quinticPath.traj.toStringEuclidean());
@@ -333,11 +333,12 @@ public class QuinticTrajectory
 	    
 	}
 	
-	public QuinticTrajectory(String filename, double[][] path, boolean reverse)
+	public QuinticTrajectory(String filename, double[][] path, double maxVel, boolean reverse)
 	{
 		this(path);
 
 		this.reverse = reverse;
+		config.max_vel = maxVel;
 		
 		//checkfile also calls calculate
 		checkFileExist(filename);
@@ -345,7 +346,7 @@ public class QuinticTrajectory
 
 	public QuinticTrajectory(String filename, double[][] path)
 	{
-		this(filename, path, false);
+		this(filename, path, 6.0, false);
 	}
 
 	public void plotPath()
