@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
         {120.0, 0.0, 0}
       };
   
-        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, false);
+        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 6.0, false);
         quinticPath.calculate();
   
         this.leftPosQuinticPath = quinticPath.getLeftPos();
@@ -209,7 +209,7 @@ public class Robot extends TimedRobot {
           {180.0, 302.0, Math.PI/4}
         };
     
-          QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, false);
+          QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, 6.0, false);
           quinticPath2.calculate();
     
           this.leftPosQuinticPath2 = quinticPath2.getLeftPos();
