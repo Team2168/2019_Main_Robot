@@ -1,8 +1,9 @@
 
 package org.team2168;
 
-import org.team2168.commands.auto.Drive10FeetForward;
-import org.team2168.commands.auto.LeftFrontRocketFromLeftHab;
+import org.team2168.commands.auto.LeftHabToLeftFrontRocket;
+import org.team2168.commands.auto.paths.Drive10FeetForward;
+import org.team2168.commands.auto.paths.LeftFrontRocketFromLeftHab;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -177,8 +178,8 @@ public class OI
 		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonX().whileHeld(new IntakeHatchPanel());
 		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonB().whenPressed(new EngageHatchPanel());
-		operatorJoystick.ButtonY().whenPressed(new DisengageHatchPanel());
+		operatorJoystick.ButtonB().whenPressed(new DisengageHatchPanel());
+		operatorJoystick.ButtonY().whenPressed(new EngageHatchPanel());
 
 		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
 		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
@@ -218,8 +219,10 @@ public class OI
 	//	 pidTestJoystick.ButtonB().whenPressed(new IntakeUntilCargoAndPivot());
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(100));
 
+		 pidTestJoystick.ButtonY().whenPressed(new EngageHatchPanel());
 		 pidTestJoystick.ButtonA().whenPressed(new Drive10FeetForward());
 		 pidTestJoystick.ButtonB().whenPressed(new LeftFrontRocketFromLeftHab());
+		 pidTestJoystick.ButtonX().whenPressed(new LeftHabToLeftFrontRocket());
 
 		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
 		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(1.0));

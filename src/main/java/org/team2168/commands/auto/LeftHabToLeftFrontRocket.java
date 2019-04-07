@@ -7,15 +7,18 @@
 
 package org.team2168.commands.auto;
 
-import org.team2168.Robot;
-import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPathQuinticPID;
+import org.team2168.commands.auto.paths.LeftFrontRocketFromLeftHab;
+import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
+import org.team2168.commands.hatchProbePistons.ExtendHatchPlunger;
+import org.team2168.commands.hatchProbePistons.RetractHatchPlunger;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Drive10FeetForward extends CommandGroup {
+public class LeftHabToLeftFrontRocket extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Drive10FeetForward() {
+  public LeftHabToLeftFrontRocket() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -32,7 +35,11 @@ public class Drive10FeetForward extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new DrivePIDPathQuinticPID(Robot.leftPosQuinticPath, Robot.rightPosQuinticPath, Robot.leftVelQuinticPath,
-          Robot.rightVelQuinticPath, Robot.leftAccQuinticPath, Robot.rightAccQuinticPath, Robot.headingQuinticPath));
+    addSequential(new LeftFrontRocketFromLeftHab());
+    addSequential(new ExtendHatchPlunger());
+    addSequential(new Sleep(), 0.5);
+    addSequential(new DisengageHatchPanel());
+    addSequential(new RetractHatchPlunger());
   }
+  
 }

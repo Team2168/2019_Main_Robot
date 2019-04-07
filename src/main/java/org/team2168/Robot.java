@@ -206,7 +206,7 @@ public class Robot extends TimedRobot {
         double[][] waypointPath2 = new double[][]{
           {48.0, 212.0, 0},
           {96.0, 212.0, 0},
-          {180.0, 302.0, Math.PI/4}
+          {177.0, 301.5, Math.PI/6}
         };
     
           QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, 6.0, false);
