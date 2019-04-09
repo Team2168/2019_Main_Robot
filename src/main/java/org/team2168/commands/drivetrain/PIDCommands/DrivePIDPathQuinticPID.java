@@ -416,11 +416,11 @@ public class DrivePIDPathQuinticPID extends Command
 		this.lastRotateOutput = 0;
 
 		// if true we want to reverse else we want to go forward
-		if (direction)
-			directionValue = -1;
-		else
-			directionValue = 1;
-	}
+	// 	if (direction)
+	// 		directionValue = -1;
+	// 	else
+	// 		directionValue = 1;
+		}
 
 	// Called repeatedly when this Command is scheduled to run
 

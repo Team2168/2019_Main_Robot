@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     public static double[] leftAccQuinticPath;
     public static double[] rightAccQuinticPath;
     public static double[] headingQuinticPath;
-    //public static boolean QuinticPath_Reverse = false;
+    public static boolean reversePath = false;
 
     public static double[] leftVelQuinticPath2;
     public static double[] rightVelQuinticPath2;
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
     public static double[] leftAccQuinticPath2;
     public static double[] rightAccQuinticPath2;
     public static double[] headingQuinticPath2;
-    //public static boolean QuinticPath_Reverse = false;
+    public static boolean reversePath2 = false;
 
     public static double[] leftVelQuinticPath3;
     public static double[] rightVelQuinticPath3;
@@ -137,6 +137,7 @@ public class Robot extends TimedRobot {
     public static double[] leftAccQuinticPath3;
     public static double[] rightAccQuinticPath3;
     public static double[] headingQuinticPath3;
+    public static boolean reversePath3 = false;
     
   /****************************************************
     * 
@@ -197,10 +198,10 @@ public class Robot extends TimedRobot {
 
       double[][] waypointPath = new double[][]{
         {0.0, 0.0, 0},
-        {36.0, 0.0, 0}
+        {24.0, 0.0, 0}
       };
   
-        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 4.0, true);
+        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 4.0, false);
         //quinticPath.calculate();
   
         this.leftPosQuinticPath = quinticPath.getLeftPos();

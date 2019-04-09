@@ -339,7 +339,8 @@ public class QuinticTrajectory
 		this(path);
 
 		this.reverse = reverse;
-		config.max_vel = maxVel*12;
+		config.max_vel = maxVel*12.0;
+		//config.max_acc = maxVel*12.0;
 		
 		//checkfile also calls calculate
 		checkFileExist(filename);
