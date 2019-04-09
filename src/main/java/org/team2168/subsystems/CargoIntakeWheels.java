@@ -57,7 +57,6 @@ public class CargoIntakeWheels extends Subsystem {
     public void drive(double speed)
     {
         this.cargoIntakeWheelsSpeedForLEDs = speed;
-        System.out.println("cargoIntakeWheelsSpeedForLEDs =" + cargoIntakeWheelsSpeedForLEDs);
         if (RobotMap.CARGO_INTAKE_MOTOR_REVERSE)
             speed = -speed;
 
