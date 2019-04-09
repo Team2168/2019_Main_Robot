@@ -129,6 +129,14 @@ public class Robot extends TimedRobot {
     public static double[] rightAccQuinticPath2;
     public static double[] headingQuinticPath2;
     //public static boolean QuinticPath_Reverse = false;
+
+    public static double[] leftVelQuinticPath3;
+    public static double[] rightVelQuinticPath3;
+    public static double[] leftPosQuinticPath3;
+    public static double[] rightPosQuinticPath3;
+    public static double[] leftAccQuinticPath3;
+    public static double[] rightAccQuinticPath3;
+    public static double[] headingQuinticPath3;
     
   /****************************************************
     * 
@@ -189,11 +197,11 @@ public class Robot extends TimedRobot {
 
       double[][] waypointPath = new double[][]{
         {0.0, 0.0, 0},
-        {120.0, 0.0, 0}
+        {36.0, 0.0, 0}
       };
   
-        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 6.0, false);
-        quinticPath.calculate();
+        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 4.0, true);
+        //quinticPath.calculate();
   
         this.leftPosQuinticPath = quinticPath.getLeftPos();
         this.rightPosQuinticPath = quinticPath.getRightPos();
@@ -210,7 +218,7 @@ public class Robot extends TimedRobot {
         };
     
           QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, 6.0, false);
-          quinticPath2.calculate();
+          //quinticPath2.calculate();
     
           this.leftPosQuinticPath2 = quinticPath2.getLeftPos();
           this.rightPosQuinticPath2 = quinticPath2.getRightPos();
@@ -219,6 +227,22 @@ public class Robot extends TimedRobot {
           this.leftAccQuinticPath2 = quinticPath2.getLeftAcc();
           this.rightAccQuinticPath2 = quinticPath2.getRightAcc();
           this.headingQuinticPath2 = quinticPath2.getHeadingDeg();
+
+          double[][] waypointPath3 = new double[][]{
+            {0.0, 0.0, 0},
+            {36.0, 0.0, 0}
+          };
+      
+            QuinticTrajectory quinticPath3= new QuinticTrajectory("path3", waypointPath3, 4.0, false);
+            //quinticPath.calculate();
+      
+            this.leftPosQuinticPath3 = quinticPath3.getLeftPos();
+            this.rightPosQuinticPath3 = quinticPath3.getRightPos();
+            this.leftVelQuinticPath3 = quinticPath3.getLeftVel();
+            this.rightVelQuinticPath3 = quinticPath3.getRightVel();
+            this.leftAccQuinticPath3 = quinticPath3.getLeftAcc();
+            this.rightAccQuinticPath3 = quinticPath3.getRightAcc();
+            this.headingQuinticPath3 = quinticPath3.getHeadingDeg();
   
          /*******************************************************
          *                    
