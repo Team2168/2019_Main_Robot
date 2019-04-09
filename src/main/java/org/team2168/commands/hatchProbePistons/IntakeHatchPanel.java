@@ -7,6 +7,7 @@
 
 package org.team2168.commands.hatchProbePistons;
 
+import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.Sleep;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -36,6 +37,7 @@ public class IntakeHatchPanel extends CommandGroup {
     addSequential(new Sleep(), 1.0);
     addSequential(new ExtendHatchPlunger());
     addSequential(new WaitUntilHatch());
+    addParallel(new WithGamePiecePattern());
     addSequential(new Sleep(), 0.1);
     addSequential(new RetractHatchPlunger());
     addSequential(new Sleep(), 100);

@@ -71,9 +71,8 @@ public class Lift extends Subsystem {
 	MoveMonkeyBarToSafePositionForLift moveMonkeyBarToSafePositionForLift;
 	MovePivotToMBPosition movePivotToMBPosition;
 
-	//Leds commands
-	LiftLoweringPattern liftLoweringPattern;
-	LiftRaisingPattern liftRaisingPattern;
+
+	public double liftSpeedForLEDs;
 
 	/**
 	 * Default constructor for the lift
@@ -126,10 +125,6 @@ public class Lift extends Subsystem {
 
 		TCPLiftPOTController = new TCPSocketSender(RobotMap.TCP_SERVER_LIFT_POT_CONTROLLER, liftPOTController);
 		TCPLiftPOTController.start();
-
-		//leds commands init
-		liftLoweringPattern = new LiftLoweringPattern();
-		liftRaisingPattern = new LiftRaisingPattern();
 
 		ConsolePrinter.putNumber("Lift Joystick value", () -> {return Robot.oi.getLiftJoystickValue();}, true, true);
 		ConsolePrinter.putNumber("Lift motor 1 voltage", () -> {return liftMotor1Voltage;}, true, true);
@@ -250,6 +245,7 @@ public class Lift extends Subsystem {
 	 */
 	public void driveAllMotors(double speed)
 	{
+		this.liftSpeedForLEDs = 0;
 		if( moveMonkeyBarToSafePositionForLift == null)
 			moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
 		if( movePivotToMBPosition == null)
@@ -329,6 +325,7 @@ public class Lift extends Subsystem {
 					//if we got here then we are driving lift
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
+					this.liftSpeedForLEDs = speed;
 
 					if(Math.abs(liftPot.getRate()) < 1.0)
 						isSensorValid = false;
@@ -366,6 +363,7 @@ public class Lift extends Subsystem {
 				{
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
+					this.liftSpeedForLEDs = speed;
 				}
 				else
 				{
@@ -374,30 +372,6 @@ public class Lift extends Subsystem {
 				}
 
 				
-			}
-		}
-
-		//leds pattern
-		if(!Robot.withGamePiecePattern.isRunning() && !Robot.autoWithoutGamePiecePattern.isRunning())
-		{
-			if(speed > RobotMap.LIFT_HOLDING_VOLTAGE)
-			{
-				liftRaisingPattern.start();
-			}
-			else if(speed < -RobotMap.LIFT_HOLDING_VOLTAGE)
-			{
-				liftLoweringPattern.start();
-			}
-			else
-			{
-				if(liftRaisingPattern.isRunning())
-				{
-					liftRaisingPattern.cancel();
-				}				
-				if(liftLoweringPattern.isRunning())
-				{
-					liftLoweringPattern.cancel();
-				}
 			}
 		}
 
