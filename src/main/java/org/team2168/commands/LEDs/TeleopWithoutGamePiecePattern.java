@@ -22,23 +22,57 @@ public class TeleopWithoutGamePiecePattern extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (Robot.onBlueAlliance())
-    {
-    //  Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 160, 255, 255);
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 160, 255, 100);
-    }
-    else
-    {
-    //  Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
-      Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 100);
-    }
-
 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //cargo wheels patterns
+    if (Robot.cargoIntakeWheels.cargoIntakeWheelsSpeedForLEDs > RobotMap.CARGO_INTAKE_MIN_SPEED)
+    {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
+    }
+    else if (Robot.cargoIntakeWheels.cargoIntakeWheelsSpeedForLEDs < -RobotMap.CARGO_INTAKE_MIN_SPEED)
+    {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE, 96, 255, 255);
+    }
+
+    //lift patterns
+    else if(Robot.lift.liftSpeedForLEDs > RobotMap.LIFT_HOLDING_VOLTAGE)
+    {
+      if (Robot.onBlueAlliance())
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 100);
+      }
+      else
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 0, 255, 100);
+      }
+    }
+    else if(Robot.lift.liftSpeedForLEDs < -RobotMap.LIFT_HOLDING_VOLTAGE)
+    {
+      if (Robot.onBlueAlliance())
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 100);
+      }
+      else
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 0, 255, 100);
+      }
+    }
+    
+    //true default pattern
+    else {
+      if (Robot.onBlueAlliance())
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 160, 255, 100);
+      }
+      else
+      {
+        Robot.leds.writePatternOneColor(RobotMap.PATTERN_FILL, 0, 255, 100);
+      }
+    }
 
   }
 

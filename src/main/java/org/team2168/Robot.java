@@ -369,28 +369,28 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
-    if(hatchProbePistons.isHatchPresentLimitSwitch() && canRunGamePiecePattern)
-    {
-      withGamePiecePattern.start();
-      canRunGamePiecePattern = false;
-      lastHatch = true;
-    }
-    else if(cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
-    {
-      withGamePiecePattern.start();
-      canRunGamePiecePattern = false;
-      lastCargo = true;
-    }
-    if(lastHatch && !hatchProbePistons.isHatchPresentLimitSwitch() && !withGamePiecePattern.isRunning())
-    {
-      canRunGamePiecePattern = true;
-      lastHatch = false;
-    }
-    else if(lastCargo && !cargoIntakeWheels.isCargoPresent() && !withGamePiecePattern.isRunning())
-    {
-      canRunGamePiecePattern = true;
-      lastCargo = false;
-    }
+    // if(hatchProbePistons.isHatchPresentLimitSwitch() && canRunGamePiecePattern)
+    // {
+    //   withGamePiecePattern.start();
+    //   canRunGamePiecePattern = false;
+    //   lastHatch = true;
+    // }
+    // else if(cargoIntakeWheels.isCargoPresent()  && canRunGamePiecePattern)
+    // {
+    //   withGamePiecePattern.start();
+    //   canRunGamePiecePattern = false;
+    //   lastCargo = true;
+    // }
+    // if(lastHatch && !hatchProbePistons.isHatchPresentLimitSwitch() && !withGamePiecePattern.isRunning())
+    // {
+    //   canRunGamePiecePattern = true;
+    //   lastHatch = false;
+    // }
+    // else if(lastCargo && !cargoIntakeWheels.isCargoPresent() && !withGamePiecePattern.isRunning())
+    // {
+    //   canRunGamePiecePattern = true;
+    //   lastCargo = false;
+    // }
     
   }
 

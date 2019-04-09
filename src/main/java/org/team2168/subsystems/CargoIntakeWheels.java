@@ -27,16 +27,13 @@ public class CargoIntakeWheels extends Subsystem {
     private CanAnalogInput _sharpIRSensor;
     public static volatile double _driveVoltage;
     private static CargoIntakeWheels _instance;
-    private static WheelsInPattern wheelsInPattern;
-    private static WheelsOutPattern wheelsOutPattern;
+    public double cargoIntakeWheelsSpeedForLEDs;
+
 
 	private CargoIntakeWheels() {
         _intakeMotor = new TalonSRX(RobotMap.CARGO_INTAKE_MOTOR_PDP);
         //_intakeMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
         _sharpIRSensor = new CanAnalogInput(_intakeMotor, CanAnalogInput.kSCALE_3_3_VOLTS);
-
-        wheelsInPattern = new WheelsInPattern();
-        wheelsOutPattern = new WheelsOutPattern();
 
         ConsolePrinter.putNumber("Cargo Raw IR", () -> {return getRawIRVoltage();}, true, false);
         ConsolePrinter.putBoolean("isCargoPresent", () -> {return isCargoPresent();}, true, false);
@@ -59,37 +56,13 @@ public class CargoIntakeWheels extends Subsystem {
     // (positive moves ball out, negative moves ball in)
     public void drive(double speed)
     {
+        this.cargoIntakeWheelsSpeedForLEDs = speed;
+        System.out.println("cargoIntakeWheelsSpeedForLEDs =" + cargoIntakeWheelsSpeedForLEDs);
         if (RobotMap.CARGO_INTAKE_MOTOR_REVERSE)
             speed = -speed;
 
         _intakeMotor.set(ControlMode.PercentOutput,speed);
         _driveVoltage = Robot.pdp.getBatteryVoltage() * speed;
-
-        //leds trigger code
-        if(!Robot.withGamePiecePattern.isRunning() && !Robot.autoWithoutGamePiecePattern.isRunning());
-        {
-            if (speed > RobotMap.CARGO_INTAKE_MIN_SPEED)
-            {
-                wheelsOutPattern.start();
-            }
-            else if (speed < -RobotMap.CARGO_INTAKE_MIN_SPEED)
-            {
-                wheelsInPattern.start();
-            }
-            else
-            {
-                if(wheelsInPattern.isRunning())
-                {
-                    wheelsInPattern.cancel();
-
-                }
-                if(wheelsOutPattern.isRunning())
-                {
-                    wheelsOutPattern.cancel();
-                }
-            }
-
-        }
         
     }
 
