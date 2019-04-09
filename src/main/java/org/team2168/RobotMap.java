@@ -459,7 +459,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double DRIVE_TRAIN_LEFT_POSITION_I = 0.00085;
 	public static final double DRIVE_TRAIN_LEFT_POSITION_D = 0.0;
 
-	public static final double DRIVE_TRAIN_RIGHT_POSITION_P = 0.0001;
+	public static final double DRIVE_TRAIN_RIGHT_POSITION_P = 0.001;
 	public static final double DRIVE_TRAIN_RIGHT_POSITION_I = 0.00085;
 	public static final double DRIVE_TRAIN_RIGHT_POSITION_D = 0.0;
 

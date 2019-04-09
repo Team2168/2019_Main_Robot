@@ -33,6 +33,6 @@ public class Drive10FeetForward extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     addSequential(new DrivePIDPathQuinticPID(Robot.leftPosQuinticPath, Robot.rightPosQuinticPath, Robot.leftVelQuinticPath,
-          Robot.rightVelQuinticPath, Robot.leftAccQuinticPath, Robot.rightAccQuinticPath, Robot.headingQuinticPath));
+          Robot.rightVelQuinticPath, Robot.leftAccQuinticPath, Robot.rightAccQuinticPath, Robot.headingQuinticPath, Robot.reversePath));
   }
 }
