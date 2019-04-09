@@ -408,7 +408,7 @@ public class QuinticTrajectory
 			File roborio = new File(directory);
 			if(roborio.exists()) //We are on the roborio
 			{
-				directory = "/home/lvuser/Path";
+				directory = "/home/lvuser/Path/";
 			}
 			else // we are on test computer
 			{

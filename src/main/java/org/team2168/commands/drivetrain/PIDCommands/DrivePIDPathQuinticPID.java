@@ -151,7 +151,7 @@ public class DrivePIDPathQuinticPID extends Command
 	}
 
 	public DrivePIDPathQuinticPID(double[] setPointLeftPos, double[] setPointRightPos, double[] setPointLeftVel,
-			double[] setPointRightVel, double[] setPointLeftAcc,double[] setPointRightAcc, double[] setPointHeading)
+			double[] setPointRightVel, double[] setPointLeftAcc,double[] setPointRightAcc, double[] setPointHeading, boolean reverse)
 	{
 		requires(Robot.drivetrain);
 
@@ -167,6 +167,15 @@ public class DrivePIDPathQuinticPID extends Command
 		this.setPointHeading = setPointHeading;
 
 		this.headingByArray = true;
+
+		if(reverse)
+		{
+			this.directionValue = -1;
+		}
+		else
+		{
+			this.directionValue = 1;
+		}
 
 		SmartDashboard.putNumber("FF_term", this.ff_term);
 		ff_term = SmartDashboard.getNumber("FF_term", this.ff_term);
@@ -433,8 +442,8 @@ public class DrivePIDPathQuinticPID extends Command
 
 		if (this.positonGiven)
 		{
-			leftPID = Robot.drivetrain.leftPosController.getControlOutput();
-			rightPID = Robot.drivetrain.rightPosController.getControlOutput();
+			leftPID = Robot.drivetrain.leftPosController.getControlOutput()*this.directionValue;
+			rightPID = Robot.drivetrain.rightPosController.getControlOutput()*this.directionValue;
 		}
 
 		double headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
