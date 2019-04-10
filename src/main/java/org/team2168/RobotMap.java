@@ -108,14 +108,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
-	public static final int HATCH_PANEL_VELCRO_PUSHER_PCM = 1;
+	public static final int DRIVETRAIN_DISENGAGED_PCM = 1; 
+	public static final int HATCH_PANEL_VELCRO_PUSHER_PCM = 4; //old floor pickup
 	public static final int HATCH_INTAKE_LOWER_PCM = 6;
 	public static final int HATCH_INTAKE_RAISE_PCM = 7;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
 	public static final int STINGER_ENGAGE_PCM = 3;
 	public static final int STINGER_DISENGAGE_PCM = 2;
-	public static final int DRIVETRAIN_DISENGAGED_PCM = 8; //TOdO need to make/verify
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
