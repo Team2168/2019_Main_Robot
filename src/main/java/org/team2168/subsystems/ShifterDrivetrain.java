@@ -12,18 +12,16 @@ import org.team2168.RobotMap;
 import org.team2168.utils.consoleprinter.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShifterDrivetrain extends Subsystem {
   private static ShifterDrivetrain _instance = null;
-  private static Solenoid _drivetrainShifter; 
+  private static DoubleSolenoid _drivetrainShifter; 
 
 
   private ShifterDrivetrain()
   {
-    _drivetrainShifter = new Solenoid(RobotMap.PCM_CAN_ID_BELLYPAN,  RobotMap.DRIVETRAIN_ENGAGED_PCM);
+    _drivetrainShifter = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN,  RobotMap.DRIVETRAIN_ENGAGED_PCM, RobotMap.DRIVETRAIN_DISENGAGED_PCM);
 
     ConsolePrinter.putBoolean("Drivetrain Enagaged", () -> {return Robot.shifterDrivetrain.isDrivetrainDisengaged();}, true, false);
     ConsolePrinter.putBoolean("Drivetrain Disnagaged", () -> {return Robot.shifterDrivetrain.isDrivetrainDisengaged();}, true, false);
@@ -49,7 +47,7 @@ public class ShifterDrivetrain extends Subsystem {
   public void engageDrivetrain()
   {
     Robot.isClimbEnabled = false;
-    _drivetrainShifter.set(false);
+    _drivetrainShifter.set(DoubleSolenoid.Value.kForward);
   }
 
   /**
@@ -57,7 +55,7 @@ public class ShifterDrivetrain extends Subsystem {
    */
   public void disengageDrivetrain()
   {
-    _drivetrainShifter.set(true);
+    _drivetrainShifter.set(DoubleSolenoid.Value.kReverse);
   }
 
 
@@ -66,12 +64,12 @@ public class ShifterDrivetrain extends Subsystem {
    */
   public boolean isDrivetrainEngaged()
   {
-    return _drivetrainShifter.get() == false;
+    return _drivetrainShifter.get() == DoubleSolenoid.Value.kForward;
   }
 
   public boolean isDrivetrainDisengaged()
   {
-    return _drivetrainShifter.get() == true;
+    return _drivetrainShifter.get() == DoubleSolenoid.Value.kReverse;
   }
 
 

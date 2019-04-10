@@ -115,6 +115,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int STINGER_RACHET_DISENGAGE_PCM = 5;
 	public static final int STINGER_ENGAGE_PCM = 3;
 	public static final int STINGER_DISENGAGE_PCM = 2;
+	public static final int DRIVETRAIN_DISENGAGED_PCM = 8; //TOdO need to make/verify
 	
 	//Double Soldenoids PCM ID = 1
 	public static final int PROBE_ROTATE_BRAKE_EXTENDED_PCM = 0;
