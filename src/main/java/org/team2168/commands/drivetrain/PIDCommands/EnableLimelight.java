@@ -57,7 +57,7 @@ public class EnableLimelight extends Command {
     }
     else
     {
-      Robot.drivetrain.limelight.setPipeline(2);
+      Robot.drivetrain.limelight.setPipeline(0);
     }
     Robot.drivetrain.limelightPosController.Enable();
   }
