@@ -220,9 +220,11 @@ public class OI
 		 pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 		 pidTestJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPath(63));
-		 pidTestJoystick.ButtonA().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(7.5,5));
+		 //.ButtonA().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
+		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(7.5,4.5));
 
+		 pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
+		 
 		//pidTestJoystick.ButtonX().whenPressed(new AutoClimb());
 
 		 pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(35));
