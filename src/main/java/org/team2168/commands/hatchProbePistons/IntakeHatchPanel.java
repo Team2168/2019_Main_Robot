@@ -38,7 +38,7 @@ public class IntakeHatchPanel extends CommandGroup {
     addSequential(new ExtendHatchPlunger());
     addSequential(new WaitUntilHatch());
     addParallel(new WithGamePiecePattern());
-    addSequential(new Sleep(), 0.1);
+    addSequential(new Sleep(), 1.0);
     addSequential(new RetractHatchPlunger());
     addSequential(new Sleep(), 100);
   }
