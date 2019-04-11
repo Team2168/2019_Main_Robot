@@ -9,6 +9,7 @@ package org.team2168.commands.hatchProbePistons;
 
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.Sleep;
+import org.team2168.commands.driverJoystick.VibrateDriverJoystick;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

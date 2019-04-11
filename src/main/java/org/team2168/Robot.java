@@ -13,7 +13,7 @@ import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
-import org.team2168.commands.hatchProbePistons.VibrationPattern;
+import org.team2168.commands.driverJoystick.VibrationPattern;
 import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
 import org.team2168.subsystems.CargoPunch;
