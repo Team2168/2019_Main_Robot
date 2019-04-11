@@ -28,8 +28,6 @@ public class HatchFloorIntake extends Subsystem
 {
   private Victor _intakeMotor;
   private DoubleSolenoid _dSolenoidRotate;
-  private static DigitalInput _hallEffectRaise;
-  private static DigitalInput _hallEffectLower;
 
   private static HatchFloorIntake instance = null;
   public static volatile double _intakeMotorVoltage;
@@ -38,8 +36,6 @@ public class HatchFloorIntake extends Subsystem
   {
     _intakeMotor = new Victor(RobotMap.HATCH_FLOOR_INTAKE_PDP);
     _dSolenoidRotate = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.HATCH_INTAKE_LOWER_PCM, RobotMap.HATCH_INTAKE_RAISE_PCM);
-    _hallEffectRaise = new DigitalInput(RobotMap.HATCH_INTAKE_RAISED_LIMIT);
-    _hallEffectLower = new DigitalInput(RobotMap.HATCH_INTAKE_LOWERED_LIMIT);
 
     // ConsolePrinter.putBoolean("Is Solenoid Raised",() -> {return isSolenoidRaised();}, true, false);
     // ConsolePrinter.putBoolean("Is Solenoid Lowered",() -> {return isSolenoidLowered();},true, false);
@@ -85,16 +81,6 @@ public class HatchFloorIntake extends Subsystem
   public boolean isSolenoidRaised()
   {
     return _dSolenoidRotate.get() == Value.kReverse;
-  }
-
-  public boolean isHatchIntakeUp()
-  {
-    return !_hallEffectRaise.get();
-  }
-
-  public boolean isHatchIntakeLowered()
-  {
-    return !_hallEffectLower.get();
   }
 
 

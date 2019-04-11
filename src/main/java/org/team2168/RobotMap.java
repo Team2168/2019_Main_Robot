@@ -54,14 +54,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_ENCODER_B = 2;
 	public static final int LEFT_DRIVE_ENCODER_A = 3;
 
-	public static final int LIFT_FULLY_UP_LIMIT = 4;
-	public static final int LIFT_FULLY_DOWN_LIMIT = 5;
+	public static final int RIGHT_STINGER_ENCODER_A = 5;//change something
+	public static final int RIGHT_STINGER_ENCODER_B = 4;//change
+	public static final int LEFT_STINGER_ENCODER_B = 8;//change
+	public static final int LEFT_STINGER_ENCODER_A = 9;//change
 
-	public static final int STINGER_LEFT_RATCHET_ENGAGED = 6;
-	public static final int STINGER_RIGHT_RATCHET_ENGAGED = 7;
+	public static final int LIFT_FULLY_UP_LIMIT = 14;
+	public static final int LIFT_FULLY_DOWN_LIMIT = 15;
 
-	public static final int HATCH_INTAKE_LOWERED_LIMIT = 8;
-	public static final int HATCH_INTAKE_RAISED_LIMIT = 9;
 
 
 	//Channels 10-25 on MXP (PWM and DIO)
@@ -183,6 +183,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	private static final double DRIVE_GEAR_RATIO = 1.0 / 1.0; // ratio between wheel over encoder
 	private static final double DRIVE_WHEEL_DIAMETER = 6.0;   //inches;
 	public static final int DRIVE_ENCODER_PULSE_PER_ROT = (int) (DRIVE_PULSE_PER_ROTATION * DRIVE_GEAR_RATIO); // pulse per rotation * gear																					// ratio
+	
 	public static final double DRIVE_ENCODER_DIST_PER_TICK = (Math.PI * DRIVE_WHEEL_DIAMETER / DRIVE_ENCODER_PULSE_PER_ROT);
 	public static final CounterBase.EncodingType DRIVE_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
 	public static final AverageEncoder.PositionReturnType DRIVE_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.INCH;

@@ -16,16 +16,11 @@ public class Stinger extends Subsystem
 
     private static DoubleSolenoid _ratchet;
 
-    DigitalInput _stingerRightRatchetEngagedHallEffect;
-    DigitalInput _stingerLeftRatchetEngagedHallEffect;
-
     private static Stinger _instance;
 
     private Stinger()
     {
-        _stingerLeftRatchetEngagedHallEffect = new DigitalInput(RobotMap.STINGER_LEFT_RATCHET_ENGAGED);
-        _stingerRightRatchetEngagedHallEffect = new DigitalInput(RobotMap.STINGER_RIGHT_RATCHET_ENGAGED);
-
+      
         _ratchet = new DoubleSolenoid(RobotMap.PCM_CAN_ID_BELLYPAN, RobotMap.STINGER_RACHET_ENGAGE_PCM,
                 RobotMap.STINGER_RACHET_DISENGAGE_PCM);
 
@@ -76,15 +71,6 @@ public class Stinger extends Subsystem
         return _instance;
     }
 
-    public boolean isLeftStingerRatchetEngaged()
-    {
-        return _stingerLeftRatchetEngagedHallEffect.get();
-    }
-
-    public boolean isRightStingerRatchetEngaged()
-    {
-        return _stingerRightRatchetEngagedHallEffect.get();
-    }
 
     public double getLeftPotRaw()
     {
