@@ -24,7 +24,7 @@ public class DriveStingerPIDPath extends Command {
   private double setPoint;
   OneDimensionalMotionProfilingNoConstraint motion;
 	int counter;
-  double ff_term = 1.6;
+  double ff_term = 2.6;//1.6
   double ff_term_accel = 0.075;
 
   private double maxSpeed;
@@ -132,7 +132,8 @@ public class DriveStingerPIDPath extends Command {
       double pidRSpeed = Robot.drivetrain.rightPosController.getControlOutput();
       double ff_Speed = (ff_term  * vel[counter]) / (Robot.pdp.getBatteryVoltage());
       double ff_accel = (ff_term_accel  * accel[counter]) / (Robot.pdp.getBatteryVoltage());
-      Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed+ff_accel,ff_Speed+pidRSpeed+ff_accel);
+      //Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed+ff_accel,ff_Speed+pidRSpeed+ff_accel);
+      Robot.drivetrain.tankDrive(ff_Speed+ff_accel,ff_Speed+ff_accel);
       //System.out.println(ff_Speed+pidLSpeed);
     }
     else
