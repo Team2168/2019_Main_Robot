@@ -12,8 +12,8 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class VibrateDriverStick extends Command {
-  public VibrateDriverStick() {
+public class VibrateDriverJoystick extends Command {
+  public VibrateDriverJoystick() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     setTimeout(1.0);
