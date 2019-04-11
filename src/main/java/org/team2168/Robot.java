@@ -13,6 +13,7 @@ import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
+import org.team2168.commands.hatchProbePistons.VibrationPattern;
 import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
 import org.team2168.subsystems.CargoPunch;
@@ -121,6 +122,9 @@ public class Robot extends TimedRobot
   private static boolean lastHatch = false;
   private static boolean lastCargo = false;
 
+  // Vibration
+  public static VibrationPattern vibrationPattern;
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -163,6 +167,8 @@ public class Robot extends TimedRobot
       autoWithoutGamePiecePattern = new AutoWithoutGamePiecePattern();
       habClimbPattern = new HABClimbPattern();
       teleopWithoutGamePiecePattern = new TeleopWithoutGamePiecePattern();
+
+      vibrationPattern = new VibrationPattern();
 
       drivetrain.calibrateGyro();
       driverstation = DriverStation.getInstance();
@@ -369,6 +375,11 @@ public class Robot extends TimedRobot
 
     controlStyle = (int) controlStyleChooser.getSelected();
     throttleStyle = (int) throttleVibeChooser.getSelected();
+
+    if(driverstation.getMatchTime() == 20)
+    {
+      vibrationPattern.start();
+    }
     // if(hatchProbePistons.isHatchPresentLimitSwitch() && canRunGamePiecePattern)
     // {
     //   withGamePiecePattern.start();
