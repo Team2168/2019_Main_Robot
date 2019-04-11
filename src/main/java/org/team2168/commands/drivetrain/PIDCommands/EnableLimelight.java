@@ -44,8 +44,8 @@ public class EnableLimelight extends Command {
 
     Robot.drivetrain.limelight.setCamMode(0);
     Robot.drivetrain.limelight.setLedMode(0);
-    if(Robot.driverstation.isFMSAttached())
-    {
+    // if(Robot.driverstation.isFMSAttached())
+    // {
       if(Robot.onBlueAlliance())
       {
         Robot.drivetrain.limelight.setPipeline(3);
@@ -54,11 +54,11 @@ public class EnableLimelight extends Command {
       {
         Robot.drivetrain.limelight.setPipeline(2);
       }
-    }
-    else
-    {
-      Robot.drivetrain.limelight.setPipeline(0);
-    }
+  //   }
+  //   else
+  //   {
+  //     Robot.drivetrain.limelight.setPipeline(0);
+  //   }
     Robot.drivetrain.limelightPosController.Enable();
   }
 
