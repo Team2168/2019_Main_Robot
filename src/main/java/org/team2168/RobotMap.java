@@ -54,14 +54,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_ENCODER_B = 2;
 	public static final int LEFT_DRIVE_ENCODER_A = 3;
 
-	public static final int LIFT_FULLY_UP_LIMIT = 4;
-	public static final int LIFT_FULLY_DOWN_LIMIT = 5;
+	public static final int RIGHT_STINGER_ENCODER_A = 4;//change something
+	public static final int RIGHT_STINGER_ENCODER_B = 5;//change
+	public static final int LEFT_STINGER_ENCODER_B = 8;//change
+	public static final int LEFT_STINGER_ENCODER_A = 9;//change
 
-	public static final int STINGER_LEFT_RATCHET_ENGAGED = 6;
-	public static final int STINGER_RIGHT_RATCHET_ENGAGED = 7;
+	public static final int LIFT_FULLY_UP_LIMIT = 18;
+	public static final int LIFT_FULLY_DOWN_LIMIT = 19;
 
-	public static final int HATCH_INTAKE_LOWERED_LIMIT = 8;
-	public static final int HATCH_INTAKE_RAISED_LIMIT = 9;
 
 
 	//Channels 10-25 on MXP (PWM and DIO)
@@ -108,7 +108,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	//Double Soldenoids PCM ID = 0
 	public final static int DRIVETRAIN_ENGAGED_PCM = 0;
-	public static final int HATCH_PANEL_VELCRO_PUSHER_PCM = 1;
+	public static final int DRIVETRAIN_DISENGAGED_PCM = 1; 
+	public static final int HATCH_PANEL_VELCRO_PUSHER_PCM = 4; //old floor pickup
 	public static final int HATCH_INTAKE_LOWER_PCM = 6;
 	public static final int HATCH_INTAKE_RAISE_PCM = 7;
 	public static final int STINGER_RACHET_ENGAGE_PCM = 4;
@@ -182,6 +183,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	private static final double DRIVE_GEAR_RATIO = 1.0 / 1.0; // ratio between wheel over encoder
 	private static final double DRIVE_WHEEL_DIAMETER = 6.0;   //inches;
 	public static final int DRIVE_ENCODER_PULSE_PER_ROT = (int) (DRIVE_PULSE_PER_ROTATION * DRIVE_GEAR_RATIO); // pulse per rotation * gear																					// ratio
+	
 	public static final double DRIVE_ENCODER_DIST_PER_TICK = (Math.PI * DRIVE_WHEEL_DIAMETER / DRIVE_ENCODER_PULSE_PER_ROT);
 	public static final CounterBase.EncodingType DRIVE_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
 	public static final AverageEncoder.PositionReturnType DRIVE_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.INCH;
@@ -213,7 +215,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                         CARGO INTAKE PARAMETERS                        *
 	 *************************************************************************/
 	public static final boolean CARGO_INTAKE_MOTOR_REVERSE = false;
-	public static final double CARGO_INTAKE_MAX_SPEED = 1.0;
+	public static final double CARGO_INTAKE_MAX_SPEED = 0.55;
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MIN = 2.5; 
 	public static final double CARGO_INTAKE_IR_THRESHOLD_MAX = 3.3; 
 
@@ -240,11 +242,11 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean LIFT_ENABLE_HEIGHT_HOLD = true;
 	public static final boolean LIFT_ENABLE_INTERLOCKS = false;
 
-	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift pot
+	public static final double LIFT_POT_CROSS_BAR_HEIGHT = 40.0; //inches on lift p2ot
 	public static final double LIFT_POT_CROSS_BAR_HEIGHT_PBOT = 40.0; //inches on lift pot
 	public static final double LIFT_ZERO_BELOW_THIS_HEIGHT = 14.0;
 
-	public static final double LIFT_MAX_JOYSTICK_SPEED = 1.0; 
+	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.6; 
 
 	public static final double LIFT_HOLDING_VOLTAGE = 1.2; //volts divide by batt voltage. 
 	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
@@ -301,7 +303,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.3; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 1.2; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 0.87; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
@@ -358,9 +360,23 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double STINGER_RIGHT_POT_VOLTAGE_0_PBOT = 0.62; //0 degrees
 	public static final double STINGER_RIGHT_POT_0_HEIGHT_INCHES_PBOT = 0.0;
 
+	private static final int STINGER_PULSE_PER_ROTATION = 256; // encoder ticks per rotation
+	private static final double STINGER_GEAR_RATIO = 1.0 / 1.0; // ratio between wheel over encoder
+	private static final double STINGER_WHEEL_DIAMETER = 0.5;   //inches;
+	public static final int STINGER_ENCODER_PULSE_PER_ROT = (int) (STINGER_PULSE_PER_ROTATION * STINGER_GEAR_RATIO); // pulse per rotation * gear																					// ratio
+	
+	public static final double STINGER_ENCODER_DIST_PER_TICK = (Math.PI * STINGER_WHEEL_DIAMETER / STINGER_ENCODER_PULSE_PER_ROT);
+	public static final CounterBase.EncodingType STINGER_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
+	public static final AverageEncoder.PositionReturnType STINGER_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType STINGER_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.IPS;
+	public static final int STINGER_ENCODER_MIN_RATE = 0;
+	public static final int STINGER_ENCODER_MIN_PERIOD = 1;
+	public static final boolean LEFT_STINGER_TRAIN_ENCODER_REVERSE = true;
+	public static final boolean RIGHT_STINGER_TRAIN_ENCODER_REVERSE = true;
+
 	public static final int STINGER_AVG_ENCODER_VAL = 5;
 	/*************************************************************************
-	 *                         Plunger Arm Pivot PARAMETERS                   *
+	 *                         Plunger Arm Pivot PARAMETERS                   *																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										
 	 *************************************************************************/
 	public static final boolean PLUNGER_ARM_PIVOT_ENABlE_HEIGHT_HOLD = false;
 	public static final double PLUNGER_ARM_PIVOT_HOLDING_VOLTAGE = 3.0; //volts
@@ -447,6 +463,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double DRIVE_TRAIN_RIGHT_POSITION_I = 0.0001412646174233;
 	public static final double DRIVE_TRAIN_RIGHT_POSITION_D = 0.0074778888124088;
 
+
 	public static final double ROTATE_POSITION_P = 0.055;
 	public static final double ROTATE_POSITION_I = 0.001;
 	public static final double ROTATE_POSITION_D = 0.0064778888124088;
@@ -458,6 +475,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double STINGER_AUTO_RIGHT_POSITION_P = 0.1;
 	public static final double STINGER_AUTO_RIGHT_POSITION_I = 0.05;
 	public static final double STINGER_AUTO_RIGHT_POSITION_D = 0.0;
+
+	public static final double STINGER_AUTO_LEFT_POSITION_P = 0.1;
+	public static final double STINGER_AUTO_LEFT_POSITION_I = 0.05;
+	public static final double STINGER_AUTO_LEFT_POSITION_D = 0.0;
 
 
 	public static final double LIFT_P = 0.044;
@@ -496,6 +517,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int TCP_SERVER_ROTATE_CONTROLLER_WITH_CAMERA = 1188;
 	public static final int TCP_SERVER_MB_POT_CONTROLLER = 1189;
 	public static final int TCP_SERVER_HP_POT_CONTROLLER = 1190;
+	public static final int TCP_SERVER_RIGHT_STINGER_POSITION = 1191;
+	public static final int TCP_SERVER_LEFT_STINGER_POSITION = 1192;
+
+	
 
 	/******************************************************************
 	 *                         ConsolePrinter PARAMETERS              *

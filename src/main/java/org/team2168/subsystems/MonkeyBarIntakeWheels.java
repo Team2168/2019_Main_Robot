@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -36,6 +37,10 @@ public class MonkeyBarIntakeWheels extends Subsystem {
   {
     _intakeLeft = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_LEFT_PDP);
     _intakeRight = new VictorSPX(RobotMap.MONKEY_BAR_INTAKE_WHEELS_RIGHT_PDP);
+
+
+
+    
 
     //ConsolePrinter.putNumber("Monkey Bar Intake Joystick value", () -> {return Robot.oi.getMonkeyBarIntakeJoystickValue();}, true, false);
     ConsolePrinter.putNumber("Monkey Bar Intake right motor voltage", () -> {return _intakeRightVoltage;}, true, false);

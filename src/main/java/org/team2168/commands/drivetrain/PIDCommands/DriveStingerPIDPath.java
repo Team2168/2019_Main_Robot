@@ -24,7 +24,7 @@ public class DriveStingerPIDPath extends Command {
   private double setPoint;
   OneDimensionalMotionProfilingNoConstraint motion;
 	int counter;
-  double ff_term = 1.6;
+  double ff_term = 2.6;//1.6
   double ff_term_accel = 0.075;
 
   private double maxSpeed;
@@ -41,7 +41,7 @@ public class DriveStingerPIDPath extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
-    this.setPoint = Robot.drivetrain.leftPosController.getSetPoint();
+    this.setPoint = Robot.drivetrain.leftStingerController.getSetPoint();
     this.maxSpeed = 1.0;
     this.minSpeed = 0.0;
 
@@ -89,30 +89,31 @@ public class DriveStingerPIDPath extends Command {
     this.vel = motion.vel;
     this.accel = motion.acc;
 
-    Robot.drivetrain.resetPosition();
-    Robot.drivetrain.leftPosController.reset();
-    Robot.drivetrain.leftPosController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
-    Robot.drivetrain.leftPosController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
-    Robot.drivetrain.leftPosController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
-    Robot.drivetrain.leftPosController.setSetPoint(this.pos);
-    Robot.drivetrain.leftPosController.setMaxPosOutput(maxSpeed);
-    Robot.drivetrain.leftPosController.setMaxNegOutput(-maxSpeed);
-    Robot.drivetrain.leftPosController.setMinPosOutput(minSpeed);
-    Robot.drivetrain.leftPosController.setMinNegOutput(-minSpeed);
-    Robot.drivetrain.leftPosController.setAcceptErrorDiff(error);
-    Robot.drivetrain.leftPosController.Enable();
+    Robot.drivetrain.resetLeftStingerPosition();
+    Robot.drivetrain.resetRightStingerPosition();
+    Robot.drivetrain.leftStingerController.reset();
+    Robot.drivetrain.leftStingerController.setpGain(RobotMap.STINGER_AUTO_LEFT_POSITION_P);
+    Robot.drivetrain.leftStingerController.setiGain(RobotMap.STINGER_AUTO_LEFT_POSITION_I);
+    Robot.drivetrain.leftStingerController.setdGain(RobotMap.STINGER_AUTO_LEFT_POSITION_D);
+    Robot.drivetrain.leftStingerController.setSetPoint(this.pos);
+    Robot.drivetrain.leftStingerController.setMaxPosOutput(maxSpeed);
+    Robot.drivetrain.leftStingerController.setMaxNegOutput(-maxSpeed);
+    Robot.drivetrain.leftStingerController.setMinPosOutput(minSpeed);
+    Robot.drivetrain.leftStingerController.setMinNegOutput(-minSpeed);
+    Robot.drivetrain.leftStingerController.setAcceptErrorDiff(error);
+    Robot.drivetrain.leftStingerController.Enable();
 
-    Robot.drivetrain.rightPosController.reset();
-    Robot.drivetrain.rightPosController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
-    Robot.drivetrain.rightPosController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
-    Robot.drivetrain.rightPosController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
-    Robot.drivetrain.rightPosController.setSetPoint(this.pos);
-    Robot.drivetrain.rightPosController.setMaxPosOutput(maxSpeed);
-    Robot.drivetrain.rightPosController.setMaxNegOutput(-maxSpeed);
-    Robot.drivetrain.rightPosController.setMinPosOutput(minSpeed);
-    Robot.drivetrain.rightPosController.setMinNegOutput(-minSpeed);
-    Robot.drivetrain.rightPosController.setAcceptErrorDiff(error);
-    Robot.drivetrain.rightPosController.Enable();
+    Robot.drivetrain.rightStingerController.reset();
+    Robot.drivetrain.rightStingerController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
+    Robot.drivetrain.rightStingerController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
+    Robot.drivetrain.rightStingerController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
+    Robot.drivetrain.rightStingerController.setSetPoint(this.pos);
+    Robot.drivetrain.rightStingerController.setMaxPosOutput(maxSpeed);
+    Robot.drivetrain.rightStingerController.setMaxNegOutput(-maxSpeed);
+    Robot.drivetrain.rightStingerController.setMinPosOutput(minSpeed);
+    Robot.drivetrain.rightStingerController.setMinNegOutput(-minSpeed);
+    Robot.drivetrain.rightStingerController.setAcceptErrorDiff(error);
+    Robot.drivetrain.rightStingerController.Enable();
 
     counter = 0;
 
@@ -128,11 +129,12 @@ public class DriveStingerPIDPath extends Command {
 
     if (counter < pos.length)
     {
-      double pidLSpeed = Robot.drivetrain.leftPosController.getControlOutput();
-      double pidRSpeed = Robot.drivetrain.rightPosController.getControlOutput();
+      double pidLSpeed = Robot.drivetrain.leftStingerController.getControlOutput();
+      double pidRSpeed = Robot.drivetrain.rightStingerController.getControlOutput();
       double ff_Speed = (ff_term  * vel[counter]) / (Robot.pdp.getBatteryVoltage());
       double ff_accel = (ff_term_accel  * accel[counter]) / (Robot.pdp.getBatteryVoltage());
       Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed+ff_accel,ff_Speed+pidRSpeed+ff_accel);
+      //Robot.drivetrain.tankDrive(ff_Speed+ff_accel,ff_Speed+ff_accel);
       //System.out.println(ff_Speed+pidLSpeed);
     }
     else
@@ -151,8 +153,8 @@ public class DriveStingerPIDPath extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.drivetrain.leftPosController.Pause();
-    Robot.drivetrain.rightPosController.Pause();
+    Robot.drivetrain.leftStingerController.Pause();
+    Robot.drivetrain.rightStingerController.Pause();
     Robot.drivetrain.tankDrive(0.0,0.0);
   }
 

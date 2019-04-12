@@ -47,7 +47,7 @@ public class DriveMonkeyBarPivotPIDPathAutoClimb extends Command {
     requires(Robot.monkeyBarPivot);
     this.setPoint = Robot.monkeyBarPivot.monkeyBarPivotController.getSetPoint();
     this.maxSpeed = 1.0;
-    this.minSpeed = 0.0;
+    this.minSpeed = 0.15;
 
     SmartDashboard.putNumber("FF_term_MB", ff_term);
     

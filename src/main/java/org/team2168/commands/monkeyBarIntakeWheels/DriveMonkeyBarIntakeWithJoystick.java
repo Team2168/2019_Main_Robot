@@ -27,9 +27,9 @@ public class DriveMonkeyBarIntakeWithJoystick extends Command {
   {
     if(Robot.isClimbEnabled)
       if(Math.abs(Robot.oi.driverJoystick.getLeftStickRaw_Y())>0.1) //we only want to drive fwd, never reverse
-        Robot.monkeyBarIntakeWheels.driveIntakeAll((Math.abs(Robot.oi.driverJoystick.getLeftStickRaw_Y()+.2)*0.75) + 0.15);
+        Robot.monkeyBarIntakeWheels.driveIntakeAll((Math.abs(Robot.oi.driverJoystick.getLeftStickRaw_Y()+.2)) + 0.15);
       else
-        Robot.monkeyBarIntakeWheels.driveIntakeAll(0.15); //always drive wheels in climb mode
+        Robot.monkeyBarIntakeWheels.driveIntakeAll(0.07); //always drive wheels in climb mode
     else
       Robot.monkeyBarIntakeWheels.driveIntakeAll(0.6*Robot.oi.getMonkeyBarIntakeJoystickValue());
   }
