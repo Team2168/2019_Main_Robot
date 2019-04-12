@@ -812,12 +812,12 @@ public class Drivetrain extends Subsystem {
 
   public double getRightStingerEncoderRate()
   {
-    return _drivetrainRightEncoder.getRate();
+    return _stingerRightEncoder.getRate();
   }
 
   public double getLeftStingerEncoderRate()
   {
-    return _drivetrainLeftEncoder.getRate();
+    return _stingerLeftEncoder.getRate();
   }
 
   public double getAverageStingerEncoderRate()
