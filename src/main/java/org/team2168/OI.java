@@ -96,7 +96,7 @@ public class OI
 		driverJoystick.ButtonA().whenPressed(new DisengageStingers());
 
 		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,22,5));
+		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,24,5));
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
@@ -227,7 +227,7 @@ public class OI
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 		 pidTestJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPath(63));
 		 //.ButtonA().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(0,22,5));
+		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(0,24,5));
 
 		 pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		 
@@ -349,7 +349,7 @@ public class OI
 	/**
 	 * Method that sets that Right side of the drive train so that it drives with
 	 * RightStick Y
-	 * 
+	 * /
 	 * @author Krystina
 	 */
 	public double getDriveTrainRightJoystick()

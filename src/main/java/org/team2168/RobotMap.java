@@ -291,7 +291,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	 *                      Monkey Bar PARAMETERS                            *
 	 *************************************************************************/
 
-	public static final boolean ONE_TRIGGER_CLIMB_ENABLED = true;
+	public static final boolean ONE_TRIGGER_CLIMB_ENABLED = false;
 	public static final boolean MONKEY_BAR_ROTATE_RIGHT_REVERSE = true;
 	public static final boolean MONKEY_BAR_ROTATE_LEFT_REVERSE = false;
 	
@@ -303,7 +303,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	
 	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_MAX = 4.3; //130 degrees
 	public static final double MONKEY_BAR_RIGHT_POT_MAX_ROTATION = 130; //130 degrees
-	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 0.87; //0 degrees
+	public static final double MONKEY_BAR_RIGHT_POT_VOLTAGE_0 = 1.1; //0 degrees
 	public static final double MONKEY_BAR_RIGHT_ANGLE_DEGREES_0 = 0.0;
 	public static final int MONKEY_BAR_RIGHT_AVG_ENCODER_VAL = 5;
 
@@ -473,11 +473,11 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double ROTATE_POSITION_D_Drive_Straight = 0.0064778888124088;
 
 	public static final double STINGER_AUTO_RIGHT_POSITION_P = 0.1;
-	public static final double STINGER_AUTO_RIGHT_POSITION_I = 0.05;
+	public static final double STINGER_AUTO_RIGHT_POSITION_I = 0.01;
 	public static final double STINGER_AUTO_RIGHT_POSITION_D = 0.0;
 
 	public static final double STINGER_AUTO_LEFT_POSITION_P = 0.1;
-	public static final double STINGER_AUTO_LEFT_POSITION_I = 0.05;
+	public static final double STINGER_AUTO_LEFT_POSITION_I = 0.01;
 	public static final double STINGER_AUTO_LEFT_POSITION_D = 0.0;
 
 

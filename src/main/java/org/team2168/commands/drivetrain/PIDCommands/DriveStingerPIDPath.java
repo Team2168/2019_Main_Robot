@@ -12,6 +12,7 @@ import org.team2168.RobotMap;
 import org.team2168.PID.trajectory.OneDimensionalMotionProfilingNoConstraint;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class DriveStingerPIDPath extends Command {
@@ -24,7 +25,7 @@ public class DriveStingerPIDPath extends Command {
   private double setPoint;
   OneDimensionalMotionProfilingNoConstraint motion;
 	int counter;
-  double ff_term = 2.6;//1.6
+  double ff_term = 1.0;//1.6
   double ff_term_accel = 0.075;
 
   private double maxSpeed;
@@ -45,7 +46,7 @@ public class DriveStingerPIDPath extends Command {
     this.maxSpeed = 1.0;
     this.minSpeed = 0.0;
 
-    //SmartDashboard.putNumber("FF_term_sting", ff_term);
+    SmartDashboard.putNumber("FF_term_sting", ff_term);
     //SmartDashboard.putNumber("FF_term_accel_sting", 0);
     
   }
@@ -92,9 +93,9 @@ public class DriveStingerPIDPath extends Command {
     Robot.drivetrain.resetLeftStingerPosition();
     Robot.drivetrain.resetRightStingerPosition();
     Robot.drivetrain.leftStingerController.reset();
-    Robot.drivetrain.leftStingerController.setpGain(RobotMap.STINGER_AUTO_LEFT_POSITION_P);
-    Robot.drivetrain.leftStingerController.setiGain(RobotMap.STINGER_AUTO_LEFT_POSITION_I);
-    Robot.drivetrain.leftStingerController.setdGain(RobotMap.STINGER_AUTO_LEFT_POSITION_D);
+    // Robot.drivetrain.leftStingerController.setpGain(RobotMap.STINGER_AUTO_LEFT_POSITION_P);
+    // Robot.drivetrain.leftStingerController.setiGain(RobotMap.STINGER_AUTO_LEFT_POSITION_I);
+    // Robot.drivetrain.leftStingerController.setdGain(RobotMap.STINGER_AUTO_LEFT_POSITION_D);
     Robot.drivetrain.leftStingerController.setSetPoint(this.pos);
     Robot.drivetrain.leftStingerController.setMaxPosOutput(maxSpeed);
     Robot.drivetrain.leftStingerController.setMaxNegOutput(-maxSpeed);
@@ -104,9 +105,9 @@ public class DriveStingerPIDPath extends Command {
     Robot.drivetrain.leftStingerController.Enable();
 
     Robot.drivetrain.rightStingerController.reset();
-    Robot.drivetrain.rightStingerController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
-    Robot.drivetrain.rightStingerController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
-    Robot.drivetrain.rightStingerController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
+    // Robot.drivetrain.rightStingerController.setpGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_P);
+    // Robot.drivetrain.rightStingerController.setiGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_I);
+    // Robot.drivetrain.rightStingerController.setdGain(RobotMap.STINGER_AUTO_RIGHT_POSITION_D);
     Robot.drivetrain.rightStingerController.setSetPoint(this.pos);
     Robot.drivetrain.rightStingerController.setMaxPosOutput(maxSpeed);
     Robot.drivetrain.rightStingerController.setMaxNegOutput(-maxSpeed);
@@ -124,7 +125,7 @@ public class DriveStingerPIDPath extends Command {
   @Override
   protected void execute() {
 
-   // ff_term = SmartDashboard.getNumber("FF_term_sting", ff_term);
+    ff_term = SmartDashboard.getNumber("FF_term_sting", ff_term);
    // double ff_term_accel = SmartDashboard.getNumber("FF_term_accel_sting", 0);
 
     if (counter < pos.length)
