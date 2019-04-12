@@ -178,11 +178,17 @@ public class OI
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.7));
 		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 
-
+		//Button X
 		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonX().whileHeld(new IntakeHatchPanel());
+
+		//Button A
 		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
+		
+		//Button Y
 		operatorJoystick.ButtonY().whenPressed(new EngageHatchPanel());
+		
+		//Button B
 		operatorJoystick.ButtonB().whenPressed(new DisengageHatchPanel());
 
 		operatorJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
@@ -221,7 +227,7 @@ public class OI
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
 		 pidTestJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPath(63));
 		 //.ButtonA().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(7.5,4.5));
+		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(0,22,5));
 
 		 pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		 
