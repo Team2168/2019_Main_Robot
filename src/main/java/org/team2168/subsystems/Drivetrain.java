@@ -65,6 +65,10 @@ public class Drivetrain extends Subsystem {
   public PIDPosition rightPosController;
   public PIDPosition leftPosController;
 
+  public PIDPosition rightStingerController;
+  public PIDPosition leftStingerController;
+
+
   // declare speed controllers
   public PIDSpeed rightSpeedController;
   public PIDSpeed leftSpeedController;
@@ -82,6 +86,8 @@ public class Drivetrain extends Subsystem {
   TCPSocketSender TCProtateController;
   TCPSocketSender TCPleftPosController;
   TCPSocketSender TCPrightPosController;
+  TCPSocketSender TCPleftStingerController;
+  TCPSocketSender TCPrightStingerController;
   TCPSocketSender TCPlimelightPosController;
 
   public volatile double leftMotor1Voltage;
@@ -180,24 +186,24 @@ public class Drivetrain extends Subsystem {
     _stingerLeftEncoder = new AverageEncoder(
         RobotMap.LEFT_STINGER_ENCODER_A, 
         RobotMap.LEFT_STINGER_ENCODER_B,
-        RobotMap.DRIVE_ENCODER_PULSE_PER_ROT, 
-        RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
-        RobotMap.LEFT_DRIVE_TRAIN_ENCODER_REVERSE, 
-        RobotMap.DRIVE_ENCODING_TYPE,
-        RobotMap.DRIVE_SPEED_RETURN_TYPE, 
-        RobotMap.DRIVE_POS_RETURN_TYPE, 
-        RobotMap.DRIVE_AVG_ENCODER_VAL);
+        RobotMap.STINGER_ENCODER_PULSE_PER_ROT, 
+        RobotMap.STINGER_ENCODER_DIST_PER_TICK,
+        RobotMap.LEFT_STINGER_TRAIN_ENCODER_REVERSE, 
+        RobotMap.STINGER_ENCODING_TYPE,
+        RobotMap.STINGER_SPEED_RETURN_TYPE, 
+        RobotMap.STINGER_POS_RETURN_TYPE, 
+        RobotMap.STINGER_AVG_ENCODER_VAL);
 
     _stingerRightEncoder = new AverageEncoder(
         RobotMap.RIGHT_STINGER_ENCODER_A, 
         RobotMap.RIGHT_STINGER_ENCODER_B,
-        RobotMap.DRIVE_ENCODER_PULSE_PER_ROT, 
-        RobotMap.DRIVE_ENCODER_DIST_PER_TICK,
-        RobotMap.RIGHT_DRIVE_TRAIN_ENCODER_REVERSE, 
-        RobotMap.DRIVE_ENCODING_TYPE,
-        RobotMap.DRIVE_SPEED_RETURN_TYPE, 
-        RobotMap.DRIVE_POS_RETURN_TYPE, 
-        RobotMap.DRIVE_AVG_ENCODER_VAL);
+        RobotMap.STINGER_ENCODER_PULSE_PER_ROT, 
+        RobotMap.STINGER_ENCODER_DIST_PER_TICK,
+        RobotMap.RIGHT_STINGER_TRAIN_ENCODER_REVERSE, 
+        RobotMap.STINGER_ENCODING_TYPE,
+        RobotMap.STINGER_SPEED_RETURN_TYPE, 
+        RobotMap.STINGER_POS_RETURN_TYPE, 
+        RobotMap.STINGER_AVG_ENCODER_VAL);
 
     _gyroSPI = new ADXRS453Gyro();
     _gyroSPI.startThread();
@@ -274,6 +280,24 @@ public class Drivetrain extends Subsystem {
         _drivetrainLeftEncoder,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
+        rightStingerController = new PIDPosition(
+        "rightStingerController", 
+        RobotMap.STINGER_AUTO_RIGHT_POSITION_P,
+        RobotMap.STINGER_AUTO_RIGHT_POSITION_I, 
+        RobotMap.STINGER_AUTO_RIGHT_POSITION_D, 
+        1, 
+        _stingerRightEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
+    leftStingerController = new PIDPosition(
+        "leftStingerController", 
+        RobotMap.STINGER_AUTO_LEFT_POSITION_P,
+        RobotMap.STINGER_AUTO_LEFT_POSITION_I, 
+        RobotMap.STINGER_AUTO_LEFT_POSITION_D, 
+        1, 
+        _stingerLeftEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
         
     
         // Limelight Controller
@@ -290,6 +314,8 @@ public class Drivetrain extends Subsystem {
     leftSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rightPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     leftPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    rightStingerController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    leftStingerController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
@@ -300,6 +326,8 @@ public class Drivetrain extends Subsystem {
     leftSpeedController.startThread();
     rightPosController.startThread();
     leftPosController.startThread();
+    rightStingerController.startThread();
+    leftStingerController.startThread();
     driveTrainPosController.startThread();
     rotateController.startThread();
     rotateDriveStraightController.startThread();
@@ -320,6 +348,12 @@ public class Drivetrain extends Subsystem {
 
     TCPleftPosController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION, leftPosController);
     TCPleftPosController.start();
+
+    TCPrightStingerController = new TCPSocketSender(RobotMap.TCP_SERVER_RIGHT_STINGER_POSITION, rightStingerController);
+    TCPrightStingerController.start();
+
+    TCPleftStingerController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_STINGER_POSITION, leftStingerController);
+    TCPleftStingerController.start();
 
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER, rotateController);
     TCProtateController.start();
