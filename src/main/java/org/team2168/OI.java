@@ -96,7 +96,7 @@ public class OI
 		driverJoystick.ButtonA().whenPressed(new DisengageStingers());
 
 		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(22,5));
+		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,22,5));
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());

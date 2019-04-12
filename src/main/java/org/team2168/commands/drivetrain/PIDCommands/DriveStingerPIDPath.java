@@ -133,8 +133,8 @@ public class DriveStingerPIDPath extends Command {
       double pidRSpeed = Robot.drivetrain.rightStingerController.getControlOutput();
       double ff_Speed = (ff_term  * vel[counter]) / (Robot.pdp.getBatteryVoltage());
       double ff_accel = (ff_term_accel  * accel[counter]) / (Robot.pdp.getBatteryVoltage());
-      //Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed+ff_accel,ff_Speed+pidRSpeed+ff_accel);
-      Robot.drivetrain.tankDrive(ff_Speed+ff_accel,ff_Speed+ff_accel);
+      Robot.drivetrain.tankDrive(ff_Speed+pidLSpeed+ff_accel,ff_Speed+pidRSpeed+ff_accel);
+      //Robot.drivetrain.tankDrive(ff_Speed+ff_accel,ff_Speed+ff_accel);
       //System.out.println(ff_Speed+pidLSpeed);
     }
     else
