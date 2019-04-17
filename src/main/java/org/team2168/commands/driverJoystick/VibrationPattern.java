@@ -38,5 +38,6 @@ public class VibrationPattern extends CommandGroup {
     addSequential(new VibrateDriverJoystick(), 0.25);
     addSequential(new Sleep(), 0.25);
     addSequential(new VibrateDriverJoystick(), 0.25);
+    addSequential(new Sleep(), 100);
   }
 }
