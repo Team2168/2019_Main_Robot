@@ -28,8 +28,13 @@ public class TeleopWithoutGamePiecePattern extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (Robot.isAutoMode())
+    {
+      Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 192, 255, 200);
+    }
+
     //cargo wheels patterns
-    if (Robot.cargoIntakeWheels.cargoIntakeWheelsSpeedForLEDs > RobotMap.CARGO_INTAKE_MIN_SPEED)
+    else if (Robot.cargoIntakeWheels.cargoIntakeWheelsSpeedForLEDs > RobotMap.CARGO_INTAKE_MIN_SPEED)
     {
         Robot.leds.writePatternOneColor(RobotMap.PATTERN_ANIMATED_WAVE_REVERSE, 96, 255, 255);
     }

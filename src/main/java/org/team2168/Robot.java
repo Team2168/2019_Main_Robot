@@ -299,8 +299,6 @@ public class Robot extends TimedRobot
     drivetrain.stopGyroCalibrating();
     drivetrain.resetGyro();
 
-    autoWithoutGamePiecePattern.start();
-
     autonomousCommand = (Command) autoChooser.getSelected();
 
     // schedule the autonomous command
@@ -317,11 +315,6 @@ public class Robot extends TimedRobot
   {
     autoMode = true;
     Scheduler.getInstance().run();
-
-    if(!withGamePiecePattern.isRunning())
-    {
-      autoWithoutGamePiecePattern.start();
-    }
   }
 
   /**
@@ -346,9 +339,6 @@ public class Robot extends TimedRobot
     // Select the control style
     controlStyle = (int) controlStyleChooser.getSelected();
     runTime = Timer.getFPGATimestamp();
-
-    autoWithoutGamePiecePattern.cancel();
-
   }
 
   /**
