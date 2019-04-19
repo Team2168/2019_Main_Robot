@@ -5,17 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.team2168.commands.auto.paths;
+package org.team2168.commands.auto;
 
-import org.team2168.Robot;
-import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPathQuinticPID;
+import org.team2168.commands.auto.paths.Drive10FeetForward;
+import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Drive10FeetForward extends CommandGroup {
+public class LimelightTest extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Drive10FeetForward() {
+  public LimelightTest() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -32,7 +33,8 @@ public class Drive10FeetForward extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new DrivePIDPathQuinticPID(Robot.leftPosQuinticPath, Robot.rightPosQuinticPath, Robot.leftVelQuinticPath,
-          Robot.rightVelQuinticPath, Robot.leftAccQuinticPath, Robot.rightAccQuinticPath, Robot.headingQuinticPath, Robot.reversePath, Robot.limelightEnable));
+    
+    addParallel(new Drive10FeetForward());
+    addSequential(new EnableLimelight());
   }
 }

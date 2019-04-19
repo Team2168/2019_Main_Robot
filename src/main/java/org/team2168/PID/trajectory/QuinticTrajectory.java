@@ -327,7 +327,7 @@ public class QuinticTrajectory
 //	    config.max_vel = 10.0*12;
 	    
 	    config.max_vel = 8.0*12;
-	    config.max_acc = 8.0*12;
+	    config.max_acc = 12.0*12;
 	    config.max_jerk = 30.0*12;
 	    
 	    

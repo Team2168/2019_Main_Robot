@@ -110,6 +110,7 @@ public class Robot extends TimedRobot {
   //Variable to track blue alliance vs red alliance
   private static boolean blueAlliance = false;
 
+  
   // Keep track of time
   double runTime = Timer.getFPGATimestamp();
 
@@ -123,7 +124,8 @@ public class Robot extends TimedRobot {
     public static double[] leftAccQuinticPath;
     public static double[] rightAccQuinticPath;
     public static double[] headingQuinticPath;
-    public static boolean reversePath = false;
+    public static boolean reversePath = true;
+    public static boolean limelightEnable = true;
 
     public static double[] leftVelQuinticPath2;
     public static double[] rightVelQuinticPath2;
@@ -133,6 +135,7 @@ public class Robot extends TimedRobot {
     public static double[] rightAccQuinticPath2;
     public static double[] headingQuinticPath2;
     public static boolean reversePath2 = false;
+    public static boolean limelightEnable2 = false;
 
     public static double[] leftVelQuinticPath3;
     public static double[] rightVelQuinticPath3;
@@ -141,7 +144,8 @@ public class Robot extends TimedRobot {
     public static double[] leftAccQuinticPath3;
     public static double[] rightAccQuinticPath3;
     public static double[] headingQuinticPath3;
-    public static boolean reversePath3 = false;
+    public static boolean reversePath3 = true;
+    public static boolean limelightEnable3 = false;
     
   /****************************************************
     * 
@@ -212,10 +216,10 @@ public class Robot extends TimedRobot {
 
       double[][] waypointPath = new double[][]{
         {0.0, 0.0, 0},
-        {24.0, 0.0, 0}
+        {260.0, 0.0, 0}
       };
   
-        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 4.0, false);
+        QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 12.0, true);
         //quinticPath.calculate();
   
         this.leftPosQuinticPath = quinticPath.getLeftPos();
@@ -232,7 +236,7 @@ public class Robot extends TimedRobot {
           {177.0, 301.5, Math.PI/6}
         };
     
-          QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, 6.0, false);
+          QuinticTrajectory quinticPath2 = new QuinticTrajectory("path2", waypointPath2, 12.0, false);
           //quinticPath2.calculate();
     
           this.leftPosQuinticPath2 = quinticPath2.getLeftPos();
@@ -245,10 +249,10 @@ public class Robot extends TimedRobot {
 
           double[][] waypointPath3 = new double[][]{
             {0.0, 0.0, 0},
-            {36.0, 0.0, 0}
+            {260.0, 0.0, 0}
           };
       
-            QuinticTrajectory quinticPath3= new QuinticTrajectory("path3", waypointPath3, 4.0, false);
+            QuinticTrajectory quinticPath3= new QuinticTrajectory("path3", waypointPath3, 12.0, true);
             //quinticPath.calculate();
       
             this.leftPosQuinticPath3 = quinticPath3.getLeftPos();
