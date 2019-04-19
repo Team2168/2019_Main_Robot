@@ -11,11 +11,11 @@ import org.team2168.Robot;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPathQuinticPID;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Drive10FeetForward extends CommandGroup {
+public class Drive10FeetForward2 extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Drive10FeetForward() {
+  public Drive10FeetForward2() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -32,7 +32,7 @@ public class Drive10FeetForward extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(new DrivePIDPathQuinticPID(Robot.leftPosQuinticPath, Robot.rightPosQuinticPath, Robot.leftVelQuinticPath,
-          Robot.rightVelQuinticPath, Robot.leftAccQuinticPath, Robot.rightAccQuinticPath, Robot.headingQuinticPath, Robot.reversePath, Robot.limelightEnable));
+    addSequential(new DrivePIDPathQuinticPID(Robot.leftPosQuinticPath3, Robot.rightPosQuinticPath3, Robot.leftVelQuinticPath3,
+          Robot.rightVelQuinticPath3, Robot.leftAccQuinticPath3, Robot.rightAccQuinticPath3, Robot.headingQuinticPath3, Robot.reversePath3, Robot.limelightEnable3));
   }
 }

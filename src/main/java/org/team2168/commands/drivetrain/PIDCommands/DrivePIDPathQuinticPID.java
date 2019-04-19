@@ -40,6 +40,8 @@ public class DrivePIDPathQuinticPID extends Command
 	boolean direction = false;
 	int directionValue = 1;
 
+	boolean limelight = false;
+
 	private boolean headingByArray = false;
 	private boolean rotateInPlace = false;
 	private boolean positonGiven = false;
@@ -151,12 +153,14 @@ public class DrivePIDPathQuinticPID extends Command
 	}
 
 	public DrivePIDPathQuinticPID(double[] setPointLeftPos, double[] setPointRightPos, double[] setPointLeftVel,
-			double[] setPointRightVel, double[] setPointLeftAcc,double[] setPointRightAcc, double[] setPointHeading, boolean reverse)
+			double[] setPointRightVel, double[] setPointLeftAcc,double[] setPointRightAcc, double[] setPointHeading, boolean reverse, boolean limelight)
 	{
 		requires(Robot.drivetrain);
 
 		this.positonGiven = true;
 		this.direction = false;
+
+		this.limelight = limelight;
 
 		this.setPointLeftPos = setPointLeftPos;
 		this.setPointRightPos = setPointRightPos;
@@ -394,12 +398,32 @@ public class DrivePIDPathQuinticPID extends Command
 			Robot.drivetrain.rightSpeedController.Enable();
 			Robot.drivetrain.rightSpeedController.setSetPoint(this.setPointRightVel);
 		}
+		
+		if(limelight)
+		{
+			Robot.drivetrain.limelightPosController.reset();
 
-		Robot.drivetrain.rotateDriveStraightController.reset();
-		if (this.headingByArray)
-			Robot.drivetrain.rotateDriveStraightController.setSetPoint(setPointHeading);
+    		Robot.drivetrain.limelightPosController.setSetPoint(0);
+    		Robot.drivetrain.limelightPosController.setMaxPosOutput(0.5);
+    		Robot.drivetrain.limelightPosController.setMaxNegOutput(-0.5);
+    		Robot.drivetrain.limelightPosController.setMinPosOutput(-0.5);
+    		Robot.drivetrain.limelightPosController.setMinNegOutput(0.5);
+    		Robot.drivetrain.limelightPosController.setAcceptErrorDiff(0.5);
 
-		Robot.drivetrain.rotateDriveStraightController.Enable();
+   		 	Robot.drivetrain.limelight.setCamMode(0);
+    		Robot.drivetrain.limelight.setLedMode(0);
+    		Robot.drivetrain.limelight.setPipeline(0);
+    		Robot.drivetrain.limelightPosController.Enable();
+		}
+		else
+		{
+			Robot.drivetrain.rotateDriveStraightController.reset();
+			if (this.headingByArray)
+				Robot.drivetrain.rotateDriveStraightController.setSetPoint(setPointHeading);
+	
+			Robot.drivetrain.rotateDriveStraightController.Enable();
+		}
+		
 
 		counter = 0;
 		oldClock = Timer.getFPGATimestamp();
@@ -439,21 +463,39 @@ public class DrivePIDPathQuinticPID extends Command
 		// Robot.drivetrain.rotateDriveStraightController.getControlOutput();
 		double leftPID = 0;
 		double rightPID = 0;
+		double headingCorrection = 0;
 
 		if (this.positonGiven)
 		{
-			leftPID = Robot.drivetrain.leftPosController.getControlOutput()*this.directionValue;
-			rightPID = Robot.drivetrain.rightPosController.getControlOutput()*this.directionValue;
+			// leftPID = Robot.drivetrain.leftPosController.getControlOutput()*this.directionValue;
+			// rightPID = Robot.drivetrain.rightPosController.getControlOutput()*this.directionValue;
+			if(limelight)
+			{
+				leftPID = 0;
+				rightPID = 0;
+			}
+			else
+			{
+				leftPID = Robot.drivetrain.leftPosController.getControlOutput();
+				rightPID = Robot.drivetrain.rightPosController.getControlOutput();
+			}
 		}
 
-		double headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
+		if(limelight)
+		{
+			headingCorrection = (Robot.drivetrain.limelightPosController.getControlOutput())*-1.0;
+		}
+		else
+		{
+			headingCorrection = (Robot.drivetrain.rotateDriveStraightController.getControlOutput());
+		}
 
 		if (counter < setPointLeftVel.length)
 		{
 			double speedLeft = (ff_term * setPointLeftVel[counter]) / (Robot.pdp.getBatteryVoltage());
 			double speedRight = (ff_term * setPointRightVel[counter]) / (Robot.pdp.getBatteryVoltage());
-			double accelLeft = (aff_term * setPointLeftAcc[counter]) / (Robot.pdp.getBatteryVoltage());
-			double accelRight = (aff_term * setPointRightAcc[counter]) / (Robot.pdp.getBatteryVoltage());
+			double accelLeft = (aff_term * setPointLeftAcc[counter]) / (Robot.pdp.getBatteryVoltage());//0
+			double accelRight = (aff_term * setPointRightAcc[counter]) / (Robot.pdp.getBatteryVoltage());//0
 
 			if (!this.rotateInPlace)
 			{
@@ -509,6 +551,10 @@ public class DrivePIDPathQuinticPID extends Command
 		//// Robot.drivetrain.leftPosController.reset();
 		//// Robot.drivetrain.rightPosController.reset();
 		Robot.drivetrain.tankDrive(0, 0);
+		Robot.drivetrain.limelightPosController.Pause();
+		Robot.drivetrain.limelight.setCamMode(1);
+		Robot.drivetrain.limelight.setLedMode(1);
+		Robot.drivetrain.limelight.setPipeline(7);
 
 	}
 

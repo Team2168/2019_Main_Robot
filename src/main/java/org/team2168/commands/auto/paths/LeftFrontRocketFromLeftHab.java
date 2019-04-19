@@ -33,6 +33,6 @@ public class LeftFrontRocketFromLeftHab extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
     addSequential(new DrivePIDPathQuinticPID(Robot.leftPosQuinticPath2, Robot.rightPosQuinticPath2, Robot.leftVelQuinticPath2,
-          Robot.rightVelQuinticPath2, Robot.leftAccQuinticPath2, Robot.rightAccQuinticPath2, Robot.headingQuinticPath2, Robot.reversePath2));
+          Robot.rightVelQuinticPath2, Robot.leftAccQuinticPath2, Robot.rightAccQuinticPath2, Robot.headingQuinticPath2, Robot.reversePath2, Robot.limelightEnable2));
   }
 }
