@@ -215,7 +215,7 @@ public class Robot extends TimedRobot {
 
       double[][] waypointPath = new double[][]{
         {0.0, 0.0, 0},
-        {260.0, 0.0, 0}
+        {120.0, 0.0, 0}
       };
   
         QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 12.0, true);
@@ -247,8 +247,9 @@ public class Robot extends TimedRobot {
           this.headingQuinticPath2 = quinticPath2.getHeadingDeg();
 
           double[][] waypointPath3 = new double[][]{
-            {0.0, 0.0, 0},
-            {260.0, 0.0, 0}
+            {0.0, 200.0, 0},
+            {200.0, 230.0, 0},
+			      {225.0, 205.0, -Math.PI/2+0.001}     
           };
       
             QuinticTrajectory quinticPath3= new QuinticTrajectory("path3", waypointPath3, 12.0, true);

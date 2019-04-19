@@ -105,18 +105,23 @@ public class QuinticTrajectory
 //			{10.0, 4.0, Math.PI/2-0.001}, //works with 19.3 on practice bot
 //		//	{9.0, 20.5, Math.PI/2}
 			
-			{0.0, 0.0, 0},
-			{30.0, 0.0, 0},
-			{84.0, 54.0, Math.PI/2-0.001},
-			{138.0, 108.0, 0},
-			{168.0, 108.0, 0},
-			
+			// {0.0, 0.0, 0},
+			// {30.0, 0.0, 0},
+			// {84.0, 54.0, Math.PI/2-0.001},
+			// {138.0, 108.0, 0},
+			// {168.0, 108.0, 0},
+			{0.0, 200.0, 0},
+			{200.0, 230.0, 0},
+			{225.0, 205.0, -Math.PI/2+0.001}
+
 			// {48.0, 0.0, 0},
 			// {96.0, 0.0, 0},
-			{48.0, 212.0, 0},
-			{96.0, 212.0, 0},
-			{180.0, 302.0, Math.PI/4}
+			// {48.0, 212.0, 0},
+
+			// {96.0, 212.0, 0},
+			// {180.0, 302.0, Math.PI/4}
 			// {204.0, 21.0, -Math.PI/6},
+
 			// {263.0, 32.0, Math.PI/3-0.001},
 			// {252.0, 90.0, 5*Math.PI/6-0.002}
 			
@@ -856,34 +861,42 @@ public class QuinticTrajectory
 		  double[] temp_ra = new double[heading.length];
 
 		//inverting all arrays
-		for(int j=i; j>=0; j--)
+		for(int j=0; j<=i; j++)
 		{
 			System.out.println("i:" + i + ", j:" + j + ", i-j:" + (i-j));
 			
-			temp_h[j]= heading[i-j];
-			temp_lv[j]= -leftVel[i-j];
-			temp_rv[j]= -rightVel[i-j];
-			temp_rp[j]= rightPos[i-j];
-			temp_lp[j]= leftPos[i-j];
-			temp_la[j] = -leftAcc[i-j];
-			temp_ra[j] = -rightAcc[i-j];
+			// temp_h[j]= heading[i-j];
+			// temp_lv[j]= -leftVel[i-j];
+			// temp_rv[j]= -rightVel[i-j];
+			// temp_rp[j]= rightPos[i-j];
+			// temp_lp[j]= leftPos[i-j];
+			// temp_la[j] = -leftAcc[i-j];
+			// temp_ra[j] = -rightAcc[i-j];
+
+			temp_h[j]= heading[j];
+			temp_lv[j]= -rightVel[j];
+			temp_rv[j]= -leftVel[j];
+			temp_rp[j]= -leftPos[j];
+			temp_lp[j]= -rightPos[j];
+			temp_la[j] = -rightAcc[j];
+			temp_ra[j] = -leftAcc[j];
 			
 			
 		}
 
 		  
-		double temp_lp_zero = temp_lp[0];
-		double temp_rp_zero = temp_rp[0];
+		// double temp_lp_zero = temp_lp[0];
+		// double temp_rp_zero = temp_rp[0];
 
 
 		//subtracting first element from all pos elements
 		//and making velocities negative
-		for(int j=0; j<heading.length; j++)
-		{
+		// for(int j=0; j<heading.length; j++)
+		// {
 			
-			temp_lp[j]=temp_lp[j]-temp_lp_zero;
-			temp_rp[j]=temp_rp[j]-temp_rp_zero;
-		}
+		// 	temp_lp[j]=temp_lp[j]-temp_lp_zero;
+		// 	temp_rp[j]=temp_rp[j]-temp_rp_zero;
+		// }
 
 		this.heading = temp_h;
 		this.leftPos =temp_lp;
