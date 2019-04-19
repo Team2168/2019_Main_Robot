@@ -8,6 +8,8 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
+import org.team2168.commands.LEDs.LiftLoweringPattern;
+import org.team2168.commands.LEDs.LiftRaisingPattern;
 import org.team2168.commands.hatchProbePivot.interlock.MovePivotToMBPosition;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForLift;
@@ -68,6 +70,9 @@ public class Lift extends Subsystem {
 	//interlock commands ()
 	MoveMonkeyBarToSafePositionForLift moveMonkeyBarToSafePositionForLift;
 	MovePivotToMBPosition movePivotToMBPosition;
+
+
+	public double liftSpeedForLEDs;
 
 	/**
 	 * Default constructor for the lift
@@ -240,6 +245,7 @@ public class Lift extends Subsystem {
 	 */
 	public void driveAllMotors(double speed)
 	{
+		this.liftSpeedForLEDs = 0;
 		if( moveMonkeyBarToSafePositionForLift == null)
 			moveMonkeyBarToSafePositionForLift = new MoveMonkeyBarToSafePositionForLift();
 		if( movePivotToMBPosition == null)
@@ -319,38 +325,36 @@ public class Lift extends Subsystem {
 					//if we got here then we are driving lift
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
+					this.liftSpeedForLEDs = speed;
 
 					if(Math.abs(liftPot.getRate()) < 1.0)
 						isSensorValid = false;
 					else
-					isSensorValid = true;
+						isSensorValid = true;
 
 					
 				}
-				//else
-				//{
-					// enableBrake();
-
-					//ABILITY TO PUT SUBSYSTEM BACK TO WHERE WE FOUND IT
-					// if(movedMOnkeyBAr)
-					// 	MoveBAckTo
-					// elseif(MonkeyNotRunning)
-					// 	movedMOnkeyBAr = false;
-
-					// if(getPotPos()<=13)
-					// {
-					// 	driveLiftMotor1(RobotMap.LIFT_UP_MIN_VOLTAGE);
-					// 	driveLiftMotor2(RobotMap.LIFT_UP_MIN_VOLTAGE);
-					// }
-					// else
-					// {
-					// 	driveLiftMotor1(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
-					// 	driveLiftMotor2(-RobotMap.LIFT_DOWN_MIN_VOLTAGE);
-					// }
-					//driveLiftMotor1(0.0);
-					//driveLiftMotor2(0.0);
-
-				//}
+				else if(RobotMap.LIFT_ENABLE_HEIGHT_HOLD)
+				{
+					double holdingSpeed = RobotMap.LIFT_HOLDING_VOLTAGE/Robot.pdp.getBatteryVoltage();
+					if(getPotPos() <= RobotMap.LIFT_ZERO_BELOW_THIS_HEIGHT)
+					{
+						driveLiftMotor1(-holdingSpeed);//+0.01
+						driveLiftMotor2(-holdingSpeed);
+					//  System.out.println("Da lift is holding down");
+					}
+					else
+					{
+						driveLiftMotor1(holdingSpeed);
+						driveLiftMotor2(holdingSpeed);
+					 // System.out.println("Da lift is holding up");
+					}
+				}
+				else
+				{
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
+				}
 			}
 			else
 			{
@@ -359,12 +363,13 @@ public class Lift extends Subsystem {
 				{
 					driveLiftMotor1(speed);
 					driveLiftMotor2(speed);
+					this.liftSpeedForLEDs = speed;
 				}
-				// else
-				// {
-				// 	driveLiftMotor1(0.0);
-				// 	driveLiftMotor2(0.0);
-				// }
+				else
+				{
+					driveLiftMotor1(0.0);
+					driveLiftMotor2(0.0);
+				}
 
 				
 			}
@@ -482,27 +487,6 @@ public class Lift extends Subsystem {
 					driveLiftMotor1(0.0);
 					driveLiftMotor2(0.0);
 				}
-			}
-		}
-		if(!Robot.returnIsGamePiecePatternRunning())
-		{
-			if(speed > RobotMap.LIFT_MIN_SPEED)
-			{
-				if(RobotMap.LEDS_REVERSE)
-					{
-						Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
-					}
-					else
-						Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
-			}
-			else if(speed < -RobotMap.LIFT_MIN_SPEED)
-			{
-				if(RobotMap.LEDS_REVERSE)
-				{
-					Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_RIGHT, 160, 255, 255);
-				}
-				else
-					Robot.leds.writePatternOneColor(RobotMap.PATTERN_COLUMNS_LEFT, 160, 255, 255);
 			}
 		}
 

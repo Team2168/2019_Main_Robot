@@ -9,8 +9,11 @@ package org.team2168.commands.drivetrain;
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.commands.LEDs.HABClimbPattern;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+
 
 /**
  * Engages stingers and puts drivetrain in neutral
@@ -27,20 +30,7 @@ public class EngageStingers extends Command
   protected void initialize()
   {
     Robot.shifterStinger.engageStingers();
-    if (Robot.onBlueAlliance())
-    {
-      if(RobotMap.LEDS_REVERSE)
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 160, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 160, 255, 200);
-    }
-    else
-    {
-      if(RobotMap.LEDS_REVERSE)
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_ASCEND, 0, 255, 200);
-      else  
-        Robot.leds.writePatternOneColor(RobotMap.PATTERN_ROCKET_DESCEND, 0, 255, 200);
-    }
+    Robot.habClimbPattern.start();
   }
 
   // Called repeatedly when this Command is scheduled to run

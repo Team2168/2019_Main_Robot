@@ -48,7 +48,6 @@ public class HatchProbePivot extends Subsystem {
   MoveMonkeyBarToSafePositionForPivot moveMonkeyBarToSafePositionForPivot;
   MoveLiftToLvl1Position moveLiftFullyDown;
 
-
   private HatchProbePivot()
   {
     _plungerArmPivotMotor = new TalonSRX(RobotMap.PLUNGER_PIVOT_MOTOR_PDP);
@@ -143,13 +142,7 @@ public class HatchProbePivot extends Subsystem {
     _plungerArmPivotMotor.set(ControlMode.PercentOutput, speed);
     _plungerArmPivotVoltage = Robot.pdp.getBatteryVoltage() * speed; // not currently used
 
-    if(!Robot.returnIsGamePiecePatternRunning())
-    {
-      if (speed > RobotMap.PIVOT_MIN_SPEED || speed < -RobotMap.PIVOT_MIN_SPEED)
-      {
-        Robot.leds.writePattern(RobotMap.PATTERN_CONFETTI_RAINBOW);
-      }
-    }
+   
   }
 
   public void drivePlungerArmPivotMotor(double speed)

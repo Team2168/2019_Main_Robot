@@ -36,6 +36,9 @@ public class DisabledPattern extends Command {
     {
       Robot.leds.writePatternOneColor(RobotMap.PATTERN_2168, 0, 255, 255);
     }
+    
+
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

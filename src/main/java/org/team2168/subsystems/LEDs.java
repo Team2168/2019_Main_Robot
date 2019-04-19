@@ -7,7 +7,10 @@
 
 package org.team2168.subsystems;
 
+import java.util.TimerTask;
+
 import org.team2168.RobotMap;
+import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,10 +24,23 @@ public class LEDs extends Subsystem {
   private static I2C _i2c;
   private static LEDs _instance;
 
+  private java.util.Timer executor;
+  private static final long THREAD_PERIOD = 20; // ms - max poll rate on sensor.
+
+  private boolean writePattern;
+  private boolean writePatternOneColor;
+  private boolean writePatternTwoColors;
+
+  int pattern;
+  byte lightByteOneColor[] = new byte[4];
+  byte lightByteTwoColor[] = new byte[7];
+
+
+
   private LEDs()
   {
     _i2c = new I2C(RobotMap.I2C_PORT, RobotMap.I2C_ADDRESS);
-
+    startThread();
   }
 
   /**
@@ -38,13 +54,21 @@ public class LEDs extends Subsystem {
     }
     return _instance;
   }
+  
+  public void startThread()
+  {
+    executor = new java.util.Timer();
+    executor.schedule(new LedsUpdateTask(this), 0L, THREAD_PERIOD);
+  }
 
   /**
    * Sends the indicated pattern number to the LEDs Arduino
    */
   public void writePattern(int pattern)
   {
-    _i2c.write(RobotMap.I2C_ADDRESS, pattern);
+    this.pattern = pattern;
+    writePattern = true;
+    //_i2c.write(RobotMap.I2C_ADDRESS, pattern);
   }
 
   /**
@@ -55,33 +79,70 @@ public class LEDs extends Subsystem {
    */
   public void writePatternOneColor(int pattern, int hue, int sat, int val)
   {
-    byte lightByte[] = new byte[4];
-    lightByte[0] = (byte) hue;
-    lightByte[1] = (byte) sat;
-    lightByte[2] = (byte) val;
-    lightByte[3] = (byte) pattern;
-    _i2c.writeBulk(lightByte);
+    lightByteOneColor[0] = (byte) hue;
+    lightByteOneColor[1] = (byte) sat;
+    lightByteOneColor[2] = (byte) val;
+    lightByteOneColor[3] = (byte) pattern;
+    writePatternOneColor = true;
+    //_i2c.writeBulk(lightByteOneColor);
   }
 
   public void writePatternTwoColors(int pattern, int hue1, int sat1, int val1, int hue2, int sat2, int val2)
   {
-    byte lightByte[] = new byte[7];
-    lightByte[0] = (byte) hue2;
-    lightByte[1] = (byte) sat2;
-    lightByte[2] = (byte) val2;
-    lightByte[3] = (byte) hue1;
-    lightByte[4] = (byte) sat1;
-    lightByte[5] = (byte) val1;
-    lightByte[6] = (byte) pattern;
-    _i2c.writeBulk(lightByte);
+    lightByteTwoColor[0] = (byte) hue2;
+    lightByteTwoColor[1] = (byte) sat2;
+    lightByteTwoColor[2] = (byte) val2;
+    lightByteTwoColor[3] = (byte) hue1;
+    lightByteTwoColor[4] = (byte) sat1;
+    lightByteTwoColor[5] = (byte) val1;
+    lightByteTwoColor[6] = (byte) pattern;
+    writePatternTwoColors = true;
+    //_i2c.writeBulk(lightByteTwoColor);
 
   }
 
-
+  private void run()
+  {
+    if(writePattern)
+    {
+      _i2c.write(RobotMap.I2C_ADDRESS, pattern);
+      writePattern = false;
+    }
+    else if(writePatternOneColor)
+    {
+      _i2c.writeBulk(lightByteOneColor);
+      writePatternOneColor = false;
+    }
+    else if(writePatternTwoColors)
+    {
+      _i2c.writeBulk(lightByteTwoColor);
+      writePatternTwoColors = false;
+    }
+  }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new TeleopWithoutGamePiecePattern());
+  }
+
+
+  private class LedsUpdateTask extends TimerTask {
+    private LEDs leds;
+
+    private LedsUpdateTask(LEDs leds) {
+      if (leds == null) {
+        throw new NullPointerException("LEDs pointer null");
+      }
+      this.leds = leds;
+    }
+
+    /**
+     * Called periodically in its own thread
+     */
+    public void run() {
+      leds.run();
+ 
+    }
   }
 }

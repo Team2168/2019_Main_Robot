@@ -8,6 +8,7 @@ import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
@@ -23,6 +24,7 @@ import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPathAutoClimb;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
@@ -92,15 +94,21 @@ public class OI
 		 *************************************************************************/
 		driverJoystick.ButtonStart().whenPressed(new EngageStingers()); // add drivetrainshifter
 		driverJoystick.ButtonStart().whenPressed(new DisengageDrivetrain());
+		driverJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(63));
 
 		driverJoystick.ButtonA().whenPressed(new EngageDrivetrain());
 		driverJoystick.ButtonA().whenPressed(new DisengageStingers());
+
+		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
+		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,24,5));
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
 
 		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
 		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
+		driverJoystick.ButtonLeftStick().whenPressed(new EnableLimelight());
+		driverJoystick.ButtonLeftStick().whenReleased(new PauseLimelight());
 
 		gunStyleInterpolator = new LinearInterpolator(gunStyleArray);
 
@@ -174,12 +182,18 @@ public class OI
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.7));
 		operatorJoystick.ButtonLeftBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 
-
+		//Button X
 		operatorJoystick.ButtonX().whenPressed(new ExtendHatchPlunger());
 		operatorJoystick.ButtonX().whileHeld(new IntakeHatchPanel());
+
+		//Button A
 		operatorJoystick.ButtonA().whenPressed(new RetractHatchPlunger());
-		operatorJoystick.ButtonB().whenPressed(new DisengageHatchPanel());
+		
+		//Button Y
 		operatorJoystick.ButtonY().whenPressed(new EngageHatchPanel());
+		
+		//Button B
+		operatorJoystick.ButtonB().whenPressed(new DisengageHatchPanel());
 
 		operatorJoystick.ButtonStart().whenPressed(new MoveMonkeyBarToCargoIntakePosition());
 		//operatorJoystick.ButtonStart().whenPressed(new IntakeUntilCargoAndPivot());
@@ -209,10 +223,8 @@ public class OI
 		// pidTestJoystick.ButtonRightDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_2_POS));
 		// pidTestJoystick.ButtonUpDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_LVL_3_POS));
 		// pidTestJoystick.ButtonLeftDPad().whenPressed(new DriveLiftPathPIDZZZ(RobotMap.LIFT_CARGO_SHIP_POS));
-		
 		// // pidTestJoystick.ButtonY().whenPressed(new PauseLiftPID());
 		// // pidTestJoystick.ButtonY().whenPressed(new PauseMonkeyBarPivotPID());
-
 		// // pidTestJoystick.ButtonDownDPad().whenPressed(new MoveLiftToLvl1Position());
 		// // pidTestJoystick.ButtonRightDPad().whenPressed(new MoveLiftToLvl2Position());
 		// // pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
@@ -249,6 +261,7 @@ public class OI
 
 
 
+		
 	}
 	
 
@@ -347,7 +360,7 @@ public class OI
 	/**
 	 * Method that sets that Right side of the drive train so that it drives with
 	 * RightStick Y
-	 * 
+	 * /
 	 * @author Krystina
 	 */
 	public double getDriveTrainRightJoystick()

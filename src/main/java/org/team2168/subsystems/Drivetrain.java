@@ -41,6 +41,9 @@ public class Drivetrain extends Subsystem {
   private AverageEncoder _drivetrainLeftEncoder;
   private AverageEncoder _drivetrainRightEncoder;
 
+  private AverageEncoder _stingerLeftEncoder;
+  private AverageEncoder _stingerRightEncoder;
+
   private AnalogInput _drivetrainFrontIRSensor;
   private AnalogInput _drivetrainBackIRSensor;
 
@@ -62,6 +65,10 @@ public class Drivetrain extends Subsystem {
   public PIDPosition rightPosController;
   public PIDPosition leftPosController;
 
+  public PIDPosition rightStingerController;
+  public PIDPosition leftStingerController;
+
+
   // declare speed controllers
   public PIDSpeed rightSpeedController;
   public PIDSpeed leftSpeedController;
@@ -79,6 +86,8 @@ public class Drivetrain extends Subsystem {
   TCPSocketSender TCProtateController;
   TCPSocketSender TCPleftPosController;
   TCPSocketSender TCPrightPosController;
+  TCPSocketSender TCPleftStingerController;
+  TCPSocketSender TCPrightStingerController;
   TCPSocketSender TCPlimelightPosController;
 
   public volatile double leftMotor1Voltage;
@@ -174,11 +183,32 @@ public class Drivetrain extends Subsystem {
         RobotMap.DRIVE_POS_RETURN_TYPE, 
         RobotMap.DRIVE_AVG_ENCODER_VAL);
 
+    _stingerLeftEncoder = new AverageEncoder(
+        RobotMap.LEFT_STINGER_ENCODER_A, 
+        RobotMap.LEFT_STINGER_ENCODER_B,
+        RobotMap.STINGER_ENCODER_PULSE_PER_ROT, 
+        RobotMap.STINGER_ENCODER_DIST_PER_TICK,
+        RobotMap.LEFT_STINGER_TRAIN_ENCODER_REVERSE, 
+        RobotMap.STINGER_ENCODING_TYPE,
+        RobotMap.STINGER_SPEED_RETURN_TYPE, 
+        RobotMap.STINGER_POS_RETURN_TYPE, 
+        RobotMap.STINGER_AVG_ENCODER_VAL);
+
+    _stingerRightEncoder = new AverageEncoder(
+        RobotMap.RIGHT_STINGER_ENCODER_A, 
+        RobotMap.RIGHT_STINGER_ENCODER_B,
+        RobotMap.STINGER_ENCODER_PULSE_PER_ROT, 
+        RobotMap.STINGER_ENCODER_DIST_PER_TICK,
+        RobotMap.RIGHT_STINGER_TRAIN_ENCODER_REVERSE, 
+        RobotMap.STINGER_ENCODING_TYPE,
+        RobotMap.STINGER_SPEED_RETURN_TYPE, 
+        RobotMap.STINGER_POS_RETURN_TYPE, 
+        RobotMap.STINGER_AVG_ENCODER_VAL);
+
     _gyroSPI = new ADXRS453Gyro();
     _gyroSPI.startThread();
     
     imu = new IMU(_drivetrainLeftEncoder, _drivetrainRightEncoder, RobotMap.WHEEL_BASE);
-
     _drivetrainFrontIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_FRONT_IR_SENSOR);
     _drivetrainBackIRSensor = new AnalogInput(RobotMap.DRIVETRAIN_BACK_IR_SENSOR);
 
@@ -250,6 +280,24 @@ public class Drivetrain extends Subsystem {
         _drivetrainLeftEncoder,
         RobotMap.DRIVE_TRAIN_PID_PERIOD);
 
+        rightStingerController = new PIDPosition(
+        "rightStingerController", 
+        RobotMap.STINGER_AUTO_RIGHT_POSITION_P,
+        RobotMap.STINGER_AUTO_RIGHT_POSITION_I, 
+        RobotMap.STINGER_AUTO_RIGHT_POSITION_D, 
+        1, 
+        _stingerRightEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
+    leftStingerController = new PIDPosition(
+        "leftStingerController", 
+        RobotMap.STINGER_AUTO_LEFT_POSITION_P,
+        RobotMap.STINGER_AUTO_LEFT_POSITION_I, 
+        RobotMap.STINGER_AUTO_LEFT_POSITION_D, 
+        1, 
+        _stingerLeftEncoder,
+        RobotMap.DRIVE_TRAIN_PID_PERIOD);
+
         
     
         // Limelight Controller
@@ -266,6 +314,8 @@ public class Drivetrain extends Subsystem {
     leftSpeedController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rightPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     leftPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    rightStingerController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
+    leftStingerController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     driveTrainPosController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
     rotateDriveStraightController.setSIZE(RobotMap.DRIVE_TRAIN_PID_ARRAY_SIZE);
@@ -276,6 +326,8 @@ public class Drivetrain extends Subsystem {
     leftSpeedController.startThread();
     rightPosController.startThread();
     leftPosController.startThread();
+    rightStingerController.startThread();
+    leftStingerController.startThread();
     driveTrainPosController.startThread();
     rotateController.startThread();
     rotateDriveStraightController.startThread();
@@ -296,6 +348,12 @@ public class Drivetrain extends Subsystem {
 
     TCPleftPosController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_DRIVE_TRAIN_POSITION, leftPosController);
     TCPleftPosController.start();
+
+    TCPrightStingerController = new TCPSocketSender(RobotMap.TCP_SERVER_RIGHT_STINGER_POSITION, rightStingerController);
+    TCPrightStingerController.start();
+
+    TCPleftStingerController = new TCPSocketSender(RobotMap.TCP_SERVER_LEFT_STINGER_POSITION, leftStingerController);
+    TCPleftStingerController.start();
 
     TCProtateController = new TCPSocketSender(RobotMap.TCP_SERVER_ROTATE_CONTROLLER, rotateController);
     TCProtateController.start();
@@ -320,6 +378,12 @@ public class Drivetrain extends Subsystem {
     ConsolePrinter.putNumber("Right Drive Encoder Rate", () -> {return Robot.drivetrain.getRightEncoderRate();}, true, false);
     ConsolePrinter.putNumber("Left Drive Encoder Rate", () -> {return Robot.drivetrain.getLeftEncoderRate();}, true, false);
     ConsolePrinter.putNumber("Average Drive Encoder Rate", () -> {return Robot.drivetrain.getAverageEncoderRate();}, true, false);
+    ConsolePrinter.putNumber("Left Stinger Encoder Distance", () -> {return Robot.drivetrain.getLeftStingerPosition();}, true, false);
+    ConsolePrinter.putNumber("Right Stinger Encoder Distance:", () -> {return Robot.drivetrain.getRightStingerPosition();}, true, false);
+    ConsolePrinter.putNumber("Average Stinger Encoder Distance", () -> {return Robot.drivetrain.getAverageStingerDistance();}, true, false);
+    ConsolePrinter.putNumber("Right Stinger Encoder Rate", () -> {return Robot.drivetrain.getRightStingerEncoderRate();}, true, false);
+    ConsolePrinter.putNumber("Left Stinger Encoder Rate", () -> {return Robot.drivetrain.getLeftStingerEncoderRate();}, true, false);
+    ConsolePrinter.putNumber("Average Stinger Encoder Rate", () -> {return Robot.drivetrain.getAverageStingerEncoderRate();}, true, false);
     ConsolePrinter.putNumber("Gyro Angle:", () -> {return Robot.drivetrain.getHeading();}, true, false);	
     ConsolePrinter.putNumber("Gunstyle X Value", () -> {return Robot.oi.getGunStyleXValue();}, true, false);
     ConsolePrinter.putNumber("Gunstyle Y Value", () -> {return Robot.oi.getGunStyleYValue();}, true, false);
@@ -558,6 +622,11 @@ public class Drivetrain extends Subsystem {
     return _drivetrainRightEncoder.getPos();
   }
 
+  public double getRightStingerPosition()
+  {
+    return _stingerRightEncoder.getPos();
+  }
+
   /**
    * returns total distance traveled by left side of drivetrain
    * 
@@ -567,6 +636,12 @@ public class Drivetrain extends Subsystem {
   {
     return _drivetrainLeftEncoder.getPos();
   }
+
+  public double getLeftStingerPosition()
+  {
+    return _stingerLeftEncoder.getPos();
+  }
+  
 
   /**
    * returns total distance traveled by drivetrain
@@ -578,12 +653,22 @@ public class Drivetrain extends Subsystem {
     return imu.getPos();
   }
 
+  public double getAverageStingerDistance()
+  {
+    return (getRightStingerPosition()+getLeftStingerPosition())/2;
+  }
+
   /**
    * resets position of right encoder to 0 inches
    */
   public void resetRightPosition()
   {
     _drivetrainRightEncoder.reset();
+  }
+
+  public void resetRightStingerPosition()
+  {
+    _stingerRightEncoder.reset();
   }
 
   /**
@@ -594,6 +679,11 @@ public class Drivetrain extends Subsystem {
     _drivetrainLeftEncoder.reset();
   }
 
+  public void resetLeftStingerPosition()
+  {
+    _stingerLeftEncoder.reset();
+  }
+
   /**
    * resets position of both Encoders to 0 inches
    */
@@ -601,6 +691,12 @@ public class Drivetrain extends Subsystem {
   {
     resetLeftPosition();
     resetRightPosition();
+  }
+
+  public void resetStingerPosition()
+  {
+    resetLeftStingerPosition();
+    resetRightStingerPosition();
   }
 
 
@@ -746,6 +842,21 @@ public class Drivetrain extends Subsystem {
   public double getAverageEncoderRate()
   {
     return ((getRightEncoderRate() + getLeftEncoderRate()) / 2);
+  }
+
+  public double getRightStingerEncoderRate()
+  {
+    return _stingerRightEncoder.getRate();
+  }
+
+  public double getLeftStingerEncoderRate()
+  {
+    return _stingerLeftEncoder.getRate();
+  }
+
+  public double getAverageStingerEncoderRate()
+  {
+    return ((getRightStingerEncoderRate() + getLeftStingerEncoderRate()) / 2);
   }
 
   /**

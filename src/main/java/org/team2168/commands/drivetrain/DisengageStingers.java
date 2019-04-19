@@ -26,6 +26,10 @@ public class DisengageStingers extends Command
   protected void initialize()
   {
     Robot.shifterStinger.disengageStingers();
+    if(Robot.habClimbPattern.isRunning())
+    {
+      Robot.habClimbPattern.cancel();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run

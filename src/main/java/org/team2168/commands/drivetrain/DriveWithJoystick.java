@@ -41,8 +41,10 @@ public class DriveWithJoystick extends Command {
 	static final double TURN_ERROR_TOLERANCE_DEG = 1;
 
 	private int climbCounter = 0;
+	private int climbCounterReverse = 0;
 
 	double lastRotateOutput;
+	DisengageDrivetrain disengageDrivetrainCommand;
 
 	public DriveWithJoystick(int inputStyle) {
 		// Use requires() here to declare subsystem dependencies
@@ -75,7 +77,6 @@ public class DriveWithJoystick extends Command {
 			finished = false;
 			Robot.drivetrain.getInstance();
 		
-
 			// reset controller
 				Robot.drivetrain.resetPosition();	
 				Robot.drivetrain.imu.reset();
@@ -185,6 +186,7 @@ public class DriveWithJoystick extends Command {
 			{
 				Robot.drivetrain.tankDrive(Robot.oi.getGunStyleYValue(), Robot.oi.getGunStyleYValue());	
 				climbCounter = 0;
+				climbCounterReverse = 0;
 			} 
 			else {
 				Robot.drivetrain.tankDrive(
@@ -192,6 +194,7 @@ public class DriveWithJoystick extends Command {
 						(Robot.oi.getGunStyleYValue()) - Robot.oi.driverJoystick.getLeftStickRaw_X());
 				Robot.drivetrain.rotateDriveStraightController.setSetPoint(Robot.drivetrain.getHeading());
 				climbCounter = 0;
+				climbCounterReverse = 0;
 						
 			}
 			
@@ -259,6 +262,10 @@ public class DriveWithJoystick extends Command {
 
 			if(Robot.isClimbEnabled)
 			{ 
+				if( disengageDrivetrainCommand == null)
+					disengageDrivetrainCommand = new DisengageDrivetrain();
+
+				
 				if (climbCounter < 25) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
 				{
 					double voltage = 2.0;
@@ -268,11 +275,33 @@ public class DriveWithJoystick extends Command {
 					climbCounter++;
 				}
 				else
-					Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
+				{
+					if(-Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
+						Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
+					else //driving dt in reverse, lets not do that
+					{
+						if (climbCounterReverse < 15) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
+						{
+							if(!disengageDrivetrainCommand.isRunning())
+								disengageDrivetrainCommand.start();
+
+							double voltage = 1.0;
+							double minspeed = voltage/Robot.pdp.getBatteryVoltage();
+							Robot.drivetrain.tankDrive(minspeed,minspeed);
+							System.out.println("Driving stinger slow");
+							climbCounterReverse++;
+						}
+						else
+						{
+							Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
+						}
+					}
+					}
 				}
 			else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) 
 			{
 					climbCounter = 0;
+					climbCounterReverse = 0;
 					//Drive straight
 					if(Robot.drivetrain.limelightPosController.isEnabled())
 					{
