@@ -1,13 +1,13 @@
 
 package org.team2168;
 
-import org.team2168.commands.auto.LeftHabToLeftFrontRocket;
-import org.team2168.commands.auto.paths.Drive10FeetForward;
+import org.team2168.commands.auto.Level2ToFrontLeftCS;
 import org.team2168.commands.auto.paths.Drive10FeetForward2;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
+import org.team2168.commands.drivetrain.PIDCommands.DriveDistanceWithLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
@@ -22,9 +22,9 @@ import org.team2168.commands.lift.MoveLiftToLvl2Position;
 import org.team2168.commands.lift.MoveLiftToLvl3Position;
 import org.team2168.commands.monkeyBarPivot.DriveMonkeyBarPivotWithConstant;
 import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPath;
+import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPathAutoClimb;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToCargoIntakePosition;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForScoring;
-import org.team2168.commands.monkeyBarPivot.PIDCommands.DriveMonkeyBarPivotPIDPathAutoClimb;
 import org.team2168.utils.F310;
 import org.team2168.utils.LinearInterpolator;
 
@@ -233,10 +233,11 @@ public class OI
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(100));
 
 		 pidTestJoystick.ButtonY().whenPressed(new EngageHatchPanel());
-		 pidTestJoystick.ButtonA().whenPressed(new Drive10FeetForward());
+		 pidTestJoystick.ButtonA().whenPressed(new DriveDistanceWithLimelight(-6.0, 36.0));
+		 //pidTestJoystick.ButtonA().whenPressed(new DriveXDistance(-6.0, 20.0));
 		 pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForward2());
 		 //pidTestJoystick.ButtonB().whenPressed(new LeftFrontRocketFromLeftHab());
-		 pidTestJoystick.ButtonX().whenPressed(new LeftHabToLeftFrontRocket());
+		 pidTestJoystick.ButtonX().whenPressed(new Level2ToFrontLeftCS());
 
 		//  pidTestJoystick.ButtonA().whileHeld(new DriveMonkeyBarIntakeWithConstant(1.0));
 		//  pidTestJoystick.ButtonA().whileHeld(new DriveCargoIntakeWithConstant(1.0));
