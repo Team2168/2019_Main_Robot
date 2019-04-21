@@ -146,6 +146,16 @@ public class Robot extends TimedRobot {
     public static boolean reversePath3 = true;
     public static boolean limelightEnable3 = false;
     
+    public static double[] leftVelQuinticPath4;
+    public static double[] rightVelQuinticPath4;
+    public static double[] leftPosQuinticPath4;
+    public static double[] rightPosQuinticPath4;
+    public static double[] leftAccQuinticPath4;
+    public static double[] rightAccQuinticPath4;
+    public static double[] headingQuinticPath4;
+    public static boolean reversePath4 = false;
+    public static boolean limelightEnable4 = false;
+
   /****************************************************
     * 
     ***************************************************/
@@ -215,7 +225,7 @@ public class Robot extends TimedRobot {
 
       double[][] waypointPath = new double[][]{
         {0.0, 0.0, 0},
-        {0.001, 0.0, 0}
+        {290.0, 0.0, 0}
       };
   
         QuinticTrajectory quinticPath= new QuinticTrajectory("path1", waypointPath, 12.0, true);
@@ -262,6 +272,23 @@ public class Robot extends TimedRobot {
             this.leftAccQuinticPath3 = quinticPath3.getLeftAcc();
             this.rightAccQuinticPath3 = quinticPath3.getRightAcc();
             this.headingQuinticPath3 = quinticPath3.getHeadingDeg();
+
+            double[][] waypointPath4 = new double[][]{
+              {0.0, 0.0, 0},
+              {270.0, 30.0, Math.PI/6}
+            };
+        
+              QuinticTrajectory quinticPath4= new QuinticTrajectory("path4", waypointPath4, 12.0, false);
+              //quinticPath.calculate();
+        
+              this.leftPosQuinticPath4 = quinticPath4.getLeftPos();
+              this.rightPosQuinticPath4 = quinticPath4.getRightPos();
+              this.leftVelQuinticPath4 = quinticPath4.getLeftVel();
+              this.rightVelQuinticPath4 = quinticPath4.getRightVel();
+              this.leftAccQuinticPath4 = quinticPath4.getLeftAcc();
+              this.rightAccQuinticPath4 = quinticPath4.getRightAcc();
+              this.headingQuinticPath4 = quinticPath4.getHeadingDeg();
+      
   
          /*******************************************************
          *                    
