@@ -135,7 +135,7 @@ public class DriveMonkeyBarPivotPIDPathAutoClimb extends Command {
   @Override
   protected boolean isFinished() {
     //return (counter >= pos.length) || (Robot.monkeyBarPivot.getRightPotPos() < pos[pos.length-1]+1 && Robot.monkeyBarPivot.getRightPotPos() > pos[pos.length-1]) ;
-    return (Robot.monkeyBarPivot.getRightPotPos() < pos[pos.length-1]+1 && Robot.monkeyBarPivot.getRightPotPos() > pos[pos.length-1]) ;
+    return (Robot.monkeyBarPivot.getRightPotPos() < pos[pos.length-1]+1 && Robot.monkeyBarPivot.getRightPotPos() > pos[pos.length-1] || Robot.oi.driverJoystick.getLeftStickRaw_X() < -0.1 || Robot.oi.driverJoystick.getLeftStickRaw_X() > 0.1);
   }
 
   // Called once after isFinished returns true

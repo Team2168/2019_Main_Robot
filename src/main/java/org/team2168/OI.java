@@ -1,6 +1,8 @@
 
 package org.team2168;
 
+import org.team2168.commands.cargoIntake.IntakeUntilCargo;
+import org.team2168.commands.cargoIntake.OperationKeepCargo;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
@@ -95,8 +97,11 @@ public class OI
 		driverJoystick.ButtonA().whenPressed(new EngageDrivetrain());
 		driverJoystick.ButtonA().whenPressed(new DisengageStingers());
 
-		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,24,5));
+		// driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
+		// driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,24,5));
+
+		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3));
+		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3.5));
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
@@ -173,6 +178,8 @@ public class OI
 		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
+		//operatorJoystick.ButtonRightTrigger().whenReleased(new OperationKeepCargo());
+
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.7));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(-0.7));
@@ -225,11 +232,14 @@ public class OI
 		// // pidTestJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		 pidTestJoystick.ButtonStart().whenPressed(new DriveMonkeyBarPivotPIDPath(40));
 		 pidTestJoystick.ButtonBack().whenPressed(new DriveMonkeyBarPivotPIDPath(110));
-		 pidTestJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPath(63));
+		 //pidTestJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPath(63));
 		 //.ButtonA().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
-		 pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(0,24,5));
+		 //pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(0,24,5));
 
-		 pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
+		pidTestJoystick.ButtonA().whenPressed(new IntakeUntilCargo());
+		pidTestJoystick.ButtonA().whenPressed(new OperationKeepCargo());
+
+		 //pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		 
 		//pidTestJoystick.ButtonX().whenPressed(new AutoClimb());
 
