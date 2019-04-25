@@ -237,7 +237,7 @@ public class OI
 		 //pidTestJoystick.ButtonA().whenPressed(new DriveStingerPIDPath(0,24,5));
 
 		pidTestJoystick.ButtonA().whenPressed(new IntakeUntilCargo());
-		pidTestJoystick.ButtonA().whenPressed(new OperationKeepCargo());
+		pidTestJoystick.ButtonA().whenReleased(new OperationKeepCargo());
 
 		 //pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		 
