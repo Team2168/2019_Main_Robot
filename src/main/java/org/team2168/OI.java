@@ -100,8 +100,8 @@ public class OI
 		// driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		// driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,24,5));
 
-		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3));
-		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3.5));
+		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3.5));
+		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3));
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
@@ -299,7 +299,7 @@ public class OI
 	public double getCargoIntakeJoystickValue()
 	{
 
-		return operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw();
+		return (operatorJoystick.getLeftTriggerAxisRaw() - operatorJoystick.getRightTriggerAxisRaw())*0.8;
 	}
 
 	/*************************************************************************
