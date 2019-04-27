@@ -178,7 +178,7 @@ public class OI
 		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
-		//operatorJoystick.ButtonRightTrigger().whenReleased(new OperationKeepCargo());
+		operatorJoystick.ButtonRightTrigger().whenReleased(new OperationKeepCargo());
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.7));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
