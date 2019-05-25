@@ -50,8 +50,10 @@ public class Drivetrain extends Subsystem {
   //Leave these wihtout _name convention to work with past code base
   private double RightMotor1FPS;
   private double RightMotor2FPS;
+  private double RightMotor3FPS;
   private double leftMotor1FPS;
   private double lefttMotor1FPS;
+  private double leftMotor3FPS;
   public IMU imu;
 
   public NavX ahrs;
@@ -121,38 +123,50 @@ public class Drivetrain extends Subsystem {
       System.out.println("CAN Comp Bot Drivetrain enabled - 4 motors");
       _leftMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP, MotorType.kBrushless);
       _leftMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP, MotorType.kBrushless);
+      _leftMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP, MotorType.kBrushless);
       _rightMotor1 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP, MotorType.kBrushless);
       _rightMotor2 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP, MotorType.kBrushless);
+      _rightMotor3 = new CANSparkMax(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP, MotorType.kBrushless);
     
       //speed limit 60
       _leftMotor1.setSmartCurrentLimit(60);
       _leftMotor2.setSmartCurrentLimit(60);
+      _leftMotor3.setSmartCurrentLimit(60);
       _rightMotor1.setSmartCurrentLimit(60);
       _rightMotor2.setSmartCurrentLimit(60);
+      _rightMotor3.setSmartCurrentLimit(60);
       
       //control frame every 20ms
       _leftMotor1.setControlFramePeriodMs(20);
       _leftMotor2.setControlFramePeriodMs(20);
+      _leftMotor3.setControlFramePeriodMs(20);
       _rightMotor1.setControlFramePeriodMs(20);
       _rightMotor2.setControlFramePeriodMs(20);
+      _rightMotor3.setControlFramePeriodMs(20);
 
       //status frame every 500ms
       _leftMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
       _leftMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
+      _leftMotor3.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
       _rightMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
       _rightMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
+      _rightMotor3.setPeriodicFramePeriod(PeriodicFrame.kStatus0,500);
 
       //status frame every 500ms
       _leftMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
       _leftMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
+      _leftMotor3.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
       _rightMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
       _rightMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
+      _rightMotor3.setPeriodicFramePeriod(PeriodicFrame.kStatus1,500);
 
       //status frame every 500ms
       _leftMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
       _leftMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
+      _leftMotor3.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
       _rightMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
       _rightMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
+      _rightMotor3.setPeriodicFramePeriod(PeriodicFrame.kStatus2,500);
 
       // leftMotor1.setCANTimeout(100);
       // leftMotor3.setCANTimeout(100);
@@ -366,9 +380,11 @@ public class Drivetrain extends Subsystem {
 
     leftMotor1Voltage = 0;
     leftMotor2Voltage = 0;
+    leftMotor3Voltage = 0;
 
     rightMotor1Voltage = 0;
     rightMotor2Voltage = 0;
+    rightMotor3Voltage = 0;
     
 
     // Log sensor data
@@ -389,18 +405,23 @@ public class Drivetrain extends Subsystem {
     ConsolePrinter.putNumber("Gunstyle Y Value", () -> {return Robot.oi.getGunStyleYValue();}, true, false);
     ConsolePrinter.putNumber("DTLeft1MotorVoltage", () -> {return Robot.drivetrain.getleftMotor1Voltage();}, true, false);
     ConsolePrinter.putNumber("DTLeft2MotorVoltage", () -> {return Robot.drivetrain.getleftMotor2Voltage();}, true, false);
+    ConsolePrinter.putNumber("DTLeft3MotorVoltage", () -> {return Robot.drivetrain.getleftMotor3Voltage();}, true, false);
+
     ConsolePrinter.putNumber("DTRight1MotorVoltage", () -> {return Robot.drivetrain.getrightMotor1Voltage();}, true, false);
     ConsolePrinter.putNumber("DTRight2MotorVoltage", () -> {return Robot.drivetrain.getrightMotor2Voltage();}, true, false);
+    ConsolePrinter.putNumber("DTRight3MotorVoltage", () -> {return Robot.drivetrain.getrightMotor3Voltage();}, true, false);
     ConsolePrinter.putNumber("DTRight1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP);}, true, false);
     ConsolePrinter.putNumber("DTRight2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP);}, true, false);
+    ConsolePrinter.putNumber("DTRight3MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP);}, true, false);
     ConsolePrinter.putNumber("DTLeft1MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP);}, true, false);
     ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, false);
+    ConsolePrinter.putNumber("DTLeft3MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP);}, true, false);
     ConsolePrinter.putNumber("PID right motor 1 voltage", () -> {return this.PIDVoltagefeedRightMotor1();}, true, false);
     ConsolePrinter.putNumber("PID right motor 2 voltage", () -> {return this.PIDVoltagefeedRightMotor2();}, true, false);
+    ConsolePrinter.putNumber("PID right motor 3 voltage", () -> {return this.PIDVoltagefeedRightMotor3();}, true, false);
     ConsolePrinter.putNumber("PID left motor 1 voltage", () -> {return this.PIDVoltagefeedLeftMotor1();}, true, false);
     ConsolePrinter.putNumber("PID left motor 2 voltage", () -> {return this.PIDVoltagefeedLeftMotor2();}, true, false);
-    
-    ConsolePrinter.putNumber("DTLeft2MotorCurrent", () -> {return Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP);}, true, false);
+    ConsolePrinter.putNumber("PID left Motor 3 voltage", () -> {return this.PIDVoltagefeedLeftMotor3();}, true, false);
     ConsolePrinter.putNumber("GYRO Driftrate:", () -> {return Robot.drivetrain._gyroSPI.driftRate;}, true, false);
     ConsolePrinter.putNumber("GYRO Rate:", () -> {return Robot.drivetrain._gyroSPI.getRate();}, true, false);
     ConsolePrinter.putNumber("GYRO Angle SPI:", () -> {return Robot.drivetrain._gyroSPI.getAngle();}, true, false);
@@ -808,6 +829,15 @@ public class Drivetrain extends Subsystem {
   {
     return leftMotor2Voltage;
   }
+/**
+ * Returns the last commanded voltage of left Motor 3
+ * 
+ * @return Double in volts between 0 and 12
+ */
+  public double getleftMotor3Voltage()
+  {
+    return leftMotor3Voltage;
+  }
 
   /**
    * Returns the last commanded voltage of right Motor 1
@@ -827,6 +857,15 @@ public class Drivetrain extends Subsystem {
   public double getrightMotor2Voltage()
   {
     return rightMotor2Voltage;
+  }
+/**
+ * Returns the last commanded voltage of right Motor 3
+ * 
+ * @return Double in volts between 0 and 12
+ */
+  public double getrightMotor3Voltage()
+  {
+    return rightMotor3Voltage;
   }
 
   public double getRightEncoderRate()
@@ -900,6 +939,14 @@ public class Drivetrain extends Subsystem {
       return 0.0;
   }
 
+  public double PIDVoltagefeedRightMotor3()
+  {
+    if(getRightEncoderRate() != 0)
+      return this.getrightMotor3Voltage() / this.getRightEncoderRate();
+    else
+      return 0.0;
+  }
+
   public double PIDVoltagefeedLeftMotor1()
   {
     if (getLeftEncoderRate() != 0)
@@ -912,6 +959,14 @@ public class Drivetrain extends Subsystem {
   {
     if (getLeftEncoderRate() != 0)
       return this.getleftMotor2Voltage() / this.getLeftEncoderRate();
+    else
+      return 0.0;
+  }
+
+  public double PIDVoltagefeedLeftMotor3()
+  {
+    if(getLeftEncoderRate() != 0)
+      return this.getleftMotor3Voltage() / this.getLeftEncoderRate();
     else
       return 0.0;
   }
