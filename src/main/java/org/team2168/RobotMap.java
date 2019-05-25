@@ -150,8 +150,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
 	public static final int DRIVETRAIN_RIGHT_MOTOR_2_PDP = 15;
-	public static final int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 30; //not used in 4 motor DT
-	public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 31; //not used in 4 motor DT
+	public static final int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 12; //not used in 4 motor DT
+	public static final int DRIVETRAIN_LEFT_MOTOR_3_PDP = 13; //not used in 4 motor DT
 
 
 	// Relay Channels///////////////////////////////////////////////////////////
@@ -176,7 +176,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean DT_REVERSE_RIGHT2 = true;
 	public static final boolean DT_REVERSE_RIGHT3 = true; 
 
-	public static final boolean DT_3_MOTORS_PER_SIDE = false;
+	public static final boolean DT_3_MOTORS_PER_SIDE = true;
 
 	private static final int DRIVE_PULSE_PER_ROTATION = 256; // encoder ticks per rotation
 
