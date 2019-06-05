@@ -100,14 +100,23 @@ public class OI
 		// driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		// driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,24,5));
 
-		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3));
-		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3.5));
+		driverJoystick.ButtonB().whenPressed(new EngageStingers()); // add drivetrainshifter
+		driverJoystick.ButtonB().whenPressed(new DisengageDrivetrain());
+		driverJoystick.ButtonB().whenPressed(new DriveMonkeyBarPivotPIDPath(28));
+
+		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3.5));
+		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3));
+
+		driverJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(28, 0, 2));
+		driverJoystick.ButtonY().whenPressed(new DriveStingerPIDPath(0,10,1.5));
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());
 
-		driverJoystick.ButtonB().whenPressed(new EnableLimelight());
-		driverJoystick.ButtonB().whenReleased(new PauseLimelight());
+		// driverJoystick.ButtonB().whenPressed(new EnableLimelight());
+		// driverJoystick.ButtonB().whenReleased(new PauseLimelight());
+
+
 		driverJoystick.ButtonLeftStick().whenPressed(new EnableLimelight());
 		driverJoystick.ButtonLeftStick().whenReleased(new PauseLimelight());
 
@@ -178,7 +187,7 @@ public class OI
 		operatorJoystick.ButtonUpDPad().whenPressed(new MoveLiftToLvl3Position());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new MoveLiftToCargoShipPosition());
 
-		//operatorJoystick.ButtonRightTrigger().whenReleased(new OperationKeepCargo());
+		operatorJoystick.ButtonRightTrigger().whenReleased(new OperationKeepCargo());
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new DriveMonkeyBarPivotWithConstant(0.7));
 		operatorJoystick.ButtonRightBumper().whenReleased(new DriveMonkeyBarPivotWithConstant(0.0));
