@@ -8,6 +8,7 @@ import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath;
+import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath2;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
@@ -108,7 +109,8 @@ public class OI
 		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3));
 
 		driverJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(28, 0, 2));
-		driverJoystick.ButtonY().whenPressed(new DriveStingerPIDPath(0,10,1.5));
+		driverJoystick.ButtonY().whenPressed(new DriveStingerPIDPath2(0,10,1.5));
+		
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonBack().whenPressed(new DisengageStingers());

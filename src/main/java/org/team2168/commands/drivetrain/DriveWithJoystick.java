@@ -291,7 +291,7 @@ public class DriveWithJoystick extends Command {
 							System.out.println("Driving stinger slow");
 							climbCounterReverse++;
 						}
-						else
+						else if (!Robot.isClimbEnabledLevel2)
 						{
 							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
 							{
@@ -307,6 +307,32 @@ public class DriveWithJoystick extends Command {
 							{
 								//if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
 								Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+							}
+							else
+							{
+								Robot.drivetrain.driveRight(0.0);
+							}
+						}
+						else
+						{
+							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
+							{
+								if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
+								{
+								Robot.drivetrain.driveLeft(Robot.oi.driverJoystick.getY(Hand.kLeft));
+								}
+							}
+							else
+							{
+								Robot.drivetrain.driveLeft(0.0);
+							}
+
+							if(Robot.drivetrain.getRightStingerPosition()>0.0)
+							{
+								if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
+								{
+								Robot.drivetrain.driveRight(Robot.oi.driverJoystick.getY(Hand.kLeft));
+								}
 							}
 							else
 							{

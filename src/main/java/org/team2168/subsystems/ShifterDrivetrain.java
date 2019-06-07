@@ -47,6 +47,7 @@ public class ShifterDrivetrain extends Subsystem {
   public void engageDrivetrain()
   {
     Robot.isClimbEnabled = false;
+    Robot.isClimbEnabledLevel2 = false;
     _drivetrainShifter.set(DoubleSolenoid.Value.kForward);
   }
 
