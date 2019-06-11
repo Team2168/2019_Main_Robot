@@ -260,8 +260,8 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_LVL_1_POS= 10.5; 
 	public static final double LIFT_LVL_2_POS = 38.5;
-	public static final double LIFT_LVL_3_POS = 66.5;
-	public static final double LIFT_CARGO_SHIP_POS = 25.0;
+	public static final double LIFT_LVL_3_POS = 64.0;
+	public static final double LIFT_CARGO_SHIP_POS = 22.5;
 	public static final double LIFT_BASE_POS = 10.5;
 
 	//PBOT LIFT
