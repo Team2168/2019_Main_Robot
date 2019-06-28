@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class DriveStingerPIDPath extends Command {
+public class DriveStingerPIDPath2 extends Command {
 
   private double[] pos;
   private double[] vel;
@@ -38,7 +38,7 @@ public class DriveStingerPIDPath extends Command {
 
 
 
-  private DriveStingerPIDPath() {
+  private DriveStingerPIDPath2() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
@@ -51,7 +51,7 @@ public class DriveStingerPIDPath extends Command {
     
   }
 
-  public DriveStingerPIDPath(double end, double time)
+  public DriveStingerPIDPath2(double end, double time)
   {
     this();
     this.start = 0;
@@ -59,7 +59,7 @@ public class DriveStingerPIDPath extends Command {
     this.time = time;
   }
 
-  public DriveStingerPIDPath(double end, double time, boolean absolute)
+  public DriveStingerPIDPath2(double end, double time, boolean absolute)
   {
     this();
     if(absolute)
@@ -71,7 +71,7 @@ public class DriveStingerPIDPath extends Command {
     this.time = time;
   }
 
-  public DriveStingerPIDPath(double start, double end, double time)
+  public DriveStingerPIDPath2(double start, double end, double time)
   {
     this();
     this.start = start;
@@ -157,6 +157,7 @@ public class DriveStingerPIDPath extends Command {
     Robot.drivetrain.leftStingerController.Pause();
     Robot.drivetrain.rightStingerController.Pause();
     Robot.drivetrain.tankDrive(0.0,0.0);
+    Robot.isClimbEnabledLevel2 = true;
   }
 
   // Called when another command which requires one or more of the same

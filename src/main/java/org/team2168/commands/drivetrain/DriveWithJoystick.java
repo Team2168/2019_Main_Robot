@@ -291,9 +291,53 @@ public class DriveWithJoystick extends Command {
 							System.out.println("Driving stinger slow");
 							climbCounterReverse++;
 						}
+						else if (!Robot.isClimbEnabledLevel2)
+						{
+							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
+							{
+								//if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
+								Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+							}
+							else
+							{
+								Robot.drivetrain.driveLeft(0.0);
+							}
+
+							if(Robot.drivetrain.getRightStingerPosition()>0.0)
+							{
+								//if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
+								Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+							}
+							else
+							{
+								Robot.drivetrain.driveRight(0.0);
+							}
+						}
 						else
 						{
-							Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
+							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
+							{
+								if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
+								{
+								Robot.drivetrain.driveLeft(Robot.oi.driverJoystick.getY(Hand.kLeft));
+								}
+							}
+							else
+							{
+								Robot.drivetrain.driveLeft(0.0);
+							}
+
+							if(Robot.drivetrain.getRightStingerPosition()>0.0)
+							{
+								if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
+								{
+								Robot.drivetrain.driveRight(Robot.oi.driverJoystick.getY(Hand.kLeft));
+								}
+							}
+							else
+							{
+								Robot.drivetrain.driveRight(0.0);
+							}
 						}
 					}
 					}

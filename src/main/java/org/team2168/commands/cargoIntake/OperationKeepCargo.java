@@ -24,7 +24,7 @@ public class OperationKeepCargo extends Command {
     protected void execute() {
     	if(Robot.cargoIntakeWheels.getRawIRVoltage()<3.1 && Robot.cargoIntakeWheels.getRawIRVoltage()>2.5)
         {
-            Robot.cargoIntakeWheels.drive(-0.5);
+            Robot.cargoIntakeWheels.drive(-0.25);
         }
         else if(Robot.cargoIntakeWheels.getRawIRVoltage()<2.5)
         {
@@ -32,7 +32,7 @@ public class OperationKeepCargo extends Command {
         }
         else
         {
-            Robot.cargoIntakeWheels.drive(-0.2);
+            Robot.cargoIntakeWheels.drive(-0.075);
         }
     	
     	//Robot.i2c.write(8, 5);

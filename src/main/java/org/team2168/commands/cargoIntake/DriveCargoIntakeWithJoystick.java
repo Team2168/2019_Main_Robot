@@ -10,6 +10,8 @@ import org.team2168.Robot;
 public class DriveCargoIntakeWithJoystick extends Command
 {
 
+private static double maxSpitSpeed = 0.35;
+	
 	public DriveCargoIntakeWithJoystick()
 	{
 		// Use requires() here to declare subsystem dependencies
@@ -27,8 +29,14 @@ public class DriveCargoIntakeWithJoystick extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.cargoIntakeWheels.drive(Robot.oi.getCargoIntakeJoystickValue());
-
+		if(Robot.oi.getCargoIntakeJoystickValue()<maxSpitSpeed)
+		{
+			Robot.cargoIntakeWheels.drive(Robot.oi.getCargoIntakeJoystickValue());
+		}
+		else
+		{
+			Robot.cargoIntakeWheels.drive(maxSpitSpeed);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
