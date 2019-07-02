@@ -17,7 +17,7 @@ public class RotateXDistancePIDZZZ extends Command {
 	private double setPoint;
 	private double maxSpeed;
 	private double minSpeed;
-	private double error = 0.5;  // Rotational degree error, default 0 never ends.
+	private double error = 0.50;  // Rotational degree error, default 0 never ends.
 	private boolean absolute = false;
 	
     public RotateXDistancePIDZZZ() {
