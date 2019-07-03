@@ -255,7 +255,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 1.82; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0 = 1.88; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
 	public static final double LIFT_LVL_1_POS= 10.5; 
