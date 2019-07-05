@@ -1,16 +1,14 @@
 
 package org.team2168;
 
-import org.team2168.commands.cargoIntake.IntakeUntilCargo;
-import org.team2168.commands.cargoIntake.OperationKeepCargo;
 import org.team2168.commands.auto.Level2ToFrontLeftCS;
 import org.team2168.commands.auto.turnAndGetHatch1;
-import org.team2168.commands.auto.paths.Drive10FeetForward2;
+import org.team2168.commands.auto.paths.Drive10FeetForward3;
+import org.team2168.commands.cargoIntake.OperationKeepCargo;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
-import org.team2168.commands.drivetrain.PIDCommands.DriveDistanceWithLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath2;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
@@ -37,8 +35,7 @@ import org.team2168.utils.LinearInterpolator;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI
-{
+public class OI {
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a joystick.
 	// You create one by telling it which joystick it's on and which button
@@ -255,8 +252,9 @@ public class OI
 		 pidTestJoystick.ButtonY().whenPressed(new EngageHatchPanel());
 		 //pidTestJoystick.ButtonA().whenPressed(new DriveDistanceWithLimelight(-6.0, 36.0));
 		 pidTestJoystick.ButtonA().whenPressed(new turnAndGetHatch1());
+		 pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForward3());
 		 //pidTestJoystick.ButtonA().whenPressed(new DriveXDistance(-6.0, 20.0));
-		 pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForward2());
+		 //pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForward2());
 		 //pidTestJoystick.ButtonB().whenPressed(new LeftFrontRocketFromLeftHab());
 		 pidTestJoystick.ButtonX().whenPressed(new Level2ToFrontLeftCS());
 
@@ -280,8 +278,8 @@ public class OI
 		 
 		 
 
-		pidTestJoystick.ButtonA().whenPressed(new IntakeUntilCargo());
-		pidTestJoystick.ButtonA().whenPressed(new OperationKeepCargo());
+		//pidTestJoystick.ButtonA().whenPressed(new IntakeUntilCargo());
+		//pidTestJoystick.ButtonA().whenPressed(new OperationKeepCargo());
 
 		 //pidTestJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 5));
 		 

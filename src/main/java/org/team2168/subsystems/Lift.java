@@ -8,8 +8,6 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AveragePotentiometer;
-import org.team2168.commands.LEDs.LiftLoweringPattern;
-import org.team2168.commands.LEDs.LiftRaisingPattern;
 import org.team2168.commands.hatchProbePivot.interlock.MovePivotToMBPosition;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForLift;

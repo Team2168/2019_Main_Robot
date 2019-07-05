@@ -32,7 +32,7 @@ public class DrivePIDPathQuinticPID extends Command
 	double jMax = 15000.0;
 
 	int counter;
-	double ff_term = 0.058;
+	double ff_term = 0.0631;
 	double aff_term = 0.0;
 	double oldClock;
 	double angle;
