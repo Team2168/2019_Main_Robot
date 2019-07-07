@@ -20,6 +20,6 @@ public class MoveMonkeyBarToSafePositionForScoring extends CommandGroup {
     addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS_PBOT, 0.5, 0, true));
   else
     //addSequential(new DriveMonkeyBarPivotPID(RobotMap.MONKEY_BAR_SAFE_SCORING_POS, 0.5, 0, true));
-   addSequential(new DriveMonkeyBarPivotPIDPath(110));
+   addSequential(new DriveMonkeyBarPivotPIDPath(RobotMap.MONKEY_BAR_SAFE_SCORING_POS));
   }
 }
