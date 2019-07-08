@@ -7,9 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
+import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.AveragePotentiometer;
-import org.team2168.commands.LEDs.LiftLoweringPattern;
-import org.team2168.commands.LEDs.LiftRaisingPattern;
 import org.team2168.commands.hatchProbePivot.interlock.MovePivotToMBPosition;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
 import org.team2168.commands.monkeyBarPivot.interlocks.MoveMonkeyBarToSafePositionForLift;
@@ -35,6 +34,8 @@ public class Lift extends Subsystem {
 	private static AveragePotentiometer liftPot;
 	private static DigitalInput liftFullyUp; // hall effect sensors
 	private static DigitalInput liftFullyDown; // ^^^^^^^^^^^
+
+	private static AverageEncoder liftEncoder;
 
 	double liftPotMax;
 	double liftPotMin;
@@ -111,7 +112,18 @@ public class Lift extends Subsystem {
       liftPotMax = RobotMap.LIFT_POT_VOLTAGE_MAX;
 			liftPotMin = RobotMap.LIFT_POT_VOLTAGE_0;
 		}
-
+	
+	liftEncoder = new AverageEncoder(
+		RobotMap.LIFT_ENCODER_A,
+		RobotMap.LIFT_ENCODER_B,
+		RobotMap.LIFT_ENCODER_PULSE_PER_ROT,
+		RobotMap.LIFT_ENCODER_DIST_PER_TICK,
+		RobotMap.LIFT_ENCODER_REVERSE,
+		RobotMap.LIFT_ENCODING_TYPE,
+		RobotMap.LIFT_SPEED_RETURN_TYPE,
+		RobotMap.LIFT_POS_RETURN_TYPE,
+		RobotMap.LIFT_AVG_ENCODER_VAL);
+		
     liftPOTController = new PIDPosition("LiftPosController", 
       RobotMap.LIFT_P, 
       RobotMap.LIFT_I, 
@@ -617,6 +629,16 @@ public class Lift extends Subsystem {
 	public boolean isSensorValid()
 	{
 		return this.isSensorValid;
+	}
+
+	public double getEncoderPos()
+	{
+		return liftEncoder.getPos();
+	}
+
+	public double getEncoderRate()
+	{
+		return liftEncoder.getRate();
 	}
 
 	public void initDefaultCommand()

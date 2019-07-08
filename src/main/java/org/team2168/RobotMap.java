@@ -59,6 +59,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_STINGER_ENCODER_B = 8;//change
 	public static final int LEFT_STINGER_ENCODER_A = 9;//change
 
+	public static final int LIFT_ENCODER_A = 10; //TODO SET
+	public static final int LIFT_ENCODER_B = 11; 
+
 	public static final int LIFT_FULLY_UP_LIMIT = 18;
 	public static final int LIFT_FULLY_DOWN_LIMIT = 19;
 
@@ -286,6 +289,19 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
+	private static final int LIFT_PULSE_PER_ROTATION = 256; // encoder ticks per rotation
+
+	private static final double LIFT_GEAR_RATIO = 2.0 / 1.0; // ratio between wheel over encoder //TODO set
+	private static final double LIFT_WHEEL_DIAMETER = 5.0;   //inches;
+	public static final int LIFT_ENCODER_PULSE_PER_ROT = (int) (LIFT_PULSE_PER_ROTATION * LIFT_GEAR_RATIO); // pulse per rotation * gear																					// ratio
+	
+	public static final double LIFT_ENCODER_DIST_PER_TICK = (Math.PI * LIFT_WHEEL_DIAMETER / LIFT_ENCODER_PULSE_PER_ROT);
+	public static final CounterBase.EncodingType LIFT_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
+	public static final AverageEncoder.PositionReturnType LIFT_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.TICKS; //.INCH
+	public static final AverageEncoder.SpeedReturnType LIFT_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.IPS;
+	public static final int LIFT_ENCODER_MIN_RATE = 0;
+	public static final int LIFT_ENCODER_MIN_PERIOD = 1;
+	public static final boolean LIFT_ENCODER_REVERSE = true; //TODO SET
 
 	/*************************************************************************
 	 *                      Monkey Bar PARAMETERS                            *
