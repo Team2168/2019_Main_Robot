@@ -25,7 +25,7 @@ public class DriveStingerPIDPath extends Command {
   private double setPoint;
   OneDimensionalMotionProfilingNoConstraint motion;
 	int counter;
-  double ff_term = 1.1;//1.6
+  double ff_term = 0.85;//1.6
   double ff_term_accel = 0.075;
 
   private double maxSpeed;
@@ -117,6 +117,8 @@ public class DriveStingerPIDPath extends Command {
     Robot.drivetrain.rightStingerController.Enable();
 
     counter = 0;
+
+    Robot.climbSetPoint = this.end;
 
     System.out.print("Lenght: "+ pos.length);
   }

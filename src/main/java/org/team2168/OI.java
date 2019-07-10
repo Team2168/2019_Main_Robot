@@ -108,11 +108,11 @@ public class OI {
 		driverJoystick.ButtonB().whenPressed(new DisengageDrivetrain());
 		driverJoystick.ButtonB().whenPressed(new DriveMonkeyBarPivotPIDPath(28));
 
-		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3.5));
+		driverJoystick.ButtonX().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(63, 0, 3.7));
 		driverJoystick.ButtonX().whenPressed(new DriveStingerPIDPath(0,25,3));
 
 		driverJoystick.ButtonY().whenPressed(new DriveMonkeyBarPivotPIDPathAutoClimb(28, 0, 2));
-		driverJoystick.ButtonY().whenPressed(new DriveStingerPIDPath2(0,10,1.5));
+		driverJoystick.ButtonY().whenPressed(new DriveStingerPIDPath(0,10,1.5));
 		
 		
 		driverJoystick.ButtonBack().whenPressed(new DisengageDrivetrain());

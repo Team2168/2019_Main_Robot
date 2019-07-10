@@ -277,7 +277,12 @@ public class DriveWithJoystick extends Command {
 				else
 				{
 					if(-Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
-						Robot.drivetrain.tankDrive(-Robot.oi.driverJoystick.getY(Hand.kLeft), -Robot.oi.driverJoystick.getY(Hand.kLeft));
+					{
+						if(Robot.drivetrain.getLeftStingerPosition()<Robot.climbSetPoint)
+						Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+						if(Robot.drivetrain.getRightStingerPosition()<Robot.climbSetPoint)
+						Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+					}
 					else //driving dt in reverse, lets not do that
 					{
 						if (climbCounterReverse < 15) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
@@ -291,7 +296,7 @@ public class DriveWithJoystick extends Command {
 							System.out.println("Driving stinger slow");
 							climbCounterReverse++;
 						}
-						else if (!Robot.isClimbEnabledLevel2)
+						else
 						{
 							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
 							{
@@ -302,37 +307,12 @@ public class DriveWithJoystick extends Command {
 							{
 								Robot.drivetrain.driveLeft(0.0);
 							}
+							// Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
 
 							if(Robot.drivetrain.getRightStingerPosition()>0.0)
 							{
 								//if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
 								Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
-							}
-							else
-							{
-								Robot.drivetrain.driveRight(0.0);
-							}
-						}
-						else
-						{
-							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
-							{
-								if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
-								{
-								Robot.drivetrain.driveLeft(Robot.oi.driverJoystick.getY(Hand.kLeft));
-								}
-							}
-							else
-							{
-								Robot.drivetrain.driveLeft(0.0);
-							}
-
-							if(Robot.drivetrain.getRightStingerPosition()>0.0)
-							{
-								if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
-								{
-								Robot.drivetrain.driveRight(Robot.oi.driverJoystick.getY(Hand.kLeft));
-								}
 							}
 							else
 							{

@@ -272,7 +272,7 @@ public class Lift extends Subsystem {
 				boolean drivingUp = speed > RobotMap.LIFT_MIN_SPEED;
 				boolean drivingDown = speed < -RobotMap.LIFT_MIN_SPEED;
 
-				if (( drivingUp && !isLiftFullyUp() && !liftPot.isAtLowerLimit() )
+				if (( drivingUp && !isLiftFullyUp() && getPotPos()<67 )
 						|| (drivingDown && !isLiftFullyDown() && !liftPot.isAtUpperLimit()))
 				{
 

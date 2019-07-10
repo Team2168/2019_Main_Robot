@@ -371,7 +371,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final AverageEncoder.SpeedReturnType STINGER_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.IPS;
 	public static final int STINGER_ENCODER_MIN_RATE = 0;
 	public static final int STINGER_ENCODER_MIN_PERIOD = 1;
-	public static final boolean LEFT_STINGER_TRAIN_ENCODER_REVERSE = true;
+	public static final boolean LEFT_STINGER_TRAIN_ENCODER_REVERSE = false;
 	public static final boolean RIGHT_STINGER_TRAIN_ENCODER_REVERSE = true;
 
 	public static final int STINGER_AVG_ENCODER_VAL = 5;
