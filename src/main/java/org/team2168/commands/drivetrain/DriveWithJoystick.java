@@ -276,52 +276,101 @@ public class DriveWithJoystick extends Command {
 				}
 				else
 				{
-					if(-Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
+					if(-Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1) //up
 					{
 						if(Robot.drivetrain.getLeftStingerPosition()<Robot.climbSetPoint)
-						Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
-						if(Robot.drivetrain.getRightStingerPosition()<Robot.climbSetPoint)
-						Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
-					}
-					else //driving dt in reverse, lets not do that
-					{
-						if (climbCounterReverse < 15) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
 						{
-							if(!disengageDrivetrainCommand.isRunning())
-								disengageDrivetrainCommand.start();
-
-							double voltage = 1.0;
-							double minspeed = voltage/Robot.pdp.getBatteryVoltage();
-							Robot.drivetrain.tankDrive(minspeed,minspeed);
-							System.out.println("Driving stinger slow");
-							climbCounterReverse++;
+						Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
 						}
 						else
 						{
-							if(Robot.drivetrain.getLeftStingerPosition()>0.0)
-							{
-								//if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
-								Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
-							}
-							else
-							{
-								Robot.drivetrain.driveLeft(0.0);
-							}
-							// Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+							Robot.drivetrain.tankDrive(0.0, 0.0);
+						}
 
-							if(Robot.drivetrain.getRightStingerPosition()>0.0)
-							{
-								//if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.0)
-								Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
-							}
-							else
-							{
-								Robot.drivetrain.driveRight(0.0);
-							}
+						if(Robot.drivetrain.getRightStingerPosition()<Robot.climbSetPoint)
+						{
+						Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+						}
+						else
+						{
+							Robot.drivetrain.tankDrive(0.0, 0.0);
 						}
 					}
+					else if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1) //down
+					{
+						if(Robot.drivetrain.getLeftStingerPosition()>0)
+						{
+						Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+						}
+						else
+						{
+							Robot.drivetrain.tankDrive(0.0, 0.0);
+						}
+
+						if(Robot.drivetrain.getRightStingerPosition()>0)
+						{
+						Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+						}
+						else
+						{
+							Robot.drivetrain.tankDrive(0.0, 0.0);
+						}
 					}
+					// else //driving dt in reverse, lets not do that
+					// {
+					// 	if (climbCounterReverse < 15) //auto drive drivetrain for a small time 0.5 seconds 7*0.02 to help engage
+					// 	{
+					// 		if(!disengageDrivetrainCommand.isRunning())
+					// 			disengageDrivetrainCommand.start();
+
+					// 		double voltage = 1.0;
+					// 		double minspeed = voltage/Robot.pdp.getBatteryVoltage();
+					// 		Robot.drivetrain.tankDrive(minspeed,minspeed);
+					// 		System.out.println("Driving stinger slow");
+					// 		climbCounterReverse++;
+					// 	}
+					// 	else
+					// 	{
+					// 		Robot.drivetrain.tankDrive(0.0, 0.0);
+					// 	}
+					// }
+					// }
+					else
+					{
+						Robot.drivetrain.tankDrive(0.0, 0.0);
+					}
+/**
+ * 
+ */
+				// 	if(Math.abs(Robot.oi.driverJoystick.getY(Hand.kLeft))>0.1)
+				// 	{
+				// 	if(Robot.drivetrain.getLeftStingerPosition()<Robot.climbSetPoint) //up
+				// 	{
+				// 		if(-Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
+				// 		Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+				// 	}
+				// 	if(Robot.drivetrain.getLeftStingerPosition()>0) //down
+				// 	{
+				// 		if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
+				// 		Robot.drivetrain.driveLeft(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+				// 	}
+				// 	if(Robot.drivetrain.getRightStingerPosition()<Robot.climbSetPoint) //up
+				// 	{
+				// 		if(-Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
+				// 		Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+				// 	}
+				// 	if(Robot.drivetrain.getRightStingerPosition()>0) //down
+				// 	{
+				// 		if(Robot.oi.driverJoystick.getY(Hand.kLeft)>0.1)
+				// 		Robot.drivetrain.driveRight(-Robot.oi.driverJoystick.getY(Hand.kLeft));
+				// 	}
+				// 	}
+				// 	else
+				// 	{
+				// 		Robot.drivetrain.tankDrive(0.0, 0.0);
+				// 	}
 				}
+			}
 			else if (Math.abs(Robot.oi.driverJoystick.getX(Hand.kLeft)) < 0.1) 
 			{
 					climbCounter = 0;
