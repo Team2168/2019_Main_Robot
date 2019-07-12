@@ -276,9 +276,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
 	public static final double LIFT_BASE_POS_PBOT = 10.5;
 
-	public static final double LIFT_PID_SPEED_UP_MAX = 0.35;
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.35; //.45
 	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
-	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.18;
+	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.18;// .25
 	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
 	public static final double LIFT_PID_ERROR = 0.5;
 
@@ -310,7 +310,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS = 80.0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
-	public static final double MONKEY_BAR_SAFE_SCORING_POS = 120; 
+	public static final double MONKEY_BAR_SAFE_SCORING_POS = 110; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;

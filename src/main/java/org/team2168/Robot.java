@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
   //boolean to keep track of climb mode
   public static boolean isClimbEnabled = false;
   public static boolean isClimbEnabledLevel2 = false;
-  public static double climbSetPoint;
+  public static double climbSetPoint = 25.0;
 
   //Variable to track blue alliance vs red alliance
   private static boolean blueAlliance = false;
