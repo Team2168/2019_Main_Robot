@@ -248,9 +248,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.6; 
 
-	public static final double LIFT_HOLDING_VOLTAGE = 1.2; //volts divide by batt voltage. 
-	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
-	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2; //should this be negative???
+	public static final double LIFT_HOLDING_VOLTAGE = 1.15; //volts divide by batt voltage. 
+	public static final double LIFT_UP_MIN_VOLTAGE = 1.15;
+	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.15; //should this be negative???
 	public static final double LIFT_MIN_SPEED = 0.065;
 
 	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
@@ -276,9 +276,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
 	public static final double LIFT_BASE_POS_PBOT = 10.5;
 
-	public static final double LIFT_PID_SPEED_UP_MAX = 0.35; //.45
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.45; //.35
 	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
-	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.18;// .25
+	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.18;
 	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
 	public static final double LIFT_PID_ERROR = 0.5;
 
