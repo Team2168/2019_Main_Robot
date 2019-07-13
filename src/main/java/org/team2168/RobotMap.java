@@ -54,6 +54,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_ENCODER_B = 2;
 	public static final int LEFT_DRIVE_ENCODER_A = 3;
 
+	public static final int LIFT_ENCODER_A = 6;
+	public static final int LIFT_ENCODER_B = 7;
+
+
 	public static final int RIGHT_STINGER_ENCODER_A = 4;//change something
 	public static final int RIGHT_STINGER_ENCODER_B = 5;//change
 	public static final int LEFT_STINGER_ENCODER_B = 8;//change
@@ -284,6 +288,18 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
+
+	public static final int LIFT_ENCODER_PULSE_PER_ROT = 256;
+	public static final double LIFT_ENCODER_TOTAL_ROT = 7.375;
+	
+	public static final double LIFT_ENCODER_DIST_PER_TICK = 58.5/(LIFT_ENCODER_PULSE_PER_ROT * LIFT_ENCODER_TOTAL_ROT);
+	public static final CounterBase.EncodingType LIFT_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
+	public static final AverageEncoder.PositionReturnType LIFT_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType LIFT_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.IPS;
+	public static final int LIFT_ENCODER_MIN_RATE = 0;
+	public static final int LIFT_ENCODER_MIN_PERIOD = 1;
+	public static final boolean LIFT_ENCODER_REVERSE = true;
+
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
 
