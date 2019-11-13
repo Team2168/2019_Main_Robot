@@ -265,9 +265,9 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_BASE_POS = 10.5;
 
 	//PBOT LIFT
-	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 4.48; //90 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX_PBOT = 5.0; //90 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES_PBOT = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.49; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0_PBOT = 1.88; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES_PBOT = 69.0;
 
 	public static final double LIFT_LVL_1_POS_PBOT= 10.5; //TODO SET ALL in inches
