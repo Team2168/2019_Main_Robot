@@ -3,14 +3,13 @@ package org.team2168;
 
 import org.team2168.commands.auto.Level2ToFrontLeftCS;
 import org.team2168.commands.auto.turnAndGetHatch1;
-import org.team2168.commands.auto.paths.Drive10FeetForward3;
+import org.team2168.commands.auto.paths.Drive10FeetForwardSimple;
 import org.team2168.commands.cargoIntake.OperationKeepCargo;
 import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.drivetrain.EngageStingers;
 import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath;
-import org.team2168.commands.drivetrain.PIDCommands.DriveStingerPIDPath2;
 import org.team2168.commands.drivetrain.PIDCommands.EnableLimelight;
 import org.team2168.commands.drivetrain.PIDCommands.PauseLimelight;
 import org.team2168.commands.hatchProbePistons.DisengageHatchPanel;
@@ -252,7 +251,7 @@ public class OI {
 		 pidTestJoystick.ButtonY().whenPressed(new EngageHatchPanel());
 		 //pidTestJoystick.ButtonA().whenPressed(new DriveDistanceWithLimelight(-6.0, 36.0));
 		 pidTestJoystick.ButtonA().whenPressed(new turnAndGetHatch1());
-		 pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForward3());
+		 pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForwardSimple());
 		 //pidTestJoystick.ButtonA().whenPressed(new DriveXDistance(-6.0, 20.0));
 		 //pidTestJoystick.ButtonB().whenPressed(new Drive10FeetForward2());
 		 //pidTestJoystick.ButtonB().whenPressed(new LeftFrontRocketFromLeftHab());

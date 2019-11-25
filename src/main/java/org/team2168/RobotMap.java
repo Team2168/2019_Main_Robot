@@ -432,7 +432,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double CURRENT_LIMIT_TIME_THRESHOLD_SECONDS = 1;
 
 	/*************************************************************************
-	 *                         PID PARAMETERS                                *
+	 *                           PARAMETERS                                *
 	 *************************************************************************/
 	// period to run PID loops on drive train
 	public static final long DRIVE_TRAIN_PID_PERIOD = 20;// 70ms loop
