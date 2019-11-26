@@ -13,6 +13,7 @@ import org.team2168.commands.LEDs.TeleopWithoutGamePiecePattern;
 import org.team2168.PID.trajectory.QuinticTrajectory;
 import org.team2168.commands.LEDs.WithGamePiecePattern;
 import org.team2168.commands.auto.DoNothing;
+import org.team2168.commands.drivetrain.DisengageStingers;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.pneumatics.StartCompressor;
 import org.team2168.subsystems.CargoIntakeWheels;
@@ -431,6 +432,7 @@ public class Robot extends TimedRobot {
       autonomousCommand.start();
 
     Scheduler.getInstance().add(new EngageDrivetrain());
+    Scheduler.getInstance().add(new DisengageStingers());
   }
 
   /**
@@ -458,6 +460,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
 
     Scheduler.getInstance().add(new EngageDrivetrain());
+    Scheduler.getInstance().add(new DisengageStingers());
 
     if (autonomousCommand != null) autonomousCommand.cancel();
 

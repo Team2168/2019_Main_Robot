@@ -24,7 +24,7 @@ public class OperationKeepCargo extends Command {
     protected void execute() {
     	if(Robot.cargoIntakeWheels.getRawIRVoltage()<3.1 && Robot.cargoIntakeWheels.getRawIRVoltage()>2.5)
         {
-            Robot.cargoIntakeWheels.drive(-0.25);
+            Robot.cargoIntakeWheels.drive(-0.1);
         }
         else if(Robot.cargoIntakeWheels.getRawIRVoltage()<2.5)
         {
