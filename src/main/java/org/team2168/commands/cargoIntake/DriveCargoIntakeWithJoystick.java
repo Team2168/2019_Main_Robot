@@ -10,7 +10,7 @@ import org.team2168.Robot;
 public class DriveCargoIntakeWithJoystick extends Command
 {
 
-private static double maxSpitSpeed = 0.35;
+private static double maxSpitSpeed = 0.6;
 	
 	public DriveCargoIntakeWithJoystick()
 	{

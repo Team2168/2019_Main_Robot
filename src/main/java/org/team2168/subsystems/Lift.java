@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
+import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.AveragePotentiometer;
 import org.team2168.commands.hatchProbePivot.interlock.MovePivotToMBPosition;
 import org.team2168.commands.lift.DriveLiftWithJoysticks;
@@ -29,10 +30,12 @@ public class Lift extends Subsystem {
 	private static VictorSPX liftMotor2;
 
 
-	//private DoubleSolenoid liftBrake;
+	//private DoubleSolenoid liftBrake; 
 	private static AveragePotentiometer liftPot;
 	private static DigitalInput liftFullyUp; // hall effect sensors
 	private static DigitalInput liftFullyDown; // ^^^^^^^^^^^
+
+	private AverageEncoder _liftEncoder;
 
 	double liftPotMax;
 	double liftPotMin;
@@ -84,6 +87,16 @@ public class Lift extends Subsystem {
 		liftFullyDown = new DigitalInput(RobotMap.LIFT_FULLY_DOWN_LIMIT);
 
 			
+	_liftEncoder = new AverageEncoder(
+		RobotMap.LIFT_ENCODER_A,
+		RobotMap.LIFT_ENCODER_B,
+		RobotMap.LIFT_ENCODER_PULSE_PER_ROT,
+		RobotMap.LIFT_ENCODER_DIST_PER_TICK,
+		RobotMap.LIFT_ENCODER_REVERSE,
+		RobotMap.LIFT_ENCODING_TYPE,
+		RobotMap.LIFT_SPEED_RETURN_TYPE,
+		RobotMap.LIFT_POS_RETURN_TYPE,
+		RobotMap.LIFT_AVG_ENCODER_VAL);
 
     if (Robot.isPracticeRobot()) 
     {
@@ -131,6 +144,7 @@ public class Lift extends Subsystem {
 		ConsolePrinter.putNumber("Lift Motor 1 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_1_PDP);}, true, true);
 		ConsolePrinter.putNumber("Lift Motor 2 Current ", () -> {return Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_2_PDP);}, true, true);
 
+		ConsolePrinter.putNumber("Lift Encoder Distance:", () -> {return Robot.lift.getLiftPosition() + 10.5;}, true, false);
 
 		ConsolePrinter.putBoolean("Is Lift Fully Up", () -> {return Robot.lift.isLiftFullyUp();}, true, false);
 	  	ConsolePrinter.putBoolean("Is Lift Fully Down", () -> {return Robot.lift.isLiftFullyDown();}, true, false);
@@ -159,6 +173,16 @@ public class Lift extends Subsystem {
 			instance = new Lift();
 		return instance;
 	}
+
+	public double getLiftPosition()
+  {
+    return _liftEncoder.getPos();
+  }
+
+  public void resetLiftPosition()
+  {
+    _liftEncoder.reset();
+  }
 
 	/**
 	 * 

@@ -54,6 +54,10 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final int LEFT_DRIVE_ENCODER_B = 2;
 	public static final int LEFT_DRIVE_ENCODER_A = 3;
 
+	public static final int LIFT_ENCODER_A = 6;
+	public static final int LIFT_ENCODER_B = 7;
+
+
 	public static final int RIGHT_STINGER_ENCODER_A = 4;//change something
 	public static final int RIGHT_STINGER_ENCODER_B = 5;//change
 	public static final int LEFT_STINGER_ENCODER_B = 8;//change
@@ -248,14 +252,14 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double LIFT_MAX_JOYSTICK_SPEED = 0.6; 
 
-	public static final double LIFT_HOLDING_VOLTAGE = 1.2; //volts divide by batt voltage. 
-	public static final double LIFT_UP_MIN_VOLTAGE = 1.2;
-	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.2; //should this be negative???
+	public static final double LIFT_HOLDING_VOLTAGE = 1.15; //volts divide by batt voltage. 
+	public static final double LIFT_UP_MIN_VOLTAGE = 1.15;
+	public static final double LIFT_DOWN_MIN_VOLTAGE = 1.15; //should this be negative???
 	public static final double LIFT_MIN_SPEED = 0.065;
 
-	public static final double LIFT_POT_VOLTAGE_MAX = 4.91; //85 degrees
+	public static final double LIFT_POT_VOLTAGE_MAX = 4.59; //85 degrees
 	public static final double LIFT_POT_MAX_HEIGHT_INCHES = 10.5;
-	public static final double LIFT_POT_VOLTAGE_0 = 1.88; //0 degrees
+	public static final double LIFT_POT_VOLTAGE_0 = 1.48; //0 degrees
 	public static final double LIFT_POT_0_HEIGHT_INCHES = 69.0;
 
 	public static final double LIFT_LVL_1_POS= 10.5; 
@@ -276,7 +280,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 	public static final double LIFT_CARGO_SHIP_POS_PBOT = 28.0;
 	public static final double LIFT_BASE_POS_PBOT = 10.5;
 
-	public static final double LIFT_PID_SPEED_UP_MAX = 0.35;
+	public static final double LIFT_PID_SPEED_UP_MAX = 0.45; //.35
 	public static final double LIFT_PID_SPEED_UP_MIN = 0.0;
 	public static final double LIFT_PID_SPEED_DOWN_MAX = -0.18;
 	public static final double LIFT_PID_SPEED_DOWN_MIN = 0.0;
@@ -284,6 +288,18 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 
 	public static final boolean ENABLE_LIFT_POT_SAFETY = true;
+
+	public static final int LIFT_ENCODER_PULSE_PER_ROT = 256;
+	public static final double LIFT_ENCODER_TOTAL_ROT = 7.375;
+	
+	public static final double LIFT_ENCODER_DIST_PER_TICK = 58.5/(LIFT_ENCODER_PULSE_PER_ROT * LIFT_ENCODER_TOTAL_ROT);
+	public static final CounterBase.EncodingType LIFT_ENCODING_TYPE = CounterBase.EncodingType.k4X; // count rising and falling edges on
+	public static final AverageEncoder.PositionReturnType LIFT_POS_RETURN_TYPE = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType LIFT_SPEED_RETURN_TYPE = AverageEncoder.SpeedReturnType.IPS;
+	public static final int LIFT_ENCODER_MIN_RATE = 0;
+	public static final int LIFT_ENCODER_MIN_PERIOD = 1;
+	public static final boolean LIFT_ENCODER_REVERSE = true;
+
 	public static final int LIFT_AVG_ENCODER_VAL = 5;
 
 
@@ -310,7 +326,7 @@ public static final double MAIN_PERIOD_S = 1.0/50.0; // Main loop 200Hz
 
 	public static final double MONKEY_BAR_SAFE_LIFT_POS = 80.0; //TODO SET ALL
 	public static final double MONKEY_BAR_SAFE_PIVOT_POS = 90;
-	public static final double MONKEY_BAR_SAFE_SCORING_POS = 120; 
+	public static final double MONKEY_BAR_SAFE_SCORING_POS = 110; 
 	public static final double MONKEY_BAR_FLOOR_POS = 0;
 	public static final double MONKEY_BAR_STOW_POS = 180;
 	public static final double MONKEY_BAR_CARGO_INTAKE_POS = 40;
